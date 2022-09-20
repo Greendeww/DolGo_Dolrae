@@ -1,21 +1,47 @@
 import userEvent from '@testing-library/user-event';
-import React, {useState} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
+import { useParams } from 'react-router-dom';
 import CommentModal from './CommentModal';
 
-const Comments = () => {
+const Comments = ({comment}) => {
+  const {id} = useParams();
+  console.log(comment)
   let [modal, setModal] = useState(false);
   const close = () => {
     setModal(false);
   };
+
+
+
+
   return (
-    <>
-      <div style={{cursor:"pointer"}} onClick={() => {setModal(true)}}>
-      <p>내용</p>
-      <p>닉네임</p>
+    <> 
+      {modal === false
+      ?
+      <div>
+        <div style={{cursor:"pointer",borderBottom:"3px solid red"}} onClick={() => {setModal(true)}}>
+        <p>{comment.content}</p>
+        {/* <p>닉네임</p> */}
+        </div>
+        <div style={{cursor:"pointer"}}>
+          {modal === true
+          ? <CommentModal comment={comment} close={close}/>
+          :null
+          }
+        </div>
       </div>
-      {modal === true
-      ? <CommentModal close={close}/>
-      :null
+      :<div>
+      <div style={{cursor:"pointer",borderBottom:"3px solid red"}} onClick={() => {setModal(false)}}>
+      <p>{comment.content}</p>
+      {/* <p>닉네임</p> */}
+      </div>
+      <div>
+        {modal === true
+        ? <CommentModal comment={comment} close={close}/>
+        :null
+        }
+      </div>
+    </div>
       }
     </>
   )
