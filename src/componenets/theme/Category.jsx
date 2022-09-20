@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Category = () => {
-  return (
+  return ( 
     <StCategory>
       <button>관광</button>
       <button>관람</button>
