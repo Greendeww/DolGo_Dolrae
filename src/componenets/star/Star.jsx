@@ -1,46 +1,48 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { FaStar } from 'react-icons/fa';
 import styled from 'styled-components';
 
-const ARRAY = [0, 1, 2, 3, 4];
-
-function Star() {
-  const [clicked, setClicked] = useState([false, false, false, false, false]);
-
-  const handleStarClick = index => {
-    let clickStates = [...clicked];
-    for (let i = 0; i < 5; i++) {
-      clickStates[i] = i <= index ? true : false;
-    }
-    setClicked(clickStates);
-  };
-
-  useEffect(() => {
-    sendReview();
-  }, [clicked]); //컨디마 컨디업
-
-  const sendReview = () => {
-    let score = clicked.filter(Boolean).length;
-
+function Star({comment}) {
+  
   return (
-    <Wrap>
-      <RatingText>평가하기</RatingText>
-      <Stars>
-        {ARRAY.map((el, idx) => {
-          return (
-            <FaStar
-              key={idx}
-              size="50"
-              onClick={() => handleStarClick(el)}
-              className={clicked[el] && 'yellowStar'}
-            />
-          );
-        })}
-      </Stars>
-    </Wrap>
+    <>
+    {comment.star === 5
+      ? <div>
+          <FaStar style={{color:"#fcc419"}}/>
+          <FaStar style={{color:"#fcc419"}}/>
+          <FaStar style={{color:"#fcc419"}}/>
+          <FaStar style={{color:"#fcc419"}}/>
+          <FaStar style={{color:"#fcc419"}}/>
+        </div>
+      :(comment.star === 4
+      ? <div>
+          <FaStar style={{color:"#fcc419"}}/>
+          <FaStar style={{color:"#fcc419"}}/>
+          <FaStar style={{color:"#fcc419"}}/>
+          <FaStar style={{color:"#fcc419"}}/>
+      </div>
+      :(comment.star === 3
+        ? <div>
+            <FaStar style={{color:"#fcc419"}}/>
+            <FaStar style={{color:"#fcc419"}}/>
+            <FaStar style={{color:"#fcc419"}}/>
+          </div>
+      :(comment.star === 2
+      ? <div>
+          <FaStar style={{color:"#fcc419"}}/>
+          <FaStar style={{color:"#fcc419"}}/>
+        </div>
+      :(comment.star === 1
+        ? <div>
+            <FaStar style={{color:"#fcc419"}}/>
+          </div>
+        :null
+      ))))  
+      }
+    </>
   );
 }
-}
+
 export default Star;
 
 const Wrap = styled.div`
