@@ -3,6 +3,7 @@ import styled from "styled-components";
 import check from "../../assert/check.png";
 
 const List = () => {
+  
   const [seoul, setSeoul] = useState(false);
   const [inCheon, setInCheon] = useState(false);
   const [daeJeon, setDaeJeon] = useState(false);
