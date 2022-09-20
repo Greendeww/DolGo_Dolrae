@@ -12,10 +12,10 @@ const DetailForm = ({close}) => {
   const [title,setTitle] = useState("");
   const [content,setContent] = useState("");
   const [star,setStar] = useState();
-  const [image,setImage] = useState("");
+  const [image,setImage] = useState([]);
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
-  console.log(star)
+  console.log(image)
   const handleStarClick = index => {
     let clickStates = [...clicked];
     for (let i = 0; i < 5; i++) {
@@ -41,13 +41,11 @@ const DetailForm = ({close}) => {
       const nowImageUrl = URL.createObjectURL(e.target.files[i]);
       imgFiles.push(nowImageUrl);
     }
-    // const imgList = [];
-    // for (let i = 0; i < setImgUrl.length; i++) {
-    //   const nowImageUrl1 = e.target.files[0];
-    //   console.log(nowImageUrl1)
-    //   imgList.push(nowImageUrl1);
-    // }
-    // setImgUrl(imgList)
+    for (let i = 0; i < imageList.length; i++) {
+      const nowImageUrl1 = e.target.files[i];
+      image.push(nowImageUrl1);
+      continue;
+    }
     setFileImage(imgFiles);
     // setImage(imageList);
   };
@@ -55,10 +53,9 @@ const DetailForm = ({close}) => {
     setFileImage(fileImage.filter((_, index) => index !== id));
   };
   const data = {
-    placeId: id,
     title:title,
     content:content,
-    star:star,
+    // star:Number(star),
     // nickname:nickname
   }
 
@@ -70,12 +67,22 @@ const DetailForm = ({close}) => {
     console.log(json);
     const blob = new Blob([json], { type: "application/json" });
     const formData = new FormData();
-    formData.append("image",image[0])
+    for(let i = 0; i<image.length; i++){
+      formData.append("image",image[i])
+    }
+    // formData.append("image",image[0])
+    // formData.append("image",image[1])
+    // formData.append("image",image[2])
     formData.append("data",blob)
 
+    const payload = {
+      id:id,
+      formData: formData,
+    }
+
     const res = await axios.post(
-        "http://3.34.46.193/api/auth/comment",
-        formData,
+        `http://3.34.46.193/api/auth/comment/${payload.id}`,
+        payload.formData,
         {
             headers:{
                 "Content-Type": "multipart/form-data"
@@ -84,6 +91,9 @@ const DetailForm = ({close}) => {
             }
         }
     )
+    for (let value of payload.formData.values()) {
+      console.log(value);
+    }
     return res.data;
   };
   return (
