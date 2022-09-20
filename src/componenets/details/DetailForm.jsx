@@ -74,7 +74,7 @@ const DetailForm = ({close}) => {
     formData.append("data",blob)
 
     const res = await axios.post(
-        "url",
+        "http://3.34.46.193/api/auth/comment",
         formData,
         {
             headers:{
@@ -178,10 +178,12 @@ const DetailForm = ({close}) => {
 export default DetailForm
 
 const Box = styled.div`
-  width: 800px;
+  width: 90%;
+  max-width: 428px;
+  
 `;
 const LiImg = styled.li`
-  width: 100%;
+  width: 90%;
   display: flex;
   padding: 32px 0px;
   border-bottom: 1px solid rgb(204, 204, 204);
@@ -193,7 +195,7 @@ const ImgTitle = styled.div`
   align-items: center;
   display: flex;
   justify-content: flex-start;
-  font-size: 18px;
+  font-size: 16px;
 `;
 const ImgBox = styled.div`
   width: 100%;
@@ -247,7 +249,7 @@ const PTitle = styled.b`
   align-items: center;
   display: flex;
   justify-content: flex-start;
-  font-size: 18px;
+  font-size: 16px;
 `;
 const InputTit = styled.input`
   font-size: 15px;
@@ -272,13 +274,13 @@ const Wrap = styled.div`
   padding-top: 15px;
 `;
 
-const RatingText = styled.div`
+const RatingText = styled.b`
   width: 168px;
   height: 48px;
   align-items: center;
   display: flex;
   justify-content: flex-start;
-  font-size: 18px;
+  font-size: 16px;
 `;
 
 const Stars = styled.div`
