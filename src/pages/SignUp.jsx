@@ -95,7 +95,7 @@ const SignUp = () => {
             type="button" 
             value="중복확인" 
             onClick={onIdCheckHandler} /> */}
-            </label>
+            </label> 
           </li>
           <li>
             <label>
