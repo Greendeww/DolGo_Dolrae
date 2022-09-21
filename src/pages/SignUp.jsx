@@ -28,6 +28,7 @@ const SignUp = () => {
 
   const [user, setUser] = useState(initialState);
 
+  console.log(user);
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     if (
@@ -53,10 +54,9 @@ const SignUp = () => {
   };
 
   // 정규표현식 선언
-  const emailRegex =
-    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-  const passwordRegex = /^(?=.*[a-zA-z])(?=.*[0-9]).{8,32}$/;
-
+  const emailRegex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
+  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,20}$/;
+  
   return (
     <StSignUp>
       <form onSubmit={onSubmitHandler}>
@@ -104,7 +104,7 @@ const SignUp = () => {
                 <p style={{ color: "green" }}>안전한 비밀번호예요!</p>
               ) : (
                 <p style={{ color: "red" }}>
-                  숫자, 영문자, 특수문자 조합으로 8자리 이상 입력하세요.
+                  숫자, 영문자 조합으로 6자리 이상 입력하세요.
                 </p>
               )}
             </label>
