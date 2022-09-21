@@ -4,18 +4,29 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from "styled-components";
 import { FaStar } from 'react-icons/fa';
 import Star from '../star/Star';
+import { useDispatch } from 'react-redux';
+import { _updateComment } from '../../redux/modules/comment';
 
-const DetailForm = ({close}) => {
+const DetailRevise = ({handleModal,comment}) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const {id} = useParams();
   const [title,setTitle] = useState("");
   const [content,setContent] = useState("");
   const [star,setStar] = useState();
-  const [image,setImage] = useState([]);
+  const [image,setImage] = useState([...comment.imageList]);
+  const [fileImage1,setFileImage1] = useState([...comment.imageList]);
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
   console.log(image)
+  useEffect(() => {
+    setTitle(comment.title);
+    setContent(comment.content);
+    setStar(comment.star)
+    setImage([...comment.imageList]);
+  }, [])
+  
   const handleStarClick = index => {
     let clickStates = [...clicked];
     for (let i = 0; i < 5; i++) {
@@ -28,10 +39,10 @@ const DetailForm = ({close}) => {
     sendReview();
   }, [clicked]); //컨디마 컨디업
 
- const sendReview = () => {
- let score = clicked.filter(Boolean).length;
- setStar(score)
- }
+  const sendReview = () => {
+  let score = clicked.filter(Boolean).length;
+  setStar(score)
+  }
 
   const onChangeImg = (e) => {
     const imageList = e.target.files;
@@ -50,9 +61,11 @@ const DetailForm = ({close}) => {
     // setImage(imageList);
   };
   const handleDeleteImage = (id) => {
-    setFileImage(fileImage.filter((_, index) => index !== id));
+    setFileImage(fileImage.filter((_, index) => index !== id))
+    setFileImage1(fileImage1.filter((_, index) => index !== id))
     setImage(image.filter((_, index) => index !== id));
   };
+
   const data = {
     title:title,
     content:content,
@@ -62,7 +75,7 @@ const DetailForm = ({close}) => {
 
   const onChangeHandler = (event, setState) => setState(event.target.value);
   
-  const onAddComment = async (e) => {
+  const onUpdatePost = async (e) => {
 
     let json = JSON.stringify(data)
     console.log(json);
@@ -77,28 +90,15 @@ const DetailForm = ({close}) => {
     formData.append("data",blob)
 
     const payload = {
-      id:id,
+      placeId:id,
+      id:comment.comment_id,
       formData: formData,
     }
-
-    const res = await axios.post(
-        `http://3.34.46.193/api/auth/comment/${payload.id}`,
-        payload.formData,
-        {
-            headers:{
-                "Content-Type": "multipart/form-data"
-                // Authorization: localStorage.getItem("Authorization"),
-                // RefreshToken: localStorage.getItem("RefreshToken"),
-            }
-        }
-    )
-    for (let value of payload.formData.values()) {
-      console.log(value);
-    }
-    return res.data;
+    dispatch(_updateComment(payload))
   };
   return (
    <>
+   <DivBack>
      <Box>
       <LiTilte>
           <PTitle>
@@ -115,7 +115,7 @@ const DetailForm = ({close}) => {
         <LiImg>
           <ImgTitle>
             <b>
-              상품이미지
+              사진
               <span style={{ color: "rgb(255, 80, 88)" }}>*</span>
             </b>
           </ImgTitle>
@@ -132,13 +132,21 @@ const DetailForm = ({close}) => {
                 </p>
                 <ImgInput
                   type="file"
-                  name="imgUrl"
+                  name="imageList"
                   accept="image/*"
                   multiple
                   onChange={onChangeImg}
                   id="image"
                 />
               </ImgLabel>
+              {fileImage1.map((image,id) => (
+                <div key={id}>
+                 <img style={{width:"102px",height:"102px"}} alt={`${image}-${id}`} src={image.imageUrl}/>
+                 <DeleteImg onClick={() => handleDeleteImage(id)}>
+                    X
+                  </DeleteImg>
+                </div>
+              ))}
               {fileImage.map((image, id) => (
                 <div key={id}>
                   <Img alt={`${image}-${id}`} src={image} />
@@ -178,19 +186,42 @@ const DetailForm = ({close}) => {
             />
           </LiTilte>
           <div>
-                <button onClick={onAddComment}>등록하기</button>
-                <button onClick={close}>취소하기</button>
+                <button onClick={onUpdatePost}>수정</button>
+                <button onClick={handleModal}>취소</button>
           </div>
       </Box>
+    </DivBack>
    </>
   )
 }
 
-export default DetailForm
-
+export default DetailRevise
+const DivBack = styled.div`
+  z-index: 10;
+  position: fixed;
+  width: 100%;
+  height: 100vw;
+  background: rgba(0, 0, 0, 0.2);
+`;
 const Box = styled.div`
-  width: 90%;
-  max-width: 428px;
+  height:800px;
+  max-width: 380px;
+  width:100%;
+  /* font-size: 17px; */
+  font-family: "Noto Sans KR", sans-serif;
+  border: 1px solid black;
+  background-color: rgb(255, 255, 255);
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
 `;
 const LiImg = styled.li`
   width: 90%;
@@ -240,13 +271,13 @@ const Img = styled.img`
   }
 `;
 const DeleteImg = styled.button`
-  /* margin: -10.3px;
+  margin: -10.3px;
   position: relative;
   color: red;
   right: 11.5px;
-  bottom: 186px;
+  bottom: 88px;
   background-color: white;
-  border: none; */
+  border: none;
 `;
 const LiTilte = styled.li`
   padding: 10px 0px;
@@ -297,7 +328,7 @@ const RatingText = styled.b`
 const Stars = styled.div`
   width:130px;
   display: flex;
-  padding-top: 5px;
+  /* padding-top: 5px; */
 
   & svg {
     color: gray;

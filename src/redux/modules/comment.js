@@ -9,7 +9,7 @@ const initialState = {
 }
 
 export const _getComments = createAsyncThunk(
-  "Comments/getComments",
+  "comment/getComments",
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(
@@ -30,47 +30,47 @@ export const _getComments = createAsyncThunk(
 );
 
 export const _deleteComment = createAsyncThunk(
-  "PostSlice/delete",
+  "comment/delete",
   async (payload, thunkAPI) => {
     try {
       const data = await axios.delete(
-        `http://13.125.225.96:8080/auth/products/${payload.id}`,
-        {
-          headers: {
-            Authorization: localStorage.getItem("Authorization"),
-            RefreshToken: localStorage.getItem("RefreshToken"),
-          },
-        }
+        `http://3.34.46.193/api/auth/comment/${payload.comment_id}`,
+        // {
+        //   headers: {
+        //     Authorization: localStorage.getItem("Authorization"),
+        //     RefreshToken: localStorage.getItem("RefreshToken"),
+        //   },
+        // }
       );
-      window.location.replace("/");
+      window.location.reload()
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
-// export const _updatePost = createAsyncThunk(
-//   "PostSlice/update",
-//   async (payload, thunkAPI) => {
-//     try {
-//       const data = await axios.put(
-//         `http://13.125.225.96:8080/auth/products/${payload.id}`,
-//         payload.data,
-//         {
-//           headers: {
-//             "Content-Type": "multipart/form",
-//             Authorization: localStorage.getItem("Authorization"),
-//             RefreshToken: localStorage.getItem("RefreshToken"),
-//           },
-//         }
-//       );
-//       window.location.replace(`/products/${payload.id}`);
-//       return thunkAPI.fulfillWithValue(data.data);
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   }
-// );
+export const _updateComment = createAsyncThunk(
+  "comment/update",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.put(
+        `http://3.34.46.193/api/auth/comment/${payload.id}`,
+        payload.formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form",
+            // Authorization: localStorage.getItem("Authorization"),
+            // RefreshToken: localStorage.getItem("RefreshToken"),
+          },
+        }
+      );
+      window.location.replace(`/detail/${payload.placeId}`);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 
 export const commentSlice = createSlice({
@@ -103,7 +103,18 @@ extraReducers:(builder) => {
                 state.isLoading = false;
                 state.error = action.payload;
             })
-
+        builder
+            .addCase(_updateComment.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(_updateComment.fulfilled, (state,action) => {
+                state.isLoading = true;
+                state.data = action.payload;
+            })
+            .addCase(_updateComment.rejected, (state,action) => {
+                state.isLoading = true;
+                state.error = action.payload;
+            })
     }
 })
 

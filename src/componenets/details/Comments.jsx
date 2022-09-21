@@ -25,7 +25,7 @@ const Comments = ({comment}) => {
         </div>
         <div style={{cursor:"pointer"}}>
           {modal === true
-          ? <CommentModal comment={comment} close={close}/>
+          ? <CommentModal key ={comment.comment_id} comment={comment} close={close}/>
           :null
           }
         </div>
@@ -37,7 +37,7 @@ const Comments = ({comment}) => {
       </div>
       <div>
         {modal === true
-        ? <CommentModal comment={comment} close={close}/>
+        ? <CommentModal key={comment.comment_id} comment={comment} close={close}/>
         :null
         }
       </div>

@@ -156,7 +156,7 @@ const Cover = styled.div`
 const ImgCover = styled.div`
   flex-shrink: 0;
   width:90%;
-  max-width: 428px;
+  max-width: 380px;
   justify-content:center;
   align-items:center;
   margin: 0 auto;
