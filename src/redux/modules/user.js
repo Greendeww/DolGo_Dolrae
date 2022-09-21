@@ -21,17 +21,17 @@ const initialState = {
 //   }
 // );
 
-// export const __emailCheck = createAsyncThunk(
-//   "user/__idCheck",
-//   async (user, thunkAPI) => {
-//     try {
-//       const response = await instance.post("", user);
-//       return response.data;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   }
-// );
+export const __emailCheck = createAsyncThunk(
+  "user/__idCheck",
+  async (email, thunkAPI) => {
+    try {
+      const response = await instance.post("", email);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 export const __login = createAsyncThunk(
   "user/__login",
@@ -77,21 +77,21 @@ export const userSlice = createSlice({
     //     state.error = action.payload;
     //   });
 
-    // builder
-    //   .addCase(__emailCheck.pending, (state) => {
-    //     state.isLoading = true;
-    //   })
-    //   .addCase(__emailCheck.fulfilled, (state, action) => {
-    //     state.isLoading = false;
-    //     state.users = action.payload;
-    //     window.alert("사용 가능한 이메일입니다.");
-    //     console.log(action.payload);
-    //   })
-    //   .addCase(__emailCheck.rejected, (state, action) => {
-    //     state.isLoading = false;
-    //     window.alert("이미 존재하는 이메일입니다..");
-    //     state.error = action.payload;
-    //   });
+    builder
+      .addCase(__emailCheck.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(__emailCheck.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.users = action.payload;
+        window.alert("사용 가능한 이메일입니다.");
+        console.log(action.payload);
+      })
+      .addCase(__emailCheck.rejected, (state, action) => {
+        state.isLoading = false;
+        window.alert("이미 존재하는 이메일입니다..");
+        state.error = action.payload;
+      });
 
       builder
       .addCase(__login.pending, (state) => {
