@@ -28,7 +28,6 @@ const SignUp = () => {
 
   const [user, setUser] = useState(initialState);
 
-  console.log(user);
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     if (
@@ -53,10 +52,17 @@ const SignUp = () => {
     // setUser(initialState);
   };
 
+  const emailCheckHandler = (e) => {
+    e.preventDefault();
+    // dispatch(__emailCheck(user.email))
+  };
+
+  console.log(user.email);
+
   // 정규표현식 선언
-  const emailRegex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
+  const emailRegex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,20}$/;
-  
+
   return (
     <StSignUp>
       <form onSubmit={onSubmitHandler}>
@@ -72,6 +78,11 @@ const SignUp = () => {
                   onChangeHandler(e);
                 }}
                 placeholder="Email을 입력하세요."
+              />
+              <Check
+                type="button"
+                value="중복확인"
+                onChange={emailCheckHandler}
               />
               <div>
                 {user.email === "" ? null : emailRegex.test(user.email) ? (
@@ -170,7 +181,7 @@ const StSignUp = styled.div`
   width: 428px;
   text-align: center;
   margin: 0 auto;
-  padding: 60px;
+  padding: 60px 20px;
   border: 1px solid gray;
   & li,
   ul {
@@ -200,4 +211,13 @@ const Buttons = styled.div`
     margin: 20px;
     cursor: pointer;
   }
+`;
+
+const Check = styled.input`
+  width: 80px;
+  background-color: #9797f5;
+  color: white;
+  border: none;
+  height: 25px;
+  cursor: pointer;
 `;
