@@ -92,287 +92,296 @@ const List = () => {
 
   return (
     <StList>
-        <Ul onClick={seoulHandler}>
+        <Ul value="1" onClick={seoulHandler}>
           서울
           {seoul ? (
             <ul>
-              <li>전체</li>
+              <li value="0">전체</li>
             </ul>
           ) : null}
         </Ul>
-        <Ul onClick={inCheonHandler}>
+        <Ul  value="2" onClick={inCheonHandler}>
           인천
           {inCheon ? (
             <ul>
-              <li>전체</li>
+              <li value="1">전체</li>
             </ul>
           ) : null}
         </Ul>
-        <Ul onClick={daeJeonHandler}>
+        <Ul value="3" onClick={daeJeonHandler}>
           대전
           {daeJeon ? (
             <ul>
-              <li>전체</li>
+              <li value="0">전체</li>
             </ul>
           ) : null}
         </Ul>
-        <Ul onClick={daeGuHandler}>
+        <Ul value="4" onClick={daeGuHandler}>
           대구
           {daeGu ? (
             <ul>
-              <li>전체</li>
+              <li value="0">전체</li>
             </ul>
           ) : null}
         </Ul>
-        <Ul onClick={gwangJuHandler}>
+        <Ul  value="5"onClick={gwangJuHandler}>
           광주
           {gwangJu ? (
             <ul>
-              <li>전체</li>
+              <li value="0">전체</li>
             </ul>
           ) : null}
         </Ul>
-        <Ul onClick={buSanHandler}>
+        <Ul value="6" onClick={buSanHandler}>
           부산
           {buSan ? (
             <ul>
-              <li>전체</li>
+              <li value="0">전체</li>
             </ul>
           ) : null}
         </Ul>
-        <Ul onClick={ulSanHandler}>
+        <Ul value="7" onClick={ulSanHandler}>
           울산
           {ulSan ? (
             <ul>
-              <li>전체</li>
+              <li value="0">전체</li>
             </ul>
           ) : null}
         </Ul>
-        <Ul onClick={seJongHandler}>
+        <Ul value="8" onClick={seJongHandler}>
           세종
           {seJong ? (
             <ul>
-              <li>전체</li>
+              <li value="0">전체</li>
             </ul>
           ) : null}
         </Ul>
-        <Ul onClick={gyeongGiHandler}>
+        <Ul value="31" onClick={gyeongGiHandler}>
           경기
           {gyeongGi ? (
             <ul>
-              <li>가평</li>
-              <li>고양</li>
-              <li>과천</li>
-              <li>광명</li>
-              <li>광주</li>
-              <li>구리</li>
-              <li>군포</li>
-              <li>김포</li>
-              <li>남양주</li>
-              <li>동두천</li>
-              <li>부천</li>
-              <li>성남</li>
-              <li>수원</li>
-              <li>시흥</li>
-              <li>안산</li>
-              <li>안성</li>
-              <li>안양</li>
-              <li>양주</li>
-              <li>양평</li>
-              <li>여주</li>
-              <li>연천</li>
-              <li>오산</li>
-              <li>용인</li>
-              <li>의왕</li>
-              <li>의정부</li>
-              <li>이천</li>
-              <li>파주</li>
-              <li>평택</li>
-              <li>포천</li>
-              <li>하남</li>
-              <li>화성</li>
+              <li value="0">전체</li>
+              <li value="1">가평</li>
+              <li value="2">고양</li>
+              <li value="3">과천</li>
+              <li value="4">광명</li>
+              <li value="5">광주</li>
+              <li value="6">구리</li>
+              <li value="7">군포</li>
+              <li value="8">김포</li>
+              <li value="9">남양주</li>
+              <li value="10">동두천</li>
+              <li value="11">부천</li>
+              <li value="12">성남</li>
+              <li value="13">수원</li>
+              <li value="14">시흥</li>
+              <li value="15">안산</li>
+              <li value="16">안성</li>
+              <li value="17">안양</li>
+              <li value="18">양주</li>
+              <li value="19">양평</li>
+              <li value="20">여주</li>
+              <li value="21">연천</li>
+              <li value="22">오산</li>
+              <li value="23">용인</li>
+              <li value="24">의왕</li>
+              <li value="25">의정부</li>
+              <li value="26">이천</li>
+              <li value="27">파주</li>
+              <li value="28">평택</li>
+              <li value="29">포천</li>
+              <li value="30">하남</li>
+              <li value="31">화성</li>
             </ul>
           ) : null}
         </Ul>
-        <Ul onClick={gangWonHandler}>
+        <Ul value="32" onClick={gangWonHandler}>
           강원
           {gangWon ? (
             <ul>
-              <li>강릉</li>
-              <li>고성</li>
-              <li>동해</li>
-              <li>삼척</li>
-              <li>속초</li>
-              <li>양구</li>
-              <li>양양</li>
-              <li>영월</li>
-              <li>원주</li>
-              <li>인제</li>
-              <li>정선</li>
-              <li>철원</li>
-              <li>춘천</li>
-              <li>태백</li>
-              <li>평창</li>
-              <li>홍천</li>
-              <li>화천</li>
-              <li>횡성</li>
+              <li value="0">전체</li>
+              <li value="1">강릉</li>
+              <li value="2">고성</li>
+              <li value="3">동해</li>
+              <li value="4">삼척</li>
+              <li value="5">속초</li>
+              <li value="6">양구</li>
+              <li value="7">양양</li>
+              <li value="8">영월</li>
+              <li value="9">원주</li>
+              <li value="10">인제</li>
+              <li value="11">정선</li>
+              <li value="12">철원</li>
+              <li value="13">춘천</li>
+              <li value="14">태백</li>
+              <li value="15">평창</li>
+              <li value="16">홍천</li>
+              <li value="17">화천</li>
+              <li value="18">횡성</li>
             </ul>
           ) : null}
         </Ul>
-        <Ul onClick={chungBukHandler}>
+        <Ul value="33" onClick={chungBukHandler}>
           충청북도
           {chungBuk ? (
             <ul>
-              <li>괴산</li>
-              <li>단양</li>
-              <li>보은</li>
-              <li>영동</li>
-              <li>옥천</li>
-              <li>음성</li>
-              <li>제천</li>
-              <li>증평</li>
-              <li>진천</li>
-              <li>청원</li>
-              <li>청주</li>
-              <li>충주</li>
+              <li value="0">전체</li>
+              <li value="1">괴산</li>
+              <li value="2">단양</li>
+              <li value="3">보은</li>
+              <li value="4">영동</li>
+              <li value="5">옥천</li>
+              <li value="6">음성</li>
+              <li value="7">제천</li>
+              <li value="8">증평</li>
+              <li value="9">진천</li>
+              <li value="10">청원</li>
+              <li value="11">청주</li>
+              <li value="12">충주</li>
             </ul>
           ) : null}
         </Ul>
-        <Ul onClick={chungNamHandler}>
+        <Ul value="34" onClick={chungNamHandler}>
           충청남도
           {chungNam ? (
             <ul>
-              <li>계룡</li>
-              <li>공주</li>
-              <li>금산</li>
-              <li>논산</li>
-              <li>당진</li>
-              <li>보령</li>
-              <li>부여</li>
-              <li>서산</li>
-              <li>서천</li>
-              <li>아산</li>
-              <li>예산</li>
-              <li>천안</li>
-              <li>청양</li>
-              <li>태안</li>
-              <li>홍성</li>
+              <li value="0">전체</li>
+              <li value="1">계룡</li>
+              <li value="2">공주</li>
+              <li value="3">금산</li>
+              <li value="4">논산</li>
+              <li value="5">당진</li>
+              <li value="6">보령</li>
+              <li value="7">부여</li>
+              <li value="8">서산</li>
+              <li value="9">서천</li>
+              <li value="10">아산</li>
+              <li value="11">예산</li>
+              <li value="12">천안</li>
+              <li value="13">청양</li>
+              <li value="14">태안</li>
+              <li value="15">홍성</li>
             </ul>
           ) : null}
         </Ul>
-        <Ul onClick={gyeongBukHandler}>
+        <Ul value="35" onClick={gyeongBukHandler}>
           경상북도
           {gyeongBuk ? (
             <ul>
-              <li>경산</li>
-              <li>경주</li>
-              <li>고령</li>
-              <li>구미</li>
-              <li>군위</li>
-              <li>김천</li>
-              <li>문경</li>
-              <li>봉화</li>
-              <li>상주</li>
-              <li>성주</li>
-              <li>안동</li>
-              <li>영덕</li>
-              <li>양양</li>
-              <li>영주</li>
-              <li>영천</li>
-              <li>예천</li>
-              <li>울릉</li>
-              <li>울진</li>
-              <li>의성</li>
-              <li>청도</li>
-              <li>청송</li>
-              <li>칠곡</li>
-              <li>포항</li>
+              <li value="0">전체</li>
+              <li value="1">경산</li>
+              <li value="2">경주</li>
+              <li value="3">고령</li>
+              <li value="4">구미</li>
+              <li value="5">군위</li>
+              <li value="6">김천</li>
+              <li value="7">문경</li>
+              <li value="8">봉화</li>
+              <li value="9">상주</li>
+              <li value="10">성주</li>
+              <li value="11">안동</li>
+              <li value="12">영덕</li>
+              <li value="13">양양</li>
+              <li value="14">영주</li>
+              <li value="15">영천</li>
+              <li value="16">예천</li>
+              <li value="17">울릉</li>
+              <li value="18">울진</li>
+              <li value="19">의성</li>
+              <li value="20">청도</li>
+              <li value="21">청송</li>
+              <li value="22">칠곡</li>
+              <li value="23">포항</li>
             </ul>
           ) : null}
         </Ul>
-        <Ul onClick={gyeongNamHandler}>
+        <Ul value="36" onClick={gyeongNamHandler}>
           경상남도
           {gyeongNam ? (
             <ul>
-              <li>거제</li>
-              <li>거창</li>
-              <li>고성</li>
-              <li>김해</li>
-              <li>남해</li>
-              <li>마산</li>
-              <li>밀양</li>
-              <li>사천</li>
-              <li>산청</li>
-              <li>양산</li>
-              <li>의령</li>
-              <li>진주</li>
-              <li>진해</li>
-              <li>창녕</li>
-              <li>창원</li>
-              <li>통영</li>
-              <li>하동</li>
-              <li>함안</li>
-              <li>함양</li>
-              <li>합천</li>
+              <li value="0">전체</li>
+              <li value="1">거제</li>
+              <li value="2">거창</li>
+              <li value="3">고성</li>
+              <li value="4">김해</li>
+              <li value="5">남해</li>
+              <li value="6">마산</li>
+              <li value="7">밀양</li>
+              <li value="8">사천</li>
+              <li value="9">산청</li>
+              <li value="10">양산</li>
+              <li value="11">의령</li>
+              <li value="12">진주</li>
+              <li value="13">진해</li>
+              <li value="14">창녕</li>
+              <li value="15">창원</li>
+              <li value="16">통영</li>
+              <li value="17">하동</li>
+              <li value="18">함안</li>
+              <li value="19">함양</li>
+              <li value="20">합천</li>
             </ul>
           ) : null}
         </Ul>
-        <Ul onClick={jeonBukHandler}>
+        <Ul value="37" onClick={jeonBukHandler}>
           전라북도
           {jeonBuk ? (
             <ul>
-              <li>고창</li>
-              <li>군산</li>
-              <li>김제</li>
-              <li>남원</li>
-              <li>모주</li>
-              <li>부안</li>
-              <li>순창</li>
-              <li>완주</li>
-              <li>익산</li>
-              <li>임실</li>
-              <li>장수</li>
-              <li>전주</li>
-              <li>정읍</li>
-              <li>진안</li>
+              <li value="0">전체</li>
+              <li value="1">고창</li>
+              <li value="2">군산</li>
+              <li value="3">김제</li>
+              <li value="4">남원</li>
+              <li value="5">모주</li>
+              <li value="6">부안</li>
+              <li value="7">순창</li>
+              <li value="8">완주</li>
+              <li value="9">익산</li>
+              <li value="10">임실</li>
+              <li value="11">장수</li>
+              <li value="12">전주</li>
+              <li value="13">정읍</li>
+              <li value="14">진안</li>
             </ul>
           ) : null}
         </Ul>
-        <Ul onClick={jeonNamHandler}>
+        <Ul value="38" onClick={jeonNamHandler}>
           전라남도
           {jeonNam ? (
             <ul>
-              <li>강진</li>
-              <li>고흥</li>
-              <li>곡성</li>
-              <li>광양</li>
-              <li>구례</li>
-              <li>나주</li>
-              <li>담양</li>
-              <li>목포</li>
-              <li>무안</li>
-              <li>보성</li>
-              <li>순천</li>
-              <li>신안</li>
-              <li>여수</li>
-              <li>영광</li>
-              <li>영암</li>
-              <li>완도</li>
-              <li>장성</li>
-              <li>장흥</li>
-              <li>진도</li>
-              <li>함평</li>
-              <li>해남</li>
-              <li>화순</li>
+              <li value="0">전체</li>
+              <li value="1">강진</li>
+              <li value="2">고흥</li>
+              <li value="3">곡성</li>
+              <li value="4">광양</li>
+              <li value="5">구례</li>
+              <li value="6">나주</li>
+              <li value="7">담양</li>
+              <li value="8">목포</li>
+              <li value="9">무안</li>
+              <li value="10">보성</li>
+              <li value="11">순천</li>
+              <li value="12">신안</li>
+              <li value="13">여수</li>
+              <li value="14">영광</li>
+              <li value="15">영암</li>
+              <li value="16">완도</li>
+              <li value="17">장성</li>
+              <li value="18">장흥</li>
+              <li value="19">진도</li>
+              <li value="20">함평</li>
+              <li value="21">해남</li>
+              <li value="22">화순</li>
             </ul>
           ) : null}
         </Ul>
-        <Ul onClick={jeJuHandler}>
+        <Ul value="39" onClick={jeJuHandler}>
           제주
           {jeJu ? (
             <ul>
-              <li>서귀포</li>
-              <li>제주</li>
+              <li value="0">전체</li>
+              <li value="1">서귀포</li>
+              <li value="2">제주</li>
             </ul>
           ) : null}
         </Ul>
