@@ -26,6 +26,7 @@ const Login = () => {
       user.password === ""
     ) {
       alert("모든 항목을 입력해주세요.");
+      e.preventDefault();
     } else {
       // await dispatch(__login(user));
       Navigate('/')
