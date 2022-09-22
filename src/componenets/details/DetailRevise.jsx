@@ -18,7 +18,7 @@ const DetailRevise = () => {
   const [title,setTitle] = useState("");
   const [content,setContent] = useState("");
   const [star,setStar] = useState();
-  const [image,setImage] = useState([]);
+  const [image,setImage] = useState();
   const [fileImage1,setFileImage1] = useState([]);
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
@@ -30,8 +30,6 @@ const DetailRevise = () => {
     const commentList = response.data.find(comment => {
       return comment.comment_id === Number(id)
     });
-    console.log(commentList)
-
     setTitle(commentList?.title);
     setContent(commentList?.content);
     setStar(commentList?.star);
@@ -39,7 +37,6 @@ const DetailRevise = () => {
     setImage([...commentList?.imageList]);
   }
 
-  
   useEffect(() => {
     fetch()
   }, []);
@@ -106,9 +103,11 @@ const DetailRevise = () => {
     const formData = new FormData();
     for(let i = 0; i<image.length; i++){
       formData.append("image",image[i])
+      console.log(JSON.stringify(image[i]))
       console.log(image)
       console.log(image[i])
     }
+
     formData.append("data",blob)
 
     const payload = {
