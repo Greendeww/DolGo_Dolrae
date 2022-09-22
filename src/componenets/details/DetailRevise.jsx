@@ -14,9 +14,7 @@ const DetailRevise = () => {
 
 
   const {id} = useParams();
-  console.log(id)
   const {placeId} = useParams();
-  console.log(placeId)
   const [title,setTitle] = useState("");
   const [content,setContent] = useState("");
   const [star,setStar] = useState();
@@ -108,16 +106,18 @@ const DetailRevise = () => {
     const formData = new FormData();
     for(let i = 0; i<image.length; i++){
       formData.append("image",image[i])
+      console.log(image)
+      console.log(image[i])
     }
-    // formData.append("image",image[0])
-    // formData.append("image",image[1])
-    // formData.append("image",image[2])
     formData.append("data",blob)
 
     const payload = {
       placeId:placeId,
       id:id,
       formData: formData,
+    }
+    for (let value of payload.formData.values()) {
+      console.log(value);
     }
     dispatch(_updateComment(payload))
   };
