@@ -4,6 +4,8 @@ import KakaoLogin from "../pages/KakaoLogin";
 import SignUp from "../pages/SignUp";
 import Theme from "../pages/Theme";
 import Theme1 from "../pages/Theme1";
+import Detail from "../pages/Detail";
+import DetailRevise from "../componenets/details/DetailRevise";
 
 function Router(){
     return(
@@ -15,6 +17,8 @@ function Router(){
             <Route path="/oauth/callback/kakao" element={<KakaoLogin/>}/> */}
             <Route path="/theme" element={<Theme/>}/>
             <Route path="/theme1" element={<Theme1/>}/>
+                        <Route path="/detail/:id" element={<Detail />} />
+            <Route path="/detail/update/:placeId/:id" element={<DetailRevise/>}/>
         </Routes>
         </BrowserRouter>
     )
