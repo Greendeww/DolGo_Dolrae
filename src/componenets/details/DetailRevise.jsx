@@ -4,29 +4,55 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from "styled-components";
 import { FaStar } from 'react-icons/fa';
 import Star from '../star/Star';
-import { useDispatch } from 'react-redux';
-import { _updateComment } from '../../redux/modules/comment';
+import { useDispatch,useSelector } from 'react-redux';
+import { _updateComment,_getComments } from '../../redux/modules/comment';
 
-const DetailRevise = ({handleModal,comment}) => {
+
+const DetailRevise = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+
   const {id} = useParams();
+  console.log(id)
+  const {placeId} = useParams();
+  console.log(placeId)
   const [title,setTitle] = useState("");
   const [content,setContent] = useState("");
   const [star,setStar] = useState();
-  const [image,setImage] = useState([...comment.imageList]);
-  const [fileImage1,setFileImage1] = useState([...comment.imageList]);
+  const [image,setImage] = useState([]);
+  const [fileImage1,setFileImage1] = useState([]);
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
-  console.log(image)
-  useEffect(() => {
-    setTitle(comment.title);
-    setContent(comment.content);
-    setStar(comment.star)
-    setImage([...comment.imageList]);
-  }, [])
+ 
+  const fetch = async () => {
+    const response = await axios.get(`http://3.34.46.193/api/comment/${placeId}`); 
+    console.log(response.data)
+
+    const commentList = response.data.find(comment => {
+      return comment.comment_id === Number(id)
+    });
+    console.log(commentList)
+
+    setTitle(commentList?.title);
+    setContent(commentList?.content);
+    setStar(commentList?.star);
+    setFileImage1([...commentList?.imageList]);
+    setImage([...commentList?.imageList]);
+  }
+
   
+  useEffect(() => {
+    fetch()
+  }, []);
+
+  useEffect(() => {
+    sendReview();
+  }, [clicked]); 
+
+
+
+
   const handleStarClick = index => {
     let clickStates = [...clicked];
     for (let i = 0; i < 5; i++) {
@@ -34,10 +60,6 @@ const DetailRevise = ({handleModal,comment}) => {
     }
     setClicked(clickStates);
   };
-
-  useEffect(() => {
-    sendReview();
-  }, [clicked]); //컨디마 컨디업
 
   const sendReview = () => {
   let score = clicked.filter(Boolean).length;
@@ -62,6 +84,9 @@ const DetailRevise = ({handleModal,comment}) => {
   };
   const handleDeleteImage = (id) => {
     setFileImage(fileImage.filter((_, index) => index !== id))
+    setImage(image.filter((_, index) => index !== id));
+  };
+  const handleDeleteImage1 = (id) => {
     setFileImage1(fileImage1.filter((_, index) => index !== id))
     setImage(image.filter((_, index) => index !== id));
   };
@@ -72,7 +97,7 @@ const DetailRevise = ({handleModal,comment}) => {
     star:Number(star),
     // nickname:nickname
   }
-
+  console.log(image)
   const onChangeHandler = (event, setState) => setState(event.target.value);
   
   const onUpdatePost = async (e) => {
@@ -90,12 +115,13 @@ const DetailRevise = ({handleModal,comment}) => {
     formData.append("data",blob)
 
     const payload = {
-      placeId:id,
-      id:comment.comment_id,
+      placeId:placeId,
+      id:id,
       formData: formData,
     }
     dispatch(_updateComment(payload))
   };
+
   return (
    <>
    <DivBack>
@@ -142,7 +168,7 @@ const DetailRevise = ({handleModal,comment}) => {
               {fileImage1.map((image,id) => (
                 <div key={id}>
                  <img style={{width:"102px",height:"102px"}} alt={`${image}-${id}`} src={image.imageUrl}/>
-                 <DeleteImg onClick={() => handleDeleteImage(id)}>
+                 <DeleteImg onClick={() => handleDeleteImage1(id)}>
                     X
                   </DeleteImg>
                 </div>
@@ -187,7 +213,7 @@ const DetailRevise = ({handleModal,comment}) => {
           </LiTilte>
           <div>
                 <button onClick={onUpdatePost}>수정</button>
-                <button onClick={handleModal}>취소</button>
+                <button onClick={() => navigate('/detail/'+placeId)}>취소</button>
           </div>
       </Box>
     </DivBack>
@@ -197,14 +223,14 @@ const DetailRevise = ({handleModal,comment}) => {
 
 export default DetailRevise
 const DivBack = styled.div`
-  z-index: 10;
+  /* z-index: 10;
   position: fixed;
   width: 100%;
   height: 100vw;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.2); */
 `;
 const Box = styled.div`
-  height:800px;
+  height:100%;
   max-width: 380px;
   width:100%;
   /* font-size: 17px; */
@@ -216,12 +242,12 @@ const Box = styled.div`
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  position: fixed;
+  /* position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 99;
+  z-index: 99; */
 `;
 const LiImg = styled.li`
   width: 90%;

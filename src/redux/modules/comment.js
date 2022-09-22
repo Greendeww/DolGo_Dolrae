@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-
+    post:[],
     comment:[],
     isLoading: false,
     error: null,
@@ -64,7 +64,7 @@ export const _updateComment = createAsyncThunk(
           },
         }
       );
-      window.location.replace(`/detail/${payload.placeId}`);
+      // window.location.replace(`/detail/${payload.placeId}`);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

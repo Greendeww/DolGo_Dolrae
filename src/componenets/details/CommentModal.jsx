@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux'
 import { _deleteComment } from '../../redux/modules/comment';
 import { FaStar } from 'react-icons/fa';
 import styled from "styled-components";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ModalPortal from '../modal/ModalPortal';
 import Modal from '../modal/Modal';
 import Star from '../star/Star';
@@ -11,7 +11,7 @@ import DetailRevise from './DetailRevise';
 
 const CommentModal = ({close,comment}) => {
   const [modalOn, setModalOn] = useState(false);
-
+  const navigate = useNavigate();
   const handleModal = () => {
     setModalOn(false);
   };
@@ -38,7 +38,7 @@ const CommentModal = ({close,comment}) => {
             </div>
             <div>
             <Star key={comment.comment_id} comment={comment}/>
-            <button onClick={() =>{setModalOn(true)}}>수정하기</button>
+            <button onClick={() =>navigate('/detail/update/'+comment.place_id+'/'+comment.comment_id)}>수정하기</button>
             {/* <button>삭제하기</button> */}
             <button onClick={() => dispatch(_deleteComment(comment))}>삭제하기</button>
             </div>
