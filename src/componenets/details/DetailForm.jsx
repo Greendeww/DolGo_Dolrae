@@ -4,11 +4,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from "styled-components";
 import { FaStar } from 'react-icons/fa';
 import Star from '../star/Star';
+import commentSlice from '../../redux/modules/comment';
 
-const DetailForm = ({close}) => {
+const DetailForm = () => {
   const navigate = useNavigate();
 
   const {id} = useParams();
+  console.log(id)
   const [title,setTitle] = useState("");
   const [content,setContent] = useState("");
   const [star,setStar] = useState();
@@ -179,7 +181,7 @@ const DetailForm = ({close}) => {
           </LiTilte>
           <div>
                 <button onClick={onAddComment}>등록하기</button>
-                <button onClick={close}>취소하기</button>
+                <button onClick={() => navigate('/detail/'+id)}>취소하기</button>
           </div>
       </Box>
    </>
@@ -189,8 +191,24 @@ const DetailForm = ({close}) => {
 export default DetailForm
 
 const Box = styled.div`
-  width: 90%;
-  max-width: 428px;
+  height:100%;
+  max-width: 380px;
+  width:100%;
+  /* font-size: 17px; */
+  font-family: "Noto Sans KR", sans-serif;
+  border: 1px solid black;
+  background-color: rgb(255, 255, 255);
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  /* position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99; */
 `;
 const LiImg = styled.li`
   width: 90%;
@@ -240,13 +258,13 @@ const Img = styled.img`
   }
 `;
 const DeleteImg = styled.button`
-  /* margin: -10.3px;
+  margin: -10.3px;
   position: relative;
   color: red;
   right: 11.5px;
-  bottom: 186px;
+  bottom: 88px;
   background-color: white;
-  border: none; */
+  border: none;
 `;
 const LiTilte = styled.li`
   padding: 10px 0px;
@@ -297,7 +315,7 @@ const RatingText = styled.b`
 const Stars = styled.div`
   width:130px;
   display: flex;
-  padding-top: 5px;
+  /* padding-top: 5px; */
 
   & svg {
     color: gray;

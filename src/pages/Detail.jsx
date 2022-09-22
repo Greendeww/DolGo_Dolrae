@@ -6,27 +6,33 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import { Navigation, Pagination} from 'swiper';
+import { Navigation} from 'swiper';
 import { useEffect,useState } from 'react';
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import DetailForm from '../componenets/details/DetailForm';
 import Comments from '../componenets/details/Comments';
 import { useDispatch, useSelector } from 'react-redux';
 import { onLikePost } from '../redux/modules/post';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { _getComments } from '../redux/modules/comment';
+import Pagination from "react-js-pagination";
+import '../css/paging.css'
+
 
 const Detail = () => {
+  const navigate = useNavigate();
   const {kakao} = window
   const {id} = useParams();
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false)
   const [formOpen,setFormOpen] = useState(false)
+  const [page, setPage] = useState(1);
+  
   const close = () => {
     setFormOpen(false);
   }
   const {isLoading, error,comment} = useSelector((state) => state.comment)
-  
+  console.log(comment)
 
   useEffect(() => {
     dispatch(_getComments(id));
@@ -39,6 +45,10 @@ const Detail = () => {
   if(error) {
     return <div>{error.message}</div>;
   }
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
 
 
   const onLike = async (event) => {
@@ -54,7 +64,7 @@ const Detail = () => {
           <div>
           <ImgCover>
             <Swiper
-                modules={[Navigation, Pagination]}
+                modules={[Navigation]}
                 spaceBetween={50}
                 slidesPerView={1}
                 onSlideChange={() => console.log('slide change')}
@@ -122,14 +132,31 @@ const Detail = () => {
           ?<DetailForm close={close}/>
           :null}
           <CommentDiv>
-              <p>후기</p>
-              <button onClick={() => {setFormOpen(true);console.log("작동")}}>후기작성</button>
+              <p>Review</p>
+              <div style={{display:"flex",textAlign:"center"}}>
+                <span style={{width: "6rem"}}>번호</span>
+                <span style={{width:"100%"}}>내용</span>
+              </div>
               <div>
                   {comment.map((comment) => {
                     return <Comments comment={comment} key={comment.comment_id}/>
                   })}
+                   <Pagination
+                    activePage={page}
+                    itemsCountPerPage={10}
+                    totalItemsCount={450}
+                    pageRangeDisplayed={5}
+                    prevPageText={"‹"}
+                    nextPageText={"›"}
+                    onChange={handlePageChange}
+                  />
               </div>
-          </CommentDiv>
+              <p style={{color:"white"}}>공백</p>
+              </CommentDiv>
+              <FormBut>
+                <button style={{cursor:"pointer",color:"white",backgroundColor:"#5f0080",border:"0px",height:"2.5rem"}} onClick={() => navigate('/detail/form/'+ id)}>후기작성</button>
+              </FormBut>
+          <h1 style={{color:"white"}}>공백</h1>
       </Box>
     </div>
     </>
@@ -142,7 +169,8 @@ const Box = styled.div`
   width: 100%;
   max-width:428px;
   margin: 0 auto;
-  border:2px solid black
+  /* border-left:2px solid black;
+  border-right:2px solid black */
 `;
 const Cover = styled.div`
   display: flex;
@@ -200,6 +228,13 @@ const ImgLink = styled.img`
  height:100%;
 `
 const CommentDiv = styled.div`
-  border-top: 1px solid rgb(204, 204, 204);
+  border-top: 3px solid #522772;
+  border-bottom: 3px solid #522772;
   text-align:start;
+  margin-top:10px;
+`
+const FormBut = styled.div`
+ display:flex;
+ justify-content:flex-end;
+ margin-top:60px;
 `

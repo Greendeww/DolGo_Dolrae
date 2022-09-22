@@ -18,7 +18,7 @@ const DetailRevise = () => {
   const [title,setTitle] = useState("");
   const [content,setContent] = useState("");
   const [star,setStar] = useState();
-  const [image,setImage] = useState();
+  const [image,setImage] = useState(null);
   const [fileImage1,setFileImage1] = useState([]);
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
@@ -30,6 +30,8 @@ const DetailRevise = () => {
     const commentList = response.data.find(comment => {
       return comment.comment_id === Number(id)
     });
+    console.log(commentList)
+
     setTitle(commentList?.title);
     setContent(commentList?.content);
     setStar(commentList?.star);
@@ -37,6 +39,7 @@ const DetailRevise = () => {
     setImage([...commentList?.imageList]);
   }
 
+  
   useEffect(() => {
     fetch()
   }, []);
@@ -98,16 +101,17 @@ const DetailRevise = () => {
   const onUpdatePost = async (e) => {
 
     let json = JSON.stringify(data)
+    let imagejson = JSON.stringify(image[0].imageUrl)
     console.log(json);
     const blob = new Blob([json], { type: "application/json" });
+    const imageBlob = new Blob([imagejson],{ type: 'image/png' })
     const formData = new FormData();
-    for(let i = 0; i<image.length; i++){
-      formData.append("image",image[i])
-      console.log(JSON.stringify(image[i]))
-      console.log(image)
-      console.log(image[i])
-    }
-
+    // for(let i = 0; i<image.length; i++){
+    //   formData.append("image",image[i])
+    //   console.log(image)
+    //   console.log(image[i])
+    // }
+    formData.append("image",imageBlob)
     formData.append("data",blob)
 
     const payload = {

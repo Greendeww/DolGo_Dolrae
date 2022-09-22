@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import CommentModal from './CommentModal';
 
 const Comments = ({comment}) => {
+  console.log(comment)
+  const ids = comment.length
   const {id} = useParams();
   console.log(comment)
   let [modal, setModal] = useState(false);
@@ -19,8 +21,9 @@ const Comments = ({comment}) => {
       {modal === false
       ?
       <div>
-        <div style={{cursor:"pointer",borderBottom:"3px solid red"}} onClick={() => {setModal(true)}}>
-        <p>{comment.content}</p>
+        <div style={{display:"flex",cursor:"pointer",borderTop:"1px solid rgb(195, 194, 204)",marginTop:"10px",textAlign:"center"}} onClick={() => {setModal(true)}}>
+        <p style={{width: "6rem"}}>{comment.comment_id}</p>
+        <p style={{width:"100%"}}>{comment.content}</p>
         {/* <p>닉네임</p> */}
         </div>
         <div style={{cursor:"pointer"}}>
@@ -31,9 +34,9 @@ const Comments = ({comment}) => {
         </div>
       </div>
       :<div>
-      <div style={{cursor:"pointer",borderBottom:"3px solid red"}} onClick={() => {setModal(false)}}>
-      <p>{comment.content}</p>
-      {/* <p>닉네임</p> */}
+       <div style={{display:"flex",cursor:"pointer",borderTop:"1px solid rgb(195, 194, 204)",marginTop:"10px",textAlign:"center"}} onClick={() => {setModal(false)}}>
+        <p style={{width: "6rem"}}>{comment.comment_id}</p>
+        <p style={{width:"100%"}}>{comment.content}</p>
       </div>
       <div>
         {modal === true

@@ -12,6 +12,7 @@ import DetailRevise from './DetailRevise';
 const CommentModal = ({close,comment}) => {
   const [modalOn, setModalOn] = useState(false);
   const navigate = useNavigate();
+  
   const handleModal = () => {
     setModalOn(false);
   };
@@ -22,25 +23,22 @@ const CommentModal = ({close,comment}) => {
   
   return (
     <>
-      {modalOn === true
-      ? <DetailRevise comment={comment} handleModal={handleModal}/>
-      :null
-      }
-      <div key={comment.comment_id} style={{borderBottom:"1px solid black"}}>
+      <div key={comment.comment_id} style={{borderTop:"1px solid rgb(195, 194, 204)"}}>
         <div>
-          <div > 
-            <p>{comment.title}</p>
+          <div style={{marginLeft:"20px"}} > 
+            <div style={{display:"flex",alignItems:"center"}}>
+              <p>{comment.title}</p>
+              <Star key={comment.comment_id} comment={comment}/>
+            </div>
             <p>{comment.content}</p>
             <div style={{  textAlign:"center"}}>
-              {comment.imageList.map((image) => {
-                return <img style={{width:"300px"}} alt='' src={image.imageUrl}/>
+              {comment.imageList.map((image,index) => {
+                return <img key={index} style={{width:"300px",borderRadius:"20px"}} alt='' src={image.imageUrl}/>
               })}
             </div>
-            <div>
-            <Star key={comment.comment_id} comment={comment}/>
-            <button onClick={() =>navigate('/detail/update/'+comment.place_id+'/'+comment.comment_id)}>수정하기</button>
-            {/* <button>삭제하기</button> */}
-            <button onClick={() => dispatch(_deleteComment(comment))}>삭제하기</button>
+            <div style={{display:"flex", justifyContent:"flex-end" }}>
+            <button style={{cursor:"pointer",color:"white",backgroundColor:"#5f0080",border:"0px",height:"2rem",marginRight:"0.5rem",borderRadius:"5px",lineHeight:"2rem"}} onClick={() =>navigate('/detail/update/'+comment.place_id+'/'+comment.comment_id)}>수정하기</button>
+            <button style={{cursor:"pointer",color:"white",backgroundColor:"#5f0080",border:"0px",height:"2rem",borderRadius:"5px",lineHeight:"2rem"}} onClick={() => dispatch(_deleteComment(comment))}>삭제하기</button>
             </div>
           </div>
         </div>
