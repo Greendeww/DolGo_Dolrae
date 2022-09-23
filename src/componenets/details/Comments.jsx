@@ -4,10 +4,9 @@ import { useParams } from 'react-router-dom';
 import CommentModal from './CommentModal';
 
 const Comments = ({comment}) => {
-  console.log(comment)
+
   const ids = comment.length
   const {id} = useParams();
-  console.log(comment)
   let [modal, setModal] = useState(false);
   const close = () => {
     setModal(false);
