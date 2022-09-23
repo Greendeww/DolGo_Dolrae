@@ -11,6 +11,8 @@ import "slick-carousel/slick/slick-theme.css";
 
 import { getApi } from "../shared/Api";
 
+import { FaStar } from 'react-icons/fa';
+
 
 
 const Main = () => {
@@ -63,31 +65,39 @@ const Main = () => {
                 <Body>
                     <Banner></Banner>
                     
-                    <Theme01>                                       
+                    <Theme01>
+                        <ThemeTitle>관광지</ThemeTitle>                                       
                         <Slider {...settings}>
                             {theme01.map((item,index) => {
                                 return(
                                     <div key={index}>
                                         <IMG>
-                                            <Text>{item.title}</Text>
                                             <Opps src={item.imageUrl}></Opps>
                                         </IMG>
+                                        <Text>
+                                            <Title>{item.title}</Title>
+                                            <Star>{item.star} 점 『<FaStar style={{color:"#fcc419"}}/>』</Star>
+                                        </Text>
                                     </div>
                                 )
                             })}
                         </Slider>
-                        <More01 onClick={() => navigate('/api/place?theme=12')}>더 보기</More01>    
+                        <More01 onClick={() => navigate('/api/place?theme=12')}>더 보기</More01>   
                     </Theme01>
 
-                    <Theme02>                                       
+                    <Theme02> 
+                        <ThemeTitle>문화시설</ThemeTitle>                                      
                         <Slider {...settings}>
                             {theme02.map((item,index) => {
                                 return(
                                     <div key={index}>
                                         <IMG>
-                                            <Text>{item.title}</Text>
                                             <Opps src={item.imageUrl}></Opps>
                                         </IMG>
+                                        <Text>
+                                            <Title>{item.title}</Title>
+                                            <Star>{item.star} 점 『<FaStar style={{color:"#fcc419"}}/>』</Star>
+                                        </Text>
                                     </div>
                                 )
                             })}
@@ -95,15 +105,19 @@ const Main = () => {
                         <More02 onClick={() => navigate('/api/place?theme=14')}>더 보기</More02>    
                     </Theme02>
 
-                    <Theme03>                                       
+                    <Theme03>    
+                        <ThemeTitle>레포츠</ThemeTitle>                                   
                         <Slider {...settings}>
                             {theme03.map((item,index) => {
                                 return(
                                     <div key={index}>
                                         <IMG>
-                                            <Text>{item.title}</Text>
                                             <Opps src={item.imageUrl}></Opps>
                                         </IMG>
+                                        <Text>
+                                            <Title>{item.title}</Title>
+                                            <Star>{item.star} 점 『<FaStar style={{color:"#fcc419"}}/>』</Star>
+                                        </Text>
                                     </div>
                                 )
                             })}
@@ -111,15 +125,19 @@ const Main = () => {
                         <More03 onClick={() => navigate('/api/place?theme=28')}>더 보기</More03>    
                     </Theme03>
 
-                    <Theme04>                                       
+                    <Theme04>      
+                        <ThemeTitle>음식점</ThemeTitle>                                 
                         <Slider {...settings}>
                             {theme04.map((item,index) => {
                                 return(
                                     <div key={index}>
                                         <IMG>
-                                            <Text>{item.title}</Text>
                                             <Opps src={item.imageUrl}></Opps>
                                         </IMG>
+                                        <Text>
+                                            <Title>{item.title}</Title>
+                                            <Star>{item.star} 점 『<FaStar style={{color:"#fcc419"}}/>』</Star>
+                                        </Text>
                                     </div>
                                 )
                             })}
@@ -136,13 +154,48 @@ const Main = () => {
 export default Main;
 
 
+const ThemeTitle = styled.div `
+    width: 80px;
+    height: 30px;
+    margin: 0px 0px 0px auto;
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    font-size: 15px;
+
+    position: absolute;
+
+    left: 10px;
+    top: 10px;
+
+    z-index: 2;
+`
 const Opps = styled.img `
     width: 100%;
-    height: 100%;
+    height: 100%;    
 `
 const IMG = styled.div `
     width: 100%; 
     height: 300px; 
+`
+const Star = styled.div `
+    width: 214px;
+    height: 50px;
+    margin: 0px 0px 0px 0px;
+    background-color: dodgerblue;
+    text-align: center;
+    line-height: 50px;
+`
+const Title = styled.div `
+    width: 214px;
+    height: 50px;
+    margin: 0px 0px 0px px;
+    background-color: dodgerblue;
+    text-align: center;
+    line-height: 50px;
 `
 const Div = styled.div `
     width: 428px;
@@ -296,7 +349,7 @@ const Text = styled.div `
     font-size: 15px;
     margin: 0px 0px 0px 0px;
 
-    position: absolute;
+    display: flex;
 
     z-index: 2;
 `
