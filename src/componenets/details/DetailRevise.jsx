@@ -4,20 +4,53 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from "styled-components";
 import { FaStar } from 'react-icons/fa';
 import Star from '../star/Star';
-import commentSlice from '../../redux/modules/comment';
+import { useDispatch,useSelector } from 'react-redux';
+import { _updateComment,_getComments } from '../../redux/modules/comment';
 
-const DetailForm = () => {
+
+const DetailRevise = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   const {id} = useParams();
-  console.log(id)
+  const {placeId} = useParams();
   const [title,setTitle] = useState("");
   const [content,setContent] = useState("");
   const [star,setStar] = useState();
-  const [image,setImage] = useState([]);
+  const [image,setImage] = useState(null);
+  const [fileImage1,setFileImage1] = useState([]);
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
-  console.log(image)
+ 
+  const fetch = async () => {
+    const response = await axios.get(`http://3.34.46.193/api/comment/${placeId}`); 
+    console.log(response.data)
+
+    const commentList = response.data.find(comment => {
+      return comment.comment_id === Number(id)
+    });
+    console.log(commentList)
+
+    setTitle(commentList?.title);
+    setContent(commentList?.content);
+    setStar(commentList?.star);
+    setFileImage1([...commentList?.imageList]);
+    setImage([...commentList?.imageList]);
+  }
+
+  
+  useEffect(() => {
+    fetch()
+  }, []);
+
+  useEffect(() => {
+    sendReview();
+  }, [clicked]); 
+
+
+
+
   const handleStarClick = index => {
     let clickStates = [...clicked];
     for (let i = 0; i < 5; i++) {
@@ -26,14 +59,10 @@ const DetailForm = () => {
     setClicked(clickStates);
   };
 
-  useEffect(() => {
-    sendReview();
-  }, [clicked]); //컨디마 컨디업
-
- const sendReview = () => {
- let score = clicked.filter(Boolean).length;
- setStar(score)
- }
+  const sendReview = () => {
+  let score = clicked.filter(Boolean).length;
+  setStar(score)
+  }
 
   const onChangeImg = (e) => {
     const imageList = e.target.files;
@@ -52,56 +81,53 @@ const DetailForm = () => {
     // setImage(imageList);
   };
   const handleDeleteImage = (id) => {
-    setFileImage(fileImage.filter((_, index) => index !== id));
+    setFileImage(fileImage.filter((_, index) => index !== id))
     setImage(image.filter((_, index) => index !== id));
   };
+  const handleDeleteImage1 = (id) => {
+    setFileImage1(fileImage1.filter((_, index) => index !== id))
+    setImage(image.filter((_, index) => index !== id));
+  };
+
   const data = {
     title:title,
     content:content,
     star:Number(star),
     // nickname:nickname
   }
-
+  console.log(image)
   const onChangeHandler = (event, setState) => setState(event.target.value);
   
-  const onAddComment = async (e) => {
+  const onUpdatePost = async (e) => {
 
     let json = JSON.stringify(data)
+    let imagejson = JSON.stringify(image[0].imageUrl)
     console.log(json);
     const blob = new Blob([json], { type: "application/json" });
+    const imageBlob = new Blob([imagejson],{ type: 'image/png' })
     const formData = new FormData();
-    for(let i = 0; i<image.length; i++){
-      formData.append("image",image[i])
-    }
-    // formData.append("image",image[0])
-    // formData.append("image",image[1])
-    // formData.append("image",image[2])
+    // for(let i = 0; i<image.length; i++){
+    //   formData.append("image",image[i])
+    //   console.log(image)
+    //   console.log(image[i])
+    // }
+    formData.append("image",imageBlob)
     formData.append("data",blob)
 
     const payload = {
+      placeId:placeId,
       id:id,
       formData: formData,
     }
-
-    const res = await axios.post(
-        `http://3.34.46.193/api/auth/comment/${payload.id}`,
-        payload.formData,
-        {
-            headers:{
-                "Content-Type": "multipart/form-data"
-                // Authorization: localStorage.getItem("Authorization"),
-                // RefreshToken: localStorage.getItem("RefreshToken"),
-            }
-        }
-    )
     for (let value of payload.formData.values()) {
       console.log(value);
     }
-    window.location.replace(`/detail/${id}`);
-    return res.data;
+    dispatch(_updateComment(payload))
   };
+
   return (
    <>
+   <DivBack>
      <Box>
       <LiTilte>
           <PTitle>
@@ -118,7 +144,7 @@ const DetailForm = () => {
         <LiImg>
           <ImgTitle>
             <b>
-              상품이미지
+              사진
               <span style={{ color: "rgb(255, 80, 88)" }}>*</span>
             </b>
           </ImgTitle>
@@ -135,13 +161,21 @@ const DetailForm = () => {
                 </p>
                 <ImgInput
                   type="file"
-                  name="imgUrl"
+                  name="imageList"
                   accept="image/*"
                   multiple
                   onChange={onChangeImg}
                   id="image"
                 />
               </ImgLabel>
+              {fileImage1.map((image,id) => (
+                <div key={id}>
+                 <img style={{width:"102px",height:"102px"}} alt={`${image}-${id}`} src={image.imageUrl}/>
+                 <DeleteImg onClick={() => handleDeleteImage1(id)}>
+                    X
+                  </DeleteImg>
+                </div>
+              ))}
               {fileImage.map((image, id) => (
                 <div key={id}>
                   <Img alt={`${image}-${id}`} src={image} />
@@ -181,16 +215,23 @@ const DetailForm = () => {
             />
           </LiTilte>
           <div>
-                <button onClick={onAddComment}>등록하기</button>
-                <button onClick={() => navigate('/detail/'+id)}>취소하기</button>
+                <button onClick={onUpdatePost}>수정</button>
+                <button onClick={() => navigate('/detail/'+placeId)}>취소</button>
           </div>
       </Box>
+    </DivBack>
    </>
   )
 }
 
-export default DetailForm
-
+export default DetailRevise
+const DivBack = styled.div`
+  /* z-index: 10;
+  position: fixed;
+  width: 100%;
+  height: 100vw;
+  background: rgba(0, 0, 0, 0.2); */
+`;
 const Box = styled.div`
   height:100%;
   max-width: 380px;
