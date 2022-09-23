@@ -1,6 +1,6 @@
 import axios from "axios";
 const api = axios.create({
-    baseURL: "http://localhost:3001",
+    baseURL: "http://13.125.38.131/",
     withCredentials: true
 })
 api.interceptors.request.use(function (config) {
