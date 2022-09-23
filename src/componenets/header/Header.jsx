@@ -13,7 +13,7 @@ const Header = () => {
                 <Button01 onClick={() => navigate('/api/auth/place/random')}>Random</Button01>
                 <Button02 onClick={() => navigate('/api/auth/place')}>Write</Button02>
                 <Button03 onClick={() => navigate('/api/auth/mypage')}>MyPage</Button03>
-                <Button04 onClick={() => navigate('/api/auth/member/login')}>Login</Button04>
+                <Button04 onClick={() => navigate('/login')}>Login</Button04>
             </Bar>
         </Div>
     );

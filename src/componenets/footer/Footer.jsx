@@ -33,4 +33,5 @@ const Div = styled.div `
 const Text = styled.div `
   color: white;
   font-size: 10px;
+  text-align: center;
 `
