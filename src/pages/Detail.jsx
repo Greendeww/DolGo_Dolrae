@@ -17,6 +17,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { _getComments } from '../redux/modules/comment';
 import Paginations from '../componenets/pagination/Paginations';
 import axios from 'axios';
+import Review from '../componenets/details/Review';
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -145,28 +146,7 @@ const Detail = () => {
           {formOpen === true
           ?<DetailForm close={close}/>
           :null}
-          <CommentDiv>
-              <p>Review</p>
-              <div style={{display:"flex",textAlign:"center"}}>
-                <span style={{width: "6rem"}}>번호</span>
-                <span style={{width:"100%"}}>내용</span>
-              </div>
-              <div>
-                  {currentComments.map((comment) => {
-                    return <Comments comment={comment} key={comment.comment_id}/>
-                  })}
-              </div>
-              <p style={{color:"white"}}>공백</p>
-              <Paginations
-                page={page}
-                count={comment.length}
-                setPage={handlePageChange}
-                postPerpage={postPerPage}
-              />
-              </CommentDiv>
-              <FormBut>
-                <button style={{cursor:"pointer",color:"white",backgroundColor:"#5f0080",border:"0px",height:"2.5rem"}} onClick={() => navigate('/detail/form/'+ id)}>후기작성</button>
-              </FormBut>
+          <Review comment={comment}/>
           <h1 style={{color:"white"}}>공백</h1>
       </Box>
     </div>
