@@ -97,6 +97,7 @@ const DetailForm = () => {
     for (let value of payload.formData.values()) {
       console.log(value);
     }
+    window.location.replace(`/detail/${id}`);
     return res.data;
   };
   return (
