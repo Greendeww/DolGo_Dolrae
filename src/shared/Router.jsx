@@ -6,6 +6,7 @@ import Theme from "../pages/Theme";
 import Theme1 from "../pages/Theme1";
 import Detail from "../pages/Detail";
 import DetailRevise from "../componenets/details/DetailRevise";
+import DetailForm from "../componenets/details/DetailForm";
 
 function Router(){
     return(
@@ -19,6 +20,7 @@ function Router(){
             <Route path="/theme1" element={<Theme1/>}/>
                         <Route path="/detail/:id" element={<Detail />} />
             <Route path="/detail/update/:placeId/:id" element={<DetailRevise/>}/>
+            <Route path="/detail/form/:id" element={<DetailForm/>}/>
         </Routes>
         </BrowserRouter>
     )

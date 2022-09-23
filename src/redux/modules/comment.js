@@ -53,7 +53,7 @@ export const _updateComment = createAsyncThunk(
   "comment/update",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.put(
+      const data = await axios.patch(
         `http://3.34.46.193/api/auth/comment/${payload.id}`,
         payload.formData,
         {
