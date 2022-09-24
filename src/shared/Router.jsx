@@ -8,14 +8,16 @@ import Detail from "../pages/Detail";
 import DetailRevise from "../componenets/details/DetailRevise";
 import DetailForm from "../componenets/details/DetailForm";
 import Main from "../pages/Main";
+import MyPage from "../pages/MyPage";
 
 function Router(){
     return(
         <BrowserRouter>
         <Routes>
-            <Route path="/" element={<Main />}/>
+            <Route path="/" element={<Main/>}/>
             <Route path="/signup" element={<SignUp/>}/>
             <Route path="/login" element= {<Login/>}/>
+            <Route path="/mypage" element={<MyPage/>}/>
             {/* <Route path="/KakaoLogin" element= {<KakaoLogin/>}/>
             <Route path="/oauth/callback/kakao" element={<KakaoLogin/>}/> */}
             <Route path="/theme" element={<Theme/>}/>

@@ -8,11 +8,11 @@ const Header = () => {
 
     return (
         <Div>
-            <Logo>돌고돌래</Logo>
+            <Logo onClick={() => navigate('/')}>🐋돌고돌래🐋</Logo>
             <Bar>
                 <Button01 onClick={() => navigate('/api/auth/place/random')}>Random</Button01>
                 <Button02 onClick={() => navigate('/api/auth/place')}>Write</Button02>
-                <Button03 onClick={() => navigate('/api/auth/mypage')}>MyPage</Button03>
+                <Button03 onClick={() => navigate('/mypage')}>MyPage</Button03>
                 <Button04 onClick={() => navigate('/login')}>Login</Button04>
             </Bar>
         </Div>
@@ -31,13 +31,19 @@ const Logo = styled.div `
     width: 200px;
     height: 50px;
     margin: 50px auto 0px auto;
-    border: 1px solid #282c34;
+    border: 1px solid black;
     border-radius: 20px;
-    background-color: #282c34;
+    background-color: black;
     color: white;
     text-align: center;
     line-height: 50px;
     font-size: 25px;
+
+    &:hover {
+        border: 1px solid black;
+        background: black;
+        color: gold;
+      }
 `
 const Bar = styled.div `
     width: 428px;

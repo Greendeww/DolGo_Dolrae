@@ -35,13 +35,13 @@ const Main = () => {
     const [ theme04, setTheme04 ] = useState([]);
 
     const fetchPost = async () => {
-        const response = await getApi("/main")
-        console.log(response.data[0].foodList[0])
+        const response = await getApi("/api/place/rank")
+        console.log(response.data.foodList)
 
-        setTheme01([response.data[0].foodList[0], response.data[0].foodList[1], response.data[0].foodList[2]]);
-        setTheme02([response.data[1].tourList[0]]);
-        setTheme03([response.data[2].activityList[0]]);
-        setTheme04([response.data[3].museumList[0]]);
+        setTheme01(response.data.foodList);
+        setTheme02(response.data.tourList);
+        setTheme03(response.data.activityList);
+        setTheme04(response.data.museumList);
     }
 
 
@@ -51,7 +51,7 @@ const Main = () => {
 
     }, []);
 
-
+    
 
     if(theme01===undefined) {
         return
@@ -66,13 +66,13 @@ const Main = () => {
                     <Banner></Banner>
                     
                     <Theme01>
-                        <ThemeTitle>관광지</ThemeTitle>                                       
+                        <ThemeTitle>음식점</ThemeTitle>                                       
                         <Slider {...settings}>
                             {theme01.map((item,index) => {
                                 return(
                                     <div key={index}>
                                         <IMG>
-                                            <Opps src={item.imageUrl}></Opps>
+                                            <Opps src={item.image}></Opps>
                                         </IMG>
                                         <Text>
                                             <Title>{item.title}</Title>
@@ -85,14 +85,14 @@ const Main = () => {
                         <More01 onClick={() => navigate('/api/place?theme=12')}>더 보기</More01>   
                     </Theme01>
 
-                    <Theme02> 
-                        <ThemeTitle>문화시설</ThemeTitle>                                      
+                    <Theme02>
+                        <ThemeTitle>관광지</ThemeTitle>                                      
                         <Slider {...settings}>
                             {theme02.map((item,index) => {
                                 return(
                                     <div key={index}>
                                         <IMG>
-                                            <Opps src={item.imageUrl}></Opps>
+                                            <Opps src={item.image}></Opps>
                                         </IMG>
                                         <Text>
                                             <Title>{item.title}</Title>
@@ -112,7 +112,7 @@ const Main = () => {
                                 return(
                                     <div key={index}>
                                         <IMG>
-                                            <Opps src={item.imageUrl}></Opps>
+                                            <Opps src={item.image}></Opps>
                                         </IMG>
                                         <Text>
                                             <Title>{item.title}</Title>
@@ -126,13 +126,13 @@ const Main = () => {
                     </Theme03>
 
                     <Theme04>      
-                        <ThemeTitle>음식점</ThemeTitle>                                 
+                        <ThemeTitle>문화시설</ThemeTitle>                                 
                         <Slider {...settings}>
                             {theme04.map((item,index) => {
                                 return(
                                     <div key={index}>
                                         <IMG>
-                                            <Opps src={item.imageUrl}></Opps>
+                                            <Opps src={item.image}></Opps>
                                         </IMG>
                                         <Text>
                                             <Title>{item.title}</Title>

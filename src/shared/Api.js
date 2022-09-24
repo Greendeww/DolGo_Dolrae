@@ -2,7 +2,7 @@ import axios from "axios";
 import { getCookie } from "./Cookie";
 
 export const instance = axios.create({
-  baseURL: "http://localhost:3001/",
+  baseURL: "http://15.164.171.189/",
   withCredentials: true
 });
 
