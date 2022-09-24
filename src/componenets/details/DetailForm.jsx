@@ -17,6 +17,7 @@ const DetailForm = () => {
   const [image,setImage] = useState([]);
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
+  const [imagenull] = useState(null)
   console.log(image)
   const handleStarClick = index => {
     let clickStates = [...clicked];
@@ -73,6 +74,7 @@ const DetailForm = () => {
     for(let i = 0; i<image.length; i++){
       formData.append("image",image[i])
     }
+    // formData.append("image",imagenull)
     // formData.append("image",image[0])
     // formData.append("image",image[1])
     // formData.append("image",image[2])
@@ -82,7 +84,7 @@ const DetailForm = () => {
       id:id,
       formData: formData,
     }
-
+    try{
     const res = await axios.post(
         `http://3.34.46.193/api/auth/comment/${payload.id}`,
         payload.formData,
@@ -99,6 +101,9 @@ const DetailForm = () => {
     }
     window.location.replace(`/detail/${id}`);
     return res.data;
+    }catch(error){
+    window.location.replace(`/detail/${id}`);
+    }
   };
   return (
    <>

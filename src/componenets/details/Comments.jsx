@@ -3,18 +3,18 @@ import React, {useState, useRef, useEffect} from 'react'
 import { useParams } from 'react-router-dom';
 import CommentModal from './CommentModal';
 
-const Comments = ({comment}) => {
-
+const Comments = ({comment,arr}) => {
+  console.log(arr)
+  console.log(comment)
   const ids = comment.length
   const {id} = useParams();
   let [modal, setModal] = useState(false);
   const close = () => {
     setModal(false);
   };
-
-
-
-
+  const number = [...arr].reverse()
+  // comment.number = number
+  console.log(comment.number)
   return (
     <> 
       {modal === false

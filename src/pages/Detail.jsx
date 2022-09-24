@@ -28,10 +28,11 @@ const Detail = () => {
   const [currentComments,setCurrnetComments] = useState([])
   const [page, setPage] = useState(1);
   const [postPerPage] = useState(5)
+  const [number, setNumber] = useState(1)
   const indexOfLastPost = page*postPerPage;
   const indexOfFirstPage = indexOfLastPost - postPerPage
   
-  
+  console.log(id)
   const close = () => {
     setFormOpen(false);
   }
@@ -44,7 +45,12 @@ const Detail = () => {
 
   const {isLoading, error,comment} = useSelector((state) => state.comment)
   console.log(comment)
-
+  const num = (() => {
+    for(let i=0; i<comment.length; i++){
+       setNumber(number+1)
+    }
+  }) 
+  console.log(number)
   useEffect(() => {
       dispatch(_getComments(id));
   }, []);
@@ -146,7 +152,7 @@ const Detail = () => {
           {formOpen === true
           ?<DetailForm close={close}/>
           :null}
-          <Review comment={comment}/>
+          <Review comment={comment} number={number}/>
           <h1 style={{color:"white"}}>공백</h1>
       </Box>
     </div>
