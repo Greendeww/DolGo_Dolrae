@@ -20,7 +20,7 @@ const SignUp = () => {
     username: "",
     password: "",
     passwordConfirm: "",
-    // nickname: "",
+    nickname: "",
   };
 
   const [user, setUser] = useState(initialState);
@@ -143,7 +143,7 @@ const SignUp = () => {
               </div>
             </label>
           </li>
-          {/* <li>
+          <li>
             <label>
               <b>닉네임</b>
               <input
@@ -154,7 +154,7 @@ const SignUp = () => {
                 placeholder="닉네임을 입력하세요."
               />
             </label>
-          </li> */}
+          </li>
         </ul>
         <Buttons>
           <input
