@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import check from "../../assert/check.png";
+import check from "../../assert/theme/check.png";
 import { getCookie } from "../../shared/Cookie";
 
 const List = () => {

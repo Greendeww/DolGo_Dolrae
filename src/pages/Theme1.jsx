@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import gana from "../assert/gana.png";
-import hwangji from "../assert/hwangji.jpg";
-import smallRotate from "../assert/icons8-rotate-16.png";
-import largeRotate from "../assert/icons8-rotate-32.png";
+import gana from "../assert/theme/gana.png";
+import hwangji from "../assert/theme/hwangji.jpg";
+import largeRotate from "../assert/theme/icons8-rotate-32.png";
 import { __getTheme } from "../redux/modules/post";
 import { Dispatch } from "react";
 import { useDispatch } from "react-redux";
