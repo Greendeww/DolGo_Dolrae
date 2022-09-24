@@ -1,13 +1,60 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import css from "../../css/category.css";
+import { logout } from "../../redux/modules/user";
+import { useDispatch } from "react-redux";
 
 const Category = () => {
-  return ( 
+  const categories = [
+    {
+      name: "관광",
+      value: "tour",
+    },
+    {
+      name: "관람",
+      value: "museum",
+    },
+    {
+      name: "액티비티",
+      value: "activity",
+    },
+    {
+      name: "식도락",
+      value: "food",
+    },
+  ];
+
+  const [category, setCategory] = useState("");
+
+  const LS_KEY_CATEGORY = "LS_KEY_CATEGORY";
+
+  const makeCategories = () => {
+    return categories.map((item, idx) => (
+      <div
+        key={idx}
+        className={
+          item.value === category ? "category-child selected" : "category-child"
+        }
+        onClick={() => {
+          setCategory(item.value);
+          localStorage.setItem(LS_KEY_CATEGORY, item.value);
+        }}
+      >
+        {item.name}
+      </div>
+    ));
+  };
+
+  const init = () => {
+    let data = localStorage.getItem(LS_KEY_CATEGORY);
+    if (data !== null) setCategory(data);
+  };
+
+  useEffect(init, []);
+
+  return (
     <StCategory>
-      <button>관광</button>
-      <button>관람</button>
-      <button>액티비티</button>
-      <button>식도락</button>
+      <div className="category-set">{makeCategories()}</div>
     </StCategory>
   );
 };
@@ -15,12 +62,9 @@ const Category = () => {
 export default Category;
 
 const StCategory = styled.div`
-  width: 320px;
-  margin: 20px auto;
+  width: 428px;
 
-  & button {
-    margin: auto 13px;
-    background-color: white;
+  & div {
     cursor: pointer;
   }
 `;
