@@ -9,7 +9,6 @@ const Theme = () => {
       <Category />
       <Location />
     </StTheme>
-    
   );
 };
 
