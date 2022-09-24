@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import { instance } from "../../shared/Api";
-import { setCookie } from "../../shared/Cookie";
+import { deleteCookie, getCookie, setCookie } from "../../shared/Cookie";
+import axios from "axios";
 
 const initialState = {
   users: [],
@@ -9,23 +9,29 @@ const initialState = {
   error: null,
 };
 
-// export const __signUp = createAsyncThunk(
-//   "user/__signUp",
-//   async (user, thunkAPI) => {
-//     try {
-//       const response = await axios.post("http://localhost:3001/users", user);
-//       return response.data;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   }
-// );
+export const __signUp = createAsyncThunk(
+  "user/__signUp",
+  async (user, thunkAPI) => {
+    console.log(user);
+    try {
+      const response = await instance.post("/api/member/signup", user);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 export const __emailCheck = createAsyncThunk(
-  "user/__idCheck",
-  async (email, thunkAPI) => {
+  "user/__emailCheck",
+  async (payload, thunkAPI) => {
+    console.log(payload);
     try {
-      const response = await instance.post("", email);
+      const response = await instance.post("/api/member/duplicate", payload, {
+        headers: {
+          "content-type": "application/json",
+        },
+      });
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -38,28 +44,47 @@ export const __login = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       const response = await instance.post("/api/member/login", user);
-      if (response.data.success) {
-        setCookie("isLogin", response.headers.Authorization);
-        setCookie("ACCESS_TOKEN", response.headers.Authorization);
-        setCookie("REFRESH_TOKEN", response.headers.Refreshtoken);
-        localStorage.setItem("email", response.data.data.email);
-      }
+      console.log(response.headers);
+      setCookie("isLogin", response.headers.authorization);
+      setCookie("ACCESS_TOKEN", response.headers.authorization);
+      setCookie("REFRESH_TOKEN", response.headers.refreshtoken);
+      localStorage.setItem("username", response.data.username);
+
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
-)
+);
+
+export const __logout = createAsyncThunk(
+  "user/__logout",
+  async (user, thunkAPI) => {
+    try {
+      const response = await instance.post("/api/auth/member/logout");
+      deleteCookie("isLogin");
+      deleteCookie("ACCESS_TOKEN");
+      deleteCookie("REFRESH_TOKEN");
+      localStorage.removeItem("username");
+      localStorage.removeItem("LS_KEY_CATEGORY");
+      localStorage.removeItem("LS_KEY_SI");
+      localStorage.removeItem("LS_KEY_DO");
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    signUp: (state,action) => {
+    signUp: (state, action) => {
       instance.post("/api/member/signup", action.payload);
       state.users.push(action.payload);
     },
-
   },
   extraReducers: (builder) => {
     // builder
@@ -93,7 +118,7 @@ export const userSlice = createSlice({
         state.error = action.payload;
       });
 
-      builder
+    builder
       .addCase(__login.pending, (state) => {
         state.isLoading = true;
       })
@@ -110,4 +135,5 @@ export const userSlice = createSlice({
   },
 });
 
+export const { signUp, logout } = userSlice.actions;
 export default userSlice;
