@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { __signUp, __emailCheck } from "../redux/modules/user";
+import { __signUp, __emailCheck, signUp } from "../redux/modules/user";
 import { useNavigate } from "react-router-dom";
 import nextId from "react-id-generator";
 import axios from "axios";
@@ -16,22 +16,32 @@ const SignUp = () => {
     setUser({ ...user, [name]: value });
   };
 
-  // const {users} = useSelector((state) => state.user.nickname);
-  // const nicknameList = users.nickname
-
   const initialState = {
-    email: "",
+    username: "",
     password: "",
     passwordConfirm: "",
-    nickname: "",
+    // nickname: "",
   };
 
   const [user, setUser] = useState(initialState);
 
+  const [idCheck, setIdCheck] = useState({ username: "" });
+  console.log(idCheck);
+
+  const emailCheckHandler = (e) => {
+    dispatch(__emailCheck(idCheck));
+  };
+
+  const emailChangeHandler = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setIdCheck({ ...idCheck, [name]: value });
+  };
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     if (
-      user.email === "" ||
+      user.username === "" ||
       user.password === "" ||
       user.passwordConfirm === "" ||
       user.nickname === ""
@@ -39,7 +49,8 @@ const SignUp = () => {
       alert("모든 항목을 입력해주세요.");
     }
 
-    // await dispatch(__signUp(user))
+    await dispatch(signUp(user));
+    setUser(initialState);
 
     // const { data } = await instance.post("api/member/signup", user);
     // // console.log(data);
@@ -52,16 +63,9 @@ const SignUp = () => {
     // setUser(initialState);
   };
 
-  const emailCheckHandler = (e) => {
-    e.preventDefault();
-    // dispatch(__emailCheck(user.email))
-  };
-
-  console.log(user.email);
-
   // 정규표현식 선언
   const emailRegex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,20}$/;
+  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/;
 
   return (
     <StSignUp>
@@ -71,31 +75,30 @@ const SignUp = () => {
             <label>
               <b>이메일</b>
               <input
-                type="email"
-                name="email"
-                value={user.email}
+                type="username"
+                name="username"
+                value={user.username}
                 onChange={(e) => {
                   onChangeHandler(e);
+                  emailChangeHandler(e);
                 }}
                 placeholder="Email을 입력하세요."
               />
               <Check
                 type="button"
                 value="중복확인"
-                onChange={emailCheckHandler}
+                onClick={emailCheckHandler}
               />
               <div>
-                {user.email === "" ? null : emailRegex.test(user.email) ? (
+                {user.username === "" ? null : emailRegex.test(
+                    user.username
+                  ) ? (
                   <p style={{ color: "green" }}>올바른 이메일 형식입니다.</p>
                 ) : (
                   <p style={{ color: "red" }}>이메일 형식이 맞지 않습니다.</p>
                 )}
               </div>
-              {/* <input 
-            type="button" 
-            value="중복확인" 
-            onClick={onIdCheckHandler} /> */}
-            </label> 
+            </label>
           </li>
           <li>
             <label>
@@ -115,7 +118,7 @@ const SignUp = () => {
                 <p style={{ color: "green" }}>안전한 비밀번호예요!</p>
               ) : (
                 <p style={{ color: "red" }}>
-                  숫자, 영문자 조합으로 6자리 이상 입력하세요.
+                  숫자, 영문자 조합으로 8자리 이상 입력하세요.
                 </p>
               )}
             </label>
@@ -140,7 +143,7 @@ const SignUp = () => {
               </div>
             </label>
           </li>
-          <li>
+          {/* <li>
             <label>
               <b>닉네임</b>
               <input
@@ -150,17 +153,8 @@ const SignUp = () => {
                 onChange={onChangeHandler}
                 placeholder="닉네임을 입력하세요."
               />
-              {/* <div>
-                {user.nickname === "" ? null : nicknameList.find(
-                    (nickname) => nickname === user.nickname
-                  ) ? (
-                  <p style={{ color: "red" }}>이미 존재하는 닉네임입니다.</p>
-                ) : (
-                  <p style={{ color: "green" }}>사용 가능한 닉네임입니다.</p>
-                )}
-              </div> */}
             </label>
-          </li>
+          </li> */}
         </ul>
         <Buttons>
           <input
