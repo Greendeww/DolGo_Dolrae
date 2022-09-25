@@ -18,12 +18,14 @@ import { _getComments } from '../redux/modules/comment';
 import Paginations from '../componenets/pagination/Paginations';
 import axios from 'axios';
 import Review from '../componenets/details/Review';
+import DetailImage from '../componenets/details/DetailImage';
 
 const Detail = () => {
   const navigate = useNavigate();
   const {id} = useParams();
   const dispatch = useDispatch();
   const [formOpen,setFormOpen] = useState(false)
+  const [posts, setPosts] = useState("")
   const [commentList,setCommentList] = useState([])
   const [currentComments,setCurrnetComments] = useState([])
   const [page, setPage] = useState(1);
@@ -31,26 +33,23 @@ const Detail = () => {
   const [number, setNumber] = useState(1)
   const indexOfLastPost = page*postPerPage;
   const indexOfFirstPage = indexOfLastPost - postPerPage
-  
+  console.log(posts)
   console.log(id)
   const close = () => {
     setFormOpen(false);
   }
-//   const {posts} = useSelector((state) => state.comment)
-//   console.log(useSelector((state) => state))
-
-//   useEffect(() => {
-//     dispatch(_getDetail(id));
-// }, []);
+  const fetch = async () => {
+    const response = await axios.get(`http://43.201.10.227/api/place/${id}`); 
+    console.log(response.data)
+    setPosts(response.data)
+  }
+  useEffect(() => {
+    fetch()
+  },[])
 
   const {isLoading, error,comment} = useSelector((state) => state.comment)
   console.log(comment)
-  const num = (() => {
-    for(let i=0; i<comment.length; i++){
-       setNumber(number+1)
-    }
-  }) 
-  console.log(number)
+
   useEffect(() => {
       dispatch(_getComments(id));
   }, []);
@@ -84,30 +83,14 @@ const Detail = () => {
         <Cover>
           <div>
           <ImgCover>
-            <Swiper
-                modules={[Navigation,Pagination]}
-                spaceBetween={50}
-                slidesPerView={1}
-                onSlideChange={() => console.log('slide change')}
-                onSwiper={(swiper) => console.log(swiper)}
-                navigation
-                pagination={{ clickable: true }}
-                >
-                <SwiperSlide><Img alt='' src='http://tong.visitkorea.or.kr/cms/resource/87/2361087_image2_1.jpg'/></SwiperSlide>
-                {/* <SwiperSlide><Img alt='' src={data.imgUrl}/></SwiperSlide> */}
-                {/* {data.immap((data) => (
-                  <div key={data.id}>
-                      <SwiperSlide><Img alt='' src={data.image}/></SwiperSlide>
-                  </div>
-                  ))} */}
-            </Swiper>
+             <DetailImage post={posts} key={posts.id}/>
           </ImgCover>
           </div>
         </Cover>
         <Title>
           <div>
             <span>이름:</span> 
-            <span>가평레일바이크</span>   
+            <span>{posts.title}</span>   
           </div>
           <div>
             <span style={{cursor:"pointer"}}onClick={onLike}>♥ 찜하기</span> 
@@ -116,18 +99,18 @@ const Detail = () => {
           <Location>
             <div  style={{justifyContent:"center"}}>
             <p>주소</p>
-            <p>경기도 가평군 가평읍 장터길 14</p>
+            <p>{posts.address}</p>
             </div>
             <MapDiv>
               <Map
-                center={{ lat: 37.8290223933, lng: 127.5158755988 }}
+                center={{ lat: posts.mapY, lng: posts.mapX }}
                 style={{ width: "100%", height: "360px" }}
               >
               <MapMarker // 인포윈도우를 생성하고 지도에 표시합니다
                 position={{
                   // 인포윈도우가 표시될 위치입니다
-                  lat: 37.8290223933,
-                  lng: 127.5158755988,
+                  lat: posts.mapY,
+                  lng: posts.mapX,
                 }}
               /> 
               </Map>

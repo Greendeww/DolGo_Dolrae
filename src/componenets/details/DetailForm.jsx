@@ -102,7 +102,7 @@ const DetailForm = () => {
     window.location.replace(`/detail/${id}`);
     return res.data;
     }catch(error){
-    window.location.replace(`/detail/${id}`);
+    // window.location.replace(`/detail/${id}`);
     }
   };
   return (

@@ -13,7 +13,7 @@ export const _getDetail = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(
-        `http://15.164.171.189/api/place/${payload}`,
+        `http://43.201.10.227/api/place/${payload}`,
         // {
         //   headers: {
         //     Authorization: localStorage.getItem("Authorization"),
@@ -22,7 +22,7 @@ export const _getDetail = createAsyncThunk(
         // }
       );
       console.log(data);
-      return thunkAPI.fulfillWithValue(data.data.data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
