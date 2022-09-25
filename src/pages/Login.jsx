@@ -2,12 +2,9 @@ import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-<<<<<<< HEAD
-// import { KAKAO_AUTH_URL } from "../shared/OAuth";
-=======
 import { KAKAO_AUTH_URL } from "../shared/OAuth";
 import { logout, __login, __logout } from "../redux/modules/user";
->>>>>>> 0beb71a96ac169fe664f4c3f3243edea555f7a59
+
 
 const Login = () => {
   const dispatch = useDispatch();
