@@ -8,25 +8,26 @@ const Category = () => {
   const categories = [
     {
       name: "관광",
-      value: "tour",
+      value: 12,
     },
     {
       name: "관람",
-      value: "museum",
+      value: 14,
     },
     {
       name: "액티비티",
-      value: "activity",
+      value: 28,
     },
     {
       name: "식도락",
-      value: "food",
+      value: 39,
     },
   ];
 
   const [category, setCategory] = useState("");
 
-  const LS_KEY_CATEGORY = "LS_KEY_CATEGORY";
+  const THEME_CODE = "THEME_CODE";
+  const THEME_NAME = "THEME_NAME";
 
   const makeCategories = () => {
     return categories.map((item, idx) => (
@@ -37,7 +38,8 @@ const Category = () => {
         }
         onClick={() => {
           setCategory(item.value);
-          localStorage.setItem(LS_KEY_CATEGORY, item.value);
+          localStorage.setItem(THEME_CODE, item.value);
+          localStorage.setItem(THEME_NAME, item.name);
         }}
       >
         {item.name}
@@ -46,7 +48,7 @@ const Category = () => {
   };
 
   const init = () => {
-    let data = localStorage.getItem(LS_KEY_CATEGORY);
+    let data = localStorage.getItem(THEME_CODE);
     if (data !== null) setCategory(data);
   };
 
