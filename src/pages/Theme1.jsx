@@ -3,49 +3,74 @@ import styled from "styled-components";
 import gana from "../assert/theme/gana.png";
 import hwangji from "../assert/theme/hwangji.jpg";
 import largeRotate from "../assert/theme/icons8-rotate-32.png";
-import { __getTheme } from "../redux/modules/post";
+import { __getTheme } from "../redux/modules/theme";
 import { Dispatch } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 const Theme1 = () => {
-
   const dispatch = useDispatch();
 
-  const LS_KEY_CATEGORY = window.localStorage.getItem("LS_KEY_CATEGORY")
-  const LS_KEY_DO = window.localStorage.getItem("LS_KEY_DO")
-  const LS_KEY_SI = window.localStorage.getItem("LS_KEY_SI")
+  const THEME_CODE = window.localStorage.getItem("THEME_CODE");
+  const THEME_NAME = window.localStorage.getItem("THEME_NAME");
+  const AREA_CODE = window.localStorage.getItem("AREA_CODE");
+  const AREA_NAME = window.localStorage.getItem("AREA_NAME");
+  const SIGUNGU_CODE = window.localStorage.getItem("SIGUNGU_CODE");
+  const SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
 
   const search = {
-    category : LS_KEY_CATEGORY,
-    do : LS_KEY_DO,
-    si : LS_KEY_SI
-  }
+    themeCode: THEME_CODE,
+    themeName: THEME_NAME,
+    areaCode: AREA_CODE,
+    areaName: AREA_NAME,
+    sigunguCode: SIGUNGU_CODE,
+    sigunguName: SIGUNGU_NAME,
+  };
 
-  // useEffect(() => {
-  //   dispatch(__getTheme(search));
-  // }, []);
+  const { List } = useSelector((state) => state.themeList);
+
+  useEffect(() => {
+    dispatch(__getTheme(search));
+  }, []);
 
   return (
     <StTheme1>
       <Title>
-        <h3>관광 ‣ 강원 ‣ 춘천</h3>
+        <h3>
+          {THEME_NAME} ‣ {AREA_NAME} ‣ {SIGUNGU_NAME}
+        </h3>
       </Title>
       <Rotate />
       <div>
-        <Card>
-          <img src={gana} />
-          <p>가나아트파크</p>
-          <p>★★★★☆</p>
-        </Card>
-
-        <Card>
-          <img src={hwangji} />
-          <p>황지연못</p>
-          <p>★★★☆☆</p>
-        </Card>
+        {List.map((list) => (
+          <Card
+          key={list.id}>
+            <img src={list.image} />
+            <p>{list.title}</p>
+            <p>★★★★☆</p>
+          </Card>
+        ))}
       </div>
     </StTheme1>
+    // <StTheme1>
+    //   <Title>
+    //     <h3>관광 ‣ 강원 ‣ 춘천</h3>
+    //   </Title>
+    //   <Rotate />
+    //   <div>
+    //     <Card>
+    //       <img src={gana} />
+    //       <p>가나아트파크</p>
+    //       <p>★★★★☆</p>
+    //     </Card>
+
+    //     <Card>
+    //       <img src={hwangji} />
+    //       <p>황지연못</p>
+    //       <p>★★★☆☆</p>
+    //     </Card>
+    //   </div>
+    // </StTheme1>
   );
 };
 
@@ -79,10 +104,9 @@ const Card = styled.div`
 `;
 
 const Rotate = styled.div`
-
-    background-image: url(${largeRotate});
-    background-repeat: no-repeat;
-    width: 30px;
-    height: 30px;
-    margin: 0 auto;
+  background-image: url(${largeRotate});
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+  margin: 0 auto;
 `;
