@@ -2,17 +2,24 @@ import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
+<<<<<<< HEAD
 // import { KAKAO_AUTH_URL } from "../shared/OAuth";
+=======
+import { KAKAO_AUTH_URL } from "../shared/OAuth";
+import { logout, __login, __logout } from "../redux/modules/user";
+>>>>>>> 0beb71a96ac169fe664f4c3f3243edea555f7a59
 
 const Login = () => {
   const dispatch = useDispatch();
 
   const initialState = {
-    email: "",
+    username: "",
     password: "",
   };
 
   const [user, setUser] = useState(initialState);
+
+  console.log(user)
 
   const onChangeHandler = (e) => {
     e.preventDefault();
@@ -20,17 +27,23 @@ const Login = () => {
     setUser({ ...user, [name]: value });
   };
 
-  const onSubmitHandler = async (e) => {
-    if (
-      user.email === "" ||
-      user.password === ""
-    ) {
-      alert("모든 항목을 입력해주세요.");
-      e.preventDefault();
-    } else {
-      // await dispatch(__login(user));
-      Navigate('/')
-    }
+  // const onSubmitHandler = (e) => {
+  //   if (
+  //     user.email === "" ||
+  //     user.password === ""
+  //   ) {
+  //     alert("모든 항목을 입력해주세요.");
+  //     e.preventDefault();
+  //   } 
+  //   else {
+  //      dispatch(__login(user));
+  //     // Navigate('/')
+  //   }
+  // };
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    dispatch(__login(user));
   };
 
   // const onLoginBtnHandler = () => {
@@ -53,8 +66,8 @@ const Login = () => {
             <b>이메일</b>
             <input
               type="email"
-              name="email"
-              value={user.email}
+              name="username"
+              value={user.username}
               onChange={onChangeHandler}
               placeholder="이메일을 입력해주세요."
             />
@@ -97,6 +110,7 @@ const Login = () => {
           <p>회원가입</p>
         </Link>
       </SignUp>
+      <button onClick={() => dispatch(__logout())}>로그아웃</button>
     </StLogin>
   );
 };

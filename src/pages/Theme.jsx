@@ -9,13 +9,13 @@ const Theme = () => {
       <Category />
       <Location />
     </StTheme>
-    
   );
 };
 
 export default Theme;
 
 const StTheme = styled.div`
-display: block;
-width: 755px;
+width: 428px;
+border: 1px solid gray;
+margin: 0 auto;
 `;

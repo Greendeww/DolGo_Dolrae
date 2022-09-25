@@ -11,7 +11,10 @@
     "bootstrap": "^5.2.1",
     "hoist-non-react-statics": "^3.3.2",
     "json-server": "^0.17.0",
+<<<<<<< HEAD
     "prop-types": "^15.8.1",
+=======
+>>>>>>> 0beb71a96ac169fe664f4c3f3243edea555f7a59
     "react": "^18.2.0",
     "react-auto-image-slider": "^1.0.0",
     "react-bootstrap": "^2.5.0",
