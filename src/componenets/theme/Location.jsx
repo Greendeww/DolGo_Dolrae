@@ -6,8 +6,11 @@ import { getCookie } from "../../shared/Cookie";
 
 const List = () => {
   const navigate = useNavigate();
-  const LS_KEY_DO = "LS_KEY_DO";
-  const LS_KEY_SI = "LS_KEY_SI";
+
+  const AREA_CODE = "AREA_CODE";
+  const AREA_NAME = "AREA_NAME";
+  const SIGUNGU_CODE = "SIGUNGU_CODE";
+  const SIGUNGU_NAME = "SIGUNGU_NAME";
 
   const [seoul, setSeoul] = useState(false);
   const [inCheon, setInCheon] = useState(false);
@@ -964,7 +967,8 @@ const List = () => {
       <Do
         key={idx}
         onClick={() => {
-          localStorage.setItem(LS_KEY_DO, item.value);
+          localStorage.setItem(AREA_CODE, item.value);
+          localStorage.setItem(AREA_NAME, item.name);
         }}
       >
         {item.name}
@@ -977,7 +981,8 @@ const List = () => {
       <Si
         key={idx}
         onClick={() => {
-          localStorage.setItem(LS_KEY_SI, item.value);
+          localStorage.setItem(SIGUNGU_CODE, item.value);
+          localStorage.setItem(SIGUNGU_NAME, item.name);
         }}
       >
         {item.name}
@@ -1403,7 +1408,6 @@ const Do = styled.div`
   &:hover {
     font-weight: bold;
   }
-  background-color: red;
 `;
 
 const Si = styled.div`
@@ -1411,4 +1415,9 @@ const Si = styled.div`
   width: 50%;
   margin-left: 10px;
   margin-right: 20px;
+  cursor: pointer;
+
+  &:hover {
+    font-weight: bold;
+  }
 `;
