@@ -45,9 +45,9 @@ export const __login = createAsyncThunk(
     try {
       const response = await instance.post("/api/member/login", user);
       console.log(response.headers);
-      setCookie("isLogin", response.headers.authorization);
-      setCookie("ACCESS_TOKEN", response.headers.authorization);
-      setCookie("REFRESH_TOKEN", response.headers.refreshtoken);
+      localStorage.setItem("isLogin", response.headers.authorization);
+      localStorage.setItem("ACCESS_TOKEN", response.headers.authorization);
+      localStorage.setItem("REFRESH_TOKEN", response.headers.refreshtoken);
       localStorage.setItem("username", response.data.username);
 
       return response.data;
@@ -62,13 +62,16 @@ export const __logout = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       const response = await instance.post("/api/auth/member/logout");
-      deleteCookie("isLogin");
-      deleteCookie("ACCESS_TOKEN");
-      deleteCookie("REFRESH_TOKEN");
       localStorage.removeItem("username");
-      localStorage.removeItem("LS_KEY_CATEGORY");
-      localStorage.removeItem("LS_KEY_SI");
-      localStorage.removeItem("LS_KEY_DO");
+      localStorage.removeItem("isLogin");
+      localStorage.removeItem("ACCESS_TOKEN");
+      localStorage.removeItem("REFRESH_TOKEN");
+      localStorage.removeItem("THEME_CODE");
+      localStorage.removeItem("THEME_NAME");
+      localStorage.removeItem("AREA_CODE");
+      localStorage.removeItem("AREA_NAME");
+      localStorage.removeItem("SIGUNGU_CODE");
+      localStorage.removeItem("SIGUNGU_NAME");
 
       return response.data;
     } catch (error) {
