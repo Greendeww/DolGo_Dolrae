@@ -11,27 +11,13 @@ import { useEffect } from "react";
 const Theme1 = () => {
   const dispatch = useDispatch();
 
-  const THEME_CODE = window.localStorage.getItem("THEME_CODE");
   const THEME_NAME = window.localStorage.getItem("THEME_NAME");
-  const AREA_CODE = window.localStorage.getItem("AREA_CODE");
   const AREA_NAME = window.localStorage.getItem("AREA_NAME");
-  const SIGUNGU_CODE = window.localStorage.getItem("SIGUNGU_CODE");
   const SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
 
-  const search = {
-    themeCode: THEME_CODE,
-    themeName: THEME_NAME,
-    areaCode: AREA_CODE,
-    areaName: AREA_NAME,
-    sigunguCode: SIGUNGU_CODE,
-    sigunguName: SIGUNGU_NAME,
-  };
+  const { list } = useSelector((state) => state.theme);
 
-  const { List } = useSelector((state) => state.themeList);
-
-  useEffect(() => {
-    dispatch(__getTheme(search));
-  }, []);
+  console.log(list)
 
   return (
     <StTheme1>
@@ -42,7 +28,7 @@ const Theme1 = () => {
       </Title>
       <Rotate />
       <div>
-        {List.map((list) => (
+        {list.map((list) => (
           <Card
           key={list.id}>
             <img src={list.image} />
@@ -52,25 +38,6 @@ const Theme1 = () => {
         ))}
       </div>
     </StTheme1>
-    // <StTheme1>
-    //   <Title>
-    //     <h3>관광 ‣ 강원 ‣ 춘천</h3>
-    //   </Title>
-    //   <Rotate />
-    //   <div>
-    //     <Card>
-    //       <img src={gana} />
-    //       <p>가나아트파크</p>
-    //       <p>★★★★☆</p>
-    //     </Card>
-
-    //     <Card>
-    //       <img src={hwangji} />
-    //       <p>황지연못</p>
-    //       <p>★★★☆☆</p>
-    //     </Card>
-    //   </div>
-    // </StTheme1>
   );
 };
 
