@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import check from "../../assert/theme/check.png";
-import { getCookie } from "../../shared/Cookie";
+import { __getTheme } from "../../redux/modules/theme";
 
 const List = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const AREA_CODE = "AREA_CODE";
   const AREA_NAME = "AREA_NAME";
@@ -990,13 +992,36 @@ const List = () => {
     ));
   };
 
+  const GET_THEME_CODE = window.localStorage.getItem("THEME_CODE");
+  const GET_THEME_NAME = window.localStorage.getItem("THEME_NAME");
+  const GET_AREA_CODE = window.localStorage.getItem("AREA_CODE");
+  const GET_AREA_NAME = window.localStorage.getItem("AREA_NAME");
+  const GET_SIGUNGU_CODE = window.localStorage.getItem("SIGUNGU_CODE");
+  const GET_SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
+
+  const search = {
+    themeCode: GET_THEME_CODE,
+    themeName: GET_THEME_NAME,
+    areaCode: GET_AREA_CODE,
+    areaName: GET_AREA_NAME,
+    sigunguCode: GET_SIGUNGU_CODE,
+    sigunguName: GET_SIGUNGU_NAME,
+  };
+
   return (
     <div>
       <StList>
         <div>{selectDo()}</div>
       </StList>
       <div>{selectSi()}</div>
-      <button onClick={() => navigate("/theme1")}>다음으로</button>
+      <button
+        onClick={() => {
+          dispatch(__getTheme(search));
+          navigate("/theme1");
+        }}
+      >
+        다음으로
+      </button>
     </div>
 
     // <StList>
