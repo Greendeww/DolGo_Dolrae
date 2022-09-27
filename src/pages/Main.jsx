@@ -192,7 +192,7 @@ const Star = styled.div `
 const Title = styled.div `
     width: 214px;
     height: 50px;
-    margin: 0px 0px 0px px;
+    margin: 0px 0px 0px 0px;
     background-color: dodgerblue;
     text-align: center;
     line-height: 50px;
@@ -346,7 +346,7 @@ const Text = styled.div `
     width: 428px;
     height: 100px;
     line-height: 100px;
-    font-size: 15px;
+    font-size: 13px;
     margin: 0px 0px 0px 0px;
 
     display: flex;

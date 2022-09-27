@@ -17,5 +17,13 @@
         {"museumList": [
             {"title": "title", "imageUrl": "imageUrl", "star": "star"}
         ]}
+    ],
+
+    "mypage": [
+        {"placeList": [
+            {"title": "title", "imageUrl": "https://blog.kakaocdn.net/dn/dbXcOg/btraWTKkpOy/DPNZA9yXcl6RHWkVBKsZxK/img.png", "star": "star"},
+            {"title": "title", "imageUrl": "https://blog.kakaocdn.net/dn/dbXcOg/btraWTKkpOy/DPNZA9yXcl6RHWkVBKsZxK/img.png", "star": "star"},
+            {"title": "title", "imageUrl": "https://blog.kakaocdn.net/dn/dbXcOg/btraWTKkpOy/DPNZA9yXcl6RHWkVBKsZxK/img.png", "star": "star"}
+        ]}
     ]
 }
