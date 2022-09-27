@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { KAKAO_AUTH_URL } from "../shared/OAuth";
 import { logout, __login, __logout } from "../redux/modules/user";
+import Header from "../componenets/header/Header";
+import kakao from "../assert/login/kakao_login_medium_wide.png";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const initialState = {
     username: "",
@@ -15,141 +18,156 @@ const Login = () => {
 
   const [user, setUser] = useState(initialState);
 
-  console.log(user)
-
   const onChangeHandler = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
 
-  // const onSubmitHandler = (e) => {
-  //   if (
-  //     user.email === "" ||
-  //     user.password === ""
-  //   ) {
-  //     alert("모든 항목을 입력해주세요.");
-  //     e.preventDefault();
-  //   } 
-  //   else {
-  //      dispatch(__login(user));
-  //     // Navigate('/')
-  //   }
-  // };
-
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(__login(user));
+    if (
+      user.username === "" ||
+      user.password === ""
+    ) {
+      alert("모든 항목을 입력해주세요.");
+      e.preventDefault();
+    }
+    else {
+       dispatch(__login(user));
+      // Navigate('/')
+    }
   };
 
-  // const onLoginBtnHandler = () => {
-  //   if (login.email.trim() === "" || login.password.trim() === "")
-  //   {return alert("이메일과 비밀번호를 입력하세요.")};
-  //   if ( login.email && (sameIdList?.length === 0)) {
-  //     return alert("회원가입 후 로그인이 가능합니다.")
-  //   } else {
-  //     // dispatch(__memberLogin(login));
-  //     navigate('/');
-  //     setLogin(initialState);
-  //   }
-  //   };
-
   return (
-    <StLogin>
-      <form onSubmit={onSubmitHandler}>
-        <div>
-          <label>
-            <b>이메일</b>
-            <input
-              type="email"
-              name="username"
-              value={user.username}
-              onChange={onChangeHandler}
-              placeholder="이메일을 입력해주세요."
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            <b>비밀번호</b>
-            <input
-              type="password"
-              name="password"
-              value={user.password}
-              onChange={onChangeHandler}
-              placeholder="비밀번호를 입력해주세요."
-            />
-          </label>
-        </div>
-        <div>
-            <button>로그인</button>
-        </div>
-      </form>
+    <StLogin_>
+      <Header />
+      <StLogin>
+        <form onSubmit={onSubmitHandler}>
+          <Inputs>
+            <Input>
+              <label>
+                <p>
+                  <b>이메일</b>
+                </p>
+                <input
+                  type="email"
+                  name="username"
+                  value={user.username}
+                  onChange={onChangeHandler}
+                  placeholder="이메일을 입력해주세요."
+                />
+              </label>
+            </Input>
+            <Input>
+              <label>
+                <p>
+                  <b>비밀번호</b>
+                </p>
+                <input
+                  type="password"
+                  name="password"
+                  value={user.password}
+                  onChange={onChangeHandler}
+                  placeholder="비밀번호를 입력해주세요."
+                />
+              </label>
+            </Input>
+          </Inputs>
+          <Buttons>
+            <div>
+              <button>로그인</button>
+            </div>
 
-      <Social>
-        <p> SNS 계정 사용하기</p>
-        <div>
-          <img
-            src="https://contents-image.twayair.com/homepage/images/member/sns_c_kakao.png"
-            alt=""
-            onClick={() => {
-              window.location.href = KAKAO_AUTH_URL;
-            }}
-          />
-          <p> 카카오 </p>
-        </div>
-      </Social>
+            <Social>
+              <img
+                src={kakao}
+                onClick={() => {
+                  window.location.href = KAKAO_AUTH_URL;
+                }}
+              />
+            </Social>
+          </Buttons>
+        </form>
 
-      <SignUp>
-        <p>아직 돌고돌래 회원이 아니세요?</p>
-        <Link to="/signup">
-          <p>회원가입</p>
-        </Link>
-      </SignUp>
-      <button onClick={() => dispatch(__logout())}>로그아웃</button>
-    </StLogin>
+        <SignUp>
+          <p>아직 돌고돌래 회원이 아니세요?</p>
+          <p >
+            <b onClick={() => navigate("/signUp")}>회원가입 ></b>
+          </p>
+        </SignUp>
+        {/* <button onClick={() => dispatch(__logout())}>로그아웃</button> */}
+      </StLogin>
+    </StLogin_>
   );
 };
 
 export default Login;
 
-const StLogin = styled.div`
+const StLogin_ = styled.div`
   width: 428px;
-  text-align: center;
   margin: 0 auto;
-  padding: 60px;
-  border: 1px solid gray;
+`;
 
-  & div {
-    margin-bottom: 10px;
-  }
-
+const StLogin = styled.div`
   & input {
-    margin-left: 15px;
+    width: 373px;
+    height: 52px;
+    background-color: rgba(172, 212, 228, 0.35);
+    border-radius: 15px;
+    border: none;
+    padding-left: 10px;
   }
 
   & button {
-    background-color: #9797f5;
+    background-color: rgba(121, 185, 211, 0.62);
     color: white;
     border: none;
-    width: 80px;
-    margin: 20px 0;
+    border-radius: 12px;
+    width: 370px;
+    height: 50px;
     cursor: pointer;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    display: block;
+    margin: 0 auto;
   }
+`;
+
+const Input = styled.div`
+  display: block;
+  margin: 40px 20px;
+`;
+
+const Inputs = styled.div`
+  margin: 100px 0;
 `;
 
 const Social = styled.div`
-  border: 1px solid gray;
-  font-size: 15px;
-  margin-bottom: 30px;
-
-  & img,
-  div > p {
-    cursor: pointer;
+  & img {
+    display: block;
+    margin: 20px auto;
+    width: 370px;
+    height: 50px;
   }
 `;
 
+const Buttons = styled.div`
+  margin: 100px 0;
+`;
+
 const SignUp = styled.div`
-  margin-top: 40px;
-  border: 1px solid gray;
+  margin: 100px 0;
+  text-align: center;
+
+  & p {
+    color: #a19a9a;
+  }
+
+  & b {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;
