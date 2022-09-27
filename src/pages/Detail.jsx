@@ -4,48 +4,49 @@ import styled from "styled-components";
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import { Navigation,Pagination} from 'swiper';
 import { useEffect,useState } from 'react';
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import DetailForm from '../componenets/details/DetailForm';
-import Comments from '../componenets/details/Comments';
 import { useDispatch, useSelector } from 'react-redux';
 import { onLikeDetail, _getDetail} from '../redux/modules/post';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { _getComments } from '../redux/modules/comment';
-import Paginations from '../componenets/pagination/Paginations';
-import axios from 'axios';
+import Review from '../componenets/details/Review';
+import DetailImage from '../componenets/details/DetailImage';
+import { instance } from '../shared/Api';
+import StarDetail from '../componenets/star/StarDetail';
 
 const Detail = () => {
   const navigate = useNavigate();
   const {id} = useParams();
   const dispatch = useDispatch();
   const [formOpen,setFormOpen] = useState(false)
+  const [posts, setPosts] = useState("")
   const [commentList,setCommentList] = useState([])
   const [currentComments,setCurrnetComments] = useState([])
   const [page, setPage] = useState(1);
   const [postPerPage] = useState(5)
+  const [number, setNumber] = useState(1)
   const indexOfLastPost = page*postPerPage;
   const indexOfFirstPage = indexOfLastPost - postPerPage
-  
-  
+  console.log(posts)
+  console.log(id)
   const close = () => {
     setFormOpen(false);
   }
-//   const {posts} = useSelector((state) => state.comment)
-//   console.log(useSelector((state) => state))
-
-//   useEffect(() => {
-//     dispatch(_getDetail(id));
-// }, []);
+  const fetch = async () => {
+    const response = await instance.get(`/api/place/${id}`); 
+    console.log(response.data)
+    setPosts(response.data)
+  }
 
   const {isLoading, error,comment} = useSelector((state) => state.comment)
   console.log(comment)
 
   useEffect(() => {
       dispatch(_getComments(id));
+      fetch()
   }, []);
 
   useEffect(() => {
@@ -75,98 +76,66 @@ const Detail = () => {
     <div>
       <Box>
         <Cover>
-          <div>
+          <ImgDiv>
           <ImgCover>
-            <Swiper
-                modules={[Navigation,Pagination]}
-                spaceBetween={50}
-                slidesPerView={1}
-                onSlideChange={() => console.log('slide change')}
-                onSwiper={(swiper) => console.log(swiper)}
-                navigation
-                pagination={{ clickable: true }}
-                >
-                <SwiperSlide><Img alt='' src='http://tong.visitkorea.or.kr/cms/resource/87/2361087_image2_1.jpg'/></SwiperSlide>
-                {/* <SwiperSlide><Img alt='' src={data.imgUrl}/></SwiperSlide> */}
-                {/* {data.immap((data) => (
-                  <div key={data.id}>
-                      <SwiperSlide><Img alt='' src={data.image}/></SwiperSlide>
-                  </div>
-                  ))} */}
-            </Swiper>
+             <DetailImage post={posts} key={posts.id}/>
+             <div style={{display:"flex", justifyContent:"space-between"}}>
+              <span styel={{}}>{posts.title}</span> 
+              <span style={{cursor:"pointer", color:"#FF8585", fontSize:"30px",lineHeight:"1rem"}}onClick={onLike}>♥</span> 
+             </div>
+             <div style={{display:"flex", paddingTop:"10px"}}>
+               <StarDetail posts={posts}/>
+               <span style={{fontWeight:"600"}}>{posts.star}</span>
+               <span style={{color:"#8f8f8f"}}>/5</span>
+             </div>
           </ImgCover>
-          </div>
+          </ImgDiv>
         </Cover>
         <Title>
-          <div>
-            <span>이름:</span> 
-            <span>가평레일바이크</span>   
-          </div>
-          <div>
-            <span style={{cursor:"pointer"}}onClick={onLike}>♥ 찜하기</span> 
-          </div>
           </Title> 
           <Location>
-            <div  style={{justifyContent:"center"}}>
-            <p>주소</p>
-            <p>경기도 가평군 가평읍 장터길 14</p>
+            <div style={{justifyContent:"center"}}>
+            <p style={{color:"#BFB8B8",fontSize:"1.3rem"}}>위치</p>
+            <p style={{fontWeight:"600"}}>{posts.address}</p>
             </div>
             <MapDiv>
               <Map
-                center={{ lat: 37.8290223933, lng: 127.5158755988 }}
-                style={{ width: "100%", height: "360px" }}
+                center={{ lat: posts?.mapY, lng: posts?.mapX }}
+                style={{ width: "100%", height: "300px" ,borderRadius: "20px"}}
               >
               <MapMarker // 인포윈도우를 생성하고 지도에 표시합니다
                 position={{
                   // 인포윈도우가 표시될 위치입니다
-                  lat: 37.8290223933,
-                  lng: 127.5158755988,
+                  lat: posts?.mapY,
+                  lng: posts?.mapX,
                 }}
               /> 
               </Map>
             </MapDiv>
           </Location>
           <DescDiv>
-            <p>설명</p>
+            <p style={{color:"#BFB8B8",fontSize:"1.3rem"}}>설명</p>
             <p>가평 레일바이크는 가평역을 출발해 북한강 철교, 계절 따라 그 모습을 달리하는 느티나무터널, 영화 &lt;편지&gt;의 촬영지 경강역에서 회차, 가평역으로 돌아오는 왕복코스다. 북한강을 가로지르는 높이 30m의 아찔한 북한강 철교를 따라  폐달을 밟다 보면 한적한 시골마을과, 푸른 빛깔의 아름다운 강변이 번 갈아가면서 눈앞에 펼쳐진다.
             </p>
           </DescDiv>
-          <div style={{display:"flex", justifyContent:"flex-start"}}>
-            <ALink href = {`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${id}`}>
-              <ImgLink alt='' src='https://www.siksinhot.com/static2/images/mobile/bg_site_img01.gif'/>
-            </ALink>
-            <ALink href = {`https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q=${id}`}>
-              <ImgLink alt='' src='https://www.siksinhot.com/static2/images/mobile/bg_site_img02.gif'/>
-            </ALink>
-            <ALink href = {`https://www.google.com/search?q=${id}`}>
-              <ImgLink alt='' src='https://www.siksinhot.com/static2/images/mobile/bg_site_img03.gif'/>
-            </ALink>
+          <div>
+            <p style={{color:"#BFB8B8",fontSize:"1.3rem"}}>더 알아보기</p>
+            <div style={{display:"flex", justifyContent:"center"}}>
+              <ALink href = {`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${posts.title}`}>
+                <ImgLink alt='' src='https://www.siksinhot.com/static2/images/mobile/bg_site_img01.gif'/>
+              </ALink>
+              <ALink href = {`https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q=${posts.title}`}>
+                <ImgLink alt='' src='https://www.siksinhot.com/static2/images/mobile/bg_site_img02.gif'/>
+              </ALink>
+              <ALink href = {`https://www.google.com/search?q=${posts.title}`}>
+                <ImgLink alt='' src='https://www.siksinhot.com/static2/images/mobile/bg_site_img03.gif'/>
+              </ALink>
+            </div>
           </div>
           {formOpen === true
           ?<DetailForm close={close}/>
           :null}
-          <CommentDiv>
-              <p>Review</p>
-              <div style={{display:"flex",textAlign:"center"}}>
-                <span style={{width: "6rem"}}>번호</span>
-                <span style={{width:"100%"}}>내용</span>
-              </div>
-              <div>
-                  {currentComments.map((comment) => {
-                    return <Comments comment={comment} key={comment.comment_id}/>
-                  })}
-              </div>
-              <p style={{color:"white"}}>공백</p>
-              <Paginations
-                page={page}
-                count={comment.length}
-                setPage={handlePageChange}
-                postPerpage={postPerPage}
-              />
-              </CommentDiv>
-              <FormBut>
-                <button style={{cursor:"pointer",color:"white",backgroundColor:"#5f0080",border:"0px",height:"2.5rem"}} onClick={() => navigate('/detail/form/'+ id)}>후기작성</button>
-              </FormBut>
+          <Review comment={comment} number={number}/>
           <h1 style={{color:"white"}}>공백</h1>
       </Box>
     </div>
@@ -180,8 +149,7 @@ const Box = styled.div`
   width: 100%;
   max-width:428px;
   margin: 0 auto;
-  /* border-left:2px solid black;
-  border-right:2px solid black */
+  border:2px solid #79B9D3;
 `;
 const Cover = styled.div`
   display: flex;
@@ -190,31 +158,35 @@ const Cover = styled.div`
   /* background: rgb(249, 249, 249); */
   padding-top: 40px;
   margin: 0 auto;
-  margin-bottom:60px;
+  margin-bottom:20px;
+`
+const ImgDiv =styled.div`
+  background-color:#EBF8FF;
+  padding: 20px 0px 20px;
 `
 const ImgCover = styled.div`
   flex-shrink: 0;
   width:90%;
-  max-width: 380px;
+  max-width: 428px;
   justify-content:center;
   align-items:center;
   margin: 0 auto;
 `
-const Img = styled.img`
-  border: 1px solid rgb(238, 238, 238);
-  position: relative;
-  width: 100%;
-  height: 100%;
-`
+// const Img = styled.img`
+//   border: 1px solid rgb(238, 238, 238);
+//   position: relative;
+//   width: 100%;
+//   height: 100%;
+// `
 const Title = styled.div`
   margin:0 auto;
-  width:90%;
+  width:100%;
   justify-content:space-between;
   display:flex;
 `
 const Location = styled.div`
   margin: 0 auto;
-  width:90%;
+  width:100%;
   justify-content:center;
   align-items:center;
 `
@@ -225,14 +197,14 @@ const MapDiv =styled.div`
   margin:0 auto;
 `
 const DescDiv = styled.div`
-  width:90%;
+  width:100%;
   justify-content:center;
   align-items:center;
   margin:0 auto;
 `
 const ALink = styled.a`
-  width:85px;
-  height:35px;
+  width:100%;
+  height:50px;
 `
 const ImgLink = styled.img`
  width:100%;

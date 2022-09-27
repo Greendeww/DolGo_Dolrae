@@ -6,6 +6,7 @@ import { FaStar } from 'react-icons/fa';
 import Star from '../star/Star';
 import { useDispatch,useSelector } from 'react-redux';
 import { _updateComment,_getComments } from '../../redux/modules/comment';
+import { instance } from '../../shared/Api';
 
 
 const DetailRevise = () => {
@@ -22,9 +23,10 @@ const DetailRevise = () => {
   const [fileImage1,setFileImage1] = useState([]);
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
- 
+  const [imagenull] = useState(null)
+
   const fetch = async () => {
-    const response = await axios.get(`http://3.34.46.193/api/comment/${placeId}`); 
+    const response = await instance.get(`/api/comment/${placeId}`); 
     console.log(response.data)
 
     const commentList = response.data.find(comment => {
@@ -101,17 +103,17 @@ const DetailRevise = () => {
   const onUpdatePost = async (e) => {
 
     let json = JSON.stringify(data)
-    let imagejson = JSON.stringify(image[0].imageUrl)
+    // let imagejson = JSON.stringify(image[0].imageUrl)
     console.log(json);
     const blob = new Blob([json], { type: "application/json" });
-    const imageBlob = new Blob([imagejson],{ type: 'image/png' })
+    // const imageBlob = new Blob([imagejson],{ type: 'image/png' })
     const formData = new FormData();
-    // for(let i = 0; i<image.length; i++){
-    //   formData.append("image",image[i])
-    //   console.log(image)
-    //   console.log(image[i])
-    // }
-    formData.append("image",imageBlob)
+    for(let i = 0; i<image.length; i++){
+      formData.append("image",image[i])
+      console.log(image)
+      console.log(image[i])
+    }
+    // formData.append("image",imageBlob)
     formData.append("data",blob)
 
     const payload = {
@@ -170,7 +172,7 @@ const DetailRevise = () => {
               </ImgLabel>
               {fileImage1.map((image,id) => (
                 <div key={id}>
-                 <img style={{width:"102px",height:"102px"}} alt={`${image}-${id}`} src={image.imageUrl}/>
+                 <img style={{width:"102px",height:"102px"}} alt={`${image}-${id}`} src={image}/>
                  <DeleteImg onClick={() => handleDeleteImage1(id)}>
                     X
                   </DeleteImg>

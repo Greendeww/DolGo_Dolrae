@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { FaStar } from 'react-icons/fa';
 import Star from '../star/Star';
 import commentSlice from '../../redux/modules/comment';
+import { instance } from '../../shared/Api';
 
 const DetailForm = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const DetailForm = () => {
   const [image,setImage] = useState([]);
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
+  const [imagenull] = useState(null)
   console.log(image)
   const handleStarClick = index => {
     let clickStates = [...clicked];
@@ -73,6 +75,7 @@ const DetailForm = () => {
     for(let i = 0; i<image.length; i++){
       formData.append("image",image[i])
     }
+    // formData.append("image",imagenull)
     // formData.append("image",image[0])
     // formData.append("image",image[1])
     // formData.append("image",image[2])
@@ -82,15 +85,13 @@ const DetailForm = () => {
       id:id,
       formData: formData,
     }
-
-    const res = await axios.post(
-        `http://3.34.46.193/api/auth/comment/${payload.id}`,
+    try{
+    const res = await instance.post(
+        `/api/auth/comment/${payload.id}`,
         payload.formData,
         {
             headers:{
                 "Content-Type": "multipart/form-data"
-                // Authorization: localStorage.getItem("Authorization"),
-                // RefreshToken: localStorage.getItem("RefreshToken"),
             }
         }
     )
@@ -99,6 +100,9 @@ const DetailForm = () => {
     }
     window.location.replace(`/detail/${id}`);
     return res.data;
+    }catch(error){
+    window.location.replace(`/detail/${id}`);
+    }
   };
   return (
    <>
