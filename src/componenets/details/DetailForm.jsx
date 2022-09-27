@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { FaStar } from 'react-icons/fa';
 import Star from '../star/Star';
 import commentSlice from '../../redux/modules/comment';
+import { instance } from '../../shared/Api';
 
 const DetailForm = () => {
   const navigate = useNavigate();
@@ -85,14 +86,12 @@ const DetailForm = () => {
       formData: formData,
     }
     try{
-    const res = await axios.post(
-        `http://3.34.46.193/api/auth/comment/${payload.id}`,
+    const res = await instance.post(
+        `/api/auth/comment/${payload.id}`,
         payload.formData,
         {
             headers:{
                 "Content-Type": "multipart/form-data"
-                // Authorization: localStorage.getItem("Authorization"),
-                // RefreshToken: localStorage.getItem("RefreshToken"),
             }
         }
     )
@@ -102,7 +101,7 @@ const DetailForm = () => {
     window.location.replace(`/detail/${id}`);
     return res.data;
     }catch(error){
-    // window.location.replace(`/detail/${id}`);
+    window.location.replace(`/detail/${id}`);
     }
   };
   return (

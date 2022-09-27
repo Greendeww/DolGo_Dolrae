@@ -94,7 +94,7 @@ const Login = () => {
             src="https://contents-image.twayair.com/homepage/images/member/sns_c_kakao.png"
             alt=""
             onClick={() => {
-              // window.location.href = KAKAO_AUTH_URL;
+              window.location.href = KAKAO_AUTH_URL;
             }}
           />
           <p> 카카오 </p>

@@ -14,6 +14,7 @@ const dispatch = useDispatch();
 const [formOpen,setFormOpen] = useState(false)
 const [commentList,setCommentList] = useState([...comment].reverse())
 const [currentComments,setCurrnetComments] = useState([])
+const [modal, setModal] = useState(false);
 const [arr, setArr] = useState([])
 const [number,setNumber] = useState([])
 const [page, setPage] = useState(1);
@@ -34,29 +35,32 @@ const indexOfFirstPage = indexOfLastPost - postPerPage
       for(let i=0; i<comment.length; i++){
         arr.push(i+1)
         const set = new Set(arr)
-        console.log(set)
         number.push(set)
       }
     },[])
-    
+    const close = (idx) => {
+      const newComment = Array(comment.length).fill(false);
+      newComment[idx] = true;
+      setModal(newComment)
+    };
     // comment.number = number
     console.log(comment.number)
   return (
     <div>
         <CommentDiv>
         <p>Review</p>
-            <div style={{display:"flex",textAlign:"center"}}>
+            {/* <div style={{display:"flex",textAlign:"center"}}>
             <span style={{width: "6rem"}}>번호</span>
             <span style={{width:"100%"}}>내용</span>
-            </div>
+            </div> */}
             <div>
                 {currentComments.map((comment,index) => {
-                return <Comments comment={comment} index={index} arr={arr} key={comment.comment_id}/>
+                return <Comments comment={comment} key={index} arr={arr} isSelected={modal[index]} handleClick={close} elementIndex={index}/>
                 })}
             </div>
-            <FormBut>
-            <button style={{cursor:"pointer",color:"white",backgroundColor:"#5f0080",border:"0px",height:"2.5rem"}} onClick={() => navigate('/detail/form/'+ id)}>후기작성</button>
-            </FormBut>
+            <ButDiv>
+            <FormBut onClick={() => navigate('/detail/form/'+ id)}>후기작성</FormBut>
+            </ButDiv>
             <p style={{color:"white"}}>공백</p>
             <Paginations
             page={page}
@@ -72,12 +76,21 @@ const indexOfFirstPage = indexOfLastPost - postPerPage
 export default Review
 const CommentDiv = styled.div`
   border-top: 3px solid #522772;
-  border-bottom: 3px solid #522772;
+  /* border-bottom: 3px solid #522772; */
   text-align:start;
   margin-top:10px;
 `
-const FormBut = styled.div`
+const ButDiv = styled.div`
  display:flex;
  justify-content:flex-end;
  margin-top:60px;
+`
+const FormBut = styled.button`
+cursor:pointer;
+color:white;
+background-color:#79B9D3;
+border:0px;
+height:2.5rem;
+border-radius:5px;
+width:100%
 `

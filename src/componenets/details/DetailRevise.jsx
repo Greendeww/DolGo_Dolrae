@@ -6,6 +6,7 @@ import { FaStar } from 'react-icons/fa';
 import Star from '../star/Star';
 import { useDispatch,useSelector } from 'react-redux';
 import { _updateComment,_getComments } from '../../redux/modules/comment';
+import { instance } from '../../shared/Api';
 
 
 const DetailRevise = () => {
@@ -25,7 +26,7 @@ const DetailRevise = () => {
   const [imagenull] = useState(null)
 
   const fetch = async () => {
-    const response = await axios.get(`http://3.34.46.193/api/comment/${placeId}`); 
+    const response = await instance.get(`/api/comment/${placeId}`); 
     console.log(response.data)
 
     const commentList = response.data.find(comment => {
@@ -171,7 +172,7 @@ const DetailRevise = () => {
               </ImgLabel>
               {fileImage1.map((image,id) => (
                 <div key={id}>
-                 <img style={{width:"102px",height:"102px"}} alt={`${image}-${id}`} src={image.imageUrl}/>
+                 <img style={{width:"102px",height:"102px"}} alt={`${image}-${id}`} src={image}/>
                  <DeleteImg onClick={() => handleDeleteImage1(id)}>
                     X
                   </DeleteImg>

@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Navigation,Pagination} from 'swiper';
 import styled from "styled-components";
-import postSlice from '../../redux/modules/post';
+
 
 const DetailImage = ({post}) => {
     console.log(post)
@@ -32,4 +32,5 @@ const Img = styled.img`
   position: relative;
   width: 100%;
   height: 100%;
+  border-radius: 20px;
 `
