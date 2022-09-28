@@ -12,6 +12,8 @@ const DetailForm = () => {
 
   const {id} = useParams();
   console.log(id)
+  const [contentMessage, setContentMessage] = useState('')
+  const [isContent, setIsContent] = useState(false)
   const [title,setTitle] = useState("");
   const [content,setContent] = useState("");
   const [star,setStar] = useState();
@@ -32,31 +34,53 @@ const DetailForm = () => {
     sendReview();
   }, [clicked]); //컨디마 컨디업
 
- const sendReview = () => {
- let score = clicked.filter(Boolean).length;
- setStar(score)
- }
+  const sendReview = () => {
+  let score = clicked.filter(Boolean).length;
+  setStar(score)
+  }
 
   const onChangeImg = (e) => {
+    const maxImageCnt = 3;
     const imageList = e.target.files;
-    console.log(imageList);
-    const imgFiles = [...fileImage];
-    for (let i = 0; i < imageList.length; i++) {
-      const nowImageUrl = URL.createObjectURL(e.target.files[i]);
-      imgFiles.push(nowImageUrl);
+    const imageLists = [...image]
+    if(image.length > maxImageCnt){
+      alert("첨부파일은 최대 3개까지 가능합니다")
     }
-    for (let i = 0; i < imageList.length; i++) {
-      const nowImageUrl1 = e.target.files[i];
-      image.push(nowImageUrl1);
-      continue;
-    }
-    setFileImage(imgFiles);
-    // setImage(imageList);
-  };
-  const handleDeleteImage = (id) => {
-    setFileImage(fileImage.filter((_, index) => index !== id));
-    setImage(image.filter((_, index) => index !== id));
-  };
+   
+  console.log(imageList);
+  const imgFiles = [...fileImage];
+  for (let i = 0; i < imageList.length; i++) {
+    const nowImageUrl = URL.createObjectURL(e.target.files[i]);
+    imgFiles.push(nowImageUrl);
+  }
+  for (let i = 0; i < imageList.length; i++) {
+    const nowImageUrl1 = e.target.files[i];
+    imageLists.push(nowImageUrl1);
+    continue;
+  }
+  if (imageLists.length > 3) {
+    imageLists = imageLists.slice(0, 3);
+  }
+  setFileImage(imgFiles);
+  setImage(imageLists);
+};
+const handleDeleteImage = (id) => {
+  setFileImage(fileImage.filter((_, index) => index !== id));
+  setImage(image.filter((_, index) => index !== id));
+};
+const onChangeContent = (e) => {
+  const contentRegex = /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{10,1000}$/
+  const contentCurrnet = e.target.value 
+  setContent(contentCurrnet)
+  
+  if(!contentRegex.test(contentCurrnet)){
+    setContentMessage('10글자 이상 작성해주세요')
+    setIsContent(false)
+  }else{
+    setContentMessage(null)
+    setIsContent(true)
+  }
+};
   const data = {
     title:title,
     content:content,
@@ -67,7 +91,17 @@ const DetailForm = () => {
   const onChangeHandler = (event, setState) => setState(event.target.value);
   
   const onAddComment = async (e) => {
-
+    e.preventDefault();
+    if(
+      title === "" ||
+      content === "" ||
+      star === ""
+    ){
+      alert("모든 항목을 입력해주세요.");
+    }
+    if(isContent !== true){
+      return alert('형식을 확인해주세요')
+    }
     let json = JSON.stringify(data)
     console.log(json);
     const blob = new Blob([json], { type: "application/json" });
@@ -101,7 +135,7 @@ const DetailForm = () => {
     window.location.replace(`/detail/${id}`);
     return res.data;
     }catch(error){
-    window.location.replace(`/detail/${id}`);
+    // window.location.replace(`/detail/${id}`);
     }
   };
   return (
@@ -122,7 +156,7 @@ const DetailForm = () => {
         <LiImg>
           <ImgTitle>
             <b>
-              상품이미지
+              이미지
               <span style={{ color: "rgb(255, 80, 88)" }}>*</span>
             </b>
           </ImgTitle>
@@ -180,10 +214,13 @@ const DetailForm = () => {
               type="text"
               name="content"
               value={content}
-              onChange={(event) => onChangeHandler(event, setContent)}
+              onChange={onChangeContent}
               placeholder="후기를 남겨주세요"
             />
           </LiTilte>
+          <div>
+             {content.length > 0 && <p style={{color:'red'}}>{contentMessage}</p>}
+          </div>
           <div>
                 <button onClick={onAddComment}>등록하기</button>
                 <button onClick={() => navigate('/detail/'+id)}>취소하기</button>

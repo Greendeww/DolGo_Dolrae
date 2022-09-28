@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from "styled-components";
 import { FaStar } from 'react-icons/fa';
 import Star from '../star/Star';
-import { useDispatch,useSelector } from 'react-redux';
+import { shallowEqual, useDispatch,useSelector } from 'react-redux';
 import { _updateComment,_getComments } from '../../redux/modules/comment';
 import { instance } from '../../shared/Api';
 
@@ -67,6 +67,10 @@ const DetailRevise = () => {
   }
 
   const onChangeImg = (e) => {
+    const maxImageCnt = 3;
+    if(image.length > maxImageCnt){
+      alert("첨부파일은 최대 3개까지 가능합니다")
+    }
     const imageList = e.target.files;
     console.log(imageList);
     const imgFiles = [...fileImage];
@@ -101,7 +105,14 @@ const DetailRevise = () => {
   const onChangeHandler = (event, setState) => setState(event.target.value);
   
   const onUpdatePost = async (e) => {
-
+    e.preventDefault();
+    if(
+      title === "" ||
+      content === "" ||
+      star === ""
+    ){
+      alert("모든 항목을 입력해주세요.");
+    }
     let json = JSON.stringify(data)
     // let imagejson = JSON.stringify(image[0].imageUrl)
     console.log(json);
@@ -146,7 +157,7 @@ const DetailRevise = () => {
         <LiImg>
           <ImgTitle>
             <b>
-              사진
+              이미지
               <span style={{ color: "rgb(255, 80, 88)" }}>*</span>
             </b>
           </ImgTitle>
