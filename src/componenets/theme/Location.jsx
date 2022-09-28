@@ -136,6 +136,132 @@ const List = () => {
     {
       name: "경기",
       value: 31,
+      siGunGu: [
+        {
+          name: "가평",
+          value: 1,
+        },
+        {
+          name: "고양",
+          value: 2,
+        },
+        {
+          name: "과천",
+          value: 3,
+        },
+        {
+          name: "광명",
+          value: 4,
+        },
+        {
+          name: "광주",
+          value: 5,
+        },
+        {
+          name: "구리",
+          value: 6,
+        },
+        {
+          name: "군포",
+          value: 7,
+        },
+        {
+          name: "김포",
+          value: 8,
+        },
+        {
+          name: "남양주",
+          value: 9,
+        },
+        {
+          name: "동두천",
+          value: 10,
+        },
+        {
+          name: "부천",
+          value: 11,
+        },
+        {
+          name: "성남",
+          value: 12,
+        },
+        {
+          name: "수원",
+          value: 13,
+        },
+        {
+          name: "시흥",
+          value: 14,
+        },
+        {
+          name: "안산",
+          value: 15,
+        },
+        {
+          name: "안성",
+          value: 16,
+        },
+        {
+          name: "안양",
+          value: 17,
+        },
+        {
+          name: "양주",
+          value: 18,
+        },
+        {
+          name: "양평",
+          value: 19,
+        },
+        {
+          name: "여주",
+          value: 20,
+        },
+        {
+          name: "연천",
+          value: 21,
+        },
+        {
+          name: "오산",
+          value: 22,
+        },
+        {
+          name: "용인",
+          value: 23,
+        },
+        {
+          name: "의왕",
+          value: 24,
+        },
+        {
+          name: "의정부",
+          value: 25,
+        },
+        {
+          name: "이천",
+          value: 26,
+        },
+        {
+          name: "파주",
+          value: 27,
+        },
+        {
+          name: "평택",
+          value: 28,
+        },
+        {
+          name: "포천",
+          value: 29,
+        },
+        {
+          name: "하남",
+          value: 30,
+        },
+        {
+          name: "화성",
+          value: 31,
+        },
+      ],
     },
     {
       name: "강원",
@@ -974,6 +1100,17 @@ const List = () => {
         }}
       >
         {item.name}
+        {/* {item.siGunGu.map((item, idx) => (
+          <Si
+            key={idx}
+            onClick={() => {
+              localStorage.setItem(AREA_CODE, item.value);
+              localStorage.setItem(AREA_NAME, item.name);
+            }}
+          >
+            {item.name}
+          </Si>
+        ))} */}
       </Do>
     ));
   };
@@ -1013,7 +1150,7 @@ const List = () => {
       <StList>
         <div>{selectDo()}</div>
       </StList>
-      <div>{selectSi()}</div>
+      {/* <div>{selectSi()}</div> */}
       <button
         onClick={() => {
           dispatch(__getTheme(search));
