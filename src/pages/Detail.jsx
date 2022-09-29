@@ -16,6 +16,7 @@ import Review from '../componenets/details/Review';
 import DetailImage from '../componenets/details/DetailImage';
 import { instance } from '../shared/Api';
 import StarDetail from '../componenets/star/StarDetail';
+import Like from '../componenets/like/Like';
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -66,10 +67,10 @@ const Detail = () => {
     setPage(page)
   }
 
-  const onLike = async (event) => {
-    event.preventDefault();
-    dispatch(onLikeDetail(id));
-  };
+  // const onLike = async (event) => {
+  //   event.preventDefault();
+  //   dispatch(onLikeDetail(id));
+  // };
   
   return (
     <>
@@ -81,8 +82,9 @@ const Detail = () => {
              <DetailImage post={posts} key={posts.id}/>
              <div style={{display:"flex", justifyContent:"space-between"}}>
               <span styel={{}}>{posts.title}</span> 
-              <span style={{cursor:"pointer", color:"#FF8585", fontSize:"30px",lineHeight:"1rem"}}onClick={onLike}>♥</span> 
+              <Like id={id}></Like>
              </div>
+             {posts.star}
              <div style={{display:"flex", paddingTop:"10px"}}>
                <StarDetail posts={posts}/>
                <span style={{fontWeight:"600"}}>{posts.star}</span>
@@ -118,9 +120,9 @@ const Detail = () => {
             <p>가평 레일바이크는 가평역을 출발해 북한강 철교, 계절 따라 그 모습을 달리하는 느티나무터널, 영화 &lt;편지&gt;의 촬영지 경강역에서 회차, 가평역으로 돌아오는 왕복코스다. 북한강을 가로지르는 높이 30m의 아찔한 북한강 철교를 따라  폐달을 밟다 보면 한적한 시골마을과, 푸른 빛깔의 아름다운 강변이 번 갈아가면서 눈앞에 펼쳐진다.
             </p>
           </DescDiv>
-          <div>
-            <p style={{color:"#BFB8B8",fontSize:"1.3rem"}}>더 알아보기</p>
-            <div style={{display:"flex", justifyContent:"center"}}>
+          <SearchDate>
+            <SearchP>더 알아보기</SearchP>
+            <SearchDiv>
               <ALink href = {`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${posts.title}`}>
                 <ImgLink alt='' src='https://www.siksinhot.com/static2/images/mobile/bg_site_img01.gif'/>
               </ALink>
@@ -130,8 +132,8 @@ const Detail = () => {
               <ALink href = {`https://www.google.com/search?q=${posts.title}`}>
                 <ImgLink alt='' src='https://www.siksinhot.com/static2/images/mobile/bg_site_img03.gif'/>
               </ALink>
-            </div>
-          </div>
+            </SearchDiv>
+          </SearchDate>
           {formOpen === true
           ?<DetailForm close={close}/>
           :null}
@@ -189,6 +191,7 @@ const Location = styled.div`
   width:100%;
   justify-content:center;
   align-items:center;
+  padding-top:30px;
 `
 const MapDiv =styled.div`
   width: 100%;
@@ -201,23 +204,36 @@ const DescDiv = styled.div`
   justify-content:center;
   align-items:center;
   margin:0 auto;
+  padding-top:50px;
+`
+const SearchDate = styled.div`
+  margin-top:50px;
+`
+const SearchP = styled.p`
+  color:#BFB8B8;
+  font-size:1.3rem;
+  margin-bottom:20px;
+`
+const SearchDiv = styled.div`
+  display:flex;
+  justify-content:flex-start
 `
 const ALink = styled.a`
-  width:100%;
-  height:50px;
+  width:6rem;
+  height:40px;
 `
 const ImgLink = styled.img`
  width:100%;
  height:100%;
 `
-const CommentDiv = styled.div`
-  border-top: 3px solid #522772;
-  border-bottom: 3px solid #522772;
-  text-align:start;
-  margin-top:10px;
-`
-const FormBut = styled.div`
- display:flex;
- justify-content:flex-end;
- margin-top:60px;
-`
+// const CommentDiv = styled.div`
+//   border-top: 3px solid #522772;
+//   border-bottom: 3px solid #522772;
+//   text-align:start;
+//   margin-top:10px;
+// `
+// const FormBut = styled.div`
+//  display:flex;
+//  justify-content:flex-end;
+//  margin-top:60px;
+// `

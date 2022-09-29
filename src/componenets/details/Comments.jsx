@@ -25,7 +25,7 @@ const Comments = ({comment,arr,isSelected, handleClick, elementIndex}) => {
       {modal === false
       ?
       <CommentDiv>
-        <div style={{display:"flex",cursor:"pointer",marginTop:"10px",textAlign:"center"}} onClick={() => {handleClick(elementIndex);setModal(true)}}>
+        <ContentDiv onClick={() => {handleClick(elementIndex);setModal(true)}}>
         <p style={{width: "6rem"}}>{comment.comment_id}</p>
         {comment.imageList.length === 0
         ?<span style={{cursor:"pointer", color:"#EBF8FF", fontSize:"30px",lineHeight:"3.4rem"}}>♥</span> 
@@ -33,7 +33,7 @@ const Comments = ({comment,arr,isSelected, handleClick, elementIndex}) => {
         }
         <PCom >{comment.title}</PCom>
         {/* <p>닉네임</p> */}
-        </div>
+        </ContentDiv>
         <div style={{cursor:"pointer"}} id="state">
           {modal === true
           ? <CommentModal key ={comment.comment_id} comment={comment} />
@@ -42,14 +42,14 @@ const Comments = ({comment,arr,isSelected, handleClick, elementIndex}) => {
         </div>
       </CommentDiv>
       :<CommentDiv>
-       <div style={{display:"flex",cursor:"pointer",marginTop:"10px",textAlign:"center"}} onClick={() => {handleClick(elementIndex);setModal(false)}}>
+       <ContentDiv onClick={() => {handleClick(elementIndex);setModal(false)}}>
         <p style={{width: "6rem"}}>{comment.comment_id}</p>
         {comment.imageList.length === 0
         ?<span style={{cursor:"pointer", color:"#EBF8FF", fontSize:"30px",lineHeight:"3.4rem"}}>♥</span> 
         :<span style={{cursor:"pointer", color:"#FF8585", fontSize:"30px",lineHeight:"3.4rem"}}>♥</span> 
         }
         <PCom>{comment.title}</PCom>
-      </div>
+      </ContentDiv>
       <div style={{cursor:"pointer"}} id="state">
         {modal === true
         ? <CommentModal key={comment.comment_id} comment={comment}/>
@@ -79,3 +79,10 @@ const CommentDiv = styled.div`
   /* border:5px solid #EBF8FF; */
   border-radius:20px;
 `
+const ContentDiv = styled.div`
+  display:flex;
+  cursor:pointer;
+  margin-top:10px;
+  text-align:center;
+  align-items:center;
+`;

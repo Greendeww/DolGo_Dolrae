@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { instance } from "../../shared/Api";
 
 const initialState = {
     post: [],
@@ -28,22 +29,16 @@ export const _getDetail = createAsyncThunk(
     }
   }
 );
+
 export const onLikeDetail = createAsyncThunk(
   "like/onLikePost",
   async (payload, thunkApI) => {
-    console.log(payload);
     try {
-      const data = await axios.post(
-        // `http://13.125.225.96:8080/products/likes/${payload}`,
+      const data = await instance.post(
+        `/api/auth/place/like/${payload}`,
         {},
-        {
-          headers: {
-            Authorization: localStorage.getItem("Authorization"),
-            RefreshToken: localStorage.getItem("RefreshToken"),
-          },
-        } //post는 두번째 인자가 데이터가 들어가야해서 {}를 넣어줌 데이터가 없으면 headers를 데이터로 인식
       );
-      window.location.reload()
+      // window.location.reload()
       return payload;
     } catch (error) {
       return thunkApI.rejectWithValue(error);
@@ -56,6 +51,19 @@ export const postSlice = createSlice({
     initialState,
     reducers:{},
 extraReducers:(builder) => {
+        builder
+            .addCase(onLikeDetail.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(onLikeDetail.fulfilled, (state,action) => {
+                state.isLoading = false;
+                state.detail = action.payload;
+                console.log(state.detail)
+            })
+            .addCase(onLikeDetail.rejected, (state,action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
         builder
             .addCase(_getDetail.pending, (state) => {
                 state.isLoading = true;

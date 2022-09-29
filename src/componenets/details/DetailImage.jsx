@@ -33,4 +33,5 @@ const Img = styled.img`
   width: 100%;
   height: 100%;
   border-radius: 20px;
+  margin-bottom:20px;
 `

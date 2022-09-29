@@ -59,7 +59,7 @@ export const _updateComment = createAsyncThunk(
           },
         }
       );
-      // window.location.replace(`/detail/${payload.placeId}`);
+      window.location.replace(`/detail/${payload.placeId}`);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
