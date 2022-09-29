@@ -48,11 +48,7 @@ const indexOfFirstPage = indexOfLastPost - postPerPage
   return (
     <div>
         <CommentDiv>
-        <p>Review</p>
-            {/* <div style={{display:"flex",textAlign:"center"}}>
-            <span style={{width: "6rem"}}>번호</span>
-            <span style={{width:"100%"}}>내용</span>
-            </div> */}
+          <p>Review</p>
             <div>
                 {currentComments.map((comment,index) => {
                 return <Comments comment={comment} key={index} arr={arr} isSelected={modal[index]} handleClick={close} elementIndex={index}/>

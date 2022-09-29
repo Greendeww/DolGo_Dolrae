@@ -12,10 +12,12 @@ const DetailForm = () => {
 
   const {id} = useParams();
   console.log(id)
+  const [content,setContent] = useState("");
   const [contentMessage, setContentMessage] = useState('')
   const [isContent, setIsContent] = useState(false)
   const [title,setTitle] = useState("");
-  const [content,setContent] = useState("");
+  const [titleMessage, setTitleMessage] = useState('')
+  const [isTitle, setIsTitle] = useState(false)
   const [star,setStar] = useState();
   const [image,setImage] = useState([]);
   const [fileImage, setFileImage] = useState([]);
@@ -40,12 +42,12 @@ const DetailForm = () => {
   }
 
   const onChangeImg = (e) => {
-    const maxImageCnt = 3;
     const imageList = e.target.files;
+    // const maxImageCnt = 3;
     const imageLists = [...image]
-    if(image.length > maxImageCnt){
-      alert("첨부파일은 최대 3개까지 가능합니다")
-    }
+    // if(image.length > maxImageCnt){
+    //   alert("첨부파일은 최대 3개까지 가능합니다")
+    // }
    
   console.log(imageList);
   const imgFiles = [...fileImage];
@@ -58,18 +60,21 @@ const DetailForm = () => {
     imageLists.push(nowImageUrl1);
     continue;
   }
-  if (imageLists.length > 3) {
-    imageLists = imageLists.slice(0, 3);
-  }
+  // if (imageLists.length > 3) {
+  //   imageLists = imageLists.slice(0, 3);
+  // }
   setFileImage(imgFiles);
   setImage(imageLists);
 };
+//이미지 삭제
 const handleDeleteImage = (id) => {
   setFileImage(fileImage.filter((_, index) => index !== id));
   setImage(image.filter((_, index) => index !== id));
 };
+
+//후기 내용 10글자 이상 작성
 const onChangeContent = (e) => {
-  const contentRegex = /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{10,1000}$/
+  const contentRegex = /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{10,300}$/
   const contentCurrnet = e.target.value 
   setContent(contentCurrnet)
   
@@ -79,6 +84,19 @@ const onChangeContent = (e) => {
   }else{
     setContentMessage(null)
     setIsContent(true)
+  }
+};
+const onChangeTitle = (e) => {
+  const TitleRegex = /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{1,20}$/
+  const TitleCurrnet = e.target.value 
+  setTitle(TitleCurrnet)
+  
+  if(!TitleRegex.test(TitleCurrnet)){
+    setTitleMessage('20글자 이하로 작성해주세요 ')
+    setIsTitle(false)
+  }else{
+    setTitleMessage(null)
+    setIsTitle(true)
   }
 };
   const data = {
@@ -149,10 +167,13 @@ const onChangeContent = (e) => {
             type="text"
             name="title"
             value={title}
-            onChange={(event) => onChangeHandler(event, setTitle)}
-            placeholder="상품 제목을 입력해주세요"
+            onChange={onChangeTitle}
+            placeholder="제목을 입력해주세요"
           />
         </LiTilte>
+        <Message>
+          {title.length > 0 && <p style={{color:'red'}}>{titleMessage}</p>}
+        </Message>
         <LiImg>
           <ImgTitle>
             <b>
@@ -218,9 +239,9 @@ const onChangeContent = (e) => {
               placeholder="후기를 남겨주세요"
             />
           </LiTilte>
-          <div>
+          <Message>
              {content.length > 0 && <p style={{color:'red'}}>{contentMessage}</p>}
-          </div>
+          </Message>
           <div>
                 <button onClick={onAddComment}>등록하기</button>
                 <button onClick={() => navigate('/detail/'+id)}>취소하기</button>
@@ -256,7 +277,7 @@ const LiImg = styled.li`
   width: 90%;
   display: flex;
   padding: 10px 0px;
-  border-bottom: 1px solid rgb(204, 204, 204);
+  /* border-bottom: 1px solid rgb(204, 204, 204); */
 `;
 const ImgTitle = styled.div`
   padding-right:28px;
@@ -329,6 +350,13 @@ const InputTit = styled.input`
   color: rgb(195, 194, 204);
   padding: 0px 16px;
 `;
+const Message = styled.div`
+  margin-bottom:25px;
+  font-weight:500;
+  width:96%;
+  font-size:1rem;
+  text-align:end;
+`
 const InputCom = styled.textarea`
   width: 90%;
   height: 100%;

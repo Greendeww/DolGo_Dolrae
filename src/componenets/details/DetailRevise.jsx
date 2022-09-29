@@ -38,7 +38,7 @@ const DetailRevise = () => {
     setContent(commentList?.content);
     setStar(commentList?.star);
     setFileImage1([...commentList?.imageList]);
-    setImage([...commentList?.imageList]);
+    setImage([]);
   }
 
   
@@ -68,10 +68,11 @@ const DetailRevise = () => {
 
   const onChangeImg = (e) => {
     const maxImageCnt = 3;
-    if(image.length > maxImageCnt){
-      alert("첨부파일은 최대 3개까지 가능합니다")
-    }
     const imageList = e.target.files;
+    const imageLists = [...image]
+    // if(fileImage1.length +image.length > maxImageCnt){
+    //   alert("첨부파일은 최대 3개까지 가능합니다")
+    // }
     console.log(imageList);
     const imgFiles = [...fileImage];
     for (let i = 0; i < imageList.length; i++) {
@@ -83,6 +84,9 @@ const DetailRevise = () => {
       image.push(nowImageUrl1);
       continue;
     }
+    // if (fileImage1.length+imageLists.length > 3) {
+    //   imageLists = imageLists.slice(0, 3);
+    // }
     setFileImage(imgFiles);
     // setImage(imageList);
   };
@@ -92,16 +96,18 @@ const DetailRevise = () => {
   };
   const handleDeleteImage1 = (id) => {
     setFileImage1(fileImage1.filter((_, index) => index !== id))
-    setImage(image.filter((_, index) => index !== id));
+    // setImage(image.filter((_, index) => index !== id));
   };
 
   const data = {
     title:title,
     content:content,
     star:Number(star),
+    existUrlList:fileImage1
     // nickname:nickname
   }
   console.log(image)
+  console.log(fileImage1)
   const onChangeHandler = (event, setState) => setState(event.target.value);
   
   const onUpdatePost = async (e) => {
