@@ -8,7 +8,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Navigation,Pagination} from 'swiper';
 import styled from "styled-components";
-import DeleteModal from '../deleteModal/DeleteModal';
 import ModalPortal from '../modal/ModalPortal';
 import Modal from '../modal/Modal';
 
