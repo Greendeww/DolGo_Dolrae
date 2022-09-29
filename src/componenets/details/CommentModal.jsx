@@ -8,18 +8,24 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Navigation,Pagination} from 'swiper';
 import styled from "styled-components";
+import DeleteModal from '../deleteModal/DeleteModal';
+import ModalPortal from '../modal/ModalPortal';
+import Modal from '../modal/Modal';
 
 const CommentModal = ({comment}) => {
   console.log(comment)
   const [modalOn, setModalOn] = useState(false);
+  const nickname = localStorage.getItem("nickname");
+  console.log(modalOn)
   const navigate = useNavigate();
   
   const handleModal = () => {
     setModalOn(false);
   };
-  const {id} = useParams();
+  const deleteModal = () => {
+    setModalOn(true)
+  }
   const dispatch = useDispatch();
-  const node = useRef();
   
   return (
     <>
@@ -27,7 +33,6 @@ const CommentModal = ({comment}) => {
         <div>
           <div> 
             <div style={{display:"flex",alignItems:"center"}}>
-              {/* <p>{comment.title}</p> */}
             </div>
             {/* <Swiper
               modules={[Navigation,Pagination]}
@@ -49,10 +54,13 @@ const CommentModal = ({comment}) => {
             </div>
             <Star key={comment.comment_id} comment={comment}/>
             <p>{comment.content}</p>
-            <div style={{display:"flex", justifyContent:"center" }}>
-            <ReviseBut onClick={() =>navigate('/detail/update/'+comment.place_id+'/'+comment.comment_id)}>수정하기</ReviseBut>
-            <DelBut onClick={() => dispatch(_deleteComment(comment))}>삭제하기</DelBut>
-            </div>
+            <ButtonDiv>
+              <ReviseBut onClick={() =>navigate('/detail/update/'+comment.place_id+'/'+comment.comment_id)}>수정하기</ReviseBut>
+              <DelBut onClick={deleteModal}>삭제하기</DelBut>
+            </ButtonDiv>
+            <ModalPortal>
+              {modalOn && <Modal onClose={handleModal} comment={comment}/>}
+            </ModalPortal>
           </div>
         </div>
       </ComDiv>
@@ -95,4 +103,9 @@ const DetailImg = styled.img`
   border-radius:20px;
   margin-top:1rem;
   /* border: 1px solid rgb(195, 194, 204); */
+`
+const ButtonDiv = styled.div`
+  display:flex; 
+  justify-content:center;
+  margin-top:30px;
 `
