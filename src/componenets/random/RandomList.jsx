@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { FaStar } from 'react-icons/fa';
 import axios from 'axios';
+import Like from '../like/Like';
 
 const RandomList = () => {
     // const [random, setRandom] = useState();
@@ -17,6 +18,11 @@ const RandomList = () => {
     //     fetch()
     // }, []);
 
+    // const onRandom = (e) => {
+    //     fetch();
+    //     window.location.reload();
+    //     console.log("작동")
+    // }
 
     return (
      <>
@@ -42,7 +48,7 @@ const RandomList = () => {
                             </div>
                         </TemaStar>
                     </div>
-                    <TemaHeart>♥</TemaHeart> 
+                    <TemaHeart><Like /></TemaHeart> 
                 </TemaDesc>
             </TemaImgBox>
          </TemaBox>
@@ -63,7 +69,7 @@ const RandomList = () => {
                             </div>
                         </TemaStar>
                     </div>
-                    <TemaHeart>♥</TemaHeart> 
+                    <TemaHeart><Like /></TemaHeart> 
                 </TemaDesc>
             </TemaImgBox>
          </TemaBox>
@@ -84,7 +90,7 @@ const RandomList = () => {
                             </div>
                         </TemaStar>
                     </div>
-                    <TemaHeart>♥</TemaHeart> 
+                    <TemaHeart><Like /></TemaHeart> 
                 </TemaDesc>
             </TemaImgBox>
          </TemaBox>
@@ -105,10 +111,13 @@ const RandomList = () => {
                             </div>
                         </TemaStar>
                     </div>
-                    <TemaHeart>♥</TemaHeart> 
+                    <TemaHeart><Like /></TemaHeart> 
                 </TemaDesc>
             </TemaImgBox>
          </TemaBox>
+         <ButDiv>
+            <RandomBut><ButText>다시 돌리기</ButText></RandomBut>
+         </ButDiv>
        </TemaDiv>
      </Box>
     </>
@@ -141,12 +150,12 @@ const SpanRandom = styled.span`
     color: #ACD4E4;
 `;
 const TemaDiv = styled.div`
-  flex-shrink: 0;
-  width:80%;
-  justify-content:center;
-  align-items:center;
-  margin: 0 auto;
-`;
+    flex-shrink: 0;
+    width:80%;
+    justify-content:center;
+    align-items:center;
+    margin: 0 auto;
+    `;
 const TemaBox = styled.div`
     width:100%;
     padding-bottom:30px;
@@ -169,12 +178,12 @@ const TemaHeart = styled.span`
     color:#FF8585;
 `
 const TemaImgBox = styled.div`
-  flex-shrink: 0;
-  max-width:428px;
-  width:100%;
-  justify-content:center;
-  align-items:center;
-  margin: 0 auto;
+    flex-shrink: 0;
+    max-width:428px;
+    width:100%;
+    justify-content:center;
+    align-items:center;
+    margin: 0 auto;
 `
 const TemaImg = styled.img`
     width:100%;
@@ -196,4 +205,23 @@ const TemaStar = styled.span`
     font-size:1.1rem;
     display:flex;
     line-height:1.1rem;
+`
+const ButDiv = styled.div`
+    text-align:center;
+    margin-top:60px;
+    margin-bottom:100px;
+`
+const RandomBut = styled.button`
+    cursor:pointer;
+    color:white;
+    background-color:#79B9D3;
+    border:0px;
+    height:2.5rem;
+    border-radius:5px;
+    width:100%;
+`;
+const ButText = styled.p`
+    font-weight:700;
+    line-height:0.6rem;
+    font-size:1rem;
 `
