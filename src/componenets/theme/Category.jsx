@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import css from "../../css/category.css";
 import { logout } from "../../redux/modules/user";
 import { useDispatch } from "react-redux";
 
