@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { __signUp, __emailCheck, signUp } from "../redux/modules/user";
 import { useNavigate } from "react-router-dom";
-import nextId from "react-id-generator";
-import axios from "axios";
-import { instance } from "../shared/Api";
 import Header from "../componenets/header/Header";
+import { submitCode } from "../redux/modules/user";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -20,8 +18,28 @@ const SignUp = () => {
 
   const [user, setUser] = useState(initialState);
 
+  // 이메일 인증을 위한 데이터
+  const [emailCheck, setEmailCheck] = useState({ username: "" });
+
+  const emailChangeHandler = (e) => {
+    setEmailCheck({ username: e.target.value });
+  };
+
+  // 이메일 인증버튼 클릭 여부
   const [confirmClick, setConfirmClick] = useState(false);
-  const [idCheck, setIdCheck] = useState({ username: "" });
+
+  // 이메일 인증코드
+  const [code, setCode] = useState({ code: "" });
+  console.log(code);
+
+  const codeChangeHandler = (e) => {
+    setCode({ code: e.target.value });
+  };
+
+  const codeSubmitHandler = (e) => {
+    e.preventDefault();
+    dispatch(submitCode(code));
+  };
 
   // input에 입력한 값을 state로 저장
   const onChangeHandler = (e) => {
@@ -30,21 +48,17 @@ const SignUp = () => {
   };
 
   // email 중복확인을 위한 handler
-  const emailChangeHandler = (e) => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    setIdCheck({ ...idCheck, [name]: value });
-  };
-
   const emailCheckHandler = (e) => {
     e.preventDefault();
     if (user.username === "" || emailRegex.test(user.username) === false) {
       alert("올바른 이메일을 입력해주세요.");
     } else {
       setConfirmClick(true);
-      dispatch(__emailCheck(idCheck));
+      dispatch(__emailCheck(emailCheck));
     }
   };
+
+  console.log(confirmClick);
 
   // 회원가입 정보를 전송하기 위한 handler
   const onSubmitHandler = async (e) => {
@@ -63,15 +77,14 @@ const SignUp = () => {
     // const { data } = await instance.post("api/member/signup", user);
     // // console.log(data);
     // if (data.success) {
-    //   alert("회원가입이 완료되었습니다. 로그인 후 이용바랍니다.");
-    //   navigate("/");
+    //   alert("회원가입이 완료되었습니다. 로그인 후 이용바랍니다.");    //   navigate("/");
     // } else {
     //   window.alert(data.error.message);
     // }
     // setUser(initialState);
   };
 
-  // 이메일, 비밀번호 정규표현식 
+  // 이메일, 비밀번호 정규표현식
   const emailRegex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/;
 
@@ -95,11 +108,7 @@ const SignUp = () => {
                 }}
                 placeholder="이메일을 입력해주세요."
               />
-              <button
-                onClick={emailCheckHandler}
-              >
-                인증하기
-              </button>
+              <button onClick={emailCheckHandler}>인증하기</button>
             </div>
             <div>
               {user.username === "" ? null : emailRegex.test(user.username) ? (
@@ -110,8 +119,15 @@ const SignUp = () => {
             </div>
             {confirmClick === false ? null : (
               <EmailConfirm>
-                <input placeholder="인증번호를 입력해주세요." />{" "}
-                <button>확인</button>
+                <input
+                  placeholder="인증번호를 입력해주세요."
+                  name="code"
+                  value={code.code}
+                  onChange={(e) => {
+                    codeChangeHandler(e);
+                  }}
+                />
+                <button onClick={codeSubmitHandler}>확인</button>
               </EmailConfirm>
             )}
           </label>
@@ -180,7 +196,6 @@ export default SignUp;
 const StSignUp = styled.div`
   width: 428px;
   height: 926px;
-  border: 1px solid gray;
   text-align: center;
   margin: 0 auto;
 
@@ -221,7 +236,6 @@ const Email = styled.div`
     height: 50px;
     cursor: pointer;
     font-weight: 700;
-    font-size: 20px;
     line-height: 24px;
     display: block;
     margin: 0 auto;
