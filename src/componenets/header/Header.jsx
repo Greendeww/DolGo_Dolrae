@@ -14,13 +14,11 @@ const Header = () => {
     setModal(!modal);
   };
 
+  // const menuTrigger = document.querySelector(".menu-trigger");
 
-    // const menuTrigger = document.querySelector(".menu-trigger");
-
-    // menuTrigger.addEventListener("click", (event) => {
-    //   event.currentTarget.classList.toggle("active-1");
-    // });
-
+  // menuTrigger.addEventListener("click", (event) => {
+  //   event.currentTarget.classList.toggle("active-1");
+  // });
 
   window.onload = () => {
     const menuTrigger = document.querySelector(".menu-trigger");
@@ -110,7 +108,7 @@ const HeaderMenu = styled.div`
   width: 214px;
   height: 100%;
   float: right;
-  background-color: rgba(121, 185, 211, 0.62);
+  background-color: #abd4e2;
   text-align: center;
   color: #535353;
   /* right: -60px;  */

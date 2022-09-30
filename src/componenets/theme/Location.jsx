@@ -1027,7 +1027,6 @@ const List = () => {
     sigunguCode: GET_SIGUNGU_CODE,
     sigunguName: GET_SIGUNGU_NAME,
   };
-  console.log(selectedDo);
   return (
     // <St>
     //   <StList>
@@ -1047,627 +1046,732 @@ const List = () => {
     //     선택완료
     //   </button>
     // </St>
-
-    <StList>
-      <p>지역</p>
-      <div>
-        <Do
-          name="서울"
-          value="1"
-          onClick={(e) => {
-            setSelectedDo(e.target.value);
-            seoulHandler();
-            localStorage.setItem(AREA_CODE, e.target.value);
-            localStorage.setItem(AREA_NAME, e.target.name);
-          }}
-          className={
-            1 == selectedDo ? "location-child selected" : "location-child"
-          }
-        >
-          서울
-        </Do>
+    <>
+      <StList>
+        <p>지역</p>
+        <div>
+          <Do
+            name="서울"
+            value="1"
+            onClick={(e) => {
+              setSelectedDo(e.target.value);
+              seoulHandler();
+              localStorage.setItem(AREA_CODE, e.target.value);
+              localStorage.setItem(AREA_NAME, e.target.name);
+            }}
+            className={
+              1 == selectedDo ? "location-child selected" : "location-child"
+            }
+          >
+            서울
+          </Do>
+        </div>
+        <div>
+          <Do
+            name="인천"
+            value="2"
+            onClick={(e) => {
+              setSelectedDo(e.target.value);
+              inCheonHandler();
+              localStorage.setItem(AREA_CODE, e.target.value);
+              localStorage.setItem(AREA_NAME, e.target.name);
+            }}
+            className={
+              2 == selectedDo ? "location-child selected" : "location-child"
+            }
+          >
+            인천
+          </Do>
+        
+        </div>
+        <div>
+          <Do
+            name="대전"
+            value="3"
+            onClick={(e) => {
+              setSelectedDo(e.target.value);
+              daeJeonHandler();
+              localStorage.setItem(AREA_CODE, e.target.value);
+              localStorage.setItem(AREA_NAME, e.target.name);
+            }}
+            className={
+              3 == selectedDo ? "location-child selected" : "location-child"
+            }
+          >
+            대전
+          </Do>
+         
+        </div>
+        <div>
+          <Do
+            name="대구"
+            value="4"
+            onClick={(e) => {
+              setSelectedDo(e.target.value);
+              daeGuHandler();
+              localStorage.setItem(AREA_CODE, e.target.value);
+              localStorage.setItem(AREA_NAME, e.target.name);
+            }}
+            className={
+              4 == selectedDo ? "location-child selected" : "location-child"
+            }
+          >
+            대구
+          </Do>
+          
+        </div>
+        <div>
+          <Do
+            name="광주"
+            value="5"
+            onClick={(e) => {
+              setSelectedDo(e.target.value);
+              gwangJuHandler();
+              localStorage.setItem(AREA_CODE, e.target.value);
+              localStorage.setItem(AREA_NAME, e.target.name);
+            }}
+            className={
+              5 == selectedDo ? "location-child selected" : "location-child"
+            }
+          >
+            광주
+          </Do>
+        
+        </div>
+        <div>
+          <Do
+            name="부산"
+            value="6"
+            onClick={(e) => {
+              setSelectedDo(e.target.value);
+              buSanHandler();
+              localStorage.setItem(AREA_CODE, e.target.value);
+              localStorage.setItem(AREA_NAME, e.target.name);
+            }}
+            className={
+              6 == selectedDo ? "location-child selected" : "location-child"
+            }
+          >
+            부산
+          </Do>
+        
+        </div>
+        <div>
+          <Do
+            name="울산"
+            value="7"
+            onClick={(e) => {
+              setSelectedDo(e.target.value);
+              ulSanHandler();
+              localStorage.setItem(AREA_CODE, e.target.value);
+              localStorage.setItem(AREA_NAME, e.target.name);
+            }}
+            className={
+              7 == selectedDo ? "location-child selected" : "location-child"
+            }
+          >
+            울산
+          </Do>
+     
+        </div>
+        <div>
+          <Do
+            name="세종"
+            value="8"
+            onClick={(e) => {
+              setSelectedDo(e.target.value);
+              seJongHandler();
+              localStorage.setItem(AREA_CODE, e.target.value);
+              localStorage.setItem(AREA_NAME, e.target.name);
+            }}
+            className={
+              8 == selectedDo ? "location-child selected" : "location-child"
+            }
+          >
+            세종
+          </Do>
+         
+        </div>
+        <div>
+          <Do
+            name="경기"
+            value="31"
+            onClick={(e) => {
+              setSelectedDo(e.target.value);
+              gyeongGiHandler();
+              localStorage.setItem(AREA_CODE, e.target.value);
+              localStorage.setItem(AREA_NAME, e.target.name);
+            }}
+            className={
+              31 == selectedDo ? "location-child selected" : "location-child"
+            }
+          >
+            경기
+          </Do>
+         
+        </div>
+        <div>
+          <Do
+            name="강원"
+            value="32"
+            onClick={(e) => {
+              setSelectedDo(e.target.value);
+              gangWonHandler();
+              localStorage.setItem(AREA_CODE, e.target.value);
+              localStorage.setItem(AREA_NAME, e.target.name);
+            }}
+            className={
+              32 == selectedDo ? "location-child selected" : "location-child"
+            }
+          >
+            강원
+          </Do>
+          <Si>
+            {gangWon ? (
+              <ul>
+                <li value="0">전체</li>
+                <li value="1">강릉</li>
+                <li value="2">고성</li>
+                <li value="3">동해</li>
+                <li value="4">삼척</li>
+                <li value="5">속초</li>
+                <li value="6">양구</li>
+                <li value="7">양양</li>
+                <li value="8">영월</li>
+                <li value="9">원주</li>
+                <li value="10">인제</li>
+                <li value="11">정선</li>
+                <li value="12">철원</li>
+                <li value="13">춘천</li>
+                <li value="14">태백</li>
+                <li value="15">평창</li>
+                <li value="16">홍천</li>
+                <li value="17">화천</li>
+                <li value="18">횡성</li>
+              </ul>
+            ) : null}
+          </Si>
+        </div>
+        <div>
+          <Do
+            name="충청북도"
+            value="33"
+            onClick={(e) => {
+              setSelectedDo(e.target.value);
+              chungBukHandler();
+              localStorage.setItem(AREA_CODE, e.target.value);
+              localStorage.setItem(AREA_NAME, e.target.name);
+            }}
+            className={
+              33 == selectedDo ? "location-child selected" : "location-child"
+            }
+          >
+            충북
+          </Do>
+          <Si>
+            {chungBuk ? (
+              <ul>
+                <li value="0">전체</li>
+                <li value="1">괴산</li>
+                <li value="2">단양</li>
+                <li value="3">보은</li>
+                <li value="4">영동</li>
+                <li value="5">옥천</li>
+                <li value="6">음성</li>
+                <li value="7">제천</li>
+                <li value="8">증평</li>
+                <li value="9">진천</li>
+                <li value="10">청원</li>
+                <li value="11">청주</li>
+                <li value="12">충주</li>
+              </ul>
+            ) : null}
+          </Si>
+        </div>
+        <div>
+          <Do
+            name="충청남도"
+            value="34"
+            onClick={(e) => {
+              setSelectedDo(e.target.value);
+              chungNamHandler();
+              localStorage.setItem(AREA_CODE, e.target.value);
+              localStorage.setItem(AREA_NAME, e.target.name);
+            }}
+            className={
+              34 == selectedDo ? "location-child selected" : "location-child"
+            }
+          >
+            충남
+          </Do>
+          <Si>
+            {chungNam ? (
+              <ul>
+                <li value="0">전체</li>
+                <li value="1">계룡</li>
+                <li value="2">공주</li>
+                <li value="3">금산</li>
+                <li value="4">논산</li>
+                <li value="5">당진</li>
+                <li value="6">보령</li>
+                <li value="7">부여</li>
+                <li value="8">서산</li>
+                <li value="9">서천</li>
+                <li value="10">아산</li>
+                <li value="11">예산</li>
+                <li value="12">천안</li>
+                <li value="13">청양</li>
+                <li value="14">태안</li>
+                <li value="15">홍성</li>
+              </ul>
+            ) : null}
+          </Si>
+        </div>
+        <div>
+          <Do
+            name="경상북도"
+            value="35"
+            onClick={(e) => {
+              setSelectedDo(e.target.value);
+              gyeongBukHandler();
+              localStorage.setItem(AREA_CODE, e.target.value);
+              localStorage.setItem(AREA_NAME, e.target.name);
+            }}
+            className={
+              35 == selectedDo ? "location-child selected" : "location-child"
+            }
+          >
+            경북
+          </Do>
+          <Si>
+            {gyeongBuk ? (
+              <ul>
+                <li value="0">전체</li>
+                <li value="1">경산</li>
+                <li value="2">경주</li>
+                <li value="3">고령</li>
+                <li value="4">구미</li>
+                <li value="5">군위</li>
+                <li value="6">김천</li>
+                <li value="7">문경</li>
+                <li value="8">봉화</li>
+                <li value="9">상주</li>
+                <li value="10">성주</li>
+                <li value="11">안동</li>
+                <li value="12">영덕</li>
+                <li value="13">양양</li>
+                <li value="14">영주</li>
+                <li value="15">영천</li>
+                <li value="16">예천</li>
+                <li value="17">울릉</li>
+                <li value="18">울진</li>
+                <li value="19">의성</li>
+                <li value="20">청도</li>
+                <li value="21">청송</li>
+                <li value="22">칠곡</li>
+                <li value="23">포항</li>
+              </ul>
+            ) : null}
+          </Si>
+        </div>
+        <div>
+          <Do
+            name="경상남도"
+            value="36"
+            onClick={(e) => {
+              setSelectedDo(e.target.value);
+              gyeongNamHandler();
+              localStorage.setItem(AREA_CODE, e.target.value);
+              localStorage.setItem(AREA_NAME, e.target.name);
+            }}
+            className={
+              36 == selectedDo ? "location-child selected" : "location-child"
+            }
+          >
+            경남
+          </Do>
+          <Si>
+            {gyeongNam ? (
+              <ul>
+                <li value="0">전체</li>
+                <li value="1">거제</li>
+                <li value="2">거창</li>
+                <li value="3">고성</li>
+                <li value="4">김해</li>
+                <li value="5">남해</li>
+                <li value="6">마산</li>
+                <li value="7">밀양</li>
+                <li value="8">사천</li>
+                <li value="9">산청</li>
+                <li value="10">양산</li>
+                <li value="11">의령</li>
+                <li value="12">진주</li>
+                <li value="13">진해</li>
+                <li value="14">창녕</li>
+                <li value="15">창원</li>
+                <li value="16">통영</li>
+                <li value="17">하동</li>
+                <li value="18">함안</li>
+                <li value="19">함양</li>
+                <li value="20">합천</li>
+              </ul>
+            ) : null}
+          </Si>
+        </div>
+        <div>
+          <Do
+            name="전라북도"
+            value="37"
+            onClick={(e) => {
+              setSelectedDo(e.target.value);
+              jeonBukHandler();
+              localStorage.setItem(AREA_CODE, e.target.value);
+              localStorage.setItem(AREA_NAME, e.target.name);
+            }}
+            className={
+              37 == selectedDo ? "location-child selected" : "location-child"
+            }
+          >
+            전북
+          </Do>
+          <Si>
+            {jeonBuk ? (
+              <ul>
+                <li value="0">전체</li>
+                <li value="1">고창</li>
+                <li value="2">군산</li>
+                <li value="3">김제</li>
+                <li value="4">남원</li>
+                <li value="5">모주</li>
+                <li value="6">부안</li>
+                <li value="7">순창</li>
+                <li value="8">완주</li>
+                <li value="9">익산</li>
+                <li value="10">임실</li>
+                <li value="11">장수</li>
+                <li value="12">전주</li>
+                <li value="13">정읍</li>
+                <li value="14">진안</li>
+              </ul>
+            ) : null}
+          </Si>
+        </div>
+        <div>
+          <Do
+            name="전라남도"
+            value="38"
+            onClick={(e) => {
+              setSelectedDo(e.target.value);
+              jeonNamHandler();
+              localStorage.setItem(AREA_CODE, e.target.value);
+              localStorage.setItem(AREA_NAME, e.target.name);
+            }}
+            className={
+              38 == selectedDo ? "location-child selected" : "location-child"
+            }
+          >
+            전남
+          </Do>
+          <Si>
+            {jeonNam ? (
+              <ul>
+                <li value="0">전체</li>
+                <li value="1">강진</li>
+                <li value="2">고흥</li>
+                <li value="3">곡성</li>
+                <li value="4">광양</li>
+                <li value="5">구례</li>
+                <li value="6">나주</li>
+                <li value="7">담양</li>
+                <li value="8">목포</li>
+                <li value="9">무안</li>
+                <li value="10">보성</li>
+                <li value="11">순천</li>
+                <li value="12">신안</li>
+                <li value="13">여수</li>
+                <li value="14">영광</li>
+                <li value="15">영암</li>
+                <li value="16">완도</li>
+                <li value="17">장성</li>
+                <li value="18">장흥</li>
+                <li value="19">진도</li>
+                <li value="20">함평</li>
+                <li value="21">해남</li>
+                <li value="22">화순</li>
+              </ul>
+            ) : null}
+          </Si>
+        </div>
+        <div>
+          <Do
+            name="제주"
+            value="39"
+            onClick={(e) => {
+              setSelectedDo(e.target.value);
+              jeJuHandler();
+              localStorage.setItem(AREA_CODE, e.target.value);
+              localStorage.setItem(AREA_NAME, e.target.name);
+            }}
+            className={
+              39 == selectedDo ? "location-child selected" : "location-child"
+            }
+          >
+            제주
+          </Do>
+          <Si>
+            {jeJu ? (
+              <ul>
+                <li value="0">전체</li>
+                <li value="1">서귀포</li>
+                <li value="2">제주</li>
+              </ul>
+            ) : null}
+          </Si>
+        </div>
+      </StList>
+      <StList>
+        <p>세부지역</p>
         <Si>
-          {seoul ? (
-            <ul>
-              <li
-                name="전체"
-                value="0"
-                onClick={(e) => {
-                  setSelectedSi(e.target.value);
-                  localStorage.setItem(SIGUNGU_CODE, e.target.value);
-                  localStorage.setItem(SIGUNGU_NAME, e.target.name);
-                }}
-                className={
-                  0 == selectedSi ? "location-child selected" : "location-child"
-                }
-              >
-                전체
-              </li>
-            </ul>
-          ) : null}
-        </Si>
-      </div>
-      <div>
-        <Do
-          name="인천"
-          value="2"
-          onClick={(e) => {
-            setSelectedDo(e.target.value);
-            inCheonHandler();
-            localStorage.setItem(AREA_CODE, e.target.value);
-            localStorage.setItem(AREA_NAME, e.target.name);
-          }}
-          className={
-            2 == selectedDo ? "location-child selected" : "location-child"
-          }
-        >
-          인천
-        </Do>
-        <Si>
-          {inCheon ? (
-            <ul>
-              <li
-                name="전체"
-                value="0"
-                onClick={(e) => {
-                  setSelectedSi(e.target.value);
-                  localStorage.setItem(SIGUNGU_CODE, e.target.value);
-                  localStorage.setItem(SIGUNGU_NAME, e.target.name);
-                }}
-                className={
-                  0 == selectedSi ? "location-child selected" : "location-child"
-                }
-              >
-                전체
-              </li>
-            </ul>
-          ) : null}
-        </Si>
-      </div>
-      <div>
-        <Do
-          name="대전"
-          value="3"
-          onClick={(e) => {
-            setSelectedDo(e.target.value);
-            daeJeonHandler();
-            localStorage.setItem(AREA_CODE, e.target.value);
-            localStorage.setItem(AREA_NAME, e.target.name);
-          }}
-          className={
-            3 == selectedDo ? "location-child selected" : "location-child"
-          }
-        >
-          대전
-        </Do>
-        <Si>
-          {daeJeon ? (
-            <ul>
-              <li value="0">전체</li>
-            </ul>
-          ) : null}
-        </Si>
-      </div>
-      <div>
-        <Do
-          name="대구"
-          value="4"
-          onClick={(e) => {
-            setSelectedDo(e.target.value);
-            daeGuHandler();
-            localStorage.setItem(AREA_CODE, e.target.value);
-            localStorage.setItem(AREA_NAME, e.target.name);
-          }}
-          className={
-            4 == selectedDo ? "location-child selected" : "location-child"
-          }
-        >
-          대구
-        </Do>
-        <Si>
-          {daeGu ? (
-            <ul>
-              <li value="0">전체</li>
-            </ul>
-          ) : null}
-        </Si>
-      </div>
-      <div>
-        <Do
-          name="광주"
-          value="5"
-          onClick={(e) => {
-            setSelectedDo(e.target.value);
-            gwangJuHandler();
-            localStorage.setItem(AREA_CODE, e.target.value);
-            localStorage.setItem(AREA_NAME, e.target.name);
-          }}
-          className={
-            5 == selectedDo ? "location-child selected" : "location-child"
-          }
-        >
-          광주
-        </Do>
-        <Si>
-          {gwangJu ? (
-            <ul>
-              <li value="0">전체</li>
-            </ul>
-          ) : null}
-        </Si>
-      </div>
-      <div>
-        <Do
-          name="부산"
-          value="6"
-          onClick={(e) => {
-            setSelectedDo(e.target.value);
-            buSanHandler();
-            localStorage.setItem(AREA_CODE, e.target.value);
-            localStorage.setItem(AREA_NAME, e.target.name);
-          }}
-          className={
-            6 == selectedDo ? "location-child selected" : "location-child"
-          }
-        >
-          부산
-        </Do>
-        <Si>
-          {buSan ? (
-            <ul>
-              <li value="0">전체</li>
-            </ul>
-          ) : null}
-        </Si>
-      </div>
-      <div>
-        <Do
-          name="울산"
-          value="7"
-          onClick={(e) => {
-            setSelectedDo(e.target.value);
-            ulSanHandler();
-            localStorage.setItem(AREA_CODE, e.target.value);
-            localStorage.setItem(AREA_NAME, e.target.name);
-          }}
-          className={
-            7 == selectedDo ? "location-child selected" : "location-child"
-          }
-        >
-          울산
-        </Do>
-        <Si>
-          {ulSan ? (
-            <ul>
-              <li value="0">전체</li>
-            </ul>
-          ) : null}
-        </Si>
-      </div>
-      <div>
-        <Do
-          name="세종"
-          value="8"
-          onClick={(e) => {
-            setSelectedDo(e.target.value);
-            seJongHandler();
-            localStorage.setItem(AREA_CODE, e.target.value);
-            localStorage.setItem(AREA_NAME, e.target.name);
-          }}
-          className={
-            8 == selectedDo ? "location-child selected" : "location-child"
-          }
-        >
-          세종
-        </Do>
-        <Si>
-          {seJong ? (
-            <ul>
-              <li value="0">전체</li>
-            </ul>
-          ) : null}
-        </Si>
-      </div>
-      <div>
-        <Do
-          name="경기"
-          value="31"
-          onClick={(e) => {
-            setSelectedDo(e.target.value);
-            gyeongGiHandler();
-            localStorage.setItem(AREA_CODE, e.target.value);
-            localStorage.setItem(AREA_NAME, e.target.name);
-          }}
-          className={
-            31 == selectedDo ? "location-child selected" : "location-child"
-          }
-        >
-          경기
-        </Do>
-        <Si>
-          {gyeongGi ? (
-            <ul>
-              <li
-                name="전체"
-                value="0"
-                onClick={(e) => {
-                  setSelectedSi(e.target.value);
-                  localStorage.setItem(SIGUNGU_CODE, e.target.value);
-                  localStorage.setItem(SIGUNGU_NAME, e.target.name);
-                }}
-                className={
-                  0 == selectedSi ? "location-child selected" : "location-child"
-                }
-              >
-                전체
-              </li>
-              <li
-                name="가평"
-                value="1"
-                onClick={(e) => {
-                  setSelectedSi(e.target.value);
-                  localStorage.setItem(SIGUNGU_CODE, e.target.value);
-                  localStorage.setItem(SIGUNGU_NAME, e.target.name);
-                }}
-                className={
-                  1 == selectedSi ? "location-child selected" : "location-child"
-                }
-              >
-                가평
-              </li>
-              <li value="2">고양</li>
-              <li value="3">과천</li>
-              <li value="4">광명</li>
-              <li value="5">광주</li>
-              <li value="6">구리</li>
-              <li value="7">군포</li>
-              <li value="8">김포</li>
-              <li value="9">남양주</li>
-              <li value="10">동두천</li>
-              <li value="11">부천</li>
-              <li value="12">성남</li>
-              <li value="13">수원</li>
-              <li value="14">시흥</li>
-              <li value="15">안산</li>
-              <li value="16">안성</li>
-              <li value="17">안양</li>
-              <li value="18">양주</li>
-              <li value="19">양평</li>
-              <li value="20">여주</li>
-              <li value="21">연천</li>
-              <li value="22">오산</li>
-              <li value="23">용인</li>
-              <li value="24">의왕</li>
-              <li value="25">의정부</li>
-              <li value="26">이천</li>
-              <li value="27">파주</li>
-              <li value="28">평택</li>
-              <li value="29">포천</li>
-              <li value="30">하남</li>
-              <li value="31">화성</li>
-            </ul>
-          ) : null}
-        </Si>
-      </div>
-      <div>
-        <Do
-          name="강원"
-          value="32"
-          onClick={(e) => {
-            setSelectedDo(e.target.value);
-            gangWonHandler();
-            localStorage.setItem(AREA_CODE, e.target.value);
-            localStorage.setItem(AREA_NAME, e.target.name);
-          }}
-          className={
-            32 == selectedDo ? "location-child selected" : "location-child"
-          }
-        >
-          강원
-        </Do>
-        <Si>
-          {gangWon ? (
-            <ul>
-              <li value="0">전체</li>
-              <li value="1">강릉</li>
-              <li value="2">고성</li>
-              <li value="3">동해</li>
-              <li value="4">삼척</li>
-              <li value="5">속초</li>
-              <li value="6">양구</li>
-              <li value="7">양양</li>
-              <li value="8">영월</li>
-              <li value="9">원주</li>
-              <li value="10">인제</li>
-              <li value="11">정선</li>
-              <li value="12">철원</li>
-              <li value="13">춘천</li>
-              <li value="14">태백</li>
-              <li value="15">평창</li>
-              <li value="16">홍천</li>
-              <li value="17">화천</li>
-              <li value="18">횡성</li>
-            </ul>
-          ) : null}
-        </Si>
-      </div>
-      <div>
-        <Do
-          name="충청북도"
-          value="33"
-          onClick={(e) => {
-            setSelectedDo(e.target.value);
-            chungBukHandler();
-            localStorage.setItem(AREA_CODE, e.target.value);
-            localStorage.setItem(AREA_NAME, e.target.name);
-          }}
-          className={
-            33 == selectedDo ? "location-child selected" : "location-child"
-          }
-        >
-          충북
-        </Do>
-        <Si>
-          {chungBuk ? (
-            <ul>
-              <li value="0">전체</li>
-              <li value="1">괴산</li>
-              <li value="2">단양</li>
-              <li value="3">보은</li>
-              <li value="4">영동</li>
-              <li value="5">옥천</li>
-              <li value="6">음성</li>
-              <li value="7">제천</li>
-              <li value="8">증평</li>
-              <li value="9">진천</li>
-              <li value="10">청원</li>
-              <li value="11">청주</li>
-              <li value="12">충주</li>
-            </ul>
-          ) : null}
-        </Si>
-      </div>
-      <div>
-        <Do
-          name="충청남도"
-          value="34"
-          onClick={(e) => {
-            setSelectedDo(e.target.value);
-            chungNamHandler();
-            localStorage.setItem(AREA_CODE, e.target.value);
-            localStorage.setItem(AREA_NAME, e.target.name);
-          }}
-          className={
-            34 == selectedDo ? "location-child selected" : "location-child"
-          }
-        >
-          충남
-        </Do>
-        <Si>
-          {chungNam ? (
-            <ul>
-              <li value="0">전체</li>
-              <li value="1">계룡</li>
-              <li value="2">공주</li>
-              <li value="3">금산</li>
-              <li value="4">논산</li>
-              <li value="5">당진</li>
-              <li value="6">보령</li>
-              <li value="7">부여</li>
-              <li value="8">서산</li>
-              <li value="9">서천</li>
-              <li value="10">아산</li>
-              <li value="11">예산</li>
-              <li value="12">천안</li>
-              <li value="13">청양</li>
-              <li value="14">태안</li>
-              <li value="15">홍성</li>
-            </ul>
-          ) : null}
-        </Si>
-      </div>
-      <div>
-        <Do
-          name="경상북도"
-          value="35"
-          onClick={(e) => {
-            setSelectedDo(e.target.value);
-            gyeongBukHandler();
-            localStorage.setItem(AREA_CODE, e.target.value);
-            localStorage.setItem(AREA_NAME, e.target.name);
-          }}
-          className={
-            35 == selectedDo ? "location-child selected" : "location-child"
-          }
-        >
-          경북
-        </Do>
-        <Si>
-          {gyeongBuk ? (
-            <ul>
-              <li value="0">전체</li>
-              <li value="1">경산</li>
-              <li value="2">경주</li>
-              <li value="3">고령</li>
-              <li value="4">구미</li>
-              <li value="5">군위</li>
-              <li value="6">김천</li>
-              <li value="7">문경</li>
-              <li value="8">봉화</li>
-              <li value="9">상주</li>
-              <li value="10">성주</li>
-              <li value="11">안동</li>
-              <li value="12">영덕</li>
-              <li value="13">양양</li>
-              <li value="14">영주</li>
-              <li value="15">영천</li>
-              <li value="16">예천</li>
-              <li value="17">울릉</li>
-              <li value="18">울진</li>
-              <li value="19">의성</li>
-              <li value="20">청도</li>
-              <li value="21">청송</li>
-              <li value="22">칠곡</li>
-              <li value="23">포항</li>
-            </ul>
-          ) : null}
-        </Si>
-      </div>
-      <div>
-        <Do
-          name="경상남도"
-          value="36"
-          onClick={(e) => {
-            setSelectedDo(e.target.value);
-            gyeongNamHandler();
-            localStorage.setItem(AREA_CODE, e.target.value);
-            localStorage.setItem(AREA_NAME, e.target.name);
-          }}
-          className={
-            36 == selectedDo ? "location-child selected" : "location-child"
-          }
-        >
-          경남
-        </Do>
-        <Si>
-          {gyeongNam ? (
-            <ul>
-              <li value="0">전체</li>
-              <li value="1">거제</li>
-              <li value="2">거창</li>
-              <li value="3">고성</li>
-              <li value="4">김해</li>
-              <li value="5">남해</li>
-              <li value="6">마산</li>
-              <li value="7">밀양</li>
-              <li value="8">사천</li>
-              <li value="9">산청</li>
-              <li value="10">양산</li>
-              <li value="11">의령</li>
-              <li value="12">진주</li>
-              <li value="13">진해</li>
-              <li value="14">창녕</li>
-              <li value="15">창원</li>
-              <li value="16">통영</li>
-              <li value="17">하동</li>
-              <li value="18">함안</li>
-              <li value="19">함양</li>
-              <li value="20">합천</li>
-            </ul>
-          ) : null}
-        </Si>
-      </div>
-      <div>
-        <Do
-          name="전라북도"
-          value="37"
-          onClick={(e) => {
-            setSelectedDo(e.target.value);
-            jeonBukHandler();
-            localStorage.setItem(AREA_CODE, e.target.value);
-            localStorage.setItem(AREA_NAME, e.target.name);
-          }}
-          className={
-            37 == selectedDo ? "location-child selected" : "location-child"
-          }
-        >
-          전북
-        </Do>
-        <Si>
-          {jeonBuk ? (
-            <ul>
-              <li value="0">전체</li>
-              <li value="1">고창</li>
-              <li value="2">군산</li>
-              <li value="3">김제</li>
-              <li value="4">남원</li>
-              <li value="5">모주</li>
-              <li value="6">부안</li>
-              <li value="7">순창</li>
-              <li value="8">완주</li>
-              <li value="9">익산</li>
-              <li value="10">임실</li>
-              <li value="11">장수</li>
-              <li value="12">전주</li>
-              <li value="13">정읍</li>
-              <li value="14">진안</li>
-            </ul>
-          ) : null}
-        </Si>
-      </div>
-      <div>
-        <Do
-          name="전라남도"
-          value="38"
-          onClick={(e) => {
-            setSelectedDo(e.target.value);
-            jeonNamHandler();
-            localStorage.setItem(AREA_CODE, e.target.value);
-            localStorage.setItem(AREA_NAME, e.target.name);
-          }}
-          className={
-            38 == selectedDo ? "location-child selected" : "location-child"
-          }
-        >
-          전남
-        </Do>
-        <Si>
-          {jeonNam ? (
-            <ul>
-              <li value="0">전체</li>
-              <li value="1">강진</li>
-              <li value="2">고흥</li>
-              <li value="3">곡성</li>
-              <li value="4">광양</li>
-              <li value="5">구례</li>
-              <li value="6">나주</li>
-              <li value="7">담양</li>
-              <li value="8">목포</li>
-              <li value="9">무안</li>
-              <li value="10">보성</li>
-              <li value="11">순천</li>
-              <li value="12">신안</li>
-              <li value="13">여수</li>
-              <li value="14">영광</li>
-              <li value="15">영암</li>
-              <li value="16">완도</li>
-              <li value="17">장성</li>
-              <li value="18">장흥</li>
-              <li value="19">진도</li>
-              <li value="20">함평</li>
-              <li value="21">해남</li>
-              <li value="22">화순</li>
-            </ul>
-          ) : null}
-        </Si>
-      </div>
-      <div>
-        <Do
-          name="제주"
-          value="39"
-          onClick={(e) => {
-            setSelectedDo(e.target.value);
-            jeJuHandler();
-            localStorage.setItem(AREA_CODE, e.target.value);
-            localStorage.setItem(AREA_NAME, e.target.name);
-          }}
-          className={
-            39 == selectedDo ? "location-child selected" : "location-child"
-          }
-        >
-          제주
-        </Do>
-        <Si>
-          {jeJu ? (
-            <ul>
-              <li value="0">전체</li>
-              <li value="1">서귀포</li>
-              <li value="2">제주</li>
-            </ul>
-          ) : null}
-        </Si>
-      </div>
-    </StList>
+            {seoul ? (
+              <ul>
+                <li
+                  name="전체"
+                  value="0"
+                  onClick={(e) => {
+                    setSelectedSi(e.target.value);
+                    localStorage.setItem(SIGUNGU_CODE, e.target.value);
+                    localStorage.setItem(SIGUNGU_NAME, e.target.name);
+                  }}
+                  className={
+                    0 == selectedSi
+                      ? "location-child selected"
+                      : "location-child"
+                  }
+                >
+                  전체
+                </li>
+              </ul>
+            ) : null}
+          </Si>
+          <Si>
+            {inCheon ? (
+              <ul>
+                <li
+                  name="전체"
+                  value="0"
+                  onClick={(e) => {
+                    setSelectedSi(e.target.value);
+                    localStorage.setItem(SIGUNGU_CODE, e.target.value);
+                    localStorage.setItem(SIGUNGU_NAME, e.target.name);
+                  }}
+                  className={
+                    0 == selectedSi
+                      ? "location-child selected"
+                      : "location-child"
+                  }
+                >
+                  전체
+                </li>
+              </ul>
+            ) : null}
+          </Si>
+          <Si>
+            {daeJeon ? (
+              <ul>
+                <li
+                 name="전체"
+                 value="0"
+                 onClick={(e) => {
+                   setSelectedSi(e.target.value);
+                   localStorage.setItem(SIGUNGU_CODE, e.target.value);
+                   localStorage.setItem(SIGUNGU_NAME, e.target.name);
+                 }}
+                 className={
+                   0 == selectedSi
+                     ? "location-child selected"
+                     : "location-child"
+                 }
+                >전체</li>
+              </ul>
+            ) : null}
+          </Si>
+          <Si>
+            {daeGu ? (
+              <ul>
+                <li
+                 name="전체"
+                 value="0"
+                 onClick={(e) => {
+                   setSelectedSi(e.target.value);
+                   localStorage.setItem(SIGUNGU_CODE, e.target.value);
+                   localStorage.setItem(SIGUNGU_NAME, e.target.name);
+                 }}
+                 className={
+                   0 == selectedSi
+                     ? "location-child selected"
+                     : "location-child"
+                 }>전체</li>
+              </ul>
+            ) : null}
+          </Si>
+          <Si>
+            {gwangJu ? (
+              <ul>
+                <li
+                 name="전체"
+                 value="0"
+                 onClick={(e) => {
+                   setSelectedSi(e.target.value);
+                   localStorage.setItem(SIGUNGU_CODE, e.target.value);
+                   localStorage.setItem(SIGUNGU_NAME, e.target.name);
+                 }}
+                 className={
+                   0 == selectedSi
+                     ? "location-child selected"
+                     : "location-child"
+                 }>전체</li>
+              </ul>
+            ) : null}
+          </Si>
+          <Si>
+            {buSan ? (
+              <ul>
+                <li
+                 name="전체"
+                 value="0"
+                 onClick={(e) => {
+                   setSelectedSi(e.target.value);
+                   localStorage.setItem(SIGUNGU_CODE, e.target.value);
+                   localStorage.setItem(SIGUNGU_NAME, e.target.name);
+                 }}
+                 className={
+                   0 == selectedSi
+                     ? "location-child selected"
+                     : "location-child"
+                 }>전체</li>
+              </ul>
+            ) : null}
+          </Si>
+          <Si>
+            {ulSan ? (
+              <ul>
+                <li
+                 value="0"
+                 onClick={(e) => {
+                   setSelectedSi(e.target.value);
+                   localStorage.setItem(SIGUNGU_CODE, e.target.value);
+                   localStorage.setItem(SIGUNGU_NAME, e.target.name);
+                 }}
+                 className={
+                   0 == selectedSi
+                     ? "location-child selected"
+                     : "location-child"
+                 }>전체</li>
+              </ul>
+            ) : null}
+          </Si>
+          <Si>
+            {seJong ? (
+              <ul>
+                <li
+                 name="전체"
+                 value="0"
+                 onClick={(e) => {
+                   setSelectedSi(e.target.value);
+                   localStorage.setItem(SIGUNGU_CODE, e.target.value);
+                   localStorage.setItem(SIGUNGU_NAME, e.target.name);
+                 }}
+                 className={
+                   0 == selectedSi
+                     ? "location-child selected"
+                     : "location-child"
+                 }>전체</li>
+              </ul>
+            ) : null}
+          </Si>
+          <Si>
+            {gyeongGi ? (
+              <ul>
+                <li
+                  name="전체"
+                  value="0"
+                  onClick={(e) => {
+                    setSelectedSi(e.target.value);
+                    localStorage.setItem(SIGUNGU_CODE, e.target.value);
+                    localStorage.setItem(SIGUNGU_NAME, e.target.name);
+                  }}
+                  className={
+                    0 == selectedSi
+                      ? "location-child selected"
+                      : "location-child"
+                  }
+                >
+                  전체
+                </li>
+                <li
+                  name="가평"
+                  value="1"
+                  onClick={(e) => {
+                    setSelectedSi(e.target.value);
+                    localStorage.setItem(SIGUNGU_CODE, e.target.value);
+                    localStorage.setItem(SIGUNGU_NAME, e.target.name);
+                  }}
+                  className={
+                    1 == selectedSi
+                      ? "location-child selected"
+                      : "location-child"
+                  }
+                >
+                  가평
+                </li>
+                <div
+                 name="고양"
+                 value="2"
+                 onClick={(e) => {
+                   setSelectedSi(e.target.value);
+                   localStorage.setItem(SIGUNGU_CODE, e.target.value);
+                   localStorage.setItem(SIGUNGU_NAME, e.target.name);
+                 }}
+                 className={
+                  2 == selectedSi
+                     ? "location-child selected"
+                     : "location-child"
+                 }
+                 >고양</div>
+                <li value="3">과천</li>
+                <li value="4">광명</li>
+                <li value="5">광주</li>
+                <li value="6">구리</li>
+                <li value="7">군포</li>
+                <li value="8">김포</li>
+                <li value="9">남양주</li>
+                <li value="10">동두천</li>
+                <li value="11">부천</li>
+                <li value="12">성남</li>
+                <li value="13">수원</li>
+                <li value="14">시흥</li>
+                <li value="15">안산</li>
+                <li value="16">안성</li>
+                <li value="17">안양</li>
+                <li value="18">양주</li>
+                <li value="19">양평</li>
+                <li value="20">여주</li>
+                <li value="21">연천</li>
+                <li value="22">오산</li>
+                <li value="23">용인</li>
+                <li value="24">의왕</li>
+                <li value="25">의정부</li>
+                <li value="26">이천</li>
+                <li value="27">파주</li>
+                <li value="28">평택</li>
+                <li value="29">포천</li>
+                <li value="30">하남</li>
+                <li value="31">화성</li>
+              </ul>
+            ) : null}
+          </Si>
+      </StList>
+    </>
   );
 };
 
