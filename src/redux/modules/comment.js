@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { instance } from "../../shared/Api";
 import axios from "axios";
 
 const initialState = {
@@ -12,14 +13,8 @@ export const _getComments = createAsyncThunk(
   "comment/getComments",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(
-        `http://3.34.46.193/api/comment/${payload}`
-        // {
-        //   headers: {
-        //     Authorization: localStorage.getItem("Authorization"),
-        //     RefreshToken: localStorage.getItem("RefreshToken"),
-        //   },
-        // }
+      const data = await instance.get(
+        `/api/comment/${payload}`
       );
       console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
@@ -33,8 +28,8 @@ export const _deleteComment = createAsyncThunk(
   "comment/delete",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.delete(
-        `http://3.34.46.193/api/auth/comment/${payload.comment_id}`,
+      const data = await instance.delete(
+        `api/auth/comment/${payload.comment_id}`,
         // {
         //   headers: {
         //     Authorization: localStorage.getItem("Authorization"),
@@ -53,8 +48,8 @@ export const _updateComment = createAsyncThunk(
   "comment/update",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.patch(
-        `http://3.34.46.193/api/auth/comment/${payload.id}`,
+      const data = await instance.put(
+        `/api/auth/comment/${payload.id}`,
         payload.formData,
         {
           headers: {
@@ -64,7 +59,7 @@ export const _updateComment = createAsyncThunk(
           },
         }
       );
-      // window.location.replace(`/detail/${payload.placeId}`);
+      window.location.replace(`/detail/${payload.placeId}`);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
