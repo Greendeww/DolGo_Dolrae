@@ -27,7 +27,7 @@ export const __emailCheck = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log(payload);
     try {
-      const response = await instance.post("/api/member/duplicate", payload, {
+      const response = await instance.post("/api/member/email", payload, {
         headers: {
           "content-type": "application/json",
         },
@@ -88,6 +88,15 @@ export const userSlice = createSlice({
       instance.post("/api/member/signup", action.payload);
       state.users.push(action.payload);
     },
+
+    submitCode: (state, action) => {
+      console.log(action.payload)
+      instance.post("api/member/codeEmail", action.payload, {
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+    }
   },
   extraReducers: (builder) => {
     // builder
@@ -112,12 +121,12 @@ export const userSlice = createSlice({
       .addCase(__emailCheck.fulfilled, (state, action) => {
         state.isLoading = false;
         state.users = action.payload;
-        window.alert("사용 가능한 이메일입니다.");
+        // window.alert("사용 가능한 이메일입니다.");
         console.log(action.payload);
       })
       .addCase(__emailCheck.rejected, (state, action) => {
         state.isLoading = false;
-        window.alert("이미 존재하는 이메일입니다..");
+        // window.alert("이미 존재하는 이메일입니다..");
         state.error = action.payload;
       });
 
@@ -138,5 +147,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { signUp, logout } = userSlice.actions;
+export const { signUp, logout, submitCode } = userSlice.actions;
 export default userSlice;
