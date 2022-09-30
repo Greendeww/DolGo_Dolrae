@@ -1,21 +1,22 @@
 import React from "react";
 import styled from "styled-components";
+import Header from "../componenets/header/Header";
 import Category from "../componenets/theme/Category";
 import Location from "../componenets/theme/Location";
 
 const Theme = () => {
   return (
     <StTheme>
+      <Header/>
       <Category />
       <Location />
     </StTheme>
-    
   );
 };
 
 export default Theme;
 
 const StTheme = styled.div`
-display: block;
-width: 755px;
+width: 428px;
+margin: 0 auto;
 `;

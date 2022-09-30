@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import { instance } from "../../shared/Api";
-import { setCookie } from "../../shared/Cookie";
+import { deleteCookie, getCookie, setCookie } from "../../shared/Cookie";
+import axios from "axios";
 
 const initialState = {
   users: [],
@@ -9,23 +9,29 @@ const initialState = {
   error: null,
 };
 
-// export const __signUp = createAsyncThunk(
-//   "user/__signUp",
-//   async (user, thunkAPI) => {
-//     try {
-//       const response = await axios.post("http://localhost:3001/users", user);
-//       return response.data;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   }
-// );
+export const __signUp = createAsyncThunk(
+  "user/__signUp",
+  async (user, thunkAPI) => {
+    console.log(user);
+    try {
+      const response = await instance.post("/api/member/signup", user);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 export const __emailCheck = createAsyncThunk(
-  "user/__idCheck",
-  async (email, thunkAPI) => {
+  "user/__emailCheck",
+  async (payload, thunkAPI) => {
+    console.log(payload);
     try {
-      const response = await instance.post("", email);
+      const response = await instance.post("/api/member/email", payload, {
+        headers: {
+          "content-type": "application/json",
+        },
+      });
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -38,28 +44,59 @@ export const __login = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       const response = await instance.post("/api/member/login", user);
-      if (response.data.success) {
-        setCookie("isLogin", response.headers.Authorization);
-        setCookie("ACCESS_TOKEN", response.headers.Authorization);
-        setCookie("REFRESH_TOKEN", response.headers.Refreshtoken);
-        localStorage.setItem("email", response.data.data.email);
-      }
+      console.log(response.headers);
+      localStorage.setItem("isLogin", response.headers.authorization);
+      localStorage.setItem("ACCESS_TOKEN", response.headers.authorization);
+      localStorage.setItem("REFRESH_TOKEN", response.headers.refreshtoken);
+      localStorage.setItem("username", response.data.username);
+
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
-)
+);
+
+export const __logout = createAsyncThunk(
+  "user/__logout",
+  async (user, thunkAPI) => {
+    try {
+      const response = await instance.post("/api/auth/member/logout");
+      localStorage.removeItem("username");
+      localStorage.removeItem("isLogin");
+      localStorage.removeItem("ACCESS_TOKEN");
+      localStorage.removeItem("REFRESH_TOKEN");
+      localStorage.removeItem("THEME_CODE");
+      localStorage.removeItem("THEME_NAME");
+      localStorage.removeItem("AREA_CODE");
+      localStorage.removeItem("AREA_NAME");
+      localStorage.removeItem("SIGUNGU_CODE");
+      localStorage.removeItem("SIGUNGU_NAME");
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    signUp: (state,action) => {
+    signUp: (state, action) => {
       instance.post("/api/member/signup", action.payload);
       state.users.push(action.payload);
     },
 
+    submitCode: (state, action) => {
+      console.log(action.payload)
+      instance.post("api/member/codeEmail", action.payload, {
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+    }
   },
   extraReducers: (builder) => {
     // builder
@@ -84,16 +121,16 @@ export const userSlice = createSlice({
       .addCase(__emailCheck.fulfilled, (state, action) => {
         state.isLoading = false;
         state.users = action.payload;
-        window.alert("사용 가능한 이메일입니다.");
+        // window.alert("사용 가능한 이메일입니다.");
         console.log(action.payload);
       })
       .addCase(__emailCheck.rejected, (state, action) => {
         state.isLoading = false;
-        window.alert("이미 존재하는 이메일입니다..");
+        // window.alert("이미 존재하는 이메일입니다..");
         state.error = action.payload;
       });
 
-      builder
+    builder
       .addCase(__login.pending, (state) => {
         state.isLoading = true;
       })
@@ -110,4 +147,5 @@ export const userSlice = createSlice({
   },
 });
 
+export const { signUp, logout, submitCode } = userSlice.actions;
 export default userSlice;
