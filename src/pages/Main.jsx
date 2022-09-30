@@ -4,16 +4,11 @@ import Header from "../componenets/header/Header";
 import Footer from "../componenets/footer/Footer";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
-
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import { getApi } from "../shared/Api";
-
 import { FaStar } from 'react-icons/fa';
-
-
 
 const Main = () => {
     
@@ -27,8 +22,6 @@ const Main = () => {
         slidesToScroll: 1
       };
 
-
-
     const [ theme01, setTheme01 ] = useState([]);
     const [ theme02, setTheme02 ] = useState([]);
     const [ theme03, setTheme03 ] = useState([]);
@@ -37,27 +30,19 @@ const Main = () => {
     const fetchPost = async () => {
         const response = await getApi("/main")
         console.log(response.data[0].foodList[0])
-
         setTheme01([response.data[0].foodList[0], response.data[0].foodList[1], response.data[0].foodList[2]]);
         setTheme02([response.data[1].tourList[0]]);
         setTheme03([response.data[2].activityList[0]]);
         setTheme04([response.data[3].museumList[0]]);
     }
 
-
     useEffect( () => {
-        
         fetchPost();
-
     }, []);
-
-
 
     if(theme01===undefined) {
         return
     }
-
-
 
     return (
         <Div>

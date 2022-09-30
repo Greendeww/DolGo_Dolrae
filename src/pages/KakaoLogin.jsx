@@ -28,8 +28,8 @@ const KaKaoLogin = () => {
 
       // 로컬스토리지에 저장하면 새로고침 안 해도 저장이 되어서 변경
       localStorage.setItem("token", res.headers.authorization);
-
       alert(res.data);
+      console.log("카카오 로그인 완료")
       navigate('/');
     } catch (error) {
       console.log("카카오 로그인 실패");
