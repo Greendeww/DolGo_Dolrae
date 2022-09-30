@@ -127,10 +127,6 @@ const onChangeTitle = (e) => {
     for(let i = 0; i<image.length; i++){
       formData.append("image",image[i])
     }
-    // formData.append("image",imagenull)
-    // formData.append("image",image[0])
-    // formData.append("image",image[1])
-    // formData.append("image",image[2])
     formData.append("data",blob)
 
     const payload = {
@@ -186,10 +182,10 @@ const onChangeTitle = (e) => {
               <ImgLabel>
                 <img
                   alt=""
-                  style={{ height: "20px" }}
+                  style={{ height: "1.5rem" }}
                   src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj4KICAgIDxwYXRoIGZpbGw9IiNEQ0RCRTQiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTI4LjQ3MSAzMkgzLjUzYy0uOTcxIDAtMS44OTQtLjQyMi0yLjUyOS0xLjE1N2wtLjAyNi0uMDNBNCA0IDAgMCAxIDAgMjguMTk4VjguNjA3QTQgNCAwIDAgMSAuOTc0IDUuOTlMMSA1Ljk2YTMuMzQzIDMuMzQzIDAgMCAxIDIuNTI5LTEuMTU2aDIuNTM0YTIgMiAwIDAgMCAxLjUzNy0uNzJMMTAuNC43MkEyIDIgMCAwIDEgMTEuOTM3IDBoOC4xMjZBMiAyIDAgMCAxIDIxLjYuNzJsMi44IDMuMzYzYTIgMiAwIDAgMCAxLjUzNy43MmgyLjUzNGMuOTcxIDAgMS44OTQuNDIzIDIuNTI5IDEuMTU3bC4wMjYuMDNBNCA0IDAgMCAxIDMyIDguNjA2djE5LjU5MWE0IDQgMCAwIDEtLjk3NCAyLjYxN2wtLjAyNi4wM0EzLjM0MyAzLjM0MyAwIDAgMSAyOC40NzEgMzJ6TTE2IDkuNmE4IDggMCAxIDEgMCAxNiA4IDggMCAwIDEgMC0xNnptMCAxMi44YzIuNjQ3IDAgNC44LTIuMTUzIDQuOC00LjhzLTIuMTUzLTQuOC00LjgtNC44YTQuODA1IDQuODA1IDAgMCAwLTQuOCA0LjhjMCAyLjY0NyAyLjE1MyA0LjggNC44IDQuOHoiLz4KPC9zdmc+Cg=="
                 />
-                <p style={{ marginTop: "15px", fontSize: "12px" }}>
+                <p style={{ marginTop: "15px", fontSize: "0.9rem" }}>
                   이미지 등록
                 </p>
                 <ImgInput
@@ -214,18 +210,20 @@ const onChangeTitle = (e) => {
           </LiImg>
           <Wrap>
               <RatingText>별점</RatingText>
-              <Stars>
-                  {[0,1,2,3,4].map((el, idx) => {
-                  return (
-                      <FaStar
-                      key={idx}
-                      size="50"
-                      onClick={() => handleStarClick(el)}
-                      className={clicked[el] && 'yellowStar'}
-                      />
-                  );
-                  })}
-              </Stars>
+              <StarDiv>
+                <Stars>
+                    {[0,1,2,3,4].map((el, idx) => {
+                    return (
+                        <FaStar
+                        key={idx}
+                        size="50"
+                        onClick={() => handleStarClick(el)}
+                        className={clicked[el] && 'yellowStar'}
+                        />
+                    );
+                    })}
+                </Stars>
+              </StarDiv>
           </Wrap>
           <LiTilte>
             <PTitle>
@@ -242,10 +240,10 @@ const onChangeTitle = (e) => {
           <Message>
              {content.length > 0 && <p style={{color:'red'}}>{contentMessage}</p>}
           </Message>
-          <div>
-                <button onClick={onAddComment}>등록하기</button>
-                <button onClick={() => navigate('/detail/'+id)}>취소하기</button>
-          </div>
+          <ButDiv>
+                <AddBut onClick={onAddComment}>등록하기</AddBut>
+                <CancelBut onClick={() => navigate('/detail/'+id)}>취소하기</CancelBut>
+          </ButDiv>
       </Box>
    </>
   )
@@ -259,36 +257,32 @@ const Box = styled.div`
   width:100%;
   /* font-size: 17px; */
   font-family: "Noto Sans KR", sans-serif;
-  border: 1px solid black;
+  border: 3px solid #79B9D3;
   background-color: rgb(255, 255, 255);
   margin: auto;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  /* position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 99; */
+  border-radius:10px;
 `;
 const LiImg = styled.li`
   width: 90%;
-  display: flex;
+  /* display: flex; */
   padding: 10px 0px;
   /* border-bottom: 1px solid rgb(204, 204, 204); */
 `;
 const ImgTitle = styled.div`
-  padding-right:28px;
-  width: 100px;
+  padding-left:1.3rem;
+  width: 80%;
   height: 48px;
+  font-size: 15px;
   align-items: center;
   display: flex;
   justify-content: flex-start;
-  font-size: 14px;
 `;
 const ImgBox = styled.div`
+  padding-left:1.3rem;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -300,7 +294,6 @@ const ImgLabel = styled.label`
   width: 100px;
   height: 100px;
   position: relative;
-  border: 1px solid rgb(230, 229, 239);
   background: rgb(250, 250, 253);
   display: flex;
   -webkit-box-align: center;
@@ -310,6 +303,9 @@ const ImgLabel = styled.label`
   flex-direction: column;
   color: rgb(155, 153, 169);
   font-size: 1rem;
+  border : 3px solid #79B9D3;
+  border-radius:10px;
+  font-weight:600;
 `;
 const Img = styled.img`
   width: 100px;
@@ -331,24 +327,26 @@ const DeleteImg = styled.button`
 `;
 const LiTilte = styled.li`
   padding: 10px 0px;
-  display: flex;
+  /* display: flex; */
   width: 100%;
 `;
 const PTitle = styled.b`
-  padding-right:18px;
-  width: 100px;
+  padding-left:1.3rem;
+  width: 80%;
   height: 48px;
-  font-size: 14px;
+  font-size: 15px;
   align-items: center;
   display: flex;
   justify-content: flex-start;
 `;
 const InputTit = styled.input`
   font-size: 15px;
-  width: 79.7%;
-  border: 1px solid rgb(195, 194, 204);
+  width: 80%;
+  border: 3px solid #79B9D3;
+  height:40px;
   color: rgb(195, 194, 204);
-  padding: 0px 16px;
+  padding: 0px 1rem;
+  border-radius:10px;
 `;
 const Message = styled.div`
   margin-bottom:25px;
@@ -358,14 +356,14 @@ const Message = styled.div`
   text-align:end;
 `
 const InputCom = styled.textarea`
-  width: 90%;
+  width: 80%;
   height: 100%;
   min-height: 163px;
-  padding-left:10px;
-  /* margin-right: 16px; */
+  padding: 0px 1rem;
   font-size: 14px;
   resize: none;
-  border: 1px solid rgb(195, 194, 204);
+  border : 3px solid #79B9D3;
+  border-radius:10px;
 `;
 const Wrap = styled.div`
   display: flex;
@@ -374,17 +372,22 @@ const Wrap = styled.div`
 `;
 
 const RatingText = styled.b`
-  width: 100px;
+  padding-left:1.3rem;
+  width: 20%;
   height: 48px;
-  font-size: 14px;
+  font-size: 15px;
   align-items: center;
   display: flex;
   justify-content: flex-start;
 `;
-
+const StarDiv = styled.div`
+  display:flex;
+`
 const Stars = styled.div`
-  width:130px;
-  display: flex;
+  width:9rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   /* padding-top: 5px; */
 
   & svg {
@@ -404,3 +407,33 @@ const Stars = styled.div`
     color: #fcc419;
   }
 `;
+const ButDiv = styled.div`
+  display:flex;
+  margin:0 auto;
+  width: 80%;
+  margin-bottom:20px;
+`
+const AddBut = styled.button`
+  cursor:pointer;
+  color:white;
+  background-color:#79B9D3;
+  border:0px;
+  height:2.5rem;
+  border-radius:5px;
+  line-height:2.5rem;
+  margin-right:1rem;
+  width:100%;
+`
+const CancelBut = styled.button`
+  cursor:pointer;
+  font-weight:600;
+  color:#79B9D3;
+  background-color:white;
+  border:3px solid #79B9D3;
+  height:2.5rem;
+  /* margin-right:0.5rem; */
+  border-radius:5px;
+  line-height:2.1rem;
+  /* margin-left:1rem; */
+  width:100%;
+`
