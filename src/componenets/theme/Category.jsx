@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import css from "../../css/category.css";
+import css from "../../css/select.css";
 import { logout } from "../../redux/modules/user";
 import { useDispatch } from "react-redux";
 
@@ -55,17 +55,31 @@ const Category = () => {
   useEffect(init, []);
 
   return (
-    <StCategory>
-      <div className="category-set">{makeCategories()}</div>
-    </StCategory>
+    <St>
+      <p>테마</p>
+      <StCategory>
+        <div className="category-set">{makeCategories()}</div>
+      </StCategory>
+    </St>
   );
 };
 
 export default Category;
 
+const St = styled.div`
+ & p {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 40px;
+    color: #BFB8B8;
+    margin-left: 20px;
+  }
+
+`;
+
 const StCategory = styled.div`
   width: 428px;
-
   & div {
     cursor: pointer;
   }
