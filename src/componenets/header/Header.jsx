@@ -1,114 +1,134 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-
+import back from "../../assert/header/pngwing.com.png";
+import css from "../../css/header.css";
+import { useEffect } from "react";
+import dolphin from "../../assert/header/dolphin (2).png";
 
 const Header = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [modal, setModal] = useState(false);
 
-    return (
-        <Div>
-            <Logo>돌고돌래</Logo>
-            <Bar>
-                <Button01 onClick={() => navigate('/api/auth/place/random')}>Random</Button01>
-                <Button02 onClick={() => navigate('/api/auth/place')}>Write</Button02>
-                <Button03 onClick={() => navigate('/api/auth/mypage')}>MyPage</Button03>
-                <Button04 onClick={() => navigate('/api/auth/member/login')}>Login</Button04>
-            </Bar>
-        </Div>
-    );
+  const onModalHandler = (e) => {
+    e.preventDefault();
+    setModal(!modal);
+  };
+
+
+    // const menuTrigger = document.querySelector(".menu-trigger");
+
+    // menuTrigger.addEventListener("click", (event) => {
+    //   event.currentTarget.classList.toggle("active-1");
+    // });
+
+
+  window.onload = () => {
+    const menuTrigger = document.querySelector(".menu-trigger");
+
+    menuTrigger.addEventListener("click", (event) => {
+      event.currentTarget.classList.toggle("active-1");
+    });
+  };
+
+  return (
+    <St>
+      <StHeader>
+        <Back className="menu-open" onClick={() => navigate(-1)} />
+        {/* <img src={dolphin}></img> */}
+        <a className="menu-trigger" onClick={onModalHandler}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </a>
+      </StHeader>
+      <div>
+        {modal === true ? (
+          <HeaderMenu>
+            <h2 onClick={() => navigate("/")}>Home</h2>
+            <h2 onClick={() => navigate("/select")}>Search</h2>
+            <h2 onClick={() => navigate("/random")}>Random</h2>
+            <h2 onClick={() => navigate("/mypage")}>MyPage</h2>
+            <h2 onClick={() => navigate("/write")}>Write</h2>
+            <div>
+              <h2 onClick={() => navigate("/login")}>로그인 ></h2>
+            </div>
+          </HeaderMenu>
+        ) : null}
+      </div>
+    </St>
+  );
 };
 
 export default Header;
 
-const Div = styled.div `
-    width: 428px;
-    height: 200px;
-    border: 1px solid grey;
-    background-color: dodgerblue;
-`
-const Logo = styled.div `
-    width: 200px;
-    height: 50px;
-    margin: 50px auto 0px auto;
-    border: 1px solid #282c34;
-    border-radius: 20px;
-    background-color: #282c34;
+const St = styled.div`
+  width: 428px;
+  margin: 0 auto;
+
+  & a {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+`;
+
+const StHeader = styled.div`
+  background-color: rgba(121, 185, 211, 0.62);
+  height: 70px;
+  width: 428px;
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+  /* & h2 {
     color: white;
-    text-align: center;
-    line-height: 50px;
-    font-size: 25px;
-`
-const Bar = styled.div `
-    width: 428px;
-    height: 100px;
-    display: flex;
-`
-const Button01 = styled.div `
-    width: 80px;
-    height: 30px;
-    margin: 30px auto 0px auto;
-    border: 1px solid white;
-    border-radius: 15px;
-    background-color: white;
-    text-align: center;
-    line-height: 30px;
-    font-size: 12px;
+    background-image: url(${dolphin});
+    background-repeat: no-repeat;
+  } */
 
-    &:hover {
-        border: 1px solid gold;
-        background: gold;
-        color: black;
-      }
-`
-const Button02 = styled.div `
-    width: 80px;
-    height: 30px;
-    margin: 30px auto 10px auto;
-    border: 1px solid white;
-    border-radius: 15px;
-    background-color: white;
-    text-align: center;
-    line-height: 30px;
-    font-size: 12px;
+  & img {
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+  }
+`;
 
-    &:hover {
-        border: 1px solid gold;
-        background: gold;
-        color: black;
-      }
-`
-const Button03 = styled.div `
-    width: 80px;
-    height: 30px;
-    margin: 30px auto 10px auto;
-    border: 1px solid white;
-    border-radius: 15px;
-    background-color: white;
-    text-align: center;
-    line-height: 30px;
-    font-size: 12px;
+const Back = styled.span`
+  background-image: url(${back});
+  background-repeat: no-repeat;
+  width: 45px;
+  height: 45px;
+  margin: auto 0;
+  margin-left: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
-    &:hover {
-        border: 1px solid gold;
-        background: gold;
-        color: black;
-      }
-`
-const Button04 = styled.div `
-    width: 80px;
-    height: 30px;
-    margin: 30px auto 10px auto;
-    border: 1px solid white;
-    border-radius: 15px;
-    background-color: white;
-    text-align: center;
-    line-height: 30px;
-    font-size: 12px;
+const HeaderMenu = styled.div`
+  position: absolute;
+  left: 50%;
+  width: 214px;
+  height: 100%;
+  float: right;
+  background-color: rgba(121, 185, 211, 0.62);
+  text-align: center;
+  color: #535353;
+  /* right: -60px;  */
+  transition: all 0.3s;
 
+  & h2 {
+    text-decoration: underline;
     &:hover {
-        border: 1px solid gold;
-        background: gold;
-        color: black;
-      }
-`
+      cursor: pointer;
+    }
+  }
+
+  & div {
+    margin-top: 520px;
+    color: white;
+    & h2 {
+      text-decoration: none;
+    }
+  }
+`;
