@@ -48,16 +48,18 @@ const Header = () => {
             <h2 onClick={() => navigate("/mypage")}>MyPage</h2>
             <h2 onClick={() => navigate("/write")}>Write</h2>
             <div>
-              <h2 onClick={() => navigate("/login")}>로그인 ></h2>
+              <h2 onClick={() => navigate("/login")}>로그인 </h2>
             </div>
           </HeaderMenu>
         ) : null}
       </div>
     </St>
   );
+
 };
 
 export default Header;
+
 
 const St = styled.div`
   width: 428px;
@@ -82,6 +84,7 @@ const StHeader = styled.div`
     background-image: url(${dolphin});
     background-repeat: no-repeat;
   } */
+
 
   & img {
     width: 50px;
