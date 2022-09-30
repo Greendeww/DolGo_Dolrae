@@ -61,7 +61,7 @@ const Main = () => {
 
     return (
         <Div>
-            <Header></Header>
+            {/* <Header></Header> */}
                 <Body>
                     <Banner></Banner>
                     
