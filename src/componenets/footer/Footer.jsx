@@ -27,7 +27,7 @@ const Div = styled.div `
   width: 428px;
   height: 100px;
   border: 1px solid grey;
-  background-color: midnightblue;
+  background-color: #79B9D3;
   
 `
 const Text = styled.div `

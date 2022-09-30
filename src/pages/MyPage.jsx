@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../componenets/header/Header";
+import Header01 from "../componenets/header/Header01";
 import Footer from "../componenets/footer/Footer";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
@@ -35,8 +35,16 @@ function MyPage() {
     return (
     
     <Div>
-        <Header></Header>
+        <Header01></Header01>
         <Body>
+            <MyStatus>
+                <Myemail>
+
+                </Myemail>
+                <MyNickName>
+
+                </MyNickName>
+            </MyStatus>
             <BucketList>
                 <TextBox>
                     <Text>찜 목록</Text>
@@ -93,6 +101,22 @@ const Div = styled.div `
 `
 const Body = styled.div `
 
+`
+const MyStatus = styled.div `
+    width: 428px;
+    height: 250px;
+`
+const Myemail = styled.div `
+    width: 380px;
+    height: 100px;
+    margin: 25px auto 0px auto;
+    background-color: green;
+`
+const MyNickName = styled.div `
+    width: 380px;
+    height: 100px;
+    margin: 25px auto 0px auto;
+    background-color: green;
 `
 const BucketList = styled.div `
     width: 428px;

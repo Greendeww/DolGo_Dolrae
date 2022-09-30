@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../componenets/header/Header";
+import Header01 from "../componenets/header/Header01";
 import Footer from "../componenets/footer/Footer";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
@@ -61,32 +61,13 @@ const Main = () => {
 
     return (
         <Div>
-            <Header></Header>
+            <Header01></Header01>
                 <Body>
-                    <Banner></Banner>
+                    <Banner>TOP 10</Banner>
                     
-                    <Theme01>
-                        <ThemeTitle>음식점</ThemeTitle>                                       
-                        <Slider {...settings}>
-                            {theme01.map((item,index) => {
-                                return(
-                                    <div key={index}>
-                                        <IMG>
-                                            <Opps src={item.image}></Opps>
-                                        </IMG>
-                                        <Text>
-                                            <Title>{item.title}</Title>
-                                            <Star>{item.star} 점 『<FaStar style={{color:"#fcc419"}}/>』</Star>
-                                        </Text>
-                                    </div>
-                                )
-                            })}
-                        </Slider>
-                        <More01 onClick={() => navigate('/api/place?theme=12')}>더 보기</More01>   
-                    </Theme01>
 
                     <Theme02>
-                        <ThemeTitle>관광지</ThemeTitle>                                      
+                        <ThemeTitle>관광</ThemeTitle>                                      
                         <Slider {...settings}>
                             {theme02.map((item,index) => {
                                 return(
@@ -96,7 +77,7 @@ const Main = () => {
                                         </IMG>
                                         <Text>
                                             <Title>{item.title}</Title>
-                                            <Star>{item.star} 점 『<FaStar style={{color:"#fcc419"}}/>』</Star>
+                                            <Star>『<FaStar style={{color:"#fcc419"}}/>』 {item.star}  점</Star>
                                         </Text>
                                     </div>
                                 )
@@ -105,28 +86,9 @@ const Main = () => {
                         <More02 onClick={() => navigate('/api/place?theme=14')}>더 보기</More02>    
                     </Theme02>
 
-                    <Theme03>    
-                        <ThemeTitle>레포츠</ThemeTitle>                                   
-                        <Slider {...settings}>
-                            {theme03.map((item,index) => {
-                                return(
-                                    <div key={index}>
-                                        <IMG>
-                                            <Opps src={item.image}></Opps>
-                                        </IMG>
-                                        <Text>
-                                            <Title>{item.title}</Title>
-                                            <Star>{item.star} 점 『<FaStar style={{color:"#fcc419"}}/>』</Star>
-                                        </Text>
-                                    </div>
-                                )
-                            })}
-                        </Slider>
-                        <More03 onClick={() => navigate('/api/place?theme=28')}>더 보기</More03>    
-                    </Theme03>
 
                     <Theme04>      
-                        <ThemeTitle>문화시설</ThemeTitle>                                 
+                        <ThemeTitle>관람</ThemeTitle>                                 
                         <Slider {...settings}>
                             {theme04.map((item,index) => {
                                 return(
@@ -145,6 +107,49 @@ const Main = () => {
                         <More04 onClick={() => navigate('/api/place?theme=39')}>더 보기</More04>    
                     </Theme04>
 
+
+                    <Theme03>    
+                        <ThemeTitle>액티비티</ThemeTitle>                                   
+                        <Slider {...settings}>
+                            {theme03.map((item,index) => {
+                                return(
+                                    <div key={index}>
+                                        <IMG>
+                                            <Opps src={item.image}></Opps>
+                                        </IMG>
+                                        <Text>
+                                            <Title>{item.title}</Title>
+                                            <Star>{item.star} 점 『<FaStar style={{color:"#fcc419"}}/>』</Star>
+                                        </Text>
+                                    </div>
+                                )
+                            })}
+                        </Slider>
+                        <More03 onClick={() => navigate('/api/place?theme=28')}>더 보기</More03>    
+                    </Theme03>
+
+
+                    <Theme01>
+                        <ThemeTitle>식도락</ThemeTitle>                                       
+                        <Slider {...settings}>
+                            {theme01.map((item,index) => {
+                                return(
+                                    <div key={index}>
+                                        <IMG>
+                                            <Opps src={item.image}></Opps>
+                                        </IMG>
+                                        <Text>
+                                            <Title>{item.title}</Title>
+                                            <Star>{item.star} 점 『<FaStar style={{color:"#fcc419"}}/>』</Star>
+                                        </Text>
+                                    </div>
+                                )
+                            })}
+                        </Slider>
+                        <More01 onClick={() => navigate('/api/place?theme=12')}>더 보기</More01>   
+                    </Theme01>
+
+
                 </Body>
             <Footer></Footer>
         </Div>
@@ -155,18 +160,22 @@ export default Main;
 
 
 const ThemeTitle = styled.div `
-    width: 80px;
-    height: 30px;
-    margin: 0px 0px 0px auto;
-    border: 1px solid black;
-    border-radius: 20px;
-    background-color: black;
+    width: 428px;
+    height: 42px;
+    margin: 30px 0px 0px 0px;
+    
     color: white;
     text-align: center;
     line-height: 30px;
     font-size: 15px;
 
-    position: absolute;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 42px;
+
+    color: #FFAEAE;
 
     left: 10px;
     top: 10px;
@@ -174,28 +183,46 @@ const ThemeTitle = styled.div `
     z-index: 2;
 `
 const Opps = styled.img `
-    width: 100%;
-    height: 100%;    
+    width: 80%;
+    height: 80%;
+    border-radius: 30px;
+    margin: 30px auto auto auto;
 `
 const IMG = styled.div `
     width: 100%; 
-    height: 300px; 
+    height: 300px;
+    
 `
 const Star = styled.div `
     width: 214px;
     height: 50px;
     margin: 0px 0px 0px 0px;
-    background-color: dodgerblue;
+    background-color: #79B9D3;
     text-align: center;
     line-height: 50px;
+
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 20px;
+    
+    color: #FFFFFF;
+
 `
-const Title = styled.div `
+const Title = styled.div ` 
     width: 214px;
     height: 50px;
     margin: 0px 0px 0px 0px;
-    background-color: dodgerblue;
+    background-color: #79B9D3;
     text-align: center;
     line-height: 50px;
+
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 20px;
+    
+    color: #FFFFFF;
 `
 const Div = styled.div `
     width: 428px;
@@ -207,8 +234,17 @@ const Body = styled.div `
 `
 const Banner = styled.div `
     width: 428px;
-    height: 200px;
+    height: 100px;
     border: 1px solid grey;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 40px;
+    line-height: 100px;
+    text-align: center;
+
+    color: #ACD4E4;
+
 `
 const Theme01 = styled.div `
     width: 428px;
@@ -253,9 +289,11 @@ const Theme04 = styled.div `
 const More01 = styled.div `
     width: 80px;
     height: 30px;
-    margin: 0px 0px 0px auto;
-    border: 1px solid lightgrey;
-    background-color: lightgrey;
+    margin: 5px 5px 0px auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
     text-align: center;
     line-height: 30px;
     font-size: 15px;
@@ -276,9 +314,11 @@ const More01 = styled.div `
 const More02 = styled.div `
     width: 80px;
     height: 30px;
-    margin: 0px 0px 0px auto;
-    border: 1px solid lightgrey;
-    background-color: lightgrey;
+    margin: 5px 5px 0px auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
     text-align: center;
     line-height: 30px;
     font-size: 15px;
@@ -299,9 +339,11 @@ const More02 = styled.div `
 const More03 = styled.div `
     width: 80px;
     height: 30px;
-    margin: 0px 0px 0px auto;
-    border: 1px solid lightgrey;
-    background-color: lightgrey;
+    margin: 5px 5px 0px auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
     text-align: center;
     line-height: 30px;
     font-size: 15px;
@@ -322,9 +364,11 @@ const More03 = styled.div `
 const More04 = styled.div `
     width: 80px;
     height: 30px;
-    margin: 0px 0px 0px auto;
-    border: 1px solid lightgrey;
-    background-color: lightgrey;
+    margin: 5px 5px 0px auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
     text-align: center;
     line-height: 30px;
     font-size: 15px;
