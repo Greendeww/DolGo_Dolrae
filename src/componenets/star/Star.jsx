@@ -2,43 +2,45 @@ import React from 'react';
 import { FaStar } from 'react-icons/fa';
 import styled from 'styled-components';
 
-function Star({comment}) {
+function Star({comment,posts}) {
   
   return (
     <>
-    {comment.star === 5
-      ? <div>
-          <FaStar style={{color:"#fcc419"}}/>
-          <FaStar style={{color:"#fcc419"}}/>
-          <FaStar style={{color:"#fcc419"}}/>
-          <FaStar style={{color:"#fcc419"}}/>
-          <FaStar style={{color:"#fcc419"}}/>
-        </div>
-      :(comment.star === 4
-      ? <div>
-          <FaStar style={{color:"#fcc419"}}/>
-          <FaStar style={{color:"#fcc419"}}/>
-          <FaStar style={{color:"#fcc419"}}/>
-          <FaStar style={{color:"#fcc419"}}/>
-      </div>
-      :(comment.star === 3
+    <Wrap>
+      {comment.star === 5
         ? <div>
             <FaStar style={{color:"#fcc419"}}/>
             <FaStar style={{color:"#fcc419"}}/>
             <FaStar style={{color:"#fcc419"}}/>
-          </div>
-      :(comment.star === 2
-      ? <div>
-          <FaStar style={{color:"#fcc419"}}/>
-          <FaStar style={{color:"#fcc419"}}/>
-        </div>
-      :(comment.star === 1
-        ? <div>
+            <FaStar style={{color:"#fcc419"}}/>
             <FaStar style={{color:"#fcc419"}}/>
           </div>
-        :null
-      ))))  
-      }
+        :(comment.star === 4
+        ? <div>
+            <FaStar style={{color:"#fcc419"}}/>
+            <FaStar style={{color:"#fcc419"}}/>
+            <FaStar style={{color:"#fcc419"}}/>
+            <FaStar style={{color:"#fcc419"}}/>
+        </div>
+        :(comment.star === 3
+          ? <div>
+              <FaStar style={{color:"#fcc419"}}/>
+              <FaStar style={{color:"#fcc419"}}/>
+              <FaStar style={{color:"#fcc419"}}/>
+            </div>
+        :(comment.star === 2
+        ? <div>
+            <FaStar style={{color:"#fcc419"}}/>
+            <FaStar style={{color:"#fcc419"}}/>
+          </div>
+        :(comment.star === 1
+          ? <div>
+              <FaStar style={{color:"#fcc419"}}/>
+            </div>
+          :null
+        ))))  
+        }
+      </Wrap>
     </>
   );
 }
@@ -46,9 +48,9 @@ function Star({comment}) {
 export default Star;
 
 const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-top: 15px;
+  /* display: flex;
+  flex-direction: column; */
+  padding-top: 0.8rem;
 `;
 
 const RatingText = styled.div`
