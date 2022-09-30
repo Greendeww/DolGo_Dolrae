@@ -13,7 +13,7 @@ const Paginations = ({page, count, setPage,postPerPage}) => {
     <>
         <Pagination
             activePage={page}
-            itemsCountPerPage={5}
+            itemsCountPerPage={3}
             totalItemsCount={count ? count : 0}
             pageRangeDisplayed={5}
             prevPageText={"‹"}

@@ -1,19 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import Header01 from "../componenets/header/Header01";
+import Header from "../componenets/header/Header";
 import Footer from "../componenets/footer/Footer";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
-
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import { getApi } from "../shared/Api";
-
 import { FaStar } from 'react-icons/fa';
-
-
 
 const Main = () => {
     
@@ -27,116 +22,42 @@ const Main = () => {
         slidesToScroll: 1
       };
 
-
-
     const [ theme01, setTheme01 ] = useState([]);
     const [ theme02, setTheme02 ] = useState([]);
     const [ theme03, setTheme03 ] = useState([]);
     const [ theme04, setTheme04 ] = useState([]);
 
     const fetchPost = async () => {
-        const response = await getApi("/api/place/rank")
-        console.log(response.data.foodList)
-
-        setTheme01(response.data.foodList);
-        setTheme02(response.data.tourList);
-        setTheme03(response.data.activityList);
-        setTheme04(response.data.museumList);
+        const response = await getApi("/main")
+        console.log(response.data[0].foodList[0])
+        setTheme01([response.data[0].foodList[0], response.data[0].foodList[1], response.data[0].foodList[2]]);
+        setTheme02([response.data[1].tourList[0]]);
+        setTheme03([response.data[2].activityList[0]]);
+        setTheme04([response.data[3].museumList[0]]);
     }
 
-
     useEffect( () => {
-        
         fetchPost();
-
     }, []);
-
-    
 
     if(theme01===undefined) {
         return
     }
 
-
-
     return (
         <Div>
-            <Header01></Header01>
+            <Header></Header>
                 <Body>
-                    <Banner>TOP 10</Banner>
+                    <Banner></Banner>
                     
-
-                    <Theme02>
-                        <ThemeTitle>관광</ThemeTitle>                                      
-                        <Slider {...settings}>
-                            {theme02.map((item,index) => {
-                                return(
-                                    <div key={index}>
-                                        <IMG>
-                                            <Opps src={item.image}></Opps>
-                                        </IMG>
-                                        <Text>
-                                            <Title>{item.title}</Title>
-                                            <Star>『<FaStar style={{color:"#fcc419"}}/>』 {item.star}  점</Star>
-                                        </Text>
-                                    </div>
-                                )
-                            })}
-                        </Slider>
-                        <More02 onClick={() => navigate('/api/place?theme=14')}>더 보기</More02>    
-                    </Theme02>
-
-
-                    <Theme04>      
-                        <ThemeTitle>관람</ThemeTitle>                                 
-                        <Slider {...settings}>
-                            {theme04.map((item,index) => {
-                                return(
-                                    <div key={index}>
-                                        <IMG>
-                                            <Opps src={item.image}></Opps>
-                                        </IMG>
-                                        <Text>
-                                            <Title>{item.title}</Title>
-                                            <Star>{item.star} 점 『<FaStar style={{color:"#fcc419"}}/>』</Star>
-                                        </Text>
-                                    </div>
-                                )
-                            })}
-                        </Slider>
-                        <More04 onClick={() => navigate('/api/place?theme=39')}>더 보기</More04>    
-                    </Theme04>
-
-
-                    <Theme03>    
-                        <ThemeTitle>액티비티</ThemeTitle>                                   
-                        <Slider {...settings}>
-                            {theme03.map((item,index) => {
-                                return(
-                                    <div key={index}>
-                                        <IMG>
-                                            <Opps src={item.image}></Opps>
-                                        </IMG>
-                                        <Text>
-                                            <Title>{item.title}</Title>
-                                            <Star>{item.star} 점 『<FaStar style={{color:"#fcc419"}}/>』</Star>
-                                        </Text>
-                                    </div>
-                                )
-                            })}
-                        </Slider>
-                        <More03 onClick={() => navigate('/api/place?theme=28')}>더 보기</More03>    
-                    </Theme03>
-
-
                     <Theme01>
-                        <ThemeTitle>식도락</ThemeTitle>                                       
+                        <ThemeTitle>관광지</ThemeTitle>                                       
                         <Slider {...settings}>
                             {theme01.map((item,index) => {
                                 return(
                                     <div key={index}>
                                         <IMG>
-                                            <Opps src={item.image}></Opps>
+                                            <Opps src={item.imageUrl}></Opps>
                                         </IMG>
                                         <Text>
                                             <Title>{item.title}</Title>
@@ -149,6 +70,65 @@ const Main = () => {
                         <More01 onClick={() => navigate('/api/place?theme=12')}>더 보기</More01>   
                     </Theme01>
 
+                    <Theme02> 
+                        <ThemeTitle>문화시설</ThemeTitle>                                      
+                        <Slider {...settings}>
+                            {theme02.map((item,index) => {
+                                return(
+                                    <div key={index}>
+                                        <IMG>
+                                            <Opps src={item.imageUrl}></Opps>
+                                        </IMG>
+                                        <Text>
+                                            <Title>{item.title}</Title>
+                                            <Star>{item.star} 점 『<FaStar style={{color:"#fcc419"}}/>』</Star>
+                                        </Text>
+                                    </div>
+                                )
+                            })}
+                        </Slider>
+                        <More02 onClick={() => navigate('/api/place?theme=14')}>더 보기</More02>    
+                    </Theme02>
+
+                    <Theme03>    
+                        <ThemeTitle>레포츠</ThemeTitle>                                   
+                        <Slider {...settings}>
+                            {theme03.map((item,index) => {
+                                return(
+                                    <div key={index}>
+                                        <IMG>
+                                            <Opps src={item.imageUrl}></Opps>
+                                        </IMG>
+                                        <Text>
+                                            <Title>{item.title}</Title>
+                                            <Star>{item.star} 점 『<FaStar style={{color:"#fcc419"}}/>』</Star>
+                                        </Text>
+                                    </div>
+                                )
+                            })}
+                        </Slider>
+                        <More03 onClick={() => navigate('/api/place?theme=28')}>더 보기</More03>    
+                    </Theme03>
+
+                    <Theme04>      
+                        <ThemeTitle>음식점</ThemeTitle>                                 
+                        <Slider {...settings}>
+                            {theme04.map((item,index) => {
+                                return(
+                                    <div key={index}>
+                                        <IMG>
+                                            <Opps src={item.imageUrl}></Opps>
+                                        </IMG>
+                                        <Text>
+                                            <Title>{item.title}</Title>
+                                            <Star>{item.star} 점 『<FaStar style={{color:"#fcc419"}}/>』</Star>
+                                        </Text>
+                                    </div>
+                                )
+                            })}
+                        </Slider>
+                        <More04 onClick={() => navigate('/api/place?theme=39')}>더 보기</More04>    
+                    </Theme04>
 
                 </Body>
             <Footer></Footer>
@@ -160,22 +140,18 @@ export default Main;
 
 
 const ThemeTitle = styled.div `
-    width: 428px;
-    height: 42px;
-    margin: 30px 0px 0px 0px;
-    
+    width: 80px;
+    height: 30px;
+    margin: 0px 0px 0px auto;
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: black;
     color: white;
     text-align: center;
     line-height: 30px;
     font-size: 15px;
 
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 35px;
-    line-height: 42px;
-
-    color: #FFAEAE;
+    position: absolute;
 
     left: 10px;
     top: 10px;
@@ -183,46 +159,28 @@ const ThemeTitle = styled.div `
     z-index: 2;
 `
 const Opps = styled.img `
-    width: 80%;
-    height: 80%;
-    border-radius: 30px;
-    margin: 30px auto auto auto;
+    width: 100%;
+    height: 100%;    
 `
 const IMG = styled.div `
     width: 100%; 
-    height: 300px;
-    
+    height: 300px; 
 `
 const Star = styled.div `
     width: 214px;
     height: 50px;
     margin: 0px 0px 0px 0px;
-    background-color: #79B9D3;
+    background-color: dodgerblue;
     text-align: center;
     line-height: 50px;
-
-    font-family: 'Noto Sans KR';
-    font-style: normal;
-    font-weight: 900;
-    font-size: 20px;
-    
-    color: #FFFFFF;
-
 `
-const Title = styled.div ` 
+const Title = styled.div `
     width: 214px;
     height: 50px;
-    margin: 0px 0px 0px 0px;
-    background-color: #79B9D3;
+    margin: 0px 0px 0px px;
+    background-color: dodgerblue;
     text-align: center;
     line-height: 50px;
-
-    font-family: 'Noto Sans KR';
-    font-style: normal;
-    font-weight: 900;
-    font-size: 20px;
-    
-    color: #FFFFFF;
 `
 const Div = styled.div `
     width: 428px;
@@ -234,17 +192,8 @@ const Body = styled.div `
 `
 const Banner = styled.div `
     width: 428px;
-    height: 100px;
+    height: 200px;
     border: 1px solid grey;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 900;
-    font-size: 40px;
-    line-height: 100px;
-    text-align: center;
-
-    color: #ACD4E4;
-
 `
 const Theme01 = styled.div `
     width: 428px;
@@ -289,11 +238,9 @@ const Theme04 = styled.div `
 const More01 = styled.div `
     width: 80px;
     height: 30px;
-    margin: 5px 5px 0px auto;
-    border: 1px solid black;
-    border-radius: 10px;
-    background-color: black;
-    color: white;
+    margin: 0px 0px 0px auto;
+    border: 1px solid lightgrey;
+    background-color: lightgrey;
     text-align: center;
     line-height: 30px;
     font-size: 15px;
@@ -314,11 +261,9 @@ const More01 = styled.div `
 const More02 = styled.div `
     width: 80px;
     height: 30px;
-    margin: 5px 5px 0px auto;
-    border: 1px solid black;
-    border-radius: 10px;
-    background-color: black;
-    color: white;
+    margin: 0px 0px 0px auto;
+    border: 1px solid lightgrey;
+    background-color: lightgrey;
     text-align: center;
     line-height: 30px;
     font-size: 15px;
@@ -339,11 +284,9 @@ const More02 = styled.div `
 const More03 = styled.div `
     width: 80px;
     height: 30px;
-    margin: 5px 5px 0px auto;
-    border: 1px solid black;
-    border-radius: 10px;
-    background-color: black;
-    color: white;
+    margin: 0px 0px 0px auto;
+    border: 1px solid lightgrey;
+    background-color: lightgrey;
     text-align: center;
     line-height: 30px;
     font-size: 15px;
@@ -364,11 +307,9 @@ const More03 = styled.div `
 const More04 = styled.div `
     width: 80px;
     height: 30px;
-    margin: 5px 5px 0px auto;
-    border: 1px solid black;
-    border-radius: 10px;
-    background-color: black;
-    color: white;
+    margin: 0px 0px 0px auto;
+    border: 1px solid lightgrey;
+    background-color: lightgrey;
     text-align: center;
     line-height: 30px;
     font-size: 15px;
@@ -390,7 +331,7 @@ const Text = styled.div `
     width: 428px;
     height: 100px;
     line-height: 100px;
-    font-size: 13px;
+    font-size: 15px;
     margin: 0px 0px 0px 0px;
 
     display: flex;
