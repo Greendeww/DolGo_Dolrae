@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import gana from "../assert/theme/gana.png";
-import hwangji from "../assert/theme/hwangji.jpg";
 import { __getTheme } from "../redux/modules/theme";
 import { Dispatch } from "react";
 import { useDispatch, useSelector } from "react-redux";
