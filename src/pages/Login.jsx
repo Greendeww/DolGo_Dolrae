@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { KAKAO_AUTH_URL } from "../shared/OAuth";
 import { logout, __login, __logout } from "../redux/modules/user";
 import Header from "../componenets/header/Header";
-import kakao from "../assert/header/kakao_login_medium_wide.png";
+import kakao from "../assert/login/kakao_login_medium_wide.png";
 import Swal from 'sweetalert2'
 
 
