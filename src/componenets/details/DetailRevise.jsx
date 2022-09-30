@@ -4,8 +4,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from "styled-components";
 import { FaStar } from 'react-icons/fa';
 import Star from '../star/Star';
-import { useDispatch,useSelector } from 'react-redux';
+import { shallowEqual, useDispatch,useSelector } from 'react-redux';
 import { _updateComment,_getComments } from '../../redux/modules/comment';
+import { instance } from '../../shared/Api';
 
 
 const DetailRevise = () => {
@@ -22,9 +23,10 @@ const DetailRevise = () => {
   const [fileImage1,setFileImage1] = useState([]);
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
- 
+  const [imagenull] = useState(null)
+
   const fetch = async () => {
-    const response = await axios.get(`http://3.34.46.193/api/comment/${placeId}`); 
+    const response = await instance.get(`/api/comment/${placeId}`); 
     console.log(response.data)
 
     const commentList = response.data.find(comment => {
@@ -36,7 +38,7 @@ const DetailRevise = () => {
     setContent(commentList?.content);
     setStar(commentList?.star);
     setFileImage1([...commentList?.imageList]);
-    setImage([...commentList?.imageList]);
+    setImage([]);
   }
 
   
@@ -65,7 +67,12 @@ const DetailRevise = () => {
   }
 
   const onChangeImg = (e) => {
+    const maxImageCnt = 3;
     const imageList = e.target.files;
+    const imageLists = [...image]
+    // if(fileImage1.length +image.length > maxImageCnt){
+    //   alert("첨부파일은 최대 3개까지 가능합니다")
+    // }
     console.log(imageList);
     const imgFiles = [...fileImage];
     for (let i = 0; i < imageList.length; i++) {
@@ -77,6 +84,9 @@ const DetailRevise = () => {
       image.push(nowImageUrl1);
       continue;
     }
+    // if (fileImage1.length+imageLists.length > 3) {
+    //   imageLists = imageLists.slice(0, 3);
+    // }
     setFileImage(imgFiles);
     // setImage(imageList);
   };
@@ -86,32 +96,41 @@ const DetailRevise = () => {
   };
   const handleDeleteImage1 = (id) => {
     setFileImage1(fileImage1.filter((_, index) => index !== id))
-    setImage(image.filter((_, index) => index !== id));
+    // setImage(image.filter((_, index) => index !== id));
   };
 
   const data = {
     title:title,
     content:content,
     star:Number(star),
+    existUrlList:fileImage1
     // nickname:nickname
   }
   console.log(image)
+  console.log(fileImage1)
   const onChangeHandler = (event, setState) => setState(event.target.value);
   
   const onUpdatePost = async (e) => {
-
+    e.preventDefault();
+    if(
+      title === "" ||
+      content === "" ||
+      star === ""
+    ){
+      alert("모든 항목을 입력해주세요.");
+    }
     let json = JSON.stringify(data)
-    let imagejson = JSON.stringify(image[0].imageUrl)
+    // let imagejson = JSON.stringify(image[0].imageUrl)
     console.log(json);
     const blob = new Blob([json], { type: "application/json" });
-    const imageBlob = new Blob([imagejson],{ type: 'image/png' })
+    // const imageBlob = new Blob([imagejson],{ type: 'image/png' })
     const formData = new FormData();
-    // for(let i = 0; i<image.length; i++){
-    //   formData.append("image",image[i])
-    //   console.log(image)
-    //   console.log(image[i])
-    // }
-    formData.append("image",imageBlob)
+    for(let i = 0; i<image.length; i++){
+      formData.append("image",image[i])
+      console.log(image)
+      console.log(image[i])
+    }
+    // formData.append("image",imageBlob)
     formData.append("data",blob)
 
     const payload = {
@@ -144,7 +163,7 @@ const DetailRevise = () => {
         <LiImg>
           <ImgTitle>
             <b>
-              사진
+              이미지
               <span style={{ color: "rgb(255, 80, 88)" }}>*</span>
             </b>
           </ImgTitle>
@@ -170,7 +189,7 @@ const DetailRevise = () => {
               </ImgLabel>
               {fileImage1.map((image,id) => (
                 <div key={id}>
-                 <img style={{width:"102px",height:"102px"}} alt={`${image}-${id}`} src={image.imageUrl}/>
+                 <img style={{width:"102px",height:"102px"}} alt={`${image}-${id}`} src={image}/>
                  <DeleteImg onClick={() => handleDeleteImage1(id)}>
                     X
                   </DeleteImg>

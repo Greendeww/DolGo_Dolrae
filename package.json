@@ -8,25 +8,27 @@
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
     "axios": "^0.27.2",
-    "carousel": "^0.0.3",
-    "express": "^4.18.1",
+    "bootstrap": "^5.2.1",
+    "cross-env": "^7.0.3",
+    "hoist-non-react-statics": "^3.3.2",
+    "json-server": "^0.17.0",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
-    "react-carousel-slider": "^2.0.13",
+    "react-auto-image-slider": "^1.0.0",
+    "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
     "react-id-generator": "^3.0.2",
     "react-js-pagination": "^3.0.3",
     "react-kakao-maps-sdk": "^1.1.3",
-    "react-portal": "^4.2.2",
+    "react-native-image-slider-box": "^2.0.6",
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.4.0",
-    "react-scripts": "^5.0.1",
+    "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
     "redux": "^4.2.0",
-    "slick": "^1.12.2",
-    "slick-slider": "^1.8.2",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.5",
-    "sweetalert2": "^11.4.35",
     "swiper": "^8.4.2",
     "web-vitals": "^2.1.0"
   },
@@ -54,7 +56,8 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "slick-carousel": "^1.8.1"
-  }
+  "main": "index.js",
+  "repository": "https://github.com/Greendeww/dolgo-dolrae.git",
+  "author": "Ermael35 <ermael35@gmail.com>",
+  "license": "MIT"
 }
