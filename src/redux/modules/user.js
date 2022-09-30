@@ -27,7 +27,7 @@ export const __emailCheck = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log(payload);
     try {
-      const response = await instance.post("/api/member/duplicate", payload, {
+      const response = await instance.post("/api/member/email", payload, {
         headers: {
           "content-type": "application/json",
         },
@@ -45,9 +45,9 @@ export const __login = createAsyncThunk(
     try {
       const response = await instance.post("/api/member/login", user);
       console.log(response.headers);
-      setCookie("isLogin", response.headers.authorization);
-      setCookie("ACCESS_TOKEN", response.headers.authorization);
-      setCookie("REFRESH_TOKEN", response.headers.refreshtoken);
+      localStorage.setItem("isLogin", response.headers.authorization);
+      localStorage.setItem("ACCESS_TOKEN", response.headers.authorization);
+      localStorage.setItem("REFRESH_TOKEN", response.headers.refreshtoken);
       localStorage.setItem("username", response.data.username);
 
       return response.data;
@@ -62,13 +62,16 @@ export const __logout = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       const response = await instance.post("/api/auth/member/logout");
-      deleteCookie("isLogin");
-      deleteCookie("ACCESS_TOKEN");
-      deleteCookie("REFRESH_TOKEN");
       localStorage.removeItem("username");
-      localStorage.removeItem("LS_KEY_CATEGORY");
-      localStorage.removeItem("LS_KEY_SI");
-      localStorage.removeItem("LS_KEY_DO");
+      localStorage.removeItem("isLogin");
+      localStorage.removeItem("ACCESS_TOKEN");
+      localStorage.removeItem("REFRESH_TOKEN");
+      localStorage.removeItem("THEME_CODE");
+      localStorage.removeItem("THEME_NAME");
+      localStorage.removeItem("AREA_CODE");
+      localStorage.removeItem("AREA_NAME");
+      localStorage.removeItem("SIGUNGU_CODE");
+      localStorage.removeItem("SIGUNGU_NAME");
 
       return response.data;
     } catch (error) {
@@ -85,6 +88,15 @@ export const userSlice = createSlice({
       instance.post("/api/member/signup", action.payload);
       state.users.push(action.payload);
     },
+
+    submitCode: (state, action) => {
+      console.log(action.payload)
+      instance.post("api/member/codeEmail", action.payload, {
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+    }
   },
   extraReducers: (builder) => {
     // builder
@@ -109,12 +121,12 @@ export const userSlice = createSlice({
       .addCase(__emailCheck.fulfilled, (state, action) => {
         state.isLoading = false;
         state.users = action.payload;
-        window.alert("사용 가능한 이메일입니다.");
+        // window.alert("사용 가능한 이메일입니다.");
         console.log(action.payload);
       })
       .addCase(__emailCheck.rejected, (state, action) => {
         state.isLoading = false;
-        window.alert("이미 존재하는 이메일입니다..");
+        // window.alert("이미 존재하는 이메일입니다..");
         state.error = action.payload;
       });
 
@@ -135,5 +147,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { signUp, logout } = userSlice.actions;
+export const { signUp, logout, submitCode } = userSlice.actions;
 export default userSlice;
