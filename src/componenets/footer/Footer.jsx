@@ -26,7 +26,7 @@ export default Footer;
 const Div = styled.div `
   width: 428px;
   height: 100px;
-  border: 1px solid grey;
+  border: 1px solid #79B9D3;
   background-color: #79B9D3;
   
 `
