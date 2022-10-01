@@ -6,8 +6,7 @@ import { KAKAO_AUTH_URL } from "../shared/OAuth";
 import { logout, __login, __logout } from "../redux/modules/user";
 import Header from "../componenets/header/Header";
 import kakao from "../assert/login/kakao_login_medium_wide.png";
-import Swal from 'sweetalert2'
-
+import Swal from "sweetalert2";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -36,7 +35,6 @@ const Login = () => {
       Navigate("/");
     }
   };
-  
 
   return (
     <StLogin_>
@@ -149,6 +147,10 @@ const Social = styled.div`
     margin: 20px auto;
     width: 370px;
     height: 50px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 
