@@ -9,6 +9,7 @@ import DetailRevise from "../componenets/details/DetailRevise";
 import DetailForm from "../componenets/details/DetailForm";
 import Main from "../pages/Main";
 import Random from "../pages/Random";
+import MyPage from "../pages/MyPage";
 
 function Router(){
     return(
@@ -24,6 +25,7 @@ function Router(){
             <Route path="/detail/update/:placeId/:id" element={<DetailRevise/>}/>
             <Route path="/detail/form/:id" element={<DetailForm/>}/>
             <Route path="/random" element={<Random/>}/>
+            <Route path="/mypage" element={<MyPage/>}/>
         </Routes>
         </BrowserRouter>
     )
