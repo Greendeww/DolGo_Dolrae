@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { __getTheme } from "../redux/modules/theme";
 import { Dispatch } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import Header from "../componenets/header/Header";
+import { useNavigate } from "react-router-dom";
 
 const Theme1 = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const THEME_NAME = window.localStorage.getItem("THEME_NAME");
   const AREA_NAME = window.localStorage.getItem("AREA_NAME");
@@ -35,7 +35,8 @@ const Theme1 = () => {
       </Title>
       <div>
         {list.map((list) => (
-          <Card key={list.id}>
+          <Card key={list.id}
+          onClick={()=> navigate(`/detail/${list.id}`)}>
             <div>
               <Img src={list.image} />
             </div>
