@@ -24,7 +24,7 @@ const Category = () => {
     },
   ];
 
-  const [category, setCategory] = useState("");
+  const [selectedTheme, setSelectedTheme] = useState("");
 
   const THEME_CODE = "THEME_CODE";
   const THEME_NAME = "THEME_NAME";
@@ -34,10 +34,10 @@ const Category = () => {
       <div
         key={idx}
         className={
-          item.value === category ? "category-child selected" : "category-child"
+          item.value === selectedTheme ? "category-child selected" : "category-child"
         }
         onClick={() => {
-          setCategory(item.value);
+          setSelectedTheme(item.value);
           localStorage.setItem(THEME_CODE, item.value);
           localStorage.setItem(THEME_NAME, item.name);
         }}
@@ -49,7 +49,7 @@ const Category = () => {
 
   const init = () => {
     let data = localStorage.getItem(THEME_CODE);
-    if (data !== null) setCategory(data);
+    if (data !== null) setSelectedTheme(data);
   };
 
   useEffect(init, []);
