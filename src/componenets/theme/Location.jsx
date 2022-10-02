@@ -231,7 +231,7 @@ const List = () => {
     { do: "제주", name: "제주", value: 4 },
   ];
 
-  const selectDo = () => {
+  const Location = () => {
     return doList.map((item, idx) => (
       <div
         key={idx}
@@ -251,7 +251,7 @@ const List = () => {
     ));
   };
 
-  const DetailLocationHandler = () => {
+  const DetailLocation = () => {
     return siList.map((item, idx) =>
       item.do == GET_AREA_NAME ? (
         <div
@@ -277,16 +277,24 @@ const List = () => {
     <St>
       <StList>
         <p>지역</p>
-        <div className="location-set">{selectDo()}</div>
+        <div className="location-set">{Location()}</div>
       </StList>
       <StList>
         <p>세부지역</p>
-        <div className="location-set">{DetailLocationHandler()}</div>
+        <div className="location-set">{DetailLocation()}</div>
       </StList>
       <button
         onClick={() => {
-          dispatch(__getTheme(search));
-          navigate("/list");
+          if (
+            GET_THEME_NAME === null ||
+            GET_AREA_NAME === null ||
+            GET_SIGUNGU_NAME === null
+          ) {
+            alert("모든 항목을 선택해주세요.");
+          } else {
+            dispatch(__getTheme(search));
+            navigate("/list");
+          }
         }}
       >
         선택완료
