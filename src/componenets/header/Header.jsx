@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import back from "../../assert/header/pngwing.com.png";
 import css from "../../css/header.css";
-import dolphin from "../../assert/header/dolphin (2).png";
+import dolphin from "../../assert/header/logo_.png";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -32,7 +31,7 @@ const Header = () => {
     <St>
       <StHeader>
         <Back className="menu-open" onClick={() => navigate(-1)} />
-        {/* <img src={dolphin}></img> */}
+        <img src={dolphin}/>
         <a className="menu-trigger" onClick={onModalHandler}>
           <span></span>
           <span></span>
@@ -86,15 +85,14 @@ const StHeader = styled.div`
   } */
 
 
-  & img {
+  /* & img {
     width: 50px;
     height: 50px;
     margin-top: 10px;
-  }
+  } */
 `;
 
 const Back = styled.span`
-  background-image: url(${back});
   background-repeat: no-repeat;
   width: 45px;
   height: 45px;
@@ -102,6 +100,11 @@ const Back = styled.span`
   margin-left: 10px;
   &:hover {
     cursor: pointer;
+  }
+
+  & img { 
+    width: 200px;
+    height: 100px;
   }
 `;
 
