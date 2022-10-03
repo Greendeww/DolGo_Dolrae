@@ -44,11 +44,12 @@ export const __login = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       const response = await instance.post("/api/member/login", user);
-      console.log(response.headers);
+      console.log(response);
       localStorage.setItem("isLogin", response.headers.authorization);
       localStorage.setItem("ACCESS_TOKEN", response.headers.authorization);
       localStorage.setItem("REFRESH_TOKEN", response.headers.refreshtoken);
       localStorage.setItem("username", response.data.username);
+      localStorage.setItem("nickname", response.data.nickname);
 
       return response.data;
     } catch (error) {
