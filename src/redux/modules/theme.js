@@ -10,9 +10,10 @@ const initialState = {
 export const __getTheme = createAsyncThunk(
   "post/__getTheme",
   async (payload, thunkAPI) => {
-    console.log(payload);
+    // console.log(payload);
     try {
-      const data = await instance.get(`/api/place?theme=12&areaCode=39&sigunguCode=4&pageNum=1`);
+      const data = await instance.get(`/api/place?theme=${payload.themeCode}&areaCode=${payload.areaCode}&sigunguCode=${payload.sigunguCode}&pageNum=1`);
+      // const data = await instance.get(`/api/place?theme=12&areaCode=39&sigunguCode=4&pageNum=1`);
       console.log(data)
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
