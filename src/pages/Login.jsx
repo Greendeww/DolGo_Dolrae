@@ -90,7 +90,7 @@ const Login = () => {
         <SignUp>
           <p>아직 돌고돌래 회원이 아니세요?</p>
           <p>
-            <b onClick={() => navigate("/signup")}>회원가입 ></b>
+            <b onClick={() => navigate("/signup")}>회원가입</b>
           </p>
         </SignUp>
         {/* <button onClick={() => dispatch(__logout())}>로그아웃</button> */}

@@ -64,6 +64,8 @@ const St = styled.div`
   width: 428px;
   margin: 0 auto;
 
+  z-index: 3;
+
   & a {
     &:hover {
       cursor: pointer;
@@ -72,9 +74,9 @@ const St = styled.div`
 `;
 
 const StHeader = styled.div`
-  background-color: rgba(121, 185, 211, 0.62);
+  background-color: rgba(121, 185, 211, 1);
   height: 70px;
-  width: 428px;
+  width: 430px;
   display: flex;
   justify-content: space-between;
   vertical-align: middle;
@@ -111,8 +113,8 @@ const Back = styled.span`
 const HeaderMenu = styled.div`
   position: absolute;
   left: 50%;
-  width: 214px;
-  height: 100%;
+  width: 216px;
+  height: 280%;
   float: right;
   background-color: #abd4e2;
   text-align: center;
@@ -134,4 +136,6 @@ const HeaderMenu = styled.div`
       text-decoration: none;
     }
   }
+
+  z-index: 3;
 `;

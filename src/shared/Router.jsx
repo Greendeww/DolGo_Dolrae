@@ -10,12 +10,15 @@ import DetailForm from "../componenets/details/DetailForm";
 import Main from "../pages/Main";
 import Random from "../pages/Random";
 import MyPage from "../pages/MyPage";
+import MyPageChange from "../pages/MyPageChange";
 
 function Router(){
     return(
         <BrowserRouter>
         <Routes>
             <Route path="/" element={<Main />}/>
+            <Route path="/mypage" element={<MyPage/>}/>
+            <Route path="/mypage/change" element={<MyPageChange/>}/>
             <Route path="/signup" element={<SignUp/>}/>
             <Route path="/login" element= {<Login/>}/>
             <Route path="/KakaoLogin" element= {<KakaoLogin/>}/>
@@ -25,7 +28,6 @@ function Router(){
             <Route path="/detail/update/:placeId/:id" element={<DetailRevise/>}/>
             <Route path="/detail/form/:id" element={<DetailForm/>}/>
             <Route path="/random" element={<Random/>}/>
-            <Route path="/mypage" element={<MyPage/>}/>
         </Routes>
         </BrowserRouter>
     )
