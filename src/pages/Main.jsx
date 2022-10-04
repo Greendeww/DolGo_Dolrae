@@ -60,7 +60,7 @@ const Main = () => {
                                         <IMG>
                                             {item.image === null
                                             ?<Opps alt='' src={LOGO}/>
-                                            :<Opps alt='' src={item.image}/>
+                                            :<Opps alt='' src={item.image}/>                                                                                                                               
                                             }
                                         </IMG>
                                         <Text>
