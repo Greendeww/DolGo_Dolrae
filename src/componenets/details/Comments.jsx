@@ -3,12 +3,13 @@ import React, {useState, useRef, useEffect} from 'react'
 import { useParams } from 'react-router-dom';
 import CommentModal from './CommentModal';
 import styled from "styled-components";
+import Numbers from './Numbers';
 
 
 const Comments = ({comment,arr,isSelected, handleClick, elementIndex}) => {
   console.log(arr)
   console.log(comment)
-  const ids = comment.length
+  // const ids = comment.length
   const {id} = useParams();
   let [modal, setModal] = useState(false);
   // const close = (idx) => {
@@ -17,8 +18,11 @@ const Comments = ({comment,arr,isSelected, handleClick, elementIndex}) => {
   //   setModal(newComment)
   // };
   const number = [...arr].reverse()
+  console.log(number)
   // comment.number = number
-  console.log(comment.number)
+  console.log(comment.createdAt)
+  const date = comment?.createdAt?.substring(2,10)
+  console.log(date)
   return (
     <> 
       
@@ -26,7 +30,10 @@ const Comments = ({comment,arr,isSelected, handleClick, elementIndex}) => {
       ?
       <CommentDiv>
         <ContentDiv onClick={() => {handleClick(elementIndex);setModal(true)}}>
-        <p style={{width: "6rem"}}>{comment.comment_id}</p>
+        {/* {number.map((number) => {
+         return <Numbers number={number}/>   
+        })} */}
+        <p style={{width: "9rem"}}>{date}</p>
         {comment.imageList.length === 0
         ?<span style={{cursor:"pointer", color:"#EBF8FF", fontSize:"30px",lineHeight:"3.4rem"}}>♥</span> 
         :<span style={{cursor:"pointer", color:"#FF8585", fontSize:"30px",lineHeight:"3.4rem"}}>♥</span> 
@@ -43,7 +50,7 @@ const Comments = ({comment,arr,isSelected, handleClick, elementIndex}) => {
       </CommentDiv>
       :<CommentDiv>
        <ContentDiv onClick={() => {handleClick(elementIndex);setModal(false)}}>
-        <p style={{width: "6rem"}}>{comment.comment_id}</p>
+        <p style={{width: "6rem"}}>{date}</p>
         {comment.imageList.length === 0
         ?<span style={{cursor:"pointer", color:"#EBF8FF", fontSize:"30px",lineHeight:"3.4rem"}}>♥</span> 
         :<span style={{cursor:"pointer", color:"#FF8585", fontSize:"30px",lineHeight:"3.4rem"}}>♥</span> 
