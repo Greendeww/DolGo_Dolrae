@@ -10,8 +10,6 @@ const Festival = () => {
 
   const getEvents = async () => {
     const res = await instance.get("/api/events");
-    console.log(res);
-
     setFestival(res.data);
   };
 
@@ -25,16 +23,17 @@ const Festival = () => {
 
   return (
     <StFestival>
-      <h3>이 달의 축제</h3>
-      <hr />
+      <Title>이 달의 축제</Title>
+      {/* <hr /> */}
       <FestivalList>
         {festival.map((festival) => {
           return (
-            <Card key={festival.id}
-            // onClick={() => {navigate('{festival.linkUrl}')}}
+            <Card
+              key={festival.id}
+              // onClick={() => {navigate('{festival.linkUrl}')}}
             >
-              <img src={festival.imageUrl} />
-              <p>{festival.title}</p>
+              <img alt="" src={festival.imageUrl} />
+              <p style={{ fontWeight: "bold" }} >{festival.title}</p>
               <p>{festival.period}</p>
             </Card>
           );
@@ -47,11 +46,11 @@ const Festival = () => {
 export default Festival;
 
 const StFestival = styled.div`
-  display: block;
   text-align: center;
   font-size: 37px;
   color: #79b9d3;
-  height: 750px;
+  height: 500px;
+  padding-top: 80px;
 
   & hr {
     width: 260px;
@@ -62,10 +61,19 @@ const StFestival = styled.div`
     border: none;
     border-radius: 30px;
   }
+`;
 
-  & h3 {
-    margin: 30px auto;
-  }
+const Title = styled.div`
+  color: white;
+  background: #c4e0ec;
+  border-radius: 30px;
+  width: 236px;
+  height: 50px;
+  font-weight: 900;
+  font-size: 35px;
+  line-height: 46px;
+  margin: 30px auto;
+  padding-top: 5px;
 `;
 
 const FestivalList = styled.div`
@@ -74,14 +82,16 @@ const FestivalList = styled.div`
 
 const Card = styled.div`
   img {
-    width: 400px;
-    height: 600px;
+    width: 100%;
+    border-radius: 30px;
     &:hover {
       cursor: pointer;
+      box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
     }
   }
   p {
-    font-size: 20px;
-    color: black;
+    margin: 10px auto;
+    font-size: 25px;
+    color: #414141;
   }
 `;
