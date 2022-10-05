@@ -1,19 +1,89 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { __getTheme } from "../../redux/modules/theme";
 import css from "../../css/select.css";
+import { __getThemeList } from "../../redux/modules/theme";
 
 const List = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const THEME_CODE = "THEME_CODE";
+  const THEME_NAME = "THEME_NAME";
   const AREA_CODE = "AREA_CODE";
   const AREA_NAME = "AREA_NAME";
   const SIGUNGU_CODE = "SIGUNGU_CODE";
   const SIGUNGU_NAME = "SIGUNGU_NAME";
 
+  const [selectedTheme, setSelectedTheme] = useState("");
+  const [selectedDo, setSelectedDo] = useState("");
+  const [selectedSi, setSelectedSi] = useState("");
+
+  // 테마 목록
+  const categories = [
+    {
+      name: "관광",
+      value: 12,
+    },
+    {
+      name: "관람",
+      value: 14,
+    },
+    {
+      name: "액티비티",
+      value: 28,
+    },
+    {
+      name: "식도락",
+      value: 39,
+    },
+  ];
+
+  // 테마 생성
+  const makeCategories = () => {
+    return categories.map((item, idx) => (
+      <div
+        key={idx}
+        className={
+          item.value === selectedTheme
+            ? "category-child selected"
+            : "category-child"
+        }
+        onClick={() => {
+          setSelectedTheme(item.value);
+          localStorage.setItem(THEME_CODE, item.value);
+          localStorage.setItem(THEME_NAME, item.name);
+        }}
+      >
+        {item.name}
+      </div>
+    ));
+  };
+
+  const init = () => {
+    let data = localStorage.getItem(THEME_CODE);
+    if (data !== null) setSelectedTheme(data);
+  };
+
+  useEffect(init, []);
+
+  // 필터 초기화
+  const initialization = (e) => {
+    // e.preventDefault();
+    localStorage.removeItem("THEME_CODE");
+    localStorage.removeItem("THEME_NAME");
+    localStorage.removeItem("AREA_CODE");
+    localStorage.removeItem("AREA_NAME");
+    localStorage.removeItem("SIGUNGU_CODE");
+    localStorage.removeItem("SIGUNGU_NAME");
+
+    setSelectedTheme("");
+    setSelectedDo(0);
+    setSelectedSi(0);
+  };
+
+  // 서버로 보내줄 값 ( 선택한 테마, 지역 )
   const GET_THEME_CODE = window.localStorage.getItem("THEME_CODE");
   const GET_THEME_NAME = window.localStorage.getItem("THEME_NAME");
   const GET_AREA_CODE = window.localStorage.getItem("AREA_CODE");
@@ -30,11 +100,9 @@ const List = () => {
     sigunguName: GET_SIGUNGU_NAME,
   };
 
-  const [selectedDo, setSelectedDo] = useState("");
-  const [selectedSi, setSelectedSi] = useState("");
-
+  // 지역별 name, value
   const doList = [
-    { name: "전체", value: 0 },
+    { name: "전체", value: "" },
     { name: "서울", value: 1 },
     { name: "인천", value: 2 },
     { name: "대전", value: 3 },
@@ -54,16 +122,18 @@ const List = () => {
     { name: "제주", value: 39 },
   ];
 
+  // 세부 지역별 해당 do, name, value
   const siList = [
-    { do: "서울", name: "전체", value: 0 },
-    { do: "인천", name: "전체", value: 0 },
-    { do: "대전", name: "전체", value: 0 },
-    { do: "대구", name: "전체", value: 0 },
-    { do: "광주", name: "전체", value: 0 },
-    { do: "부산", name: "전체", value: 0 },
-    { do: "울산", name: "전체", value: 0 },
-    { do: "세종", name: "전체", value: 0 },
-    { do: "경기", name: "전체", value: 0 },
+    { do: "전체", name: "전체", value: "" },
+    { do: "서울", name: "전체", value: "" },
+    { do: "인천", name: "전체", value: "" },
+    { do: "대전", name: "전체", value: "" },
+    { do: "대구", name: "전체", value: "" },
+    { do: "광주", name: "전체", value: "" },
+    { do: "부산", name: "전체", value: "" },
+    { do: "울산", name: "전체", value: "" },
+    { do: "세종", name: "전체", value: "" },
+    { do: "경기", name: "전체", value: "" },
     { do: "경기", name: "가평", value: 1 },
     { do: "경기", name: "고양", value: 2 },
     { do: "경기", name: "과천", value: 3 },
@@ -95,7 +165,7 @@ const List = () => {
     { do: "경기", name: "포천", value: 29 },
     { do: "경기", name: "하남", value: 30 },
     { do: "경기", name: "화성", value: 31 },
-    { do: "강원", name: "전체", value: 0 },
+    { do: "강원", name: "전체", value: "" },
     { do: "강원", name: "강릉", value: 1 },
     { do: "강원", name: "고성", value: 2 },
     { do: "강원", name: "동해", value: 3 },
@@ -114,7 +184,7 @@ const List = () => {
     { do: "강원", name: "홍천", value: 16 },
     { do: "강원", name: "화천", value: 17 },
     { do: "강원", name: "횡성", value: 18 },
-    { do: "충북", name: "전체", value: 0 },
+    { do: "충북", name: "전체", value: "" },
     { do: "충북", name: "괴산", value: 1 },
     { do: "충북", name: "단양", value: 2 },
     { do: "충북", name: "보은", value: 3 },
@@ -127,7 +197,7 @@ const List = () => {
     { do: "충북", name: "청원", value: 10 },
     { do: "충북", name: "청주", value: 11 },
     { do: "충북", name: "충주", value: 12 },
-    { do: "충남", name: "전체", value: 0 },
+    { do: "충남", name: "전체", value: "" },
     { do: "충남", name: "계룡", value: 1 },
     { do: "충남", name: "공주", value: 2 },
     { do: "충남", name: "금산", value: 3 },
@@ -143,7 +213,7 @@ const List = () => {
     { do: "충남", name: "청양", value: 13 },
     { do: "충남", name: "태안", value: 14 },
     { do: "충남", name: "홍성", value: 15 },
-    { do: "경북", name: "전체", value: 0 },
+    { do: "경북", name: "전체", value: "" },
     { do: "경북", name: "경산", value: 1 },
     { do: "경북", name: "경주", value: 2 },
     { do: "경북", name: "고령", value: 3 },
@@ -167,7 +237,7 @@ const List = () => {
     { do: "경북", name: "청송", value: 21 },
     { do: "경북", name: "칠곡", value: 22 },
     { do: "경북", name: "포항", value: 23 },
-    { do: "경남", name: "전체", value: 0 },
+    { do: "경남", name: "전체", value: "" },
     { do: "경남", name: "거제", value: 1 },
     { do: "경남", name: "거창", value: 2 },
     { do: "경남", name: "고성", value: 3 },
@@ -188,7 +258,7 @@ const List = () => {
     { do: "경남", name: "함안", value: 18 },
     { do: "경남", name: "함양", value: 19 },
     { do: "경남", name: "합천", value: 20 },
-    { do: "전북", name: "전체", value: 0 },
+    { do: "전북", name: "전체", value: "" },
     { do: "전북", name: "고창", value: 1 },
     { do: "전북", name: "군산", value: 2 },
     { do: "전북", name: "김제", value: 3 },
@@ -203,7 +273,7 @@ const List = () => {
     { do: "전북", name: "전주", value: 12 },
     { do: "전북", name: "정읍", value: 13 },
     { do: "전북", name: "진안", value: 14 },
-    { do: "전남", name: "전체", value: 0 },
+    { do: "전남", name: "전체", value: "" },
     { do: "전남", name: "강진", value: 1 },
     { do: "전남", name: "고흥", value: 2 },
     { do: "전남", name: "곡성", value: 3 },
@@ -226,11 +296,12 @@ const List = () => {
     { do: "전남", name: "함평", value: 20 },
     { do: "전남", name: "해남", value: 21 },
     { do: "전남", name: "화순", value: 22 },
-    { do: "제주", name: "전체", value: 0 },
+    { do: "제주", name: "전체", value: "" },
     { do: "제주", name: "서귀포", value: 3 },
     { do: "제주", name: "제주", value: 4 },
   ];
 
+  // 지역 생성
   const Location = () => {
     return doList.map((item, idx) => (
       <div
@@ -242,8 +313,11 @@ const List = () => {
         }
         onClick={() => {
           setSelectedDo(item.value);
+          setSelectedSi(0);
           localStorage.setItem(AREA_CODE, item.value);
           localStorage.setItem(AREA_NAME, item.name);
+          localStorage.removeItem(SIGUNGU_CODE);
+          localStorage.removeItem(SIGUNGU_NAME);
         }}
       >
         {item.name}
@@ -251,6 +325,7 @@ const List = () => {
     ));
   };
 
+  // 세부 지역 생성
   const DetailLocation = () => {
     return siList.map((item, idx) =>
       item.do == GET_AREA_NAME ? (
@@ -273,32 +348,48 @@ const List = () => {
     );
   };
 
+  // select 페이지로 돌아올 시 자동으로 필터 초기화
+  useEffect(() => {
+    initialization();
+  }, []);
+
   return (
     <St>
-      <StList>
-        <p>지역</p>
-        <div className="location-set">{Location()}</div>
-      </StList>
-      <StList>
-        <p>세부지역</p>
-        <div className="location-set">{DetailLocation()}</div>
-      </StList>
-      <button
-        onClick={() => {
-          if (
-            GET_THEME_NAME === null ||
-            GET_AREA_NAME === null ||
-            GET_SIGUNGU_NAME === null
-          ) {
-            alert("모든 항목을 선택해주세요.");
-          } else {
-            dispatch(__getTheme(search));
-            navigate("/list");
-          }
-        }}
-      >
-        선택완료
-      </button>
+      <StCategory>
+        <Title>
+          <p>테마</p>
+          <button onClick={initialization}>필터 초기화 ↺</button>
+        </Title>
+        <Category>
+          <div className="category-set">{makeCategories()}</div>
+        </Category>
+      </StCategory>
+      <StLocation>
+        <StList>
+          <p>지역</p>
+          <div className="location-set">{Location()}</div>
+        </StList>
+        <StList>
+          <p>세부지역</p>
+          <div className="location-set">{DetailLocation()}</div>
+        </StList>
+        <button
+          onClick={() => {
+            if (
+              GET_THEME_NAME === null ||
+              GET_AREA_NAME === null ||
+              GET_SIGUNGU_NAME === null
+            ) {
+              alert("모든 항목을 선택해주세요.");
+            } else {
+              dispatch(__getThemeList(search));
+              navigate("/list");
+            }
+          }}
+        >
+          선택완료
+        </button>
+      </StLocation>
     </St>
   );
 };
@@ -306,6 +397,50 @@ const List = () => {
 export default List;
 
 const St = styled.div`
+  position: relative;
+  top: 100px;
+`;
+
+const StCategory = styled.div`
+  margin: 30px auto;
+  & p {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 40px;
+    color: #bfb8b8;
+    margin-left: 20px;
+  }
+`;
+
+const Category = styled.div`
+  width: 428px;
+  & div {
+    cursor: pointer;
+  }
+`;
+
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  & button {
+    margin-right: 20px;
+    background: #ffc0c0;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+    color: #ffffff;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+`;
+
+const StLocation = styled.div`
   & button {
     background-color: #ffc0c0;
     color: white;
@@ -326,12 +461,6 @@ const StList = styled.div`
   width: 428px;
   margin-top: 50px;
 
-  /* & div {
-    display: inline-block;
-    width: 60%;
-    margin-left: 20px;
-  } */
-
   & p {
     font-style: normal;
     font-weight: 700;
@@ -339,15 +468,6 @@ const StList = styled.div`
     line-height: 40px;
     color: #bfb8b8;
     margin-left: 20px;
-  }
-`;
-
-const Do = styled.button`
-  border: none;
-`;
-
-const Si = styled.div`
-  & button {
-    border: none;
+    margin: 20px;
   }
 `;
