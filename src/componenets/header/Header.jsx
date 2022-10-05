@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import back from "../../assert/header/pngwing.com.png";
-import css from "../../css/header.css";
+import header from "../../css/header.css";
 import { useEffect } from "react";
-import dolphin from "../../assert/header/dolphin (2).png";
+// import dolphin from "../../assert/header/dolphin (2).png"
 
 const Header = () => {
   const navigate = useNavigate();
@@ -65,7 +65,6 @@ export default Header;
 const St = styled.div`
   width: 428px;
   margin: 0 auto;
-
   & a {
     &:hover {
       cursor: pointer;
@@ -82,7 +81,6 @@ const StHeader = styled.div`
   vertical-align: middle;
   /* & h2 {
     color: white;
-    background-image: url(${dolphin});
     background-repeat: no-repeat;
   } */
 
