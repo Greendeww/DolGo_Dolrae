@@ -1,27 +1,30 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import back from "../../assert/header/pngwing.com.png";
 import css from "../../css/header.css";
-import dolphin from "../../assert/header/dolphin (2).png";
-
+import dolphin from "../../assert/header/logo_.png";
+import bell from "../../assert/header/bell.png";
+import { useDispatch } from "react-redux";
+import { __logout } from "../../redux/modules/user";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [modal, setModal] = useState(false);
 
+  const username = localStorage.getItem("username");
+
   const onModalHandler = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     setModal(!modal);
   };
 
+  // const menuTrigger = document.querySelector(".menu-trigger");
 
-    // const menuTrigger = document.querySelector(".menu-trigger");
-
-    // menuTrigger.addEventListener("click", (event) => {
-    //   event.currentTarget.classList.toggle("active-1");
-    // });
-
+  // menuTrigger.addEventListener("click", (event) => {
+  //   event.currentTarget.classList.toggle("active-1");
+  // });
 
   window.onload = () => {
     const menuTrigger = document.querySelector(".menu-trigger");
@@ -32,47 +35,55 @@ const Header = () => {
   };
 
   return (
-    <St>
-      <StHeader>
-        <Back className="menu-open" onClick={() => navigate(-1)} />
-        {/* <img src={dolphin}></img> */}
-        <a className="menu-trigger" onClick={onModalHandler}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </a>
-      </StHeader>
-      <div>
-        {modal === true ? (
-          <HeaderMenu>
-            <h2 onClick={() => navigate("/")}>Home</h2>
-            <h2 onClick={() => navigate("/select")}>Search</h2>
-            <h2 onClick={() => navigate("/random")}>Random</h2>
-            <h2 onClick={() => navigate("/mypage")}>MyPage</h2>
-            <h2 onClick={() => navigate("/write")}>Write</h2>
-            <div>
-              <h2 onClick={() => navigate("/login")}>로그인 </h2>
-            </div>
-          </HeaderMenu>
-        ) : null}
-      </div>
-    </St>
+    <StHeader>
+      <Top>
+        <Bell alt="" src={bell} />
+        <img alt="" src={dolphin} onClick={() => navigate("/")} />
+        <div className="menu-trigger" onClick={onModalHandler}>
+          <span />
+          <span />
+          <span />
+        </div>
+      </Top>
+      {modal === true ? (
+        <Menu>
+          <h2 onClick={() => navigate("/")}>Home</h2>
+          <h2 onClick={() => navigate("/select")}>Search</h2>
+          <h2 onClick={() => navigate("/random")}>Random</h2>
+          {username !== null ? (
+            <>
+              <h2 onClick={() => navigate("/mypage")}>MyPage</h2>
+              <h2 onClick={() => navigate("/write")}>Write</h2>
+            </>
+          ) : null}
+          <div>
+            {username === null ? (
+              <h2 onClick={() => navigate("/login")}>로그인</h2>
+            ) : (
+              <h2
+                onClick={() => {
+                  dispatch(__logout());
+                  navigate('/');
+                }}
+              >
+                로그아웃
+              </h2>
+            )}
+          </div>
+        </Menu>
+      ) : null}
+    </StHeader>
   );
-
 };
 
 export default Header;
 
-
-const St = styled.div`
+const StHeader = styled.div`
   width: 428px;
   margin: 0 auto;
-<<<<<<< HEAD
-=======
-
   z-index: 3;
+  position: fixed;
 
->>>>>>> origin/Semi
   & a {
     &:hover {
       cursor: pointer;
@@ -80,8 +91,8 @@ const St = styled.div`
   }
 `;
 
-const StHeader = styled.div`
-  background-color: rgba(121, 185, 211, 1);
+const Top = styled.div`
+  background-color: #abd4e2;
   height: 70px;
   width: 430px;
   display: flex;
@@ -89,43 +100,52 @@ const StHeader = styled.div`
   vertical-align: middle;
   /* & h2 {
     color: white;
+    background-image: url(${dolphin});
     background-repeat: no-repeat;
   } */
 
+  & div {
+    top: 10px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 
   & img {
-    width: 50px;
-    height: 50px;
-    margin-top: 10px;
+    margin-top: 5px;
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 
-const Back = styled.span`
-  background-image: url(${back});
-  background-repeat: no-repeat;
-  width: 45px;
-  height: 45px;
+const Bell = styled.img`
+  width: 42px;
+  height: 42px;
   margin: auto 0;
-  margin-left: 10px;
+  margin-left: 13px;
+  position: relative;
+  top: 5px;
+
   &:hover {
     cursor: pointer;
   }
 `;
 
-const HeaderMenu = styled.div`
+const Menu = styled.div`
   position: absolute;
   left: 50%;
   width: 216px;
-  height: 280%;
   float: right;
-  background-color: rgba(121, 185, 211, 1);
+  background-color: #abd4e2;
   text-align: center;
   color: #535353;
-  /* right: -60px;  */
   transition: all 0.3s;
+  z-index: 10;
 
   & h2 {
     text-decoration: underline;
+
     &:hover {
       cursor: pointer;
     }
@@ -138,7 +158,5 @@ const HeaderMenu = styled.div`
       text-decoration: none;
     }
   }
-
-  z-index: 3;
 `;
 
