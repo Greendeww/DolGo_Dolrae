@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import back from "../../assert/header/pngwing.com.png";
+<<<<<<< HEAD
 import header from "../../css/header.css";
 import { useEffect } from "react";
 // import dolphin from "../../assert/header/dolphin (2).png"
+=======
+import css from "../../css/header.css";
+import dolphin from "../../assert/header/dolphin (2).png";
+>>>>>>> origin/Semi
 
 const Header = () => {
   const navigate = useNavigate();
@@ -51,20 +56,28 @@ const Header = () => {
             <h2 onClick={() => navigate("/mypage")}>MyPage</h2>
             <h2 onClick={() => navigate("/write")}>Write</h2>
             <div>
-              <h2 onClick={() => navigate("/login")}>로그인 ></h2>
+              <h2 onClick={() => navigate("/login")}>로그인 </h2>
             </div>
           </HeaderMenu>
         ) : null}
       </div>
     </St>
   );
+
 };
 
 export default Header;
 
+
 const St = styled.div`
   width: 428px;
   margin: 0 auto;
+<<<<<<< HEAD
+=======
+
+  z-index: 3;
+
+>>>>>>> origin/Semi
   & a {
     &:hover {
       cursor: pointer;
@@ -73,9 +86,9 @@ const St = styled.div`
 `;
 
 const StHeader = styled.div`
-  background-color: rgba(121, 185, 211, 0.62);
+  background-color: rgba(121, 185, 211, 1);
   height: 70px;
-  width: 428px;
+  width: 430px;
   display: flex;
   justify-content: space-between;
   vertical-align: middle;
@@ -83,6 +96,7 @@ const StHeader = styled.div`
     color: white;
     background-repeat: no-repeat;
   } */
+
 
   & img {
     width: 50px;
@@ -106,10 +120,10 @@ const Back = styled.span`
 const HeaderMenu = styled.div`
   position: absolute;
   left: 50%;
-  width: 214px;
-  height: 100%;
+  width: 216px;
+  height: 280%;
   float: right;
-  background-color: rgba(121, 185, 211, 0.62);
+  background-color: rgba(121, 185, 211, 1);
   text-align: center;
   color: #535353;
   /* right: -60px;  */
@@ -129,5 +143,7 @@ const HeaderMenu = styled.div`
       text-decoration: none;
     }
   }
+
+  z-index: 3;
 `;
 
