@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { _deleteComment } from "../../redux/modules/comment";
 
 const Modal = ({ onClose, comment}) => {
+  console.log(comment)
   const dispatch = useDispatch();
 
   return (
@@ -16,7 +17,7 @@ const Modal = ({ onClose, comment}) => {
               <Button>
                 <Jimbut
                   onClick={() => {
-                    dispatch(_deleteComment(comment));
+                    dispatch(_deleteComment(comment.comment_id));
                   }}
                 >
                   삭제
