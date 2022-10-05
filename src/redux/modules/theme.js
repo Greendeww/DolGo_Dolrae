@@ -7,8 +7,8 @@ const initialState = {
   error: null
 }
 
-export const __getTheme = createAsyncThunk(
-  "post/__getTheme",
+export const __getThemeList = createAsyncThunk(
+  "post/__getThemeList",
   async (payload, thunkAPI) => {
     // console.log(payload);
     try {
@@ -28,15 +28,15 @@ export const themeSlice = createSlice ({
   reducers: {},
   extraReducers: (builder) => {
     builder
-    .addCase(__getTheme.pending, (state) => {
+    .addCase(__getThemeList.pending, (state) => {
       state.isLoading = true;
     })
-    .addCase(__getTheme.fulfilled, (state, action) => {
+    .addCase(__getThemeList.fulfilled, (state, action) => {
       state.isLoading = false;
       state.list = action.payload;
       console.log(action.payload);
     })
-    .addCase(__getTheme.rejected, (state, action) => {
+    .addCase(__getThemeList.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
       // console.log("rejected");
