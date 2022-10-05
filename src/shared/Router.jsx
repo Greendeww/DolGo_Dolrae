@@ -11,6 +11,8 @@ import Main from "../pages/Main";
 import Random from "../pages/Random";
 import MyPage from "../pages/MyPage";
 import MyPageChange from "../pages/MyPageChange";
+import Report from "../pages/Report";
+import Register from "../pages/Register";
 
 function Router(){
     return(
@@ -19,6 +21,8 @@ function Router(){
             <Route path="/" element={<Main />}/>
             <Route path="/mypage" element={<MyPage/>}/>
             <Route path="/mypage/change" element={<MyPageChange/>}/>
+            <Route path="/report" element={<Report/>}/>
+            <Route path="/register" element={<Register/>}/>
             <Route path="/signup" element={<SignUp/>}/>
             <Route path="/login" element= {<Login/>}/>
             <Route path="/oauth/callback/kakao" element= {<KakaoLogin/>}/>
