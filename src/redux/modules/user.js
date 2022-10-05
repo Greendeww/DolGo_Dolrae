@@ -50,7 +50,7 @@ export const __login = createAsyncThunk(
       localStorage.setItem("REFRESH_TOKEN", response.headers.refreshtoken);
       localStorage.setItem("username", response.data.username);
       localStorage.setItem("nickname", response.data.nickname);
-
+      console.log(response);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -63,7 +63,9 @@ export const __logout = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       const response = await instance.post("/api/auth/member/logout");
+      window.location.reload();
       localStorage.removeItem("username");
+      localStorage.removeItem("nickname");
       localStorage.removeItem("isLogin");
       localStorage.removeItem("ACCESS_TOKEN");
       localStorage.removeItem("REFRESH_TOKEN");
@@ -73,7 +75,6 @@ export const __logout = createAsyncThunk(
       localStorage.removeItem("AREA_NAME");
       localStorage.removeItem("SIGUNGU_CODE");
       localStorage.removeItem("SIGUNGU_NAME");
-
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -100,7 +101,7 @@ export const userSlice = createSlice({
   reducers: {
     signUp: (state, action) => {
       instance.post("/api/member/signup", action.payload);
-      state.users.push(action.payload);
+      // state.users.push(action.payload);
     },
   },
   extraReducers: (builder) => {
