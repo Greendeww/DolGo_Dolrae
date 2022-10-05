@@ -17,6 +17,10 @@ import DetailImage from '../../componenets/details/DetailImage';
 import { instance } from '../../shared/Api';
 import StarDetail from '../../componenets/star/StarDetail';
 import Like from '../../componenets/like/Like';
+import Header from '../componenets/header/Header';
+import { FaStar } from 'react-icons/fa';
+import ThemeList from '../componenets/theme/ThemeList';
+
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -31,22 +35,20 @@ const Detail = () => {
   const [number, setNumber] = useState(1)
   const indexOfLastPost = page*postPerPage;
   const indexOfFirstPage = indexOfLastPost - postPerPage
-  console.log(posts)
-  console.log(id)
+  // console.log(posts)
+
   const close = () => {
     setFormOpen(false);
   }
+  const {isLoading, error,comment} = useSelector((state) => state.comment)
+
   const fetch = async () => {
     const response = await instance.get(`/api/place/${id}`); 
-    console.log(response.data)
-    setPosts(response.data)
+    setPosts(response?.data)
   }
-
-  const {isLoading, error,comment} = useSelector((state) => state.comment)
-  console.log(comment)
-
   useEffect(() => {
       dispatch(_getComments(id));
+      // dispatch(_getDetail(id))
       fetch()
   }, []);
 
@@ -66,50 +68,53 @@ const Detail = () => {
   const handlePageChange = (page) => {
     setPage(page)
   }
-
   // const onLike = async (event) => {
   //   event.preventDefault();
   //   dispatch(onLikeDetail(id));
   // };
-  
+  console.log(posts)
   return (
     <>
+    <Header/>
     <div>
       <Box>
         <Cover>
           <ImgDiv>
           <ImgCover>
              <DetailImage post={posts} key={posts.id}/>
-             <div style={{display:"flex", justifyContent:"space-between"}}>
-              <span styel={{}}>{posts.title}</span> 
+             <TitleLikeDiv>
+              <TitleSpan>{posts.title}</TitleSpan> 
               <Like id={id}></Like>
-             </div>
-             {posts.star}
-             <div style={{display:"flex", paddingTop:"10px"}}>
-               <StarDetail posts={posts}/>
-               <span style={{fontWeight:"600"}}>{posts.star}</span>
-               <span style={{color:"#8f8f8f"}}>/5</span>
-             </div>
+             </TitleLikeDiv>
+
+             {/* {posts.likes} */}
+             <StarThemeDiv>
+              <ThemeList post={posts}/>
+              <div style={{display:"flex",}}>
+                <FaStar style={{color:"#fcc419",marginRight:"0.3rem",}}/>
+                <span style={{fontWeight:"600",lineHeight:"1rem"}}>{posts.star}</span>
+                <span style={{color:"#8f8f8f",lineHeight:"1rem"}}>/5</span>
+              </div>
+             </StarThemeDiv>
           </ImgCover>
           </ImgDiv>
         </Cover>
         <Title>
           </Title> 
           <Location>
-            <div style={{justifyContent:"center"}}>
+            <div style={{justifyContent:"center",marginBottom:"30px"}}>
             <p style={{color:"#BFB8B8",fontSize:"1.3rem"}}>위치</p>
             <p style={{fontWeight:"600"}}>{posts.address}</p>
             </div>
             <MapDiv>
               <Map
-                center={{ lat: posts?.mapY, lng: posts?.mapX }}
-                style={{ width: "100%", height: "300px" ,borderRadius: "20px"}}
+                center={{ lat: posts?.mapY || "", lng: posts?.mapX || ""}}
+                style={{ width: "100%", height: "30vh" ,borderRadius: "20px",margin:"0 auto",zIndex:"-10"}}
               >
-              <MapMarker // 인포윈도우를 생성하고 지도에 표시합니다
+              <MapMarker 
                 position={{
-                  // 인포윈도우가 표시될 위치입니다
-                  lat: posts?.mapY,
-                  lng: posts?.mapX,
+                  lat: posts?.mapY || "",
+                  lng: posts?.mapX || "",
                 }}
               /> 
               </Map>
@@ -151,44 +156,65 @@ const Box = styled.div`
   width: 100%;
   max-width:428px;
   margin: 0 auto;
-  border:2px solid #79B9D3;
+  /* border:2px solid #79B9D3; */
 `;
 const Cover = styled.div`
   display: flex;
   -webkit-box-pack: center;
   justify-content: center;
   /* background: rgb(249, 249, 249); */
-  padding-top: 40px;
   margin: 0 auto;
   margin-bottom:20px;
 `
 const ImgDiv =styled.div`
   background-color:#EBF8FF;
   padding: 20px 0px 20px;
+  z-index:0;
 `
 const ImgCover = styled.div`
   flex-shrink: 0;
   width:90%;
   max-width: 428px;
+  min-height:430px;
+  max-height:430px;
   justify-content:center;
   align-items:center;
   margin: 0 auto;
+  
 `
-// const Img = styled.img`
-//   border: 1px solid rgb(238, 238, 238);
-//   position: relative;
-//   width: 100%;
-//   height: 100%;
-// `
+const TitleLikeDiv =styled.div`
+  display:flex;
+  justify-content:space-between;
+  margin-top:3rem;
+`
+const TitleSpan =styled.b`
+  font-weight:700;
+  font-size:18px;
+`
+const Img = styled.img`
+  border: 1px solid rgb(238, 238, 238);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  margin-bottom:20px;
+  z-index:-10;
+`
 const Title = styled.div`
   margin:0 auto;
   width:100%;
   justify-content:space-between;
   display:flex;
 `
+const StarThemeDiv =styled.div`
+  padding-top:0.5rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+`
 const Location = styled.div`
   margin: 0 auto;
-  width:100%;
+  width:90%;
   justify-content:center;
   align-items:center;
   padding-top:30px;
@@ -200,19 +226,21 @@ const MapDiv =styled.div`
   margin:0 auto;
 `
 const DescDiv = styled.div`
-  width:100%;
+  width:90%;
   justify-content:center;
   align-items:center;
   margin:0 auto;
   padding-top:50px;
 `
 const SearchDate = styled.div`
-  margin-top:50px;
+  padding-top:20px;
+  width:90%;
+  margin:0 auto;
 `
 const SearchP = styled.p`
   color:#BFB8B8;
   font-size:1.3rem;
-  margin-bottom:20px;
+  margin-bottom:10px;
 `
 const SearchDiv = styled.div`
   display:flex;

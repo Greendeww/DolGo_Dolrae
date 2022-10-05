@@ -82,8 +82,12 @@ const StHeader = styled.div`
   width: 428px;
   margin: 0 auto;
   z-index: 3;
-  position: fixed;
-  top: 0;
+
+  & a {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;
 
 const Top = styled.div`
@@ -93,6 +97,11 @@ const Top = styled.div`
   display: flex;
   justify-content: space-between;
   vertical-align: middle;
+  /* & h2 {
+    color: white;
+    background-image: url(${dolphin});
+    background-repeat: no-repeat;
+  } */
 
   & div {
     top: 10px;
@@ -149,3 +158,4 @@ const Menu = styled.div`
     }
   }
 `;
+

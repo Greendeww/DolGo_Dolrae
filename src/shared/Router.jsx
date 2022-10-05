@@ -7,12 +7,17 @@ import List from "../pages/tourist/List";
 import Detail from "../pages/tourist/Detail";
 import DetailRevise from "../componenets/details/DetailRevise";
 import DetailForm from "../componenets/details/DetailForm";
-import Main from "../pages/tourist/Main";
-import Random from "../pages/tourist/Random";
-import MyPage from "../pages/mypage/MyPage";
-import MyPageChange from "../pages/mypage/MyPageChange";
-import Report from "../pages/request/Report";
-import Register from "../pages/request/Register";
+import Main from "../pages/Main";
+import Random from "../pages/Random";
+import RndLocation from "../componenets/random/RndLocation";
+import RandomSelect from "../componenets/random/RandomSelect";
+import RandomList from "../componenets/random/RandomList";
+import MyPage from "../pages/MyPage";
+import MyPageChange from "../pages/MyPageChange";
+import Report from "../pages/Report";
+import Register from "../pages/Register";
+
+
 
 function Router(){
     return(
@@ -32,6 +37,9 @@ function Router(){
             <Route path="/detail/update/:placeId/:id" element={<DetailRevise/>}/>
             <Route path="/detail/form/:id" element={<DetailForm/>}/>
             <Route path="/random" element={<Random/>}/>
+            <Route path="/rndlocation" element={<RndLocation/>}/>
+            <Route path="/rndselect/:area/:si" element={<RandomSelect/>}/>
+            <Route path="/rnd" element={<RandomList/>}/>
         </Routes>
         </BrowserRouter>
     )
