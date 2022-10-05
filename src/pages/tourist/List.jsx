@@ -1,20 +1,32 @@
-import React from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Header from "../../componenets/header/Header";
 import basicImg from "../../assert/image/basic.png";
+import { useInView } from "react-intersection-observer";
+import { instance } from "../../shared/Api";
 
 const List = () => {
   const navigate = useNavigate();
 
+  const THEME_CODE = window.localStorage.getItem("THEME_CODE");
+  const AREA_CODE = window.localStorage.getItem("AREA_CODE");
+  const SIGUNGU_CODE = window.localStorage.getItem("SIGUNGU_CODE");
   const THEME_NAME = window.localStorage.getItem("THEME_NAME");
   const AREA_NAME = window.localStorage.getItem("AREA_NAME");
   const SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
 
-  const { list } = useSelector((state) => state.theme);
+  const [ list, setList ] = useState();
 
-  console.log(list);
+  const getList = async() => {
+    const res = await instance.get(`/api/place?theme=${THEME_CODE}&areaCode=${AREA_CODE}&sigunguCode=${SIGUNGU_CODE}&pageNum=0`);
+    setList(res.data)
+  }
+
+  useEffect(() => {
+    getList();
+  }, []);
 
   const returnHandler = (e) => {
     e.preventDefault();
@@ -45,7 +57,7 @@ const List = () => {
         </div>
       </Title>
       <Content>
-        {list.map((list) => (
+        {list&&list.map((list) => (
           <Card key={list.id} onClick={() => navigate(`/detail/${list.id}`)}>
             {list.image == null ? (
               <>
@@ -126,8 +138,8 @@ const Title = styled.div`
 
   & p {
     color: #ffc0c0;
-    font-weight: 700;
     font-size: 45px;
+    font-weight: 700;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 
@@ -137,9 +149,10 @@ const Title = styled.div`
     margin-block-start: 8px;
     margin-block-end: 0;
     color: #ffffff;
-    font-weight: 700;
     font-size: 24px;
+    font-weight: normal;
     text-shadow: none;
+    margin-top: 13px;
   }
 `;
 
@@ -202,7 +215,6 @@ const Name = styled.div`
   margin-left: 35px;
   color: #ffffff;
   font-size: 23px;
-  font-weight: bold;
   line-height: 33px;
   margin-block-end: 0;
   margin-block-start: 0;
@@ -222,7 +234,6 @@ const BasicName = styled.div`
   margin-left: 35px;
   color: #414141;
   font-size: 23px;
-  font-weight: bold;
   line-height: 33px;
   margin-block-end: 0;
   margin-block-start: 0;
