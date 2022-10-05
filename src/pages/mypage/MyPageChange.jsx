@@ -10,7 +10,6 @@ import Password from "../../componenets/mypage/Change/Password";
 import Withdrawal from "../../componenets/mypage/Change/Withdrawal";
 
 function MyPageChange() {
-
   return (
     <StChange>
       <Header />
@@ -25,9 +24,7 @@ export default MyPageChange;
 
 const StChange = styled.div`
   width: 428px;
-  height: 1000px;
   margin: 0 auto;
   background-color: #eef6fa;
+  height: 1000px;
 `;
-
-

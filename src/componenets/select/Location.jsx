@@ -398,7 +398,7 @@ export default List;
 
 const St = styled.div`
   position: relative;
-  top: 20px;
+  top: 80px;
 `;
 
 const StCategory = styled.div`

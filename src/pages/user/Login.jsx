@@ -8,7 +8,6 @@ import Header from "../../componenets/header/Header";
 import kakao from "../../assert/login/kakao_login_medium_wide.png";
 import Swal from "sweetalert2";
 
-
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -103,17 +102,17 @@ const Login = () => {
 export default Login;
 
 const StLogin_ = styled.div`
-  padding-top: 120px;
   width: 428px;
   margin: auto;
+`;
+
+const StLogin = styled.div`
+  vertical-align: middle;
+  padding-top: 120px;
 
   & p {
     margin-bottom: 10px;
   }
-`;
-
-const StLogin = styled.div`
-vertical-align: middle;
   & input {
     width: 373px;
     height: 52px;

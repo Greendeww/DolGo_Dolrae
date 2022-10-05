@@ -82,6 +82,7 @@ const StHeader = styled.div`
   width: 428px;
   margin: 0 auto;
   z-index: 3;
+  position: fixed;
 
   & a {
     &:hover {
