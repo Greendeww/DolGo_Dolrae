@@ -17,9 +17,9 @@ import DetailImage from '../../componenets/details/DetailImage';
 import { instance } from '../../shared/Api';
 import StarDetail from '../../componenets/star/StarDetail';
 import Like from '../../componenets/like/Like';
-import Header from '../componenets/header/Header';
+import Header from '../../componenets/header/Header';
 import { FaStar } from 'react-icons/fa';
-import ThemeList from '../componenets/theme/ThemeList';
+import ThemeList from '../../componenets/theme/ThemeList';
 
 
 const Detail = () => {

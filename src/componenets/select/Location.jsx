@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import css from "../../css/select.css";
-import { __getThemeList } from "../../redux/modules/theme";
+import { __getTheme } from "../../redux/modules/theme";
 
 const List = () => {
   const navigate = useNavigate();
@@ -382,7 +382,7 @@ const List = () => {
             ) {
               alert("모든 항목을 선택해주세요.");
             } else {
-              dispatch(__getThemeList(search));
+              dispatch(__getTheme(search));
               navigate("/list");
             }
           }}
@@ -398,7 +398,7 @@ export default List;
 
 const St = styled.div`
   position: relative;
-  top: 80px;
+  top: 20px;
 `;
 
 const StCategory = styled.div`
