@@ -44,7 +44,7 @@ const indexOfFirstPage = indexOfLastPost - postPerPage
       setModal(newComment)
     };
     // comment.number = number
-    console.log(comment.number)
+
   return (
     <div>
         <CommentDiv>
