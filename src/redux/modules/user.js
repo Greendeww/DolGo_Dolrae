@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { instance } from "../../shared/Api";
-import { deleteCookie, getCookie, setCookie } from "../../shared/Cookie";
-import axios from "axios";
 
 const initialState = {
   users: [],
@@ -50,9 +48,9 @@ export const __login = createAsyncThunk(
       localStorage.setItem("REFRESH_TOKEN", response.headers.refreshtoken);
       localStorage.setItem("username", response.data.username);
       localStorage.setItem("nickname", response.data.nickname);
-      console.log(response);
       return response.data;
     } catch (error) {
+      alert("이메일 또는 비밀번호를 확인해주세요.")
       return thunkAPI.rejectWithValue(error);
     }
   }
