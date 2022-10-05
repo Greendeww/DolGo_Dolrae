@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../../shared/Api";
+import Like from '../../like/Like';
 
 const LikeList = () => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const LikeList = () => {
             />
             <Title>
               <p>{item.title}</p>
-              <span>♥</span>
+              <span><Like id={item.id}/></span>
             </Title>
           </div>
         ))}
@@ -56,6 +57,10 @@ const StLikeList = styled.div`
       cursor: pointer;
     }
   }
+
+  & div > div {
+    margin-bottom: 30px;
+  }
 `;
 
 const Title = styled.div`
@@ -69,11 +74,11 @@ const Title = styled.div`
 
   & span {
     font-weight: 700;
-    font-size: 50px;
+    font-size: 40px;
     color: #ff8585;
     position: relative;
-    top: -20px;
-    right: 30px;
+    top: -5px;
+    right: 15px;
 
     &:hover {
       cursor: pointer;
