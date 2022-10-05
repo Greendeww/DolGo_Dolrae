@@ -1,32 +1,59 @@
 import React from 'react'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { onLikeDetail } from '../../redux/modules/post';
+import { onLikeDetail, onLikeGet } from '../../redux/modules/post';
 import styled from "styled-components";
 import { instance } from '../../shared/Api';
 import { useEffect } from 'react';
 
 const Like = ({id}) => {
+    console.log(id)
     const dispatch = useDispatch();
     const [like, setLike] = useState(false);
-    
-    const fetch = async () => {
-        const response = await instance.get(`/api/place/like/${id}`); 
-        console.log(response.data)
-        setLike(response.data)
-      }
+
+        const fetch = async (e) => {
+            if(id === undefined){
+                return 
+            }else{
+                const response = await instance.get(`/api/place/like/${id}`); 
+                setLike(response?.data)
+                console.log("작동")
+            }
+        }   
+
+    // const fetch = async (e) => {
+    //     const response = await instance.get(`/api/place/like/${id}`); 
+    //     setLike(response?.data)
+    // }
     useEffect(() => {
         fetch()
-    },[])
+    },[id])
+    // const {isLoading, error} = useSelector((state) => state)
+    // console.log(useSelector((state) => state))
+
+    // useEffect(() => {
+    //     dispatch(onLikeGet(id));
+    // }, []);
+
+    // if (isLoading) {
+    //     return <div>로딩중....</div>;
+    // }
+    
+    // if(error) {
+    //     return <div>{error.message}</div>;
+    // }
+
     const likeClick = (e) => {
         e.preventDefault();
         if(like === true){
             setLike(false)
             dispatch(onLikeDetail(id))
+            // window.location.reload()
         }else{
             setLike(true)
             dispatch(onLikeDetail(id))
+            // window.location.reload()
         }
     }
   return (

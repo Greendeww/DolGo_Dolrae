@@ -1,13 +1,18 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import check from "../../assert/theme/check.png";
-import { getCookie } from "../../shared/Cookie";
+import { __getTheme } from "../../redux/modules/theme";
 
 const List = () => {
   const navigate = useNavigate();
-  const LS_KEY_DO = "LS_KEY_DO";
-  const LS_KEY_SI = "LS_KEY_SI";
+  const dispatch = useDispatch();
+
+  const AREA_CODE = "AREA_CODE";
+  const AREA_NAME = "AREA_NAME";
+  const SIGUNGU_CODE = "SIGUNGU_CODE";
+  const SIGUNGU_NAME = "SIGUNGU_NAME";
 
   const [seoul, setSeoul] = useState(false);
   const [inCheon, setInCheon] = useState(false);
@@ -131,6 +136,132 @@ const List = () => {
     {
       name: "경기",
       value: 31,
+      siGunGu: [
+        {
+          name: "가평",
+          value: 1,
+        },
+        {
+          name: "고양",
+          value: 2,
+        },
+        {
+          name: "과천",
+          value: 3,
+        },
+        {
+          name: "광명",
+          value: 4,
+        },
+        {
+          name: "광주",
+          value: 5,
+        },
+        {
+          name: "구리",
+          value: 6,
+        },
+        {
+          name: "군포",
+          value: 7,
+        },
+        {
+          name: "김포",
+          value: 8,
+        },
+        {
+          name: "남양주",
+          value: 9,
+        },
+        {
+          name: "동두천",
+          value: 10,
+        },
+        {
+          name: "부천",
+          value: 11,
+        },
+        {
+          name: "성남",
+          value: 12,
+        },
+        {
+          name: "수원",
+          value: 13,
+        },
+        {
+          name: "시흥",
+          value: 14,
+        },
+        {
+          name: "안산",
+          value: 15,
+        },
+        {
+          name: "안성",
+          value: 16,
+        },
+        {
+          name: "안양",
+          value: 17,
+        },
+        {
+          name: "양주",
+          value: 18,
+        },
+        {
+          name: "양평",
+          value: 19,
+        },
+        {
+          name: "여주",
+          value: 20,
+        },
+        {
+          name: "연천",
+          value: 21,
+        },
+        {
+          name: "오산",
+          value: 22,
+        },
+        {
+          name: "용인",
+          value: 23,
+        },
+        {
+          name: "의왕",
+          value: 24,
+        },
+        {
+          name: "의정부",
+          value: 25,
+        },
+        {
+          name: "이천",
+          value: 26,
+        },
+        {
+          name: "파주",
+          value: 27,
+        },
+        {
+          name: "평택",
+          value: 28,
+        },
+        {
+          name: "포천",
+          value: 29,
+        },
+        {
+          name: "하남",
+          value: 30,
+        },
+        {
+          name: "화성",
+          value: 31,
+        },
+      ],
     },
     {
       name: "강원",
@@ -964,10 +1095,22 @@ const List = () => {
       <Do
         key={idx}
         onClick={() => {
-          localStorage.setItem(LS_KEY_DO, item.value);
+          localStorage.setItem(AREA_CODE, item.value);
+          localStorage.setItem(AREA_NAME, item.name);
         }}
       >
         {item.name}
+        {/* {item.siGunGu.map((item, idx) => (
+          <Si
+            key={idx}
+            onClick={() => {
+              localStorage.setItem(AREA_CODE, item.value);
+              localStorage.setItem(AREA_NAME, item.name);
+            }}
+          >
+            {item.name}
+          </Si>
+        ))} */}
       </Do>
     ));
   };
@@ -977,7 +1120,8 @@ const List = () => {
       <Si
         key={idx}
         onClick={() => {
-          localStorage.setItem(LS_KEY_SI, item.value);
+          localStorage.setItem(SIGUNGU_CODE, item.value);
+          localStorage.setItem(SIGUNGU_NAME, item.name);
         }}
       >
         {item.name}
@@ -985,13 +1129,36 @@ const List = () => {
     ));
   };
 
+  const GET_THEME_CODE = window.localStorage.getItem("THEME_CODE");
+  const GET_THEME_NAME = window.localStorage.getItem("THEME_NAME");
+  const GET_AREA_CODE = window.localStorage.getItem("AREA_CODE");
+  const GET_AREA_NAME = window.localStorage.getItem("AREA_NAME");
+  const GET_SIGUNGU_CODE = window.localStorage.getItem("SIGUNGU_CODE");
+  const GET_SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
+
+  const search = {
+    themeCode: GET_THEME_CODE,
+    themeName: GET_THEME_NAME,
+    areaCode: GET_AREA_CODE,
+    areaName: GET_AREA_NAME,
+    sigunguCode: GET_SIGUNGU_CODE,
+    sigunguName: GET_SIGUNGU_NAME,
+  };
+
   return (
     <div>
       <StList>
         <div>{selectDo()}</div>
       </StList>
-      <div>{selectSi()}</div>
-      <button onClick={() => navigate("/theme1")}>다음으로</button>
+      {/* <div>{selectSi()}</div> */}
+      <button
+        onClick={() => {
+          dispatch(__getTheme(search));
+          navigate("/theme1");
+        }}
+      >
+        다음으로
+      </button>
     </div>
 
     // <StList>
@@ -1403,7 +1570,6 @@ const Do = styled.div`
   &:hover {
     font-weight: bold;
   }
-  background-color: red;
 `;
 
 const Si = styled.div`
@@ -1411,4 +1577,9 @@ const Si = styled.div`
   width: 50%;
   margin-left: 10px;
   margin-right: 20px;
+  cursor: pointer;
+
+  &:hover {
+    font-weight: bold;
+  }
 `;

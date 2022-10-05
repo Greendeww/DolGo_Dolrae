@@ -8,19 +8,19 @@ import axios from 'axios';
 import Like from '../like/Like';
 import Header from '../header/Header';
 import dolphin from "../../assert/detail/dolphin_test.png";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { useRef } from 'react';
-import { useCallback } from 'react';
-import ScrollToTop from '../scroll/ScrollToTop';
 
-const RandomList = () => {
+const RandomSelect = () => {
+    const {si} = useParams();
+    const {area} =useParams();
+    console.log(si)
+    console.log(area)
     const navigate = useNavigate();
-    const scrollRef = useRef();
 
     const [random, setRandom] = useState();
     const fetch = async () => {
-        const response = await instance.get(`/api/place/random?sigunguCode=&areaCode=`); 
+        const response = await instance.get(`/api/place/random?sigunguCode=${si}&areaCode=${area}`); 
         console.log(response.data)
         setRandom(response.data)
         }
@@ -28,7 +28,7 @@ const RandomList = () => {
         window.scrollTo(0,0)
         fetch()
     }, []);
-
+   
     // console.log(random?.placeList[0]?.id)
     // console.log(random?.placeList[1]?.id)
     // console.log(random?.placeList[2]?.id)
@@ -60,15 +60,12 @@ const RandomList = () => {
               console.log('I was closed by the timer')
             }
           })
-         console.log("작동")
+        console.log("작동")
     }
-    // useEffect(() => {
-    //     window.scrollTo(0,0)
-    // },[])
+
     return (
      <>
-     <Box ref={scrollRef}>
-     <ScrollToTop/>
+     <Box>
      <Header/>
        <LocDiv>
          <PTitle>이번엔 </PTitle>
@@ -178,7 +175,7 @@ const RandomList = () => {
          </TemaBox>
          <ButDiv>
             <RandomBut><ButText onClick={()=>{onRandom()}}>다시 돌리기</ButText></RandomBut>
-            <BackBut><ButText onClick={() => navigate('/random')}>뒤로가기</ButText></BackBut>
+            <RandomBut><ButText onClick={()=>navigate('/rndLocation')}>지역 재설정</ButText></RandomBut>
          </ButDiv>
        </TemaDiv>
      </Box>
@@ -186,7 +183,7 @@ const RandomList = () => {
     )
     }
 
-export default RandomList
+export default RandomSelect;
 
 const Box = styled.div`
     width: 100%;
@@ -295,17 +292,8 @@ const RandomBut = styled.button`
     height:2.5rem;
     border-radius:5px;
     width:100%;
+    margin-top:1rem;
 `;
-const BackBut = styled.button`
-    cursor:pointer;
-    color:white;
-    background-color:#ffc0c0;
-    border:0px;
-    height:2.5rem;
-    border-radius:5px;
-    width:100%;
-    margin-top:1.5rem;
-`
 const ButText = styled.p`
     font-weight:700;
     line-height:0.6rem;
