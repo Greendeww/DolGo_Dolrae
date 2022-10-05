@@ -66,21 +66,17 @@ const SignUp = () => {
   // 회원가입 정보를 전송하기 위한 handler
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    if (
-      confirmClick === false
-      //  ||
-
-    ) {
+    if (confirmClick === false) {
       alert("이메일 인증을 해주세요.");
       return false;
-    } 
+    }
     // else if (
     //         emailOk === "false"
     // ){
     //   alert("인증코드가 올바르지 않습니다.");
     //   return false;
     // }
-     else if (
+    else if (
       user.username === "" ||
       user.password === "" ||
       user.passwordConfirm === ""
@@ -91,6 +87,7 @@ const SignUp = () => {
 
     await dispatch(signUp(user));
     setUser(initialState);
+    navigate("/login");
 
     // const { data } = await instance.post("api/member/signup", user);
     // // console.log(data);

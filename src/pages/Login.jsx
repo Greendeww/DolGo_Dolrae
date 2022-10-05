@@ -31,8 +31,8 @@ const Login = () => {
       alert("모든 항목을 입력해주세요.");
       e.preventDefault();
     } else {
+      navigate("/");
       dispatch(__login(user));
-      Navigate("/");
     }
   };
 
@@ -78,6 +78,7 @@ const Login = () => {
 
             <Social>
               <img
+                alt=""
                 src={kakao}
                 onClick={() => {
                   window.location.href = KAKAO_AUTH_URL;
@@ -93,7 +94,6 @@ const Login = () => {
             <b onClick={() => navigate("/signup")}>회원가입</b>
           </p>
         </SignUp>
-        {/* <button onClick={() => dispatch(__logout())}>로그아웃</button> */}
       </StLogin>
     </StLogin_>
   );
@@ -102,6 +102,7 @@ const Login = () => {
 export default Login;
 
 const StLogin_ = styled.div`
+  margin-top: 100px;
   width: 428px;
   margin: 0 auto;
 `;
