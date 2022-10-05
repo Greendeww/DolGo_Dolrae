@@ -2,9 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../shared/Api";
+import Slider from "react-slick";
 
 const Festival = () => {
   const navigate = useNavigate();
+
+  const settings = {
+    // dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    pauseOnHover: true,
+  };
 
   const [festival, setFestival] = useState();
 
@@ -24,20 +36,21 @@ const Festival = () => {
   return (
     <StFestival>
       <Title>이 달의 축제</Title>
-      {/* <hr /> */}
       <FestivalList>
-        {festival.map((festival) => {
-          return (
-            <Card
-              key={festival.id}
-              // onClick={() => {navigate('{festival.linkUrl}')}}
-            >
-              <img alt="" src={festival.imageUrl} />
-              <p style={{ fontWeight: "bold" }} >{festival.title}</p>
-              <p>{festival.period}</p>
-            </Card>
-          );
-        })}
+        <Slider {...settings}>
+          {festival.map((festival) => {
+            return (
+              <Card
+                key={festival.id}
+                // onClick={() => {navigate('{festival.linkUrl}')}}
+              >
+                <img alt="" src={festival.imageUrl} />
+                <p style={{ fontWeight: "bold" }}>{festival.title}</p>
+                <p>{festival.period}</p>
+              </Card>
+            );
+          })}
+        </Slider>
       </FestivalList>
     </StFestival>
   );
@@ -51,16 +64,6 @@ const StFestival = styled.div`
   color: #79b9d3;
   height: 500px;
   padding-top: 80px;
-
-  & hr {
-    width: 260px;
-    height: 4px;
-    margin-top: -25px;
-    background-color: #79b9d3;
-    font-weight: bolder;
-    border: none;
-    border-radius: 30px;
-  }
 `;
 
 const Title = styled.div`
@@ -69,10 +72,9 @@ const Title = styled.div`
   border-radius: 30px;
   width: 236px;
   height: 50px;
-  font-weight: 900;
   font-size: 35px;
   line-height: 46px;
-  margin: 30px auto;
+  margin: 35px auto;
   padding-top: 5px;
 `;
 
@@ -90,7 +92,7 @@ const Card = styled.div`
     }
   }
   p {
-    margin: 10px auto;
+    margin: 20px auto;
     font-size: 25px;
     color: #414141;
   }

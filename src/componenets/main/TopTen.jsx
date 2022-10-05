@@ -9,7 +9,6 @@ import "slick-carousel/slick/slick-theme.css";
 import { useNavigate } from "react-router-dom";
 
 const TopTen = () => {
-
   const navigate = useNavigate();
 
   const settings = {
@@ -18,6 +17,8 @@ const TopTen = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    autoplay: true,
+    pauseOnHover: true,
   };
 
   const [foodList, setFoodList] = useState();
@@ -50,32 +51,32 @@ const TopTen = () => {
         <Slider {...settings}>
           {foodList.map((item) => (
             <Card key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
-            {item.image == null ? (
-              <>
-                <BasicImg src={basicImg} />
-                <BasicName>
-                  <div>{item.title}</div>
-                  <div>
-                    <Star>★</Star> {item.star}
-                  </div>
-                </BasicName>
-              </>
-            ) : (
-              <>
-                <ImgShadow>
-                  <ImgBox>
-                    <Img src={item.image} />
-                  </ImgBox>
-                </ImgShadow>
-                <Name>
-                  <div>{item.title}</div>
-                  <div>
-                    <Star>★</Star> {item.star}
-                  </div>
-                </Name>
-              </>
-            )}
-          </Card>
+              {item.image == null ? (
+                <>
+                  <BasicImg src={basicImg} />
+                  <BasicName>
+                    <div>{item.title}</div>
+                    <div>
+                      <Star>★</Star> {item.star}
+                    </div>
+                  </BasicName>
+                </>
+              ) : (
+                <>
+                  <ImgShadow>
+                    <ImgBox>
+                      <Img src={item.image} />
+                    </ImgBox>
+                  </ImgShadow>
+                  <Name>
+                    <div>{item.title}</div>
+                    <div>
+                      <Star>★</Star> {item.star}
+                    </div>
+                  </Name>
+                </>
+              )}
+            </Card>
           ))}
         </Slider>
       </Theme>
@@ -83,33 +84,33 @@ const TopTen = () => {
         <h4>관람</h4>
         <Slider {...settings}>
           {tourList.map((item) => (
-           <Card key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
-           {item.image == null ? (
-             <>
-               <BasicImg src={basicImg} />
-               <BasicName>
-                 <div>{item.title}</div>
-                 <div>
-                   <Star>★</Star> {item.star}
-                 </div>
-               </BasicName>
-             </>
-           ) : (
-             <>
-               <ImgShadow>
-                 <ImgBox>
-                   <Img src={item.image} />
-                 </ImgBox>
-               </ImgShadow>
-               <Name>
-                 <div>{item.title}</div>
-                 <div>
-                   <Star>★</Star> {item.star}
-                 </div>
-               </Name>
-             </>
-           )}
-         </Card>
+            <Card key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
+              {item.image == null ? (
+                <>
+                  <BasicImg src={basicImg} />
+                  <BasicName>
+                    <div>{item.title}</div>
+                    <div>
+                      <Star>★</Star> {item.star}
+                    </div>
+                  </BasicName>
+                </>
+              ) : (
+                <>
+                  <ImgShadow>
+                    <ImgBox>
+                      <Img src={item.image} />
+                    </ImgBox>
+                  </ImgShadow>
+                  <Name>
+                    <div>{item.title}</div>
+                    <div>
+                      <Star>★</Star> {item.star}
+                    </div>
+                  </Name>
+                </>
+              )}
+            </Card>
           ))}
         </Slider>
       </Theme>
@@ -117,33 +118,33 @@ const TopTen = () => {
         <h4>액티비티</h4>
         <Slider {...settings}>
           {activityList.map((item) => (
-           <Card key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
-           {item.image == null ? (
-             <>
-               <BasicImg src={basicImg} />
-               <BasicName>
-                 <div>{item.title}</div>
-                 <div>
-                   <Star>★</Star> {item.star}
-                 </div>
-               </BasicName>
-             </>
-           ) : (
-             <>
-               <ImgShadow>
-                 <ImgBox>
-                   <Img src={item.image} />
-                 </ImgBox>
-               </ImgShadow>
-               <Name>
-                 <div>{item.title}</div>
-                 <div>
-                   <Star>★</Star> {item.star}
-                 </div>
-               </Name>
-             </>
-           )}
-         </Card>
+            <Card key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
+              {item.image == null ? (
+                <>
+                  <BasicImg src={basicImg} />
+                  <BasicName>
+                    <div>{item.title}</div>
+                    <div>
+                      <Star>★</Star> {item.star}
+                    </div>
+                  </BasicName>
+                </>
+              ) : (
+                <>
+                  <ImgShadow>
+                    <ImgBox>
+                      <Img src={item.image} />
+                    </ImgBox>
+                  </ImgShadow>
+                  <Name>
+                    <div>{item.title}</div>
+                    <div>
+                      <Star>★</Star> {item.star}
+                    </div>
+                  </Name>
+                </>
+              )}
+            </Card>
           ))}
         </Slider>
       </Theme>
@@ -195,7 +196,7 @@ const StTopTen = styled.div`
   & h4 {
     font-size: 35px;
     color: #ffaeae;
-    margin: -20px auto;
+    margin: -10px auto;
   }
 `;
 
@@ -205,7 +206,6 @@ const Title = styled.div`
   border-radius: 30px;
   width: 236px;
   height: 50px;
-  font-weight: 900;
   font-size: 35px;
   line-height: 46px;
   margin: 30px auto;
@@ -226,7 +226,6 @@ const Name = styled.div`
   margin-left: 35px;
   color: #ffffff;
   font-size: 23px;
-  font-weight: bold;
   line-height: 33px;
   margin-block-end: 0;
   margin-block-start: 0;
@@ -265,7 +264,7 @@ const Card = styled.div`
 const BasicImg = styled.img`
   position: relative;
   width: 420px;
-  height: 234px;
+  height: 280px;
   border-radius: 20px;
   &:hover {
     cursor: pointer;
@@ -276,7 +275,7 @@ const BasicImg = styled.img`
 const ImgShadow = styled.div`
   margin: 0 auto;
   width: 420px;
-  height: 235px;
+  height: 280px;
   border-radius: 20px;
   /* z-index: 3; */
   &:hover {
@@ -288,9 +287,9 @@ const ImgShadow = styled.div`
 const ImgBox = styled.div`
   margin: 0 auto;
   width: 100%;
-  height: 235px;
+  height: 280px;
   border-radius: 20px;
-  box-shadow: inset 0 -30px 70px #2e2e2e;
+  box-shadow: inset 0 -40px 100px #2e2e2e;
   &:hover {
     cursor: pointer;
   }
@@ -299,7 +298,7 @@ const ImgBox = styled.div`
 const Img = styled.img`
   position: relative;
   width: 100%;
-  height: 234px;
+  height: 280px;
   z-index: -2;
   border-radius: 20px;
 `;
