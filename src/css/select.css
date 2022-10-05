@@ -51,11 +51,12 @@
 
 .location-set {
   display: flex;
-  justify-content: center;
   width: 428px;
   font-size: 20px;
   flex-wrap: wrap;
-  gap: 30px 30px;
+  gap: 30px;
+  margin-left: 50px;
+
 }
 
 .location-child {
