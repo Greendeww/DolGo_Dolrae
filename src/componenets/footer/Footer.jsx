@@ -26,11 +26,12 @@ export default Footer;
 const Div = styled.div `
   width: 428px;
   height: 100px;
-  border: 1px solid grey;
-  background-color: midnightblue;
+  border: 1px solid #79B9D3;
+  background-color: #79B9D3;
   
 `
 const Text = styled.div `
   color: white;
   font-size: 10px;
+  text-align: center;
 `

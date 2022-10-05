@@ -6,6 +6,8 @@ import { KAKAO_AUTH_URL } from "../shared/OAuth";
 import { logout, __login, __logout } from "../redux/modules/user";
 import Header from "../componenets/header/Header";
 import kakao from "../assert/header/kakao_login_medium_wide.png";
+import Swal from 'sweetalert2'
+
 
 
 const Login = () => {
@@ -27,18 +29,15 @@ const Login = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    if (
-      user.username === "" ||
-      user.password === ""
-    ) {
+    if (user.username === "" || user.password === "") {
       alert("모든 항목을 입력해주세요.");
       e.preventDefault();
-    }
-    else {
-       dispatch(__login(user));
-      // Navigate('/')
+    } else {
+      dispatch(__login(user));
+      Navigate("/");
     }
   };
+  
 
   return (
     <StLogin_>
@@ -93,8 +92,8 @@ const Login = () => {
 
         <SignUp>
           <p>아직 돌고돌래 회원이 아니세요?</p>
-          <p >
-            <b onClick={() => navigate("/signUp")}>회원가입 ></b>
+          <p>
+            <b onClick={() => navigate("/signup")}>회원가입</b>
           </p>
         </SignUp>
         {/* <button onClick={() => dispatch(__logout())}>로그아웃</button> */}

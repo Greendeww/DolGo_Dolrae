@@ -12,13 +12,21 @@ import Random from "../pages/Random";
 import RndLocation from "../componenets/random/RndLocation";
 import RandomSelect from "../componenets/random/RandomSelect";
 import RandomList from "../componenets/random/RandomList";
-import ScrollToTop from "../componenets/scroll/ScrollToTop";
+import MyPage from "../pages/MyPage";
+import MyPageChange from "../pages/MyPageChange";
+import Report from "../pages/Report";
+import Register from "../pages/Register";
+
 
 function Router(){
     return(
         <BrowserRouter>
         <Routes>
             <Route path="/" element={<Main />}/>
+            <Route path="/mypage" element={<MyPage/>}/>
+            <Route path="/mypage/change" element={<MyPageChange/>}/>
+            <Route path="/report" element={<Report/>}/>
+            <Route path="/register" element={<Register/>}/>
             <Route path="/signup" element={<SignUp/>}/>
             <Route path="/login" element= {<Login/>}/>
             <Route path="/KakaoLogin" element= {<KakaoLogin/>}/>
@@ -37,4 +45,3 @@ function Router(){
 }
 
 export default Router;
-
