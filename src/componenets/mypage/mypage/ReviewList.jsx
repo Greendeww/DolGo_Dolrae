@@ -55,7 +55,7 @@ const Comment = styled.div`
     align-items: center;
     position: relative;
     left: 15px;
-    top: 13px;
+    top: 17px;
     font-size: 20px;
   }
 
