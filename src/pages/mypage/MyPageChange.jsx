@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../componenets/header/Header";
-import Footer from "../componenets/footer/Footer";
+import Header from "../../componenets/header/Header";
+import Footer from "../../componenets/footer/Footer";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { putApi } from "../shared/Api";
-import Nickname from "../componenets/mypage/Change/Nickname";
-import Password from "../componenets/mypage/Change/Password";
-import Withdrawal from "../componenets/mypage/Change/Withdrawal";
+import { putApi } from "../../shared/Api";
+import Nickname from "../../componenets/mypage/Change/Nickname";
+import Password from "../../componenets/mypage/Change/Password";
+import Withdrawal from "../../componenets/mypage/Change/Withdrawal";
 
 function MyPageChange() {
 

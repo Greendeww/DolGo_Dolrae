@@ -7,16 +7,16 @@ import 'swiper/css/scrollbar';
 import 'swiper/css';
 import { useEffect,useState } from 'react';
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import DetailForm from '../componenets/details/DetailForm';
+import DetailForm from '../../componenets/details/DetailForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { onLikeDetail, _getDetail} from '../redux/modules/post';
+import { onLikeDetail, _getDetail} from '../../redux/modules/post';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { _getComments } from '../redux/modules/comment';
-import Review from '../componenets/details/Review';
-import DetailImage from '../componenets/details/DetailImage';
-import { instance } from '../shared/Api';
-import StarDetail from '../componenets/star/StarDetail';
-import Like from '../componenets/like/Like';
+import { _getComments } from '../../redux/modules/comment';
+import Review from '../../componenets/details/Review';
+import DetailImage from '../../componenets/details/DetailImage';
+import { instance } from '../../shared/Api';
+import StarDetail from '../../componenets/star/StarDetail';
+import Like from '../../componenets/like/Like';
 
 const Detail = () => {
   const navigate = useNavigate();

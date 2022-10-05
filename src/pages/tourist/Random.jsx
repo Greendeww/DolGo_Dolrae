@@ -1,4 +1,4 @@
-import RandomList from "../componenets/random/RandomList"
+import RandomList from "../../componenets/random/RandomList"
 
 const Random = () => {
    

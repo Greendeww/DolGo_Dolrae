@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../componenets/header/Header";
-import Footer from "../componenets/footer/Footer";
-import LOGO from "../assert/logo/Logo.png"
+import Header from "../../componenets/header/Header";
+import Footer from "../../componenets/footer/Footer";
+import LOGO from "../../assert/logo/Logo.png"
 import { useState } from "react";
 
 
@@ -21,8 +21,6 @@ function Report () {
         URL.revokeObjectURL(fileImage);
         setFileImage("");
     };
-
-
 
     return (
         <Div>

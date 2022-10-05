@@ -1,18 +1,18 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "../pages/Login";
-import KakaoLogin from "../pages/KakaoLogin";
-import SignUp from "../pages/SignUp";
-import Select from "../pages/Select";
-import List from "../pages/List";
-import Detail from "../pages/Detail";
+import Login from "../pages/user/Login";
+import KakaoLogin from "../pages/user/KakaoLogin";
+import SignUp from "../pages/user/SignUp";
+import Select from "../pages/tourist/Select";
+import List from "../pages/tourist/List";
+import Detail from "../pages/tourist/Detail";
 import DetailRevise from "../componenets/details/DetailRevise";
 import DetailForm from "../componenets/details/DetailForm";
-import Main from "../pages/Main";
-import Random from "../pages/Random";
-import MyPage from "../pages/MyPage";
-import MyPageChange from "../pages/MyPageChange";
-import Report from "../pages/Report";
-import Register from "../pages/Register";
+import Main from "../pages/tourist/Main";
+import Random from "../pages/tourist/Random";
+import MyPage from "../pages/mypage/MyPage";
+import MyPageChange from "../pages/mypage/MyPageChange";
+import Report from "../pages/request/Report";
+import Register from "../pages/request/Register";
 
 function Router(){
     return(

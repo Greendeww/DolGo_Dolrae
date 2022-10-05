@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { KAKAO_AUTH_URL } from "../shared/OAuth";
-import { logout, __login, __logout } from "../redux/modules/user";
-import Header from "../componenets/header/Header";
-import kakao from "../assert/login/kakao_login_medium_wide.png";
+import { KAKAO_AUTH_URL } from "../../shared/OAuth";
+import { __login } from "../../redux/modules/user";
+import Header from "../../componenets/header/Header";
+import kakao from "../../assert/login/kakao_login_medium_wide.png";
 import Swal from "sweetalert2";
 
 const Login = () => {

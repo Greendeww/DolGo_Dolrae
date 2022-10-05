@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../componenets/header/Header";
-import Festival from "../componenets/main/Festival";
-import TopTen from "../componenets/main/TopTen";
+import Header from "../../componenets/header/Header";
+import Festival from "../../componenets/main/Festival";
+import TopTen from "../../componenets/main/TopTen";
 
 const Main = () => {
   return (

@@ -1,10 +1,10 @@
 import React, { useState, useSelector } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { __signUp, __emailCheck, signUp } from "../redux/modules/user";
+import { __signUp, __emailCheck, signUp } from "../../redux/modules/user";
 import { useNavigate } from "react-router-dom";
-import Header from "../componenets/header/Header";
-import { __submitCode } from "../redux/modules/user";
+import Header from "../../componenets/header/Header";
+import { __submitCode } from "../../redux/modules/user";
 
 const SignUp = () => {
   const dispatch = useDispatch();
