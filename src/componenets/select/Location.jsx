@@ -79,8 +79,8 @@ const List = () => {
     localStorage.removeItem("SIGUNGU_NAME");
 
     setSelectedTheme("");
-    setSelectedDo(0);
-    setSelectedSi(0);
+    setSelectedDo("");
+    setSelectedSi("");
   };
 
   // 서버로 보내줄 값 ( 선택한 테마, 지역 )
@@ -102,7 +102,7 @@ const List = () => {
 
   // 지역별 name, value
   const doList = [
-    { name: "전체", value: "" },
+    { name: "전체", value: 0 },
     { name: "서울", value: 1 },
     { name: "인천", value: 2 },
     { name: "대전", value: 3 },
@@ -124,16 +124,16 @@ const List = () => {
 
   // 세부 지역별 해당 do, name, value
   const siList = [
-    { do: "전체", name: "전체", value: "" },
-    { do: "서울", name: "전체", value: "" },
-    { do: "인천", name: "전체", value: "" },
-    { do: "대전", name: "전체", value: "" },
-    { do: "대구", name: "전체", value: "" },
-    { do: "광주", name: "전체", value: "" },
-    { do: "부산", name: "전체", value: "" },
-    { do: "울산", name: "전체", value: "" },
-    { do: "세종", name: "전체", value: "" },
-    { do: "경기", name: "전체", value: "" },
+    { do: "전체", name: "전체", value: 0 },
+    { do: "서울", name: "전체", value: 0 },
+    { do: "인천", name: "전체", value: 0 },
+    { do: "대전", name: "전체", value: 0 },
+    { do: "대구", name: "전체", value: 0 },
+    { do: "광주", name: "전체", value: 0 },
+    { do: "부산", name: "전체", value: 0 },
+    { do: "울산", name: "전체", value: 0 },
+    { do: "세종", name: "전체", value: 0 },
+    { do: "경기", name: "전체", value: 0 },
     { do: "경기", name: "가평", value: 1 },
     { do: "경기", name: "고양", value: 2 },
     { do: "경기", name: "과천", value: 3 },
@@ -165,7 +165,7 @@ const List = () => {
     { do: "경기", name: "포천", value: 29 },
     { do: "경기", name: "하남", value: 30 },
     { do: "경기", name: "화성", value: 31 },
-    { do: "강원", name: "전체", value: "" },
+    { do: "강원", name: "전체", value: 0 },
     { do: "강원", name: "강릉", value: 1 },
     { do: "강원", name: "고성", value: 2 },
     { do: "강원", name: "동해", value: 3 },
@@ -184,7 +184,7 @@ const List = () => {
     { do: "강원", name: "홍천", value: 16 },
     { do: "강원", name: "화천", value: 17 },
     { do: "강원", name: "횡성", value: 18 },
-    { do: "충북", name: "전체", value: "" },
+    { do: "충북", name: "전체", value: 0 },
     { do: "충북", name: "괴산", value: 1 },
     { do: "충북", name: "단양", value: 2 },
     { do: "충북", name: "보은", value: 3 },
@@ -197,23 +197,23 @@ const List = () => {
     { do: "충북", name: "청원", value: 10 },
     { do: "충북", name: "청주", value: 11 },
     { do: "충북", name: "충주", value: 12 },
-    { do: "충남", name: "전체", value: "" },
-    { do: "충남", name: "계룡", value: 1 },
-    { do: "충남", name: "공주", value: 2 },
-    { do: "충남", name: "금산", value: 3 },
-    { do: "충남", name: "논산", value: 4 },
-    { do: "충남", name: "당진", value: 5 },
-    { do: "충남", name: "보령", value: 6 },
-    { do: "충남", name: "부여", value: 7 },
-    { do: "충남", name: "서산", value: 8 },
-    { do: "충남", name: "서천", value: 9 },
-    { do: "충남", name: "아산", value: 10 },
+    { do: "충남", name: "전체", value: 0 },
+    { do: "충남", name: "계룡", value: 16 },
+    { do: "충남", name: "공주", value: 1 },
+    { do: "충남", name: "금산", value: 2 },
+    { do: "충남", name: "논산", value: 3 },
+    { do: "충남", name: "당진", value: 4 },
+    { do: "충남", name: "보령", value: 5 },
+    { do: "충남", name: "부여", value: 6 },
+    { do: "충남", name: "서산", value: 7 },
+    { do: "충남", name: "서천", value: 8 },
+    { do: "충남", name: "아산", value: 9 },
     { do: "충남", name: "예산", value: 11 },
     { do: "충남", name: "천안", value: 12 },
     { do: "충남", name: "청양", value: 13 },
     { do: "충남", name: "태안", value: 14 },
     { do: "충남", name: "홍성", value: 15 },
-    { do: "경북", name: "전체", value: "" },
+    { do: "경북", name: "전체", value: 0 },
     { do: "경북", name: "경산", value: 1 },
     { do: "경북", name: "경주", value: 2 },
     { do: "경북", name: "고령", value: 3 },
@@ -237,7 +237,7 @@ const List = () => {
     { do: "경북", name: "청송", value: 21 },
     { do: "경북", name: "칠곡", value: 22 },
     { do: "경북", name: "포항", value: 23 },
-    { do: "경남", name: "전체", value: "" },
+    { do: "경남", name: "전체", value: 0 },
     { do: "경남", name: "거제", value: 1 },
     { do: "경남", name: "거창", value: 2 },
     { do: "경남", name: "고성", value: 3 },
@@ -258,7 +258,7 @@ const List = () => {
     { do: "경남", name: "함안", value: 18 },
     { do: "경남", name: "함양", value: 19 },
     { do: "경남", name: "합천", value: 20 },
-    { do: "전북", name: "전체", value: "" },
+    { do: "전북", name: "전체", value: 0 },
     { do: "전북", name: "고창", value: 1 },
     { do: "전북", name: "군산", value: 2 },
     { do: "전북", name: "김제", value: 3 },
@@ -273,7 +273,7 @@ const List = () => {
     { do: "전북", name: "전주", value: 12 },
     { do: "전북", name: "정읍", value: 13 },
     { do: "전북", name: "진안", value: 14 },
-    { do: "전남", name: "전체", value: "" },
+    { do: "전남", name: "전체", value: 0 },
     { do: "전남", name: "강진", value: 1 },
     { do: "전남", name: "고흥", value: 2 },
     { do: "전남", name: "곡성", value: 3 },
@@ -296,7 +296,7 @@ const List = () => {
     { do: "전남", name: "함평", value: 20 },
     { do: "전남", name: "해남", value: 21 },
     { do: "전남", name: "화순", value: 22 },
-    { do: "제주", name: "전체", value: "" },
+    { do: "제주", name: "전체", value: 0 },
     { do: "제주", name: "서귀포", value: 3 },
     { do: "제주", name: "제주", value: 4 },
   ];
@@ -313,7 +313,7 @@ const List = () => {
         }
         onClick={() => {
           setSelectedDo(item.value);
-          setSelectedSi(0);
+          setSelectedSi("");
           localStorage.setItem(AREA_CODE, item.value);
           localStorage.setItem(AREA_NAME, item.name);
           localStorage.removeItem(SIGUNGU_CODE);
@@ -328,7 +328,7 @@ const List = () => {
   // 세부 지역 생성
   const DetailLocation = () => {
     return siList.map((item, idx) =>
-      item.do == GET_AREA_NAME ? (
+      item.do === GET_AREA_NAME ? (
         <div
           key={idx}
           className={
@@ -376,9 +376,9 @@ const List = () => {
         <button
           onClick={() => {
             if (
-              GET_THEME_NAME === null ||
-              GET_AREA_NAME === null ||
-              GET_SIGUNGU_NAME === null
+              GET_THEME_NAME === "" ||
+              GET_AREA_NAME === "" ||
+              GET_SIGUNGU_NAME === ""
             ) {
               alert("모든 항목을 선택해주세요.");
             } else {
@@ -398,18 +398,17 @@ export default List;
 
 const St = styled.div`
   position: relative;
-  top: 100px;
+  top: 80px;
 `;
 
 const StCategory = styled.div`
   margin: 30px auto;
   & p {
     font-style: normal;
-    font-weight: 700;
     font-size: 25px;
     line-height: 40px;
     color: #bfb8b8;
-    margin-left: 20px;
+    margin-left: 30px;
   }
 `;
 
@@ -429,8 +428,8 @@ const Title = styled.div`
     background: #ffc0c0;
     border: none;
     border-radius: 12px;
-    font-weight: 700;
     font-size: 20px;
+    font-weight: bold;
     text-align: center;
     color: #ffffff;
 
@@ -449,8 +448,8 @@ const StLocation = styled.div`
     width: 370px;
     height: 50px;
     cursor: pointer;
-    font-weight: 700;
     font-size: 20px;
+    font-weight: bold;
     line-height: 24px;
     display: block;
     margin: 50px auto;
@@ -463,11 +462,10 @@ const StList = styled.div`
 
   & p {
     font-style: normal;
-    font-weight: 700;
     font-size: 25px;
     line-height: 40px;
     color: #bfb8b8;
-    margin-left: 20px;
     margin: 20px;
+    margin-left: 30px;
   }
 `;
