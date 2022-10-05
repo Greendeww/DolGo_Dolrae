@@ -29,6 +29,7 @@
     "redux": "^4.2.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.5",
+    "sweetalert2": "^11.4.37",
     "swiper": "^8.4.2",
     "web-vitals": "^2.1.0"
   },
