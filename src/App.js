@@ -7,10 +7,16 @@ import "./App.css";
 
 function App() {
   return (
-      <Provider store={store} style={{ fontFamily: "tway"}}>
+    <StApp>
+      <Provider store={store}>
         <Router />
       </Provider>
+    </StApp>
   );
 }
 
 export default App;
+
+const StApp = styled.div`
+  font-family: tway;
+`;
