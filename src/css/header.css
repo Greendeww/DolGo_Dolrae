@@ -1,4 +1,5 @@
 body {
+
   /* display: flex;
   justify-content: center;
   align-items: center;
@@ -55,3 +56,4 @@ body {
 .menu-trigger.active-1 span:nth-of-type(3) {
   transform: translateY(-20px) rotate(45deg);
 }
+

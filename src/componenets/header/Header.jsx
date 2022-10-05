@@ -5,6 +5,7 @@ import back from "../../assert/header/pngwing.com.png";
 import css from "../../css/header.css";
 import dolphin from "../../assert/header/dolphin (2).png";
 
+
 const Header = () => {
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
@@ -66,9 +67,12 @@ export default Header;
 const St = styled.div`
   width: 428px;
   margin: 0 auto;
+<<<<<<< HEAD
+=======
 
   z-index: 3;
 
+>>>>>>> origin/Semi
   & a {
     &:hover {
       cursor: pointer;
@@ -85,7 +89,6 @@ const StHeader = styled.div`
   vertical-align: middle;
   /* & h2 {
     color: white;
-    background-image: url(${dolphin});
     background-repeat: no-repeat;
   } */
 
@@ -138,3 +141,4 @@ const HeaderMenu = styled.div`
 
   z-index: 3;
 `;
+

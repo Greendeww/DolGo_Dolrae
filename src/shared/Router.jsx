@@ -9,10 +9,14 @@ import DetailRevise from "../componenets/details/DetailRevise";
 import DetailForm from "../componenets/details/DetailForm";
 import Main from "../pages/Main";
 import Random from "../pages/Random";
+import RndLocation from "../componenets/random/RndLocation";
+import RandomSelect from "../componenets/random/RandomSelect";
+import RandomList from "../componenets/random/RandomList";
 import MyPage from "../pages/MyPage";
 import MyPageChange from "../pages/MyPageChange";
 import Report from "../pages/Report";
 import Register from "../pages/Register";
+
 
 function Router(){
     return(
@@ -32,6 +36,9 @@ function Router(){
             <Route path="/detail/update/:placeId/:id" element={<DetailRevise/>}/>
             <Route path="/detail/form/:id" element={<DetailForm/>}/>
             <Route path="/random" element={<Random/>}/>
+            <Route path="/rndlocation" element={<RndLocation/>}/>
+            <Route path="/rndselect/:area/:si" element={<RandomSelect/>}/>
+            <Route path="/rnd" element={<RandomList/>}/>
         </Routes>
         </BrowserRouter>
     )

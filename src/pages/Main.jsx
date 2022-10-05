@@ -46,7 +46,7 @@ const Main = () => {
 
     return (
         <Div>
-            <Header></Header>
+            {/* <Header></Header> */}
                 <Body>
                     <Festival>이 달의 축제</Festival>
                     <Banner></Banner>

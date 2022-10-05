@@ -5,7 +5,7 @@ import { logout } from "../../redux/modules/user";
 import { useDispatch } from "react-redux";
 
 const Category = () => {
-    const categories = [
+  const categories = [
     {
       name: "관광",
       value: 12,
