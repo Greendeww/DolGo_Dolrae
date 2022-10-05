@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { Dispatch } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Header from "../componenets/header/Header";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Header from "../componenets/header/Header";
+import basicImg from "../assert/image/basic.png";
 
-const Theme1 = () => {
-  const dispatch = useDispatch();
+const List = () => {
   const navigate = useNavigate();
 
   const THEME_NAME = window.localStorage.getItem("THEME_NAME");
@@ -17,9 +16,21 @@ const Theme1 = () => {
 
   console.log(list);
 
+  const returnHandler = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("THEME_CODE");
+    localStorage.removeItem("THEME_NAME");
+    localStorage.removeItem("AREA_CODE");
+    localStorage.removeItem("AREA_NAME");
+    localStorage.removeItem("SIGUNGU_CODE");
+    localStorage.removeItem("SIGUNGU_NAME");
+    navigate("/select");
+  };
+
   return (
-    <StTheme1>
+    <StList>
       <Header />
+      {/* <button onClick={returnHandler}>〈 다시 선택하기</button> */}
       <Title>
         <div>
           <p>{THEME_NAME}</p>
@@ -33,38 +44,80 @@ const Theme1 = () => {
           <p>{SIGUNGU_NAME}</p>
         </div>
       </Title>
-      <div>
+      <Content>
         {list.map((list) => (
-          <Card key={list.id}
-          onClick={()=> navigate(`/detail/${list.id}`)}>
-            <div>
-              <Img src={list.image} />
-            </div>
-            <Name>
-              {list.title} ⭐ {list.star}
-            </Name>
+          <Card key={list.id} onClick={() => navigate(`/detail/${list.id}`)}>
+            {list.image == null ? (
+              <>
+                <BasicImg src={basicImg} />
+                <BasicName>
+                  <div>{list.title}</div>
+                  <div>
+                    <Star>★</Star> {list.star}
+                  </div>
+                </BasicName>
+              </>
+            ) : (
+              <>
+                <ImgShadow>
+                  <ImgBox>
+                    <Img src={list.image} />
+                  </ImgBox>
+                </ImgShadow>
+                <Name>
+                  <div>{list.title}</div>
+                  <div>
+                    <Star>★</Star> {list.star}
+                  </div>
+                </Name>
+              </>
+            )}
           </Card>
         ))}
-      </div>
-    </StTheme1>
+      </Content>
+    </StList>
   );
 };
 
-export default Theme1;
+export default List;
 
-const StTheme1 = styled.div`
+const StList = styled.div`
   width: 428px;
   margin: 0 auto;
+  
+  & button {
+    margin-left: 15px;
+    margin-top: 30px;
+    background: #ffc0c0;
+    height: 40px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 17px;
+    text-align: center;
+    color: #ffffff;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;
 
 const Title = styled.div`
   display: flex;
+  position: fixed;
   justify-content: center;
-  margin: 15px 0;
+  align-items: center;
+  margin: 40px 0;
+  top: 30px;
+  height: 150px;
+  width: 428px;
+  z-index: 1;
+  background-color: #ffffff;
 
   & div {
-    width: 89px;
-    height: 43px;
+    width: 90px;
+    height: 50px;
     background-color: #c4e0ec;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     border-radius: 15px;
@@ -74,7 +127,7 @@ const Title = styled.div`
   & p {
     color: #ffc0c0;
     font-weight: 700;
-    font-size: 40px;
+    font-size: 45px;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 
@@ -85,16 +138,51 @@ const Title = styled.div`
     margin-block-end: 0;
     color: #ffffff;
     font-weight: 700;
-    font-size: 22px;
+    font-size: 24px;
     text-shadow: none;
   }
 `;
 
 const Card = styled.div`
   text-align: center;
-  & div {
-    height: 235px;
-    box-shadow: inset 0 -30px 70px #2e2e2e;
+`;
+
+const Content = styled.div`
+  position: relative;
+  top: 230px;
+`;
+
+const BasicImg = styled.img`
+  position: relative;
+  width: 420px;
+  height: 234px;
+  border-radius: 20px;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+  }
+`;
+
+const ImgShadow = styled.div`
+  margin: 0 auto;
+  width: 420px;
+  height: 235px;
+  border-radius: 20px;
+  /* z-index: 3; */
+  &:hover {
+    cursor: pointer;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+  }
+`;
+
+const ImgBox = styled.div`
+  margin: 0 auto;
+  width: 100%;
+  height: 235px;
+  border-radius: 20px;
+  box-shadow: inset 0 -30px 70px #2e2e2e;
+  &:hover {
+    cursor: pointer;
   }
 `;
 
@@ -102,18 +190,51 @@ const Img = styled.img`
   position: relative;
   width: 100%;
   height: 234px;
-  z-index: -1;
+  z-index: -2;
+  border-radius: 20px;
 `;
 
-const Name = styled.p`
+const Name = styled.div`
+  display: flex;
   position: relative;
   top: -55px;
   text-align: initial;
-  margin-left: 20px;
+  margin-left: 35px;
   color: #ffffff;
   font-size: 23px;
   font-weight: bold;
   line-height: 33px;
   margin-block-end: 0;
   margin-block-start: 0;
+  gap: 20px;
+
+  & div {
+    display: flex;
+    gap: 5px;
+  }
+`;
+
+const BasicName = styled.div`
+  display: flex;
+  position: relative;
+  top: -55px;
+  text-align: initial;
+  margin-left: 35px;
+  color: #414141;
+  font-size: 23px;
+  font-weight: bold;
+  line-height: 33px;
+  margin-block-end: 0;
+  margin-block-start: 0;
+  gap: 20px;
+
+  & div {
+    display: flex;
+    gap: 5px;
+  }
+`;
+
+const Star = styled.p`
+  color: gold;
+  font-size: 23px;
 `;
