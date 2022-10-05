@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-<<<<<<< HEAD
-=======
 import css from "../../css/select.css";
->>>>>>> 7690d5134b4ca55c7bf968d9016e66330551ccfc
 import { logout } from "../../redux/modules/user";
 import { useDispatch } from "react-redux";
 
 const Category = () => {
-    const categories = [
+  const categories = [
     {
       name: "관광",
       value: 12,

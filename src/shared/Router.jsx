@@ -9,17 +9,14 @@ import DetailRevise from "../componenets/details/DetailRevise";
 import DetailForm from "../componenets/details/DetailForm";
 import Main from "../pages/Main";
 import Random from "../pages/Random";
-<<<<<<< HEAD
 import RndLocation from "../componenets/random/RndLocation";
 import RandomSelect from "../componenets/random/RandomSelect";
 import RandomList from "../componenets/random/RandomList";
-import ScrollToTop from "../componenets/scroll/ScrollToTop";
-=======
 import MyPage from "../pages/MyPage";
 import MyPageChange from "../pages/MyPageChange";
 import Report from "../pages/Report";
 import Register from "../pages/Register";
->>>>>>> origin/Semi
+
 
 function Router(){
     return(
