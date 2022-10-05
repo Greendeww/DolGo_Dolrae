@@ -16,7 +16,7 @@ const Header = () => {
   const username = localStorage.getItem("username");
 
   const onModalHandler = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     setModal(!modal);
   };
 
@@ -63,6 +63,7 @@ const Header = () => {
               <h2
                 onClick={() => {
                   dispatch(__logout());
+                  navigate('/');
                 }}
               >
                 로그아웃
