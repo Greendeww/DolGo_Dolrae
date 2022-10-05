@@ -21,7 +21,7 @@ function Router(){
             <Route path="/mypage/change" element={<MyPageChange/>}/>
             <Route path="/signup" element={<SignUp/>}/>
             <Route path="/login" element= {<Login/>}/>
-            <Route path="/KakaoLogin" element= {<KakaoLogin/>}/>
+            <Route path="/oauth/callback/kakao" element= {<KakaoLogin/>}/>
             <Route path="/select" element={<Select/>}/>
             <Route path="/list" element={<List/>}/>
             <Route path="/detail/:id" element={<Detail />} />
