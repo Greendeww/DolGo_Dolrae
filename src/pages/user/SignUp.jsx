@@ -83,6 +83,12 @@ const SignUp = () => {
     ) {
       alert("모든 항목을 입력해주세요.");
       return false;
+    } 
+    else if (
+      user.password !== user.passwordConfirm
+    ) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return false;
     }
 
     await dispatch(signUp(user));
@@ -210,9 +216,9 @@ export default SignUp;
 
 const StSignUp = styled.div`
   width: 428px;
-  height: 926px;
   text-align: center;
   margin: 0 auto;
+  padding-top: 90px;
 
   & form {
     margin-top: 100px;
