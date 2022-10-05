@@ -11,7 +11,7 @@ import { FaArrowRight,FaArrowLeft} from 'react-icons/fa';
 
 
 const DetailImage = ({post}) => {
-    console.log(post)
+
   const settings = {
     dots: true,
     infinite: true,

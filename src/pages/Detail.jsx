@@ -72,7 +72,11 @@ const Detail = () => {
   //   event.preventDefault();
   //   dispatch(onLikeDetail(id));
   // };
-  console.log(posts)
+  const newText = posts?.content?.replace(/(<([^>]+)>)/gi, "\n"); //태그 제거
+  const tmp = newText?.replace(/&nbsp;/gi, " "); //공백 제거
+  const tmp2 = tmp?.replace(/&lt;/gi, ""); //부등호(<) 제거
+  const tmp3 = tmp2?.replace(/&gt;/gi, ""); //부등호(>) 제거
+
   return (
     <>
     <Header/>
@@ -82,6 +86,9 @@ const Detail = () => {
           <ImgDiv>
           <ImgCover>
              <DetailImage post={posts} key={posts.id}/>
+             <ThemeDiv>
+              <ThemeList post={posts}/>
+             </ThemeDiv>
              <TitleLikeDiv>
               <TitleSpan>{posts.title}</TitleSpan> 
               <Like id={id}></Like>
@@ -89,7 +96,6 @@ const Detail = () => {
 
              {/* {posts.likes} */}
              <StarThemeDiv>
-              <ThemeList post={posts}/>
               <div style={{display:"flex",}}>
                 <FaStar style={{color:"#fcc419",marginRight:"0.3rem",}}/>
                 <span style={{fontWeight:"600",lineHeight:"1rem"}}>{posts.star}</span>
@@ -109,7 +115,8 @@ const Detail = () => {
             <MapDiv>
               <Map
                 center={{ lat: posts?.mapY || "", lng: posts?.mapX || ""}}
-                style={{ width: "100%", height: "30vh" ,borderRadius: "20px",margin:"0 auto",zIndex:"-10"}}
+                level={8}
+                style={{ width: "100%", height: "30vh" ,borderRadius: "20px",margin:"0 auto"}}
               >
               <MapMarker 
                 position={{
@@ -122,19 +129,18 @@ const Detail = () => {
           </Location>
           <DescDiv>
             <p style={{color:"#BFB8B8",fontSize:"1.3rem"}}>설명</p>
-            <p>가평 레일바이크는 가평역을 출발해 북한강 철교, 계절 따라 그 모습을 달리하는 느티나무터널, 영화 &lt;편지&gt;의 촬영지 경강역에서 회차, 가평역으로 돌아오는 왕복코스다. 북한강을 가로지르는 높이 30m의 아찔한 북한강 철교를 따라  폐달을 밟다 보면 한적한 시골마을과, 푸른 빛깔의 아름다운 강변이 번 갈아가면서 눈앞에 펼쳐진다.
-            </p>
+            <DesP>{tmp3}</DesP>
           </DescDiv>
           <SearchDate>
             <SearchP>더 알아보기</SearchP>
             <SearchDiv>
-              <ALink href = {`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${posts.title}`}>
+              <ALink target='_blank' rel='noreferrer' href = {`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${posts.title}`}>
                 <ImgLink alt='' src='https://www.siksinhot.com/static2/images/mobile/bg_site_img01.gif'/>
               </ALink>
-              <ALink href = {`https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q=${posts.title}`}>
+              <ALink target='_blank' rel='noreferrer' href = {`https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q=${posts.title}`}>
                 <ImgLink alt='' src='https://www.siksinhot.com/static2/images/mobile/bg_site_img02.gif'/>
               </ALink>
-              <ALink href = {`https://www.google.com/search?q=${posts.title}`}>
+              <ALink target='_blank' rel='noreferrer' href = {`https://www.google.com/search?q=${posts.title}`}>
                 <ImgLink alt='' src='https://www.siksinhot.com/static2/images/mobile/bg_site_img03.gif'/>
               </ALink>
             </SearchDiv>
@@ -182,10 +188,13 @@ const ImgCover = styled.div`
   margin: 0 auto;
   
 `
+const ThemeDiv =styled.div`
+  padding-top:0.8rem;
+`
 const TitleLikeDiv =styled.div`
   display:flex;
   justify-content:space-between;
-  margin-top:3rem;
+  padding-top:0.5rem;
 `
 const TitleSpan =styled.b`
   font-weight:700;
@@ -209,7 +218,7 @@ const Title = styled.div`
 const StarThemeDiv =styled.div`
   padding-top:0.5rem;
   display:flex;
-  justify-content:space-between;
+  /* justify-content:space-between; */
   align-items:center;
 `
 const Location = styled.div`
@@ -231,6 +240,10 @@ const DescDiv = styled.div`
   align-items:center;
   margin:0 auto;
   padding-top:50px;
+`
+const DesP =styled.p`
+  text-align:justify;
+  white-space:pre-wrap;
 `
 const SearchDate = styled.div`
   padding-top:20px;

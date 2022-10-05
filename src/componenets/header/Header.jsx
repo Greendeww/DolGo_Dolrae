@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import back from "../../assert/header/pngwing.com.png";
 import css from "../../css/header.css";
-import dolphin from "../../assert/header/dolphin (2).png";
+// import dolphin from "../../assert/header/dolphin (2).png";
 
 
 const Header = () => {
