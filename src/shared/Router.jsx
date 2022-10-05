@@ -9,7 +9,6 @@ import DetailRevise from "../componenets/details/DetailRevise";
 import DetailForm from "../componenets/details/DetailForm";
 import Main from "../pages/Main";
 import Random from "../pages/Random";
-import Maps from "../componenets/maps/Maps";
 import RndLocation from "../componenets/random/RndLocation";
 import RandomSelect from "../componenets/random/RandomSelect";
 import RandomList from "../componenets/random/RandomList";
@@ -29,7 +28,6 @@ function Router(){
             <Route path="/detail/update/:placeId/:id" element={<DetailRevise/>}/>
             <Route path="/detail/form/:id" element={<DetailForm/>}/>
             <Route path="/random" element={<Random/>}/>
-            <Route path="/maps" element={<Maps/>}/>
             <Route path="/rndlocation" element={<RndLocation/>}/>
             <Route path="/rndselect/:area/:si" element={<RandomSelect/>}/>
             <Route path="/rnd" element={<RandomList/>}/>
