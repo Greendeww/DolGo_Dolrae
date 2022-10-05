@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-=======
-import React, { useState } from "react";
+eact, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import back from "../../assert/header/pngwing.com.png";
@@ -132,4 +130,4 @@ const HeaderMenu = styled.div`
     }
   }
 `;
->>>>>>> 7690d5134b4ca55c7bf968d9016e66330551ccfc
+
