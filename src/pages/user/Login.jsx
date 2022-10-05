@@ -91,7 +91,7 @@ const Login = () => {
         <SignUp>
           <p>아직 돌고돌래 회원이 아니세요?</p>
           <p>
-            <b onClick={() => navigate("/signup")}>회원가입</b>
+            <b onClick={() => navigate("/signup")}>회원가입 ></b>
           </p>
         </SignUp>
       </StLogin>
@@ -102,12 +102,17 @@ const Login = () => {
 export default Login;
 
 const StLogin_ = styled.div`
-  margin-top: 100px;
+  padding-top: 120px;
   width: 428px;
-  margin: 0 auto;
+  margin: auto;
+
+  & p {
+    margin-bottom: 10px;
+  }
 `;
 
 const StLogin = styled.div`
+vertical-align: middle;
   & input {
     width: 373px;
     height: 52px;
