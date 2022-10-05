@@ -35,7 +35,7 @@ export default Info;
 const StInfo = styled.div`
   position: relative;
   top: 70px;
-  height: 250px;
+  height: 220px;
   background-color: #eef6fa;
   padding: 20px 30px;
 
