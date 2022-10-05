@@ -129,16 +129,16 @@ const RndLocation = () => {
     { do: "충북", name: "청주", value: 11 },
     { do: "충북", name: "충주", value: 12 },
     { do: "충남", name: "전체", value: 0 },
-    { do: "충남", name: "계룡", value: 1 },
-    { do: "충남", name: "공주", value: 2 },
-    { do: "충남", name: "금산", value: 3 },
-    { do: "충남", name: "논산", value: 4 },
-    { do: "충남", name: "당진", value: 5 },
-    { do: "충남", name: "보령", value: 6 },
-    { do: "충남", name: "부여", value: 7 },
-    { do: "충남", name: "서산", value: 8 },
-    { do: "충남", name: "서천", value: 9 },
-    { do: "충남", name: "아산", value: 10 },
+    { do: "충남", name: "계룡", value: 16 },
+    { do: "충남", name: "공주", value: 1 },
+    { do: "충남", name: "금산", value: 2 },
+    { do: "충남", name: "논산", value: 3 },
+    { do: "충남", name: "당진", value: 4 },
+    { do: "충남", name: "보령", value: 5 },
+    { do: "충남", name: "부여", value: 6 },
+    { do: "충남", name: "서산", value: 7 },
+    { do: "충남", name: "서천", value: 8 },
+    { do: "충남", name: "아산", value: 9 },
     { do: "충남", name: "예산", value: 11 },
     { do: "충남", name: "천안", value: 12 },
     { do: "충남", name: "청양", value: 13 },
@@ -290,7 +290,7 @@ const RndLocation = () => {
         willClose: () => {
           clearInterval(timerInterval)
           dispatch(__getTheme(search))
-          navigate("/rndselect/"+localStorage.getItem(AREA_CODE)+'/'+localStorage.getItem(SIGUNGU_CODE));
+          navigate("/rndselect/"+localStorage.getItem(SIGUNGU_CODE)+'/'+localStorage.getItem(AREA_CODE));
         }
       }).then((result) => {
         /* Read more about handling dismissals below */
