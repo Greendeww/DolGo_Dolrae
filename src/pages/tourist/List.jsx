@@ -1,13 +1,17 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Header from "../../componenets/header/Header";
 import basicImg from "../../assert/image/basic.png";
-import { useInView } from "react-intersection-observer";
 import { instance } from "../../shared/Api";
 
 const List = () => {
+  const [posts, setPosts] = useState([]);
+  const [hasNextPage, setHasNextPage] = useState(true);
+  const observerTargetEl = useRef(null);
+  const page = useRef(1);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const THEME_CODE = window.localStorage.getItem("THEME_CODE");
@@ -17,27 +21,61 @@ const List = () => {
   const AREA_NAME = window.localStorage.getItem("AREA_NAME");
   const SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
 
-  const [ list, setList ] = useState();
+  // const [ list, setList ] = useState();
 
-  const getList = async() => {
-    const res = await instance.get(`/api/place?theme=${THEME_CODE}&areaCode=${AREA_CODE}&sigunguCode=${SIGUNGU_CODE}&pageNum=0`);
-    setList(res.data)
-  }
+  // const getList = async() => {
+  //   const res = await instance.get(`/api/place?theme=${THEME_CODE}&areaCode=${AREA_CODE}&sigunguCode=${SIGUNGU_CODE}&pageNum=0`);
+  //   setList(res.data)
+  // }
 
-  useEffect(() => {
-    getList();
+  // useEffect(() => {
+  //   getList();
+  // }, []);
+
+  // const returnHandler = (e) => {
+  //   e.preventDefault();
+  //   localStorage.removeItem("THEME_CODE");
+  //   localStorage.removeItem("THEME_NAME");
+  //   localStorage.removeItem("AREA_CODE");
+  //   localStorage.removeItem("AREA_NAME");
+  //   localStorage.removeItem("SIGUNGU_CODE");
+  //   localStorage.removeItem("SIGUNGU_NAME");
+  //   navigate("/select");
+  // };
+
+  const fetch = useCallback(async () => {
+    try {
+      const data = await instance.get(
+        `/api/place?theme=${THEME_CODE}&areaCode=${AREA_CODE}&sigunguCode=${SIGUNGU_CODE}&pageNum=${page.current}`
+      );
+      console.log(data);
+      setPosts((prevPosts) => [...prevPosts, ...data.data]);
+      setHasNextPage(data.data.length === 10);
+      if (data.data.length) {
+        page.current += 1;
+      }
+    } catch (err) {
+      console.error(err);
+    }
   }, []);
 
-  const returnHandler = (e) => {
-    e.preventDefault();
-    localStorage.removeItem("THEME_CODE");
-    localStorage.removeItem("THEME_NAME");
-    localStorage.removeItem("AREA_CODE");
-    localStorage.removeItem("AREA_NAME");
-    localStorage.removeItem("SIGUNGU_CODE");
-    localStorage.removeItem("SIGUNGU_NAME");
-    navigate("/select");
-  };
+  useEffect(() => {
+    if (!observerTargetEl.current || !hasNextPage) return;
+
+    const io = new IntersectionObserver((entries, observer) => {
+      // console.log(entries);
+      if (entries[0].isIntersecting) {
+        fetch();
+      }
+    });
+    io.observe(observerTargetEl.current);
+    // console.log(io.observe(observerTargetEl.current));
+
+    return () => {
+      io.disconnect();
+    };
+  }, [fetch, hasNextPage]);
+  // console.log(posts);
 
   return (
     <StList>
@@ -57,36 +95,39 @@ const List = () => {
         </div>
       </Title>
       <Content>
-        {list&&list.map((list) => (
-          <Card key={list.id} onClick={() => navigate(`/detail/${list.id}`)}>
-            {list.image == null ? (
-              <>
-                <BasicImg src={basicImg} />
-                <BasicName>
-                  <div>{list.title}</div>
-                  <div>
-                    <Star>★</Star> {list.star}
-                  </div>
-                </BasicName>
-              </>
-            ) : (
-              <>
-                <ImgShadow>
-                  <ImgBox>
-                    <Img src={list.image} />
-                  </ImgBox>
-                </ImgShadow>
-                <Name>
-                  <div>{list.title}</div>
-                  <div>
-                    <Star>★</Star> {list.star}
-                  </div>
-                </Name>
-              </>
-            )}
-          </Card>
-        ))}
+        {posts &&
+          posts.map((list) => (
+            <Card key={list.id} onClick={() => navigate(`/detail/${list.id}`)}>
+              {list.image == null ? (
+                <>
+                  <BasicImg src={basicImg} />
+                  <BasicName>
+                    <div>{list.title}</div>
+                    <div>
+                      <Star>★</Star> {list.star}
+                    </div>
+                  </BasicName>
+                </>
+              ) : (
+                <>
+                  <ImgShadow>
+                    <ImgBox>
+                      <Img src={list.image} />
+                    </ImgBox>
+                  </ImgShadow>
+                  <Name>
+                    <div>{list.title}</div>
+                    <div>
+                      <Star>★</Star> {list.star}
+                    </div>
+                  </Name>
+                </>
+              )}
+            </Card>
+          ))}
+
       </Content>
+      <div ref={observerTargetEl} />
     </StList>
   );
 };
@@ -96,7 +137,7 @@ export default List;
 const StList = styled.div`
   width: 428px;
   margin: 0 auto;
-  
+
   & button {
     margin-left: 15px;
     margin-top: 30px;
