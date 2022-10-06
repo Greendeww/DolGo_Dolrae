@@ -50,7 +50,7 @@ const StWithdrawal = styled.div`
   & p {
     margin-top: 20px;
     margin-bottom: 20px;
-    font-weight: 400;
+    margin-left: 10px;
     font-size: 18px;
   }
 

@@ -44,7 +44,7 @@ export default Nickname;
 
 const StNickname = styled.div`
   margin: 50px 30px;
-  padding-top: 100px;
+  padding-top: 50px;
 
   & input {
     width: 343px;

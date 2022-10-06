@@ -4,19 +4,19 @@ import Header from "../../componenets/header/Header";
 import Category from "../../componenets/select/Category";
 import Location from "../../componenets/select/Location";
 
-const Theme = () => {
+const Select = () => {
   return (
-    <StTheme>
-      <Header/>
+    <StSelect>
+      <Header />
       <Category />
       <Location />
-    </StTheme>
+    </StSelect>
   );
 };
 
-export default Theme;
+export default Select;
 
-const StTheme = styled.div`
-width: 428px;
-margin: 0 auto;
+const StSelect = styled.div`
+  margin: 0 auto;
+  width: 428px;
 `;
