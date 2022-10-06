@@ -36,6 +36,7 @@ const Randoms = () => {
 
     return (
     <>
+      <BoxDiv>
         <Header/>
         <Box>
             <div>
@@ -46,15 +47,22 @@ const Randoms = () => {
                 <RandomBut><ButText onClick={()=>navigate('/rndlocation')}>지역 선택</ButText></RandomBut>
             </ButDiv>
         </Box>
+      </BoxDiv>
     </>
     )
 }
 
 export default Randoms
+const BoxDiv = styled.div`
+    width: 100%;
+    max-width:428px;
+    margin: 0 auto;
+`;
 const Box = styled.div`
     width: 100%;
     max-width:428px;
     margin: 0 auto;
+    padding-top:4.5rem;
 `;
 const Img = styled.img`
     width:100%;

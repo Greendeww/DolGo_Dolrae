@@ -31,7 +31,16 @@ const RndLocation = () => {
     sigunguCode: GET_SIGUNGU_CODE,
     sigunguName: GET_SIGUNGU_NAME,
   };
+  const initialization = (e) => {
+    // e.preventDefault();
+    localStorage.removeItem("AREA_CODE");
+    localStorage.removeItem("AREA_NAME");
+    localStorage.removeItem("SIGUNGU_CODE");
+    localStorage.removeItem("SIGUNGU_NAME");
 
+    setSelectedDo("");
+    setSelectedSi("");
+  };
   const [selectedDo, setSelectedDo] = useState("");
   const [selectedSi, setSelectedSi] = useState("");
 
@@ -253,7 +262,7 @@ const RndLocation = () => {
   };
   const DetailLocation = () => {
     return siList.map((item, idx) =>
-      item.do == GET_AREA_NAME ? (
+      item.do === GET_AREA_NAME ? (
         <div
           key={idx}
           className={
@@ -302,9 +311,12 @@ const RndLocation = () => {
 }
   return (
     <>
-    <Header/>
     <RndDiv>
     <St>
+    <Header/>
+    <Title>
+          <button onClick={initialization}>필터 초기화 ↺</button>
+    </Title>
       <StList>
         <p>지역</p>
         <div className="location-set">{Location()}</div>
@@ -359,6 +371,25 @@ const St = styled.div`
     line-height: 24px;
     display: block;
     margin: 40px auto;
+  }
+`;
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  & button {
+    margin-right: 20px;
+    background: #ffc0c0;
+    border: none;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 const BackBut =styled.button`

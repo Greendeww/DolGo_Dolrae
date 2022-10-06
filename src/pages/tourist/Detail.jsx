@@ -79,8 +79,8 @@ const Detail = () => {
 
   return (
     <>
+    <BoxDiv>
     <Header/>
-    <div>
       <Box>
         <Cover>
           <ImgDiv>
@@ -151,18 +151,25 @@ const Detail = () => {
           <Review comment={comment} number={number}/>
           <h1 style={{color:"white"}}>공백</h1>
       </Box>
-    </div>
+    </BoxDiv>
     </>
   )
 }
 
 export default Detail
 
+const BoxDiv =styled.div`
+  width: 100%;
+  max-width:428px;
+  margin: 0 auto;
+`
 const Box = styled.div`
+  padding-top:4rem;
   width: 100%;
   max-width:428px;
   margin: 0 auto;
   /* border:2px solid #79B9D3; */
+  font-family: "Noto Sans KR", sans-serif;
 `;
 const Cover = styled.div`
   display: flex;

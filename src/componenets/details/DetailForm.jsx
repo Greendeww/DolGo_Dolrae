@@ -113,11 +113,11 @@ const onChangeTitle = (e) => {
     if(
       title === "" ||
       content === "" ||
-      star === ""
+      star === 0
     ){
-      alert("모든 항목을 입력해주세요.");
+      return alert("필수항목을 입력해주세요.");
     }
-    if(isContent !== true){
+    if(isContent !== true || isTitle !== true){
       return alert('형식을 확인해주세요')
     }
     let json = JSON.stringify(data)
@@ -155,9 +155,13 @@ const onChangeTitle = (e) => {
   return (
    <>
      <Box>
+      <BoxTitle>
+        <BoxTitleP>후기등록</BoxTitleP>
+        <BoxSpan><span>*</span>필수항목</BoxSpan>
+      </BoxTitle>
       <LiTilte>
           <PTitle>
-            제목<span style={{ color: "rgb(255, 80, 88)" }}>*</span>
+            제목<span style={{ color: "rgb(255, 80, 88)",fontWeight:"600"}}>*</span>
           </PTitle>
           <InputTit
             type="text"
@@ -174,7 +178,7 @@ const onChangeTitle = (e) => {
           <ImgTitle>
             <b>
               이미지
-              <span style={{ color: "rgb(255, 80, 88)" }}>*</span>
+             
             </b>
           </ImgTitle>
           <div style={{ width: "100%" }}>
@@ -209,7 +213,7 @@ const onChangeTitle = (e) => {
             </div>
           </LiImg>
           <Wrap>
-              <RatingText>별점</RatingText>
+              <RatingText>별점 <span style={{ color: "rgb(255, 80, 88)",fontWeight:"600" }}>*</span></RatingText>
               <StarDiv>
                 <Stars>
                     {[0,1,2,3,4].map((el, idx) => {
@@ -227,7 +231,7 @@ const onChangeTitle = (e) => {
           </Wrap>
           <LiTilte>
             <PTitle>
-              후기<span style={{ color: "rgb(255, 80, 88)" }}>*</span>
+              후기<span style={{ color: "rgb(255, 80, 88)",fontWeight:"600" }}>*</span>
             </PTitle>
             <InputCom
               type="text"
@@ -266,6 +270,21 @@ const Box = styled.div`
   text-align: center;
   border-radius:10px;
 `;
+const BoxTitle = styled.div`
+  display:flex;
+  justify-content:center;
+`
+const BoxTitleP =styled.p`
+  font-weight:700;
+  font-size:1.5rem;
+  margin-right:0.8rem;
+`
+const BoxSpan =styled.p`
+  color:rgb(255, 80, 88);
+  /* font-weight:600; */
+  text-align:center;
+  line-height:2.2rem;
+`
 const LiImg = styled.li`
   width: 90%;
   /* display: flex; */
