@@ -3,18 +3,32 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../../shared/Api";
 import Like from '../../like/Like';
+import PaginationsLike from "../../pagination/PaginationsLike";
 
 const LikeList = () => {
   const navigate = useNavigate();
 
   const [list, setList] = useState([]);
+  const [likeList,setLikeList] = useState([...list].reverse())
+  const [currentLike,setCurrnetLike] = useState([])
+  const [page, setPage] = useState(1);
+  const [postPerPage] = useState(2)
+  const indexOfLastPost = page*postPerPage;
+  const indexOfFirstPage = indexOfLastPost - postPerPage
 
   const getList = async () => {
     const res = await instance.get("/api/auth/place/mypage");
     console.log(res.data);
-    setList(res.data);
+    setList(res?.data);
+    setLikeList([...res?.data].reverse())
   };
+  useEffect(() => {
+    setCurrnetLike(likeList.slice(indexOfFirstPage, indexOfLastPost))
+  },[indexOfFirstPage,indexOfLastPost,page,list]);
 
+  const handlePageChange = (page) => {
+    setPage(page)
+  }
   useEffect(() => {
     getList();
   }, []);
@@ -23,7 +37,7 @@ const LikeList = () => {
     <StLikeList>
       <h2>찜 목록</h2>
       <div>
-        {list.map((item) => (
+        {currentLike.map((item) => (
           <div key={item.id}>
             <img
               alt=""
@@ -36,6 +50,12 @@ const LikeList = () => {
             </Title>
           </div>
         ))}
+         <PaginationsLike
+            page={page}
+            count={list.length}
+            setPage={handlePageChange}
+            postPerpage={2}
+            />
       </div>
     </StLikeList>
   );
