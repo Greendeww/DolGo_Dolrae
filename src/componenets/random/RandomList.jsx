@@ -20,7 +20,7 @@ const RandomList = () => {
 
     const [random, setRandom] = useState();
     const fetch = async () => {
-        const response = await instance.get(`/api/place/random?sigunguCode=&areaCode=`); 
+        const response = await instance.get(`/api/place/random?sigunguCode=0&areaCode=0`); 
         console.log(response.data)
         setRandom(response.data)
         }

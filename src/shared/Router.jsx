@@ -38,8 +38,9 @@ function Router(){
             <Route path="/detail/form/:id" element={<DetailForm/>}/>
             <Route path="/random" element={<Random/>}/>
             <Route path="/rndlocation" element={<RndLocation/>}/>
-            <Route path="/rndselect/:area/:si" element={<RandomSelect/>}/>
+            <Route path="/rndselect/:si/:area" element={<RandomSelect/>}/>
             <Route path="/rnd" element={<RandomList/>}/>
+
         </Routes>
         </BrowserRouter>
     )

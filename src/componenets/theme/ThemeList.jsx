@@ -31,6 +31,7 @@ const ThemeList = ({post}) => {
 export default ThemeList
 const Wrap = styled.div`
     color:#BFB8B8;
-    line-height:1rem;
+    /* line-height:1rem;
     margin-right:1rem;
+    margin-top:2rem; */
 `;
