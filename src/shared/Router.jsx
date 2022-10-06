@@ -13,6 +13,10 @@ import MyPage from "../pages/MyPage";
 import MyPageChange from "../pages/MyPageChange";
 import Report from "../pages/Report";
 import Register from "../pages/Register";
+import Administrator from "../pages/Administrator";
+import RequestDetail from "../pages/RequestDetail";
+import RequestEdit from "../pages/RequestEdit";
+import RequestPost from "../pages/RequestPost";
 
 function Router(){
     return(
@@ -23,6 +27,10 @@ function Router(){
             <Route path="/mypage/change" element={<MyPageChange/>}/>
             <Route path="/report" element={<Report/>}/>
             <Route path="/register" element={<Register/>}/>
+            <Route path="/administrator" element={<Administrator/>}/>
+            <Route path="/request/detail" element={<RequestDetail />}/>
+            <Route path="/request/edit" element={<RequestEdit />}/>
+            <Route path="/request/post" element={<RequestPost />}/>
             <Route path="/signup" element={<SignUp/>}/>
             <Route path="/login" element= {<Login/>}/>
             <Route path="/KakaoLogin" element= {<KakaoLogin/>}/>
