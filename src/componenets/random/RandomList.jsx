@@ -6,49 +6,98 @@ import { useEffect } from 'react';
 import { FaStar } from 'react-icons/fa';
 import axios from 'axios';
 import Like from '../like/Like';
+import Header from '../header/Header';
+import dolphin from "../../assert/detail/dolphin_test.png";
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { useRef } from 'react';
+import { useCallback } from 'react';
+import ScrollToTop from '../scroll/ScrollToTop';
 
 const RandomList = () => {
-    // const [random, setRandom] = useState();
-    // const fetch = async () => {
-    //     const response = await instance.get(`/api/auth/place/random`); 
-    //     console.log(response.data)
-    //     setRandom(response.data)
-    //     }
+    const navigate = useNavigate();
+    const scrollRef = useRef();
+
+    const [random, setRandom] = useState();
+    const fetch = async () => {
+        const response = await instance.get(`/api/place/random?sigunguCode=0&areaCode=0`); 
+        console.log(response.data)
+        setRandom(response.data)
+        }
+    useEffect(() => {
+        window.scrollTo(0,0)
+        fetch()
+    }, []);
+
+    // console.log(random?.placeList[0]?.id)
+    // console.log(random?.placeList[1]?.id)
+    // console.log(random?.placeList[2]?.id)
+    // console.log(random?.placeList[3]?.id)
+
+    const onRandom = (e) => {
+        window.scrollTo({ top: 0, behavior: "smooth" })
+        let timerInterval
+        Swal.fire({
+            title: '지역을 선정중입니다',
+            html: '잠시만 기다려주세요',
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading()
+              const b = Swal.getHtmlContainer().querySelector('b')
+              timerInterval = setInterval(() => {
+                b.textContent = Swal.getTimerLeft()
+              }, 100)
+            },
+            willClose: () => {
+              clearInterval(timerInterval)
+              fetch();
+              window.location.reload();
+            }
+          }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+              console.log('I was closed by the timer')
+            }
+          })
+         console.log("작동")
+    }
     // useEffect(() => {
-    //     fetch()
-    // }, []);
-
-    // const onRandom = (e) => {
-    //     fetch();
-    //     window.location.reload();
-    //     console.log("작동")
-    // }
-
+    //     window.scrollTo(0,0)
+    // },[])
     return (
      <>
-     <Box>
+     <Box ref={scrollRef}>
+     <ScrollToTop/>
+     <Header/>
        <LocDiv>
-         <PTitle>이번엔 <SpanRandom>춘천</SpanRandom> 어때요?</PTitle>
+         <PTitle>이번엔 </PTitle>
+         <SpanRandom>{random?.area}</SpanRandom>
+         <PTitle2>어때요? </PTitle2> 
        </LocDiv>
        <TemaDiv>
          <TemaBox>
             <TemaP>
                 <TemaName>관광</TemaName>
             </TemaP>
-            <TemaImgBox>
-                <TemaImg alt='' src='http://tong.visitkorea.or.kr/cms/resource/74/2648674_image2_1.jpg'/>
+            <TemaImgBox >
+                {random?.placeList[0]?.image === null
+                ?<TemaImg onClick={() => navigate('/detail/'+random?.placeList[0].id)} alt='' src={dolphin}/>
+                :<TemaImg onClick={() => navigate('/detail/'+random?.placeList[0].id)} alt='' src={random?.placeList[0]?.image}/>
+                }
+                {/* <TemaImg alt='' src={random?.placeList[0]?.image}/> */}
                 <TemaDesc>
                     <div style={{display:"flex"}}>
-                        <TemaTilte>월영교</TemaTilte>
+                        <TemaTilte>{random?.placeList[0]?.title}</TemaTilte>
                         <TemaStar>
-                            <FaStar style={{color:"#fcc419",marginLeft:"0.5rem", marginRight:"0.3rem"}}/>
+                            <FaStar style={{color:"#fcc419",marginLeft:"0.3rem", marginRight:"0.1rem"}}/>
                             <div>
-                                <span style={{fontWeight:"600"}}>4</span>
+                                <span style={{fontWeight:"600"}}>{random?.placeList[0]?.star}</span>
                                 <span style={{color:"#8f8f8f"}}>/5</span>
                             </div>
                         </TemaStar>
                     </div>
-                    <TemaHeart><Like /></TemaHeart> 
+                    <TemaHeart><Like id={random?.placeList[0]?.id} /></TemaHeart> 
                 </TemaDesc>
             </TemaImgBox>
          </TemaBox>
@@ -56,20 +105,24 @@ const RandomList = () => {
             <TemaP>
                 <TemaName>관람</TemaName>
             </TemaP>
-            <TemaImgBox>
-                <TemaImg alt='' src='http://tong.visitkorea.or.kr/cms/resource/74/2648674_image2_1.jpg'/>
+            <TemaImgBox >
+                {random?.placeList[1]?.image === null
+                ?<TemaImg onClick={() => navigate('/detail/'+random?.placeList[1].id)} alt='' src={dolphin}/>
+                :<TemaImg onClick={() => navigate('/detail/'+random?.placeList[1].id)} alt='' src={random?.placeList[1]?.image}/>
+                }
+                {/* <TemaImg alt='' src={random?.placeList[1]?.image}/> */}
                 <TemaDesc>
                     <div style={{display:"flex"}}>
-                        <TemaTilte>월영교</TemaTilte>
+                        <TemaTilte>{random?.placeList[1]?.title}</TemaTilte>
                         <TemaStar>
-                            <FaStar style={{color:"#fcc419",marginLeft:"0.5rem", marginRight:"0.3rem"}}/>
+                        <FaStar style={{color:"#fcc419",marginLeft:"0.3rem", marginRight:"0.1rem"}}/>
                             <div>
-                                <span style={{fontWeight:"600"}}>4</span>
+                                <span style={{fontWeight:"600"}}>{random?.placeList[1]?.star}</span>
                                 <span style={{color:"#8f8f8f"}}>/5</span>
                             </div>
                         </TemaStar>
                     </div>
-                    <TemaHeart><Like /></TemaHeart> 
+                    <TemaHeart><Like id={random?.placeList[1]?.id} /></TemaHeart> 
                 </TemaDesc>
             </TemaImgBox>
          </TemaBox>
@@ -77,20 +130,24 @@ const RandomList = () => {
             <TemaP>
                 <TemaName>액티비티</TemaName>
             </TemaP>
-            <TemaImgBox>
-                <TemaImg alt='' src='http://tong.visitkorea.or.kr/cms/resource/74/2648674_image2_1.jpg'/>
+            <TemaImgBox >
+                 {random?.placeList[2]?.image === null
+                ?<TemaImg onClick={() => navigate('/detail/'+random?.placeList[2].id)} alt='' src={dolphin}/>
+                :<TemaImg onClick={() => navigate('/detail/'+random?.placeList[2].id)} alt='' src={random?.placeList[2]?.image}/>
+                }
+                {/* <TemaImg alt='' src={random?.placeList[2]?.image}/> */}
                 <TemaDesc>
                     <div style={{display:"flex"}}>
-                        <TemaTilte>월영교</TemaTilte>
+                        <TemaTilte>{random?.placeList[2]?.title}</TemaTilte>
                         <TemaStar>
-                            <FaStar style={{color:"#fcc419",marginLeft:"0.5rem", marginRight:"0.3rem"}}/>
+                        <FaStar style={{color:"#fcc419",marginLeft:"0.3rem", marginRight:"0.1rem"}}/>
                             <div>
-                                <span style={{fontWeight:"600"}}>4</span>
+                                <span style={{fontWeight:"600"}}>{random?.placeList[2]?.star}</span>
                                 <span style={{color:"#8f8f8f"}}>/5</span>
                             </div>
                         </TemaStar>
                     </div>
-                    <TemaHeart><Like /></TemaHeart> 
+                    <TemaHeart><Like id={random?.placeList[2]?.id} /></TemaHeart> 
                 </TemaDesc>
             </TemaImgBox>
          </TemaBox>
@@ -99,24 +156,29 @@ const RandomList = () => {
                 <TemaName>식도락</TemaName>
             </TemaP>
             <TemaImgBox>
-                <TemaImg alt='' src='http://tong.visitkorea.or.kr/cms/resource/74/2648674_image2_1.jpg'/>
+                {random?.placeList[3]?.image === null
+                ?<TemaImg onClick={() => navigate('/detail/'+random?.placeList[3].id)} alt='' src={dolphin}/>
+                :<TemaImg onClick={() => navigate('/detail/'+random?.placeList[3].id)} alt='' src={random?.placeList[3]?.image}/>
+                }
+                {/* <TemaImg alt='' src={random?.placeList[3]?.image}/> */}
                 <TemaDesc>
-                    <div style={{display:"flex"}}>
-                        <TemaTilte>월영교</TemaTilte>
+                    <div style={{display:"flex",width:"90%"}}>
+                        <TemaTilte>{random?.placeList[3]?.title}</TemaTilte>
                         <TemaStar>
-                            <FaStar style={{color:"#fcc419",marginLeft:"0.5rem", marginRight:"0.3rem"}}/>
+                        <FaStar style={{color:"#fcc419",marginLeft:"0.3rem", marginRight:"0.1rem"}}/>
                             <div>
-                                <span style={{fontWeight:"600"}}>4</span>
+                                <span style={{fontWeight:"600"}}>{random?.placeList[3]?.star}</span>
                                 <span style={{color:"#8f8f8f"}}>/5</span>
                             </div>
                         </TemaStar>
                     </div>
-                    <TemaHeart><Like /></TemaHeart> 
+                    <TemaHeart><Like id={random?.placeList[3]?.id}/></TemaHeart> 
                 </TemaDesc>
             </TemaImgBox>
          </TemaBox>
          <ButDiv>
-            <RandomBut><ButText>다시 돌리기</ButText></RandomBut>
+            <RandomBut><ButText onClick={()=>{onRandom()}}>다시 돌리기</ButText></RandomBut>
+            <BackBut><ButText onClick={() => navigate('/random')}>뒤로가기</ButText></BackBut>
          </ButDiv>
        </TemaDiv>
      </Box>
@@ -135,16 +197,23 @@ const Box = styled.div`
     height:100%;
 `;
 const LocDiv = styled.div`
-    padding-top:30px;
+    width:90%;
+    margin:0 auto;
     text-align:center;
     color: #BFB8B8;
     padding-bottom:50px;
 `;
 const PTitle = styled.p`
-    font-size:2.2rem;
+    font-size:1.6rem;
+    margin-top:2rem;
+    text-align:start;
+`;
+const PTitle2 = styled.p`
+    font-size:1.6rem;
+    text-align:end;
 `;
 const SpanRandom = styled.span`
-    font-size:3rem;
+    font-size:2.2rem;
     font-weight:700;
     line-height:54.5px;
     color: #ACD4E4;
@@ -172,8 +241,8 @@ const TemaName = styled.span`
     font-weight:700;
 `
 const TemaHeart = styled.span`
-    font-size: 2.1rem;
-    line-height:0.8rem;
+    font-size: 2rem;
+    line-height:0.5rem;
     cursor:pointer;
     color:#FF8585;
 `
@@ -184,27 +253,34 @@ const TemaImgBox = styled.div`
     justify-content:center;
     align-items:center;
     margin: 0 auto;
+    cursor: pointer;
 `
 const TemaImg = styled.img`
     width:100%;
+    min-height:230px;
+    max-height:230px;
     border-radius:20px;
 `
 const TemaDesc = styled.div`
-    width:90%;
+    width:95%;
     text-align:start;
     margin: 0 auto;
     display:flex;
     justify-content:space-between;
+    padding-top:1rem;
+    padding-bottom:1rem;
 `
-const TemaTilte = styled.span`
+const TemaTilte = styled.span`  
     font-weight:700;
-    font-size:1.1rem;
-    line-height:1.3rem;
+    font-size:1rem;
+    line-height:1.1rem;
 `
 const TemaStar = styled.span`
-    font-size:1.1rem;
+    margin-right:1rem;
+    font-size:1rem;
     display:flex;
-    line-height:1.1rem;
+    justify-content:flex-start;
+    line-height:1rem;
 `
 const ButDiv = styled.div`
     text-align:center;
@@ -220,6 +296,16 @@ const RandomBut = styled.button`
     border-radius:5px;
     width:100%;
 `;
+const BackBut = styled.button`
+    cursor:pointer;
+    color:white;
+    background-color:#ffc0c0;
+    border:0px;
+    height:2.5rem;
+    border-radius:5px;
+    width:100%;
+    margin-top:1.5rem;
+`
 const ButText = styled.p`
     font-weight:700;
     line-height:0.6rem;

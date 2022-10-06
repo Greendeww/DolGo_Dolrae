@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../componenets/header/Header";
-import Category from "../componenets/theme/Category";
-import Location from "../componenets/theme/Location";
+import Header from "../../componenets/header/Header";
+import Category from "../../componenets/select/Category";
+import Location from "../../componenets/select/Location";
 
 const Theme = () => {
   return (

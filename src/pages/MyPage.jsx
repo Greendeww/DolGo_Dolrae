@@ -131,7 +131,7 @@ const Body = styled.div `
 
 `
 const Sir = styled.div `
-    margin: 0px 0px 0px 0px
+    margin: 0px 0px 0px 0px;
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: 700;
@@ -222,7 +222,6 @@ const TextBox = styled.div `
 `
 const Text = styled.div `
     margin: 30px 0px 0px 30px;
-
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: 700;
@@ -237,7 +236,7 @@ const Box = styled.div `
     min-height: 100px;
     background-color: white;
     margin: auto auto auto auto;
-    pading: 0px auto 0px auto;
+    padding: 0px auto 0px auto;
     border: 1px solid white;
     
     display: grid;
