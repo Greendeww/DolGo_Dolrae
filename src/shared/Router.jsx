@@ -28,10 +28,10 @@ function Router(){
             <Route path="/mypage/change" element={<MyPageChange/>}/>
             <Route path="/report" element={<Report/>}/>
             <Route path="/register" element={<Register/>}/>
-            <Route path="/administrator" element={<Administrator/>}/>
+            {/* <Route path="/administrator" element={<Administrator/>}/>
             <Route path="/request/detail" element={<RequestDetail />}/>
             <Route path="/request/edit" element={<RequestEdit />}/>
-            <Route path="/request/post" element={<RequestPost />}/>
+            <Route path="/request/post" element={<RequestPost />}/> */}
             <Route path="/signup" element={<SignUp/>}/>
             <Route path="/login" element= {<Login/>}/>
             <Route path="/oauth/callback/kakao" element= {<KakaoLogin/>}/>
