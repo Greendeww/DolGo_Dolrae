@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { KAKAO_AUTH_URL } from "../shared/OAuth";
-import { logout, __login, __logout } from "../redux/modules/user";
-import Header from "../componenets/header/Header";
-import kakao from "../assert/header/kakao_login_medium_wide.png";
-import Swal from 'sweetalert2'
-
-
+import { KAKAO_AUTH_URL } from "../../shared/OAuth";
+import { __login } from "../../redux/modules/user";
+import Header from "../../componenets/header/Header";
+import kakao from "../../assert/login/kakao_login_medium_wide.png";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -33,11 +31,10 @@ const Login = () => {
       alert("모든 항목을 입력해주세요.");
       e.preventDefault();
     } else {
+      navigate("/");
       dispatch(__login(user));
-      Navigate("/");
     }
   };
-  
 
   return (
     <StLogin_>
@@ -81,6 +78,7 @@ const Login = () => {
 
             <Social>
               <img
+                alt=""
                 src={kakao}
                 onClick={() => {
                   window.location.href = KAKAO_AUTH_URL;
@@ -93,10 +91,9 @@ const Login = () => {
         <SignUp>
           <p>아직 돌고돌래 회원이 아니세요?</p>
           <p>
-            <b onClick={() => navigate("/signup")}>회원가입</b>
+            <b onClick={() => navigate("/signup")}>회원가입 ></b>
           </p>
         </SignUp>
-        {/* <button onClick={() => dispatch(__logout())}>로그아웃</button> */}
       </StLogin>
     </StLogin_>
   );
@@ -106,10 +103,16 @@ export default Login;
 
 const StLogin_ = styled.div`
   width: 428px;
-  margin: 0 auto;
+  margin: auto;
 `;
 
 const StLogin = styled.div`
+  vertical-align: middle;
+  padding-top: 120px;
+
+  & p {
+    margin-bottom: 10px;
+  }
   & input {
     width: 373px;
     height: 52px;
@@ -150,6 +153,10 @@ const Social = styled.div`
     margin: 20px auto;
     width: 370px;
     height: 50px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 
