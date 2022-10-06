@@ -2,15 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import css from "../../css/header.css";
-<<<<<<< HEAD
-// import dolphin from "../../assert/header/dolphin (2).png";
-
-=======
 import dolphin from "../../assert/header/logo_.png";
 import bell from "../../assert/header/bell.png";
 import { useDispatch } from "react-redux";
 import { __logout } from "../../redux/modules/user";
->>>>>>> 5ee8811e18d1e2223d044b3f5da120767e278844
 
 const Header = () => {
   const navigate = useNavigate();
