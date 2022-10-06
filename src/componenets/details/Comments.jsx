@@ -3,7 +3,8 @@ import React, {useState, useRef, useEffect} from 'react'
 import { useParams } from 'react-router-dom';
 import CommentModal from './CommentModal';
 import styled from "styled-components";
-import Numbers from './Numbers';
+import { FaImage } from 'react-icons/fa';
+
 
 
 const Comments = ({comment,arr,isSelected, handleClick, elementIndex}) => {
@@ -35,8 +36,9 @@ const Comments = ({comment,arr,isSelected, handleClick, elementIndex}) => {
         })} */}
         <p style={{width: "9rem"}}>{date}</p>
         {comment.imageList.length === 0
-        ?<span style={{cursor:"pointer", color:"#EBF8FF", fontSize:"30px",lineHeight:"3.4rem"}}>♥</span> 
-        :<span style={{cursor:"pointer", color:"#FF8585", fontSize:"30px",lineHeight:"3.4rem"}}>♥</span> 
+        ?<span style={{cursor:"pointer", color:"#EBF8FF", fontSize:"1.5rem",lineHeight:"3.4rem"}}><FaImage/></span> 
+        :<span style={{cursor:"pointer", color:"black", fontSize:"1.5rem",lineHeight:"3.4rem"}}>
+          <FaImage style={{marginTop:"1rem"}}/></span> 
         }
         <PCom >{comment.title}</PCom>
         {/* <p>닉네임</p> */}
@@ -50,10 +52,11 @@ const Comments = ({comment,arr,isSelected, handleClick, elementIndex}) => {
       </CommentDiv>
       :<CommentDiv>
        <ContentDiv onClick={() => {handleClick(elementIndex);setModal(false)}}>
-        <p style={{width: "6rem"}}>{date}</p>
+        <p style={{width: "9rem"}}>{date}</p>
         {comment.imageList.length === 0
-        ?<span style={{cursor:"pointer", color:"#EBF8FF", fontSize:"30px",lineHeight:"3.4rem"}}>♥</span> 
-        :<span style={{cursor:"pointer", color:"#FF8585", fontSize:"30px",lineHeight:"3.4rem"}}>♥</span> 
+        ?<span style={{cursor:"pointer", color:"#EBF8FF", fontSize:"1.5rem",lineHeight:"3.4rem"}}><FaImage/></span> 
+        :<span style={{cursor:"pointer", color:"black", fontSize:"1.5rem",lineHeight:"3.4rem"}}>
+          <FaImage style={{marginTop:"1rem"}}/></span> 
         }
         <PCom>{comment.title}</PCom>
       </ContentDiv>
@@ -85,11 +88,14 @@ const CommentDiv = styled.div`
   background-color:#EBF8FF;
   /* border:5px solid #EBF8FF; */
   border-radius:20px;
+  margin-top:0.8rem;
 `
 const ContentDiv = styled.div`
+  width:95%;
   display:flex;
   cursor:pointer;
   margin-top:10px;
   text-align:center;
   align-items:center;
+  margin: 0px auto;
 `;
