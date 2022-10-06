@@ -16,8 +16,12 @@ const DetailRevise = () => {
 
   const {id} = useParams();
   const {placeId} = useParams();
-  const [title,setTitle] = useState("");
   const [content,setContent] = useState("");
+  const [contentMessage, setContentMessage] = useState('')
+  const [isContent, setIsContent] = useState(false)
+  const [title,setTitle] = useState("");
+  const [titleMessage, setTitleMessage] = useState('')
+  const [isTitle, setIsTitle] = useState(false)
   const [star,setStar] = useState();
   const [image,setImage] = useState(null);
   const [fileImage1,setFileImage1] = useState([]);
@@ -98,7 +102,32 @@ const DetailRevise = () => {
     setFileImage1(fileImage1.filter((_, index) => index !== id))
     // setImage(image.filter((_, index) => index !== id));
   };
-
+  const onChangeContent = (e) => {
+    const contentRegex = /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{10,300}$/
+    const contentCurrnet = e.target.value 
+    setContent(contentCurrnet)
+    
+    if(!contentRegex.test(contentCurrnet)){
+      setContentMessage('10글자 이상 작성해주세요')
+      setIsContent(false)
+    }else{
+      setContentMessage(null)
+      setIsContent(true)
+    }
+  };
+  const onChangeTitle = (e) => {
+    const TitleRegex = /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{1,20}$/
+    const TitleCurrnet = e.target.value 
+    setTitle(TitleCurrnet)
+    
+    if(!TitleRegex.test(TitleCurrnet)){
+      setTitleMessage('20글자 이하로 작성해주세요 ')
+      setIsTitle(false)
+    }else{
+      setTitleMessage(null)
+      setIsTitle(true)
+    }
+  };
   const data = {
     title:title,
     content:content,
@@ -156,10 +185,13 @@ const DetailRevise = () => {
             type="text"
             name="title"
             value={title}
-            onChange={(event) => onChangeHandler(event, setTitle)}
+            onChange={onChangeTitle}
             placeholder="상품 제목을 입력해주세요"
           />
         </LiTilte>
+        <Message>
+          {title.length > 0 && <p style={{color:'red'}}>{titleMessage}</p>}
+        </Message>
         <LiImg>
           <ImgTitle>
             <b>
@@ -229,10 +261,13 @@ const DetailRevise = () => {
               type="text"
               name="content"
               value={content}
-              onChange={(event) => onChangeHandler(event, setContent)}
+              onChange={onChangeContent}
               placeholder="후기를 남겨주세요"
             />
           </LiTilte>
+          <Message>
+             {content.length > 0 && <p style={{color:'red'}}>{contentMessage}</p>}
+          </Message>
           <div>
                 <button onClick={onUpdatePost}>수정</button>
                 <button onClick={() => navigate('/detail/'+placeId)}>취소</button>
@@ -245,11 +280,6 @@ const DetailRevise = () => {
 
 export default DetailRevise
 const DivBack = styled.div`
-  /* z-index: 10;
-  position: fixed;
-  width: 100%;
-  height: 100vw;
-  background: rgba(0, 0, 0, 0.2); */
 `;
 const Box = styled.div`
   height:100%;
@@ -257,36 +287,32 @@ const Box = styled.div`
   width:100%;
   /* font-size: 17px; */
   font-family: "Noto Sans KR", sans-serif;
-  border: 1px solid black;
+  border: 3px solid #79B9D3;
   background-color: rgb(255, 255, 255);
   margin: auto;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  /* position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 99; */
+  border-radius:10px;
 `;
 const LiImg = styled.li`
   width: 90%;
-  display: flex;
+  /* display: flex; */
   padding: 10px 0px;
-  border-bottom: 1px solid rgb(204, 204, 204);
+  /* border-bottom: 1px solid rgb(204, 204, 204); */
 `;
 const ImgTitle = styled.div`
-  padding-right:28px;
-  width: 100px;
+  padding-left:1.3rem;
+  width: 80%;
   height: 48px;
   align-items: center;
   display: flex;
   justify-content: flex-start;
-  font-size: 14px;
+  font-size: 15px;
 `;
 const ImgBox = styled.div`
+  padding-left:1.3rem;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -298,7 +324,7 @@ const ImgLabel = styled.label`
   width: 100px;
   height: 100px;
   position: relative;
-  border: 1px solid rgb(230, 229, 239);
+  border : 3px solid #79B9D3;
   background: rgb(250, 250, 253);
   display: flex;
   -webkit-box-align: center;
@@ -308,6 +334,8 @@ const ImgLabel = styled.label`
   flex-direction: column;
   color: rgb(155, 153, 169);
   font-size: 1rem;
+  border-radius:10px;
+  font-weight:600;
 `;
 const Img = styled.img`
   width: 100px;
@@ -329,11 +357,11 @@ const DeleteImg = styled.button`
 `;
 const LiTilte = styled.li`
   padding: 10px 0px;
-  display: flex;
+  /* display: flex; */
   width: 100%;
 `;
 const PTitle = styled.b`
-  padding-right:18px;
+  padding-left:1.3rem;
   width: 100px;
   height: 48px;
   font-size: 14px;
@@ -343,20 +371,29 @@ const PTitle = styled.b`
 `;
 const InputTit = styled.input`
   font-size: 15px;
-  width: 79.7%;
-  border: 1px solid rgb(195, 194, 204);
+  width: 80%;
+  border: 3px solid #79B9D3;
   color: rgb(195, 194, 204);
-  padding: 0px 16px;
+  padding: 0px 1rem;
+  border-radius:10px;
 `;
+const Message = styled.div`
+  margin-bottom:25px;
+  font-weight:500;
+  width:96%;
+  font-size:1rem;
+  text-align:end;
+`
 const InputCom = styled.textarea`
-  width: 90%;
+  width: 80%;
   height: 100%;
   min-height: 163px;
-  padding-left:10px;
+  padding: 0px 1rem;
   /* margin-right: 16px; */
   font-size: 14px;
   resize: none;
-  border: 1px solid rgb(195, 194, 204);
+  border : 3px solid #79B9D3;
+  border-radius:10px;
 `;
 const Wrap = styled.div`
   display: flex;
@@ -365,17 +402,20 @@ const Wrap = styled.div`
 `;
 
 const RatingText = styled.b`
+  padding-left:1.3rem;
   width: 100px;
   height: 48px;
-  font-size: 14px;
+  font-size: 15px;
   align-items: center;
   display: flex;
   justify-content: flex-start;
 `;
 
 const Stars = styled.div`
-  width:130px;
+  width:9rem;
   display: flex;
+  align-items:center;
+  justify-content:center;
   /* padding-top: 5px; */
 
   & svg {

@@ -27,9 +27,10 @@ export const _getComments = createAsyncThunk(
 export const _deleteComment = createAsyncThunk(
   "comment/delete",
   async (payload, thunkAPI) => {
+    console.log(payload)
     try {
       const data = await instance.delete(
-        `api/auth/comment/${payload.comment_id}`,
+        `api/auth/comment/${payload}`,
         // {
         //   headers: {
         //     Authorization: localStorage.getItem("Authorization"),

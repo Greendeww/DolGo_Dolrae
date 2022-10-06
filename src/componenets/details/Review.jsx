@@ -44,7 +44,8 @@ const indexOfFirstPage = indexOfLastPost - postPerPage
       setModal(newComment)
     };
     // comment.number = number
-    console.log(comment.number)
+    // const numbers = [...arr].reverse()
+    // console.log(numbers)
   return (
     <div>
         <CommentDiv>
@@ -75,6 +76,8 @@ const CommentDiv = styled.div`
   /* border-bottom: 3px solid #522772; */
   text-align:start;
   margin-top:10px;
+  /* width:90%;
+  margin: auto; */
 `
 const ButDiv = styled.div`
  display:flex;

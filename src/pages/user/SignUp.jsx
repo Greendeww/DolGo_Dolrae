@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useSelector } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { __signUp, __emailCheck, signUp } from "../redux/modules/user";
+import { __signUp, __emailCheck, signUp } from "../../redux/modules/user";
 import { useNavigate } from "react-router-dom";
-import Header from "../componenets/header/Header";
-import { submitCode } from "../redux/modules/user";
+import Header from "../../componenets/header/Header";
+import { __submitCode } from "../../redux/modules/user";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const SignUp = () => {
 
   const codeSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(submitCode(code));
+    dispatch(__submitCode(code));
   };
 
   // input에 입력한 값을 state로 저장
@@ -60,19 +60,37 @@ const SignUp = () => {
 
   console.log(confirmClick);
 
+  // const  emailOk  = useSelector((state) => state.user.emailOk);
+  // console.log(emailOk);
+
   // 회원가입 정보를 전송하기 위한 handler
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    if (
+    if (confirmClick === false) {
+      alert("이메일 인증을 해주세요.");
+      return false;
+    }
+    // else if (
+    //         emailOk === "false"
+    // ){
+    //   alert("인증코드가 올바르지 않습니다.");
+    //   return false;
+    // }
+    else if (
       user.username === "" ||
       user.password === "" ||
       user.passwordConfirm === ""
     ) {
       alert("모든 항목을 입력해주세요.");
+      return false;
+    } else if (user.password !== user.passwordConfirm) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return false;
     }
 
     await dispatch(signUp(user));
     setUser(initialState);
+    navigate("/login");
 
     // const { data } = await instance.post("api/member/signup", user);
     // // console.log(data);
@@ -89,115 +107,123 @@ const SignUp = () => {
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/;
 
   return (
-    <StSignUp>
+    <St>
       <Header />
-      <form onSubmit={onSubmitHandler}>
-        <Email>
-          <label>
-            <div>
-              <b>이메일</b>
-            </div>
-            <div>
-              <input
-                type="username"
-                name="username"
-                value={user.username}
-                onChange={(e) => {
-                  onChangeHandler(e);
-                  emailChangeHandler(e);
-                }}
-                placeholder="이메일을 입력해주세요."
-              />
-              <button onClick={emailCheckHandler}>인증하기</button>
-            </div>
-            <div>
-              {user.username === "" ? null : emailRegex.test(user.username) ? (
-                <p style={{ color: "green" }}>올바른 이메일 형식입니다.</p>
-              ) : (
-                <p style={{ color: "red" }}>이메일 형식이 맞지 않습니다.</p>
-              )}
-            </div>
-            {confirmClick === false ? null : (
-              <EmailConfirm>
+      <StSignUp>
+        <form onSubmit={onSubmitHandler}>
+          <Email>
+            <label>
+              <div>
+                <b>이메일</b>
+              </div>
+              <div>
                 <input
-                  placeholder="인증번호를 입력해주세요."
-                  name="code"
-                  value={code.code}
+                  type="username"
+                  name="username"
+                  value={user.username}
                   onChange={(e) => {
-                    codeChangeHandler(e);
+                    onChangeHandler(e);
+                    emailChangeHandler(e);
                   }}
+                  placeholder="이메일을 입력해주세요."
                 />
-                <button onClick={codeSubmitHandler}>확인</button>
-              </EmailConfirm>
-            )}
-          </label>
-        </Email>
-        <Password>
-          <label>
+                <button onClick={emailCheckHandler}>인증하기</button>
+              </div>
+              <div>
+                {user.username === "" ? null : emailRegex.test(
+                    user.username
+                  ) ? (
+                  <p style={{ color: "green" }}>올바른 이메일 형식입니다.</p>
+                ) : (
+                  <p style={{ color: "red" }}>이메일 형식이 맞지 않습니다.</p>
+                )}
+              </div>
+              {confirmClick === false ? null : (
+                <EmailConfirm>
+                  <input
+                    placeholder="인증번호를 입력해주세요."
+                    name="code"
+                    value={code.code}
+                    onChange={(e) => {
+                      codeChangeHandler(e);
+                    }}
+                  />
+                  <button onClick={codeSubmitHandler}>확인</button>
+                </EmailConfirm>
+              )}
+            </label>
+          </Email>
+          <Password>
+            <label>
+              <div>
+                <b>비밀번호</b>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  name="password"
+                  value={user.password}
+                  onChange={(e) => {
+                    onChangeHandler(e);
+                  }}
+                  placeholder="숫자, 영문자를 혼용하여 8자리 이상 입력해주세요."
+                />
+              </div>
+              <div>
+                {user.password === "" ? null : passwordRegex.test(
+                    user.password
+                  ) ? (
+                  <p style={{ color: "green" }}>안전한 비밀번호예요!</p>
+                ) : (
+                  <p style={{ color: "red" }}>
+                    숫자, 영문자 조합으로 8자리 이상 입력하세요.
+                  </p>
+                )}
+              </div>
+            </label>
+          </Password>
+          <PasswordConfirm>
+            <input
+              type="text"
+              name="passwordConfirm"
+              value={user.passwordConfirm}
+              onChange={onChangeHandler}
+              placeholder="비밀번호를 다시 입력해주세요."
+            />
             <div>
-              <b>비밀번호</b>
-            </div>
-            <div>
-              <input
-                type="text"
-                name="password"
-                value={user.password}
-                onChange={(e) => {
-                  onChangeHandler(e);
-                }}
-                placeholder="숫자, 영문자를 혼용하여 8자리 이상 입력해주세요."
-              />
-            </div>
-            <div>
-              {user.password === "" ? null : passwordRegex.test(
-                  user.password
-                ) ? (
-                <p style={{ color: "green" }}>안전한 비밀번호예요!</p>
+              {user.passwordConfirm === "" ? null : user.password ===
+                user.passwordConfirm ? (
+                <p style={{ color: "green" }}>비밀번호가 일치합니다.</p>
               ) : (
-                <p style={{ color: "red" }}>
-                  숫자, 영문자 조합으로 8자리 이상 입력하세요.
-                </p>
+                <p style={{ color: "red" }}>비밀번호가 일치하지 않습니다.</p>
               )}
             </div>
-          </label>
-        </Password>
-        <PasswordConfirm>
-          <input
-            type="text"
-            name="passwordConfirm"
-            value={user.passwordConfirm}
-            onChange={onChangeHandler}
-            placeholder="비밀번호를 다시 입력해주세요."
-          />
-          <div>
-            {user.passwordConfirm === "" ? null : user.password ===
-              user.passwordConfirm ? (
-              <p style={{ color: "green" }}>비밀번호가 일치합니다.</p>
-            ) : (
-              <p style={{ color: "red" }}>비밀번호가 일치하지 않습니다.</p>
-            )}
-          </div>
-        </PasswordConfirm>
-        <Buttons>
-          <Submit type="submit" value="가입하기" />
-          <Cancel
-            type="button"
-            value="취소"
-            onClick={() => navigate("/login")}
-          />
-        </Buttons>
-      </form>
-    </StSignUp>
+          </PasswordConfirm>
+          <Buttons>
+            <Submit type="submit" value="가입하기" />
+            <Cancel
+              type="button"
+              value="취소"
+              onClick={() => navigate("/login")}
+            />
+          </Buttons>
+        </form>
+      </StSignUp>
+    </St>
   );
 };
 
 export default SignUp;
 
-const StSignUp = styled.div`
+const St = styled.div`
   width: 428px;
-  height: 926px;
-  text-align: center;
   margin: 0 auto;
+`;
+
+const StSignUp = styled.div`
+  text-align: center;
+
+  padding-top: 90px;
 
   & form {
     margin-top: 100px;

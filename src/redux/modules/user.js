@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { instance } from "../../shared/Api";
-import { deleteCookie, getCookie, setCookie } from "../../shared/Cookie";
-import axios from "axios";
 
 const initialState = {
   users: [],
@@ -44,14 +42,15 @@ export const __login = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       const response = await instance.post("/api/member/login", user);
-      console.log(response.headers);
+      console.log(response);
       localStorage.setItem("isLogin", response.headers.authorization);
       localStorage.setItem("ACCESS_TOKEN", response.headers.authorization);
       localStorage.setItem("REFRESH_TOKEN", response.headers.refreshtoken);
       localStorage.setItem("username", response.data.username);
-
+      localStorage.setItem("nickname", response.data.nickname);
       return response.data;
     } catch (error) {
+      alert("이메일 또는 비밀번호를 확인해주세요.")
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -62,7 +61,9 @@ export const __logout = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       const response = await instance.post("/api/auth/member/logout");
+      window.location.reload();
       localStorage.removeItem("username");
+      localStorage.removeItem("nickname");
       localStorage.removeItem("isLogin");
       localStorage.removeItem("ACCESS_TOKEN");
       localStorage.removeItem("REFRESH_TOKEN");
@@ -72,11 +73,23 @@ export const __logout = createAsyncThunk(
       localStorage.removeItem("AREA_NAME");
       localStorage.removeItem("SIGUNGU_CODE");
       localStorage.removeItem("SIGUNGU_NAME");
-
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
+  }
+);
+
+export const __submitCode = createAsyncThunk(
+  "user/__SubmitCode",
+  async (code, thunkAPI) => {
+    const response = await instance.post("api/member/codeEmail", code, {
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    console.log(response);
+    return response.data;
   }
 );
 
@@ -86,34 +99,10 @@ export const userSlice = createSlice({
   reducers: {
     signUp: (state, action) => {
       instance.post("/api/member/signup", action.payload);
-      state.users.push(action.payload);
+      // state.users.push(action.payload);
     },
-
-    submitCode: (state, action) => {
-      console.log(action.payload)
-      instance.post("api/member/codeEmail", action.payload, {
-        headers: {
-          "content-type": "application/json",
-        },
-      });
-    }
   },
   extraReducers: (builder) => {
-    // builder
-    //   .addCase(__signUp.pending, (state) => {
-    //     state.isLoading = true;
-    //   })
-    //   .addCase(__signUp.fulfilled, (state, action) => {
-    //     state.isLoading = false;
-    //     state.users = action.payload;
-    //     window.alert("회원가입 되었습니다.");
-    //     console.log(action.payload);
-    //   })
-    //   .addCase(__signUp.rejected, (state, action) => {
-    //     state.isLoading = false;
-    //     state.error = action.payload;
-    //   });
-
     builder
       .addCase(__emailCheck.pending, (state) => {
         state.isLoading = true;
@@ -141,6 +130,19 @@ export const userSlice = createSlice({
         console.log(action.payload);
       })
       .addCase(__login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
+
+    builder
+      .addCase(__submitCode.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(__submitCode.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.emailOk = action.payload;
+      })
+      .addCase(__submitCode.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
