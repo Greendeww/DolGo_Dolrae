@@ -18,6 +18,7 @@ export default Main;
 
 const StMain = styled.div`
   display: block;
-  width: 428px;
+  max-width: 428px;
+  width: 100%;
   margin: 0 auto;
 `;

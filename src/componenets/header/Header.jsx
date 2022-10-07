@@ -4,12 +4,10 @@ import { useNavigate } from "react-router-dom";
 import css from "../../css/header.css";
 import dolphin from "../../assert/header/logo_.png";
 import bell from "../../assert/header/bell.png";
-import { useDispatch } from "react-redux";
-import { __logout } from "../../redux/modules/user";
+import { instance } from "../../shared/Api";
 
 const Header = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [modal, setModal] = useState(false);
 
@@ -34,6 +32,22 @@ const Header = () => {
     });
   };
 
+  const logout = async () => {
+    const response = await instance.post("/api/auth/member/logout");
+    alert(response.data);
+    navigate("/");
+    localStorage.removeItem("username");
+    localStorage.removeItem("nickname");
+    localStorage.removeItem("ACCESS_TOKEN");
+    localStorage.removeItem("REFRESH_TOKEN");
+    localStorage.removeItem("THEME_CODE");
+    localStorage.removeItem("THEME_NAME");
+    localStorage.removeItem("AREA_CODE");
+    localStorage.removeItem("AREA_NAME");
+    localStorage.removeItem("SIGUNGU_CODE");
+    localStorage.removeItem("SIGUNGU_NAME");
+  };
+
   return (
     <StHeader>
       <Top>
@@ -46,31 +60,35 @@ const Header = () => {
         </div>
       </Top>
       {modal === true ? (
-        <Menu>
-          <h2 onClick={() => navigate("/")}>Home</h2>
-          <h2 onClick={() => navigate("/select")}>Search</h2>
-          <h2 onClick={() => navigate("/random")}>Random</h2>
-          {username !== null ? (
-            <>
-              <h2 onClick={() => navigate("/mypage")}>MyPage</h2>
-              <h2 onClick={() => navigate("/write")}>Write</h2>
-            </>
-          ) : null}
-          <div>
-            {username === null ? (
-              <h2 onClick={() => navigate("/login")}>로그인</h2>
-            ) : (
-              <h2
-                onClick={() => {
-                  dispatch(__logout());
-                  navigate('/');
-                }}
-              >
-                로그아웃
-              </h2>
-            )}
-          </div>
-        </Menu>
+        <MenuContainer>
+          <Menu>
+            <h2 onClick={() => navigate("/")}>홈</h2>
+            <h2 onClick={() => navigate("/select")}>지역별 조회</h2>
+            <h2 onClick={() => navigate("/random")}>랜덤 추천</h2>
+            {username !== null ? (
+              <>
+                <h2 onClick={() => navigate("/mypage")}>마이페이지</h2>
+                <h2 onClick={() => navigate("/RegistrationRequest")}>
+                  장소 등록 요청
+                </h2>
+              </>
+            ) : null}
+            <Log>
+              {username === null ? (
+                <h2 onClick={() => navigate("/login")}>로그인 ＞</h2>
+              ) : (
+                <h2
+                  onClick={() => {
+                    logout();
+                    navigate("/");
+                  }}
+                >
+                  로그아웃 ＞
+                </h2>
+              )}
+            </Log>
+          </Menu>
+        </MenuContainer>
       ) : null}
     </StHeader>
   );
@@ -79,10 +97,12 @@ const Header = () => {
 export default Header;
 
 const StHeader = styled.div`
-  width: 428px;
+  max-width: 428px;
+  width: 100%;
   margin: 0 auto;
   z-index: 3;
   position: fixed;
+  top: 0;
 
   & a {
     &:hover {
@@ -132,11 +152,23 @@ const Bell = styled.img`
   }
 `;
 
+const MenuContainer = styled.div`
+  /* margin: 0 auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3); */
+`;
+
 const Menu = styled.div`
   position: absolute;
   left: 50%;
   width: 216px;
   float: right;
+  height: 100vh;
+  top: calc(0vh + 70px);
   background-color: #abd4e2;
   text-align: center;
   color: #535353;
@@ -145,6 +177,7 @@ const Menu = styled.div`
 
   & h2 {
     text-decoration: underline;
+    margin: 30px auto;
 
     &:hover {
       cursor: pointer;
@@ -152,7 +185,7 @@ const Menu = styled.div`
   }
 
   & div {
-    margin-top: 520px;
+    margin-top: 60px;
     color: white;
     & h2 {
       text-decoration: none;
@@ -160,3 +193,6 @@ const Menu = styled.div`
   }
 `;
 
+const Log = styled.div`
+
+`;

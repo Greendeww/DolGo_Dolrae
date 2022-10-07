@@ -44,13 +44,15 @@ const Withdrawal = () => {
 export default Withdrawal;
 
 const StWithdrawal = styled.div`
+  max-width: 428px;
+  width: 100%;
   margin: 50px 30px;
   padding-top: 10px;
 
   & p {
     margin-top: 20px;
     margin-bottom: 20px;
-    font-weight: 400;
+    margin-left: 10px;
     font-size: 18px;
   }
 

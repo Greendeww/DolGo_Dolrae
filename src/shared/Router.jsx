@@ -14,42 +14,41 @@ import RandomSelect from "../componenets/random/RandomSelect";
 import RandomList from "../componenets/random/RandomList";
 import MyPage from "../pages/mypage/MyPage";
 import MyPageChange from "../pages/mypage/MyPageChange";
-import Report from "../pages/request/Report";
-import Register from "../pages/request/Register";
-import Administrator from "../pages/Administrator";
-import RequestEdit from "../pages/RequestPost";
-import RequestDetail from "../pages/RequestDetail";
-import RequestPost from "../pages/RequestEdit";
+import AmendmentRequest from "../pages/request/AmendmentRequest";
+import RegistrationRequest from "../pages/request/RegistrationRequest";
+import Administrator from "../pages/manager/Administrator";
+import RequestEdit from "../pages/manager/RequestPost";
+import RequestDetail from "../pages/manager/RequestDetail";
+import RequestPost from "../pages/manager/RequestEdit";
 
-function Router(){
-    return(
-        <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<Main/>}/>
-            <Route path="/mypage" element={<MyPage/>}/>
-            <Route path="/mypage/change" element={<MyPageChange/>}/>
-            <Route path="/report" element={<Report/>}/>
-            <Route path="/register" element={<Register/>}/>
-            <Route path="/administrator" element={<Administrator/>}/>
-            <Route path="/request/detail" element={<RequestDetail />}/>
-            <Route path="/request/edit" element={<RequestEdit />}/>
-            <Route path="/request/post" element={<RequestPost />}/>
-            <Route path="/signup" element={<SignUp/>}/>
-            <Route path="/login" element= {<Login/>}/>
-            <Route path="/oauth/callback/kakao" element= {<KakaoLogin/>}/>
-            <Route path="/select" element={<Select/>}/>
-            <Route path="/list" element={<List/>}/>
-            <Route path="/detail/:id" element={<Detail />} />
-            <Route path="/detail/update/:placeId/:id" element={<DetailRevise/>}/>
-            <Route path="/detail/form/:id" element={<DetailForm/>}/>
-            <Route path="/random" element={<Random/>}/>
-            <Route path="/rndlocation" element={<RndLocation/>}/>
-            <Route path="/rndselect/:si/:area" element={<RandomSelect/>}/>
-            <Route path="/rnd" element={<RandomList/>}/>
-
-        </Routes>
-        </BrowserRouter>
-    )
+function Router() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/mypage/change" element={<MyPageChange />} />
+        <Route path="/AmendmentRequest" element={<AmendmentRequest />} />
+        <Route path="/RegistrationRequest" element={<RegistrationRequest />} />
+        <Route path="/administrator" element={<Administrator />} />
+        <Route path="/request/detail" element={<RequestDetail />} />
+        <Route path="/request/edit" element={<RequestEdit />} />
+        <Route path="/request/post" element={<RequestPost />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/oauth/callback/kakao" element={<KakaoLogin />} />
+        <Route path="/select" element={<Select />} />
+        <Route path="/list" element={<List />} />
+        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/detail/update/:placeId/:id" element={<DetailRevise />} />
+        <Route path="/detail/form/:id" element={<DetailForm />} />
+        <Route path="/random" element={<Random />} />
+        <Route path="/rndlocation" element={<RndLocation />} />
+        <Route path="/rndselect/:si/:area" element={<RandomSelect />} />
+        <Route path="/rnd" element={<RandomList />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default Router;

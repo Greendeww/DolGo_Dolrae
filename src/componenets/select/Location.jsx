@@ -397,6 +397,8 @@ const List = () => {
 export default List;
 
 const St = styled.div`
+  max-width: 428px;
+  width: 100%;
   position: relative;
   top: 80px;
 `;

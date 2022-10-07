@@ -20,7 +20,7 @@ const ReviewList = () => {
 
   return (
     <StReviewList>
-      <h2>내가 쓴 후기</h2>
+      <h2>내가 작성한 후기</h2>
       {list.map((item, index) => (
         <Comment
           key={index}
@@ -37,8 +37,12 @@ const ReviewList = () => {
 export default ReviewList;
 
 const StReviewList = styled.div`
+  max-width: 428px;
+  width: 100%;
+  margin-top: 40px;
   & h2 {
     color: #bfb8b8;
+    margin-left: 10px;
   }
 `;
 

@@ -274,80 +274,82 @@ const RndLocation = () => {
   };
 
   const onRandom = (e) => {
-    let timerInterval
+    let timerInterval;
     Swal.fire({
-        title: '지역을 선정중입니다',
-        html: '잠시만 기다려주세요',
-        timer: 1500,
-        timerProgressBar: true,
-        didOpen: () => {
-          Swal.showLoading()
-          const b = Swal.getHtmlContainer().querySelector('b')
-          timerInterval = setInterval(() => {
-            b.textContent = Swal.getTimerLeft()
-          }, 100)
-        },
-        willClose: () => {
-          clearInterval(timerInterval)
-          dispatch(__getTheme(search))
-          navigate("/rndselect/"+localStorage.getItem(SIGUNGU_CODE)+'/'+localStorage.getItem(AREA_CODE));
-        }
-      }).then((result) => {
-        /* Read more about handling dismissals below */
-        if (result.dismiss === Swal.DismissReason.timer) {
-          console.log('I was closed by the timer')
-        }
-      })
-    console.log("작동")
-}
+      title: "지역을 선정중입니다",
+      html: "잠시만 기다려주세요",
+      timer: 1500,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const b = Swal.getHtmlContainer().querySelector("b");
+        timerInterval = setInterval(() => {
+          b.textContent = Swal.getTimerLeft();
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+        dispatch(__getTheme(search));
+        navigate(
+          "/rndselect/" +
+            localStorage.getItem(SIGUNGU_CODE) +
+            "/" +
+            localStorage.getItem(AREA_CODE)
+        );
+      },
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log("I was closed by the timer");
+      }
+    });
+    console.log("작동");
+  };
   return (
-    <>
-    <Header/>
-    <RndDiv>
-    <St>
-      <StList>
-        <p>지역</p>
-        <div className="location-set">{Location()}</div>
-      </StList>
-      <StList>
-        <p>세부지역</p>
-        <div className="location-set">{DetailLocation()}</div>
-      </StList>
-      <button
-        onClick={() => {
-          if (
-            GET_AREA_NAME === null ||
-            GET_SIGUNGU_NAME === null
-          ) {
-            alert("모든 항목을 선택해주세요.");
-          } else {
-            onRandom()
-          }
-        }}
-      >
-        선택완료
-      </button>
-    </St>
-      <BackBut
-          onClick={() => navigate('/random')}
-        >
-          뒤로가기
-        </BackBut>
-    </RndDiv>
-    </>
+    <StRnd>
+      <Header />
+      <RndDiv>
+        <St>
+          <StList>
+            <p>지역</p>
+            <div className="location-set">{Location()}</div>
+          </StList>
+          <StList>
+            <p>세부지역</p>
+            <div className="location-set">{DetailLocation()}</div>
+          </StList>
+          <button
+            onClick={() => {
+              if (GET_AREA_NAME === null || GET_SIGUNGU_NAME === null) {
+                alert("모든 항목을 선택해주세요.");
+              } else {
+                onRandom();
+              }
+            }}
+          >
+            선택완료
+          </button>
+        </St>
+        <BackBut onClick={() => navigate("/random")}>뒤로가기</BackBut>
+      </RndDiv>
+    </StRnd>
   );
 };
 
 export default RndLocation;
 
+const StRnd = styled.div`
+  max-width: 428px;
+  width: 100%;
+  margin: 0 auto;
+`;
+
 const RndDiv = styled.div`
-  max-width:428px;
-  width:100%;
-  margin:0 auto;
-`
+  padding-top: 60px;
+`;
 const St = styled.div`
   & button {
-    background-color: #79B9D3;
+    background-color: #abd4e2;
     color: white;
     border: none;
     border-radius: 12px;
@@ -361,45 +363,31 @@ const St = styled.div`
     margin: 40px auto;
   }
 `;
-const BackBut =styled.button`
-    background-color: #ffc0c0;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    width: 370px;
-    height: 50px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 24px;
-    display: block;
-    margin: 50px auto;
-    margin-top:-20px;
-`
+const BackBut = styled.button`
+  background-color: #ffc0c0;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  width: 370px;
+  height: 50px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  display: block;
+  margin: 50px auto;
+  margin-top: -20px;
+`;
 const StList = styled.div`
   width: 428px;
-  margin-top: 50px;
-  /* & div {
-    display: inline-block;
-    width: 60%;
-    margin-left: 20px;
-  } */
+  margin-top: 40px;
   & p {
     font-style: normal;
     font-weight: 700;
     font-size: 25px;
-    line-height: 40px;
+    line-height: 60px;
     color: #bfb8b8;
-    margin-left: 20px;
-  }
-`;
-
-const Do = styled.button`
-  border: none;
-`;
-
-const Si = styled.div`
-  & button {
-    border: none;
+    margin-left: 40px;
+    margin-bottom: 20px;
   }
 `;
