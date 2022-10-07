@@ -32,7 +32,6 @@ const Festival = () => {
   if (festival === undefined) {
     return;
   }
-  console.log(festival)
   return (
     <StFestival>
       <Title>이 달의 축제</Title>

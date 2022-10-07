@@ -375,12 +375,26 @@ const Message = styled.div`
 const InputCom = styled.textarea`
   width: 373px;
   min-height: 163px;
+<<<<<<< HEAD
+  padding: 0px 1rem;
+  font-size: 14px;
+  resize: none;
+  border : 3px solid #79B9D3;
+  border-radius:10px;
+  -webkit-box-sizing: border-box; 
+  -moz-box-sizing: border-box; 
+  box-sizing: border-box; 
+  ::-webkit-inner-spin-button, 
+  ::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+=======
   height: 100%;
   background-color: rgba(172, 212, 228, 0.35);
   border-radius: 15px;
   border: none;
   padding-top: 15px;
   padding-left: 10px;
+>>>>>>> 2a94b6ea2b8ad9b23a736c3482abc959172708d3
 `;
 const Wrap = styled.div`
   display: flex;

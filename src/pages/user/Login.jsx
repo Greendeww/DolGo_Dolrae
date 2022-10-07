@@ -74,7 +74,6 @@ const Login = () => {
             <div>
               <button>로그인</button>
             </div>
-
             <Social>
               <img
                 alt=""
@@ -86,11 +85,10 @@ const Login = () => {
             </Social>
           </Buttons>
         </form>
-
         <SignUp>
           <p>아직 돌고돌래 회원이 아니세요?</p>
           <p>
-            <b onClick={() => navigate("/signup")}>회원가입 ＞</b>
+            <b onClick={() => navigate("/signup")}>회원가입</b>
           </p>
         </SignUp>
       </StLogin>

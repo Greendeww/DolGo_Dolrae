@@ -33,7 +33,7 @@ const ReviewModal = ({item}) => {
             </div>
             <StarDiv>
                 <Star key={item.comment_id} comment={item}/>
-                <PlaceBut onClick={() => navigate(`/detail/${item.place_id}`)}>장소보기</PlaceBut>
+                <button onClick={() => navigate(`/detail/${item.place_id}`)}>장소보기</button>
             </StarDiv>
             <p>{item.content}</p>
             <ButtonDiv>
@@ -58,14 +58,15 @@ const StarDiv =styled.div`
   display:flex;
   justify-content:space-between;
   margin-bottom:1rem;
+  button{
+    border:3px solid #ffc0c0;
+    background-color:white;
+    border-radius:5px;
+    font-weight:700;
+    cursor: pointer;
+  }
 `
-const PlaceBut =styled.button`
-  border:3px solid #ffc0c0;
-  background-color:white;
-  border-radius:5px;
-  font-weight:700;
-  cursor: pointer;
-`
+
 const ReviseBut = styled.button`
   cursor:pointer;
   font-weight:600;
