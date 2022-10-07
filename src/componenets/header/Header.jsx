@@ -5,6 +5,7 @@ import css from "../../css/header.css";
 import dolphin from "../../assert/header/logo_.png";
 import bell from "../../assert/header/bell.png";
 import { instance } from "../../shared/Api";
+import burger from "../../assert/header/burger.png";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -24,13 +25,13 @@ const Header = () => {
   //   event.currentTarget.classList.toggle("active-1");
   // });
 
-  window.onload = () => {
-    const menuTrigger = document.querySelector(".menu-trigger");
+  // window.onload = () => {
+  //   const menuTrigger = document.querySelector(".menu-trigger");
 
-    menuTrigger.addEventListener("click", (event) => {
-      event.currentTarget.classList.toggle("active-1");
-    });
-  };
+  //   menuTrigger.addEventListener("click", (event) => {
+  //     event.currentTarget.classList.toggle("active-1");
+  //   });
+  // };
 
   const logout = async () => {
     const response = await instance.post("/api/auth/member/logout");
@@ -51,13 +52,19 @@ const Header = () => {
   return (
     <StHeader>
       <Top>
-        <Bell alt="" src={bell} />
+        <Bell alt="" src={bell} style={{ paddingLeft: "8px" }} />
         <img alt="" src={dolphin} onClick={() => navigate("/")} />
-        <div className="menu-trigger" onClick={onModalHandler}>
+        <img
+          alt=""
+          src={burger}
+          onClick={onModalHandler}
+          style={{ paddingBottom: "7px", paddingRight: "12px" }}
+        />
+        {/* <div className="menu-trigger" onClick={onModalHandler}>
           <span />
           <span />
           <span />
-        </div>
+        </div> */}
       </Top>
       {modal === true ? (
         <MenuContainer>
@@ -193,6 +200,4 @@ const Menu = styled.div`
   }
 `;
 
-const Log = styled.div`
-
-`;
+const Log = styled.div``;
