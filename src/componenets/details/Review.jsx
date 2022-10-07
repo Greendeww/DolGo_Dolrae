@@ -10,8 +10,7 @@ import { _getComments } from '../../redux/modules/comment';
 const Review = ({comment}) => {
 const navigate = useNavigate();
 const {id} = useParams();
-const dispatch = useDispatch();
-const [formOpen,setFormOpen] = useState(false)
+const nickname = localStorage.getItem("nickname");
 const [commentList,setCommentList] = useState([...comment].reverse())
 const [currentComments,setCurrnetComments] = useState([])
 const [modal, setModal] = useState(false);
@@ -43,9 +42,11 @@ const indexOfFirstPage = indexOfLastPost - postPerPage
       newComment[idx] = true;
       setModal(newComment)
     };
-    // comment.number = number
-    // const numbers = [...arr].reverse()
-    // console.log(numbers)
+    const noLogin = (e) => {
+      e.preventDefault();
+      alert('로그인이 필요한 서비스 입니다')
+      navigate('/login' )
+    }
   return (
     <div>
         <CommentDiv>
@@ -56,7 +57,10 @@ const indexOfFirstPage = indexOfLastPost - postPerPage
                 })}
             </div>
             <ButDiv>
-            <FormBut onClick={() => navigate('/detail/form/'+ id)}>후기작성</FormBut>
+            {nickname === null
+            ?<FormBut onClick={noLogin}>후기작성</FormBut>
+            :<FormBut onClick={() => navigate('/detail/form/'+ id)}>후기작성</FormBut>
+            }
             </ButDiv>
             <p style={{color:"white"}}>공백</p>
             <Paginations

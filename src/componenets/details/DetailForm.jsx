@@ -178,7 +178,6 @@ const onChangeTitle = (e) => {
           <ImgTitle>
             <b>
               이미지
-             
             </b>
           </ImgTitle>
           <div style={{ width: "100%" }}>
@@ -383,6 +382,12 @@ const InputCom = styled.textarea`
   resize: none;
   border : 3px solid #79B9D3;
   border-radius:10px;
+  -webkit-box-sizing: border-box; 
+  -moz-box-sizing: border-box; 
+  box-sizing: border-box; 
+  ::-webkit-inner-spin-button, 
+  ::-webkit-outer-spin-button { -webkit-appearance: none; }
+
 `;
 const Wrap = styled.div`
   display: flex;
