@@ -186,7 +186,7 @@ const RandomSelect = () => {
     }
 
 export default RandomSelect;
-<<<<<<< HEAD
+
 const BoxDiv = styled.div`
     width: 100%;
     max-width:428px;
@@ -203,16 +203,7 @@ const Box = styled.div`
     /* border:2px solid #79B9D3; */
     line-height:40px;
     height:100%;
-=======
 
-const Box = styled.div`
-  padding-top: 70px;
-  width: 100%;
-  max-width: 428px;
-  margin: 0 auto;
-  line-height: 40px;
-  height: 100%;
->>>>>>> 7b0ae381ba0d74f30401f8191c284921692acc97
 `;
 const LocDiv = styled.div`
   width: 90%;

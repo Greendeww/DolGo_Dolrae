@@ -77,13 +77,11 @@ const Detail = () => {
   const tmp3 = tmp2?.replace(/&gt;/gi, ""); //부등호(>) 제거
 
   return (
-<<<<<<< HEAD
     <>
     <BoxDiv>
     <Header/>
       <Box>
         <Cover>
-          <ImgDiv>
           <ImgCover>
              <DetailImage post={posts} key={posts.id}/>
              <ThemeDiv>
@@ -93,24 +91,6 @@ const Detail = () => {
               <TitleSpan>{posts.title}</TitleSpan> 
               <Like id={id}></Like>
              </TitleLikeDiv>
-=======
-    <St>
-      <Header />
-      <div>
-        <Box>
-          <Cover>
-            <ImgCover>
-              <DetailImage post={posts} key={posts.id} />
-              <Div>
-              <ThemeDiv>
-                <ThemeList post={posts} />
-              </ThemeDiv>
-              <TitleLikeDiv>
-                <TitleSpan>{posts.title}</TitleSpan>
-                <Like id={id}></Like>
-              </TitleLikeDiv>
->>>>>>> 7b0ae381ba0d74f30401f8191c284921692acc97
-
               {/* {posts.likes} */}
               <StarThemeDiv>
                 <div style={{ display: "flex" }}>
@@ -123,7 +103,6 @@ const Detail = () => {
                   </span>
                 </div>
               </StarThemeDiv>
-              </Div>
             </ImgCover>
           </Cover>
           <Title></Title>
@@ -207,7 +186,6 @@ const Detail = () => {
               </ALink>
             </SearchDiv>
           </SearchDate>
-<<<<<<< HEAD
           {formOpen === true
           ?<DetailForm close={close}/>
           :null}
@@ -218,20 +196,11 @@ const Detail = () => {
     </>
   )
 }
-=======
-          {formOpen === true ? <DetailForm close={close} /> : null}
-          <Review comment={comment} number={number} />
-          <h1 style={{ color: "white" }}>공백</h1>
-        </Box>
-      </div>
-    </St>
-  );
-};
->>>>>>> 7b0ae381ba0d74f30401f8191c284921692acc97
+
 
 export default Detail;
 
-<<<<<<< HEAD
+
 const BoxDiv =styled.div`
   width: 100%;
   max-width:428px;
@@ -239,18 +208,9 @@ const BoxDiv =styled.div`
 `
 const Box = styled.div`
   padding-top:4rem;
-=======
-const St = styled.div`
->>>>>>> 7b0ae381ba0d74f30401f8191c284921692acc97
-  width: 100%;
-  max-width: 428px;
-  margin: 0 auto;
-`;
-const Box = styled.div`
-  padding-top: 70px;
   /* border:2px solid #79B9D3; */
   font-family: "Noto Sans KR", sans-serif;
-`;
+`
 const Cover = styled.div`
   display: flex;
   -webkit-box-pack: center;

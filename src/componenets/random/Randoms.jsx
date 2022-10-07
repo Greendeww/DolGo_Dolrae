@@ -3,6 +3,7 @@ import styled from "styled-components";
 import basicImg from "../../assert/image/basic.png";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import Header from "../header/Header";
 
 const Randoms = () => {
   const navigate = useNavigate();
@@ -33,14 +34,14 @@ const Randoms = () => {
     });
   };
 
-<<<<<<< HEAD
+
     return (
     <>
       <BoxDiv>
         <Header/>
         <Box>
             <div>
-                <Img alt='logo' src={dolphin}/>
+                <Img alt='logo' src={basicImg}/>
             </div>
             <ButDiv>
                 <RandomBut><ButText onClick={() => random()}>랜덤</ButText></RandomBut>
@@ -63,31 +64,7 @@ const Box = styled.div`
     max-width:428px;
     margin: 0 auto;
     padding-top:4.5rem;
-=======
-  return (
-    <Box>
-      <div>
-        <Img alt="logo" src={basicImg} />
-      </div>
-      <ButDiv>
-        <RandomBut onClick={() => random()}>전체 랜덤</RandomBut>
-        <RandomBut onClick={() => navigate("/rndlocation")}>
-          지역 선택해서 랜덤
-        </RandomBut>
-      </ButDiv>
-    </Box>
-  );
-};
-
-export default Randoms;
-
-const Box = styled.div`
-  width: 100%;
-  max-width: 428px;
-  margin: 0 auto;
-  padding-top: 80px;
->>>>>>> 7b0ae381ba0d74f30401f8191c284921692acc97
-`;
+`
 const Img = styled.img`
   display: flex;
   width: 400px;
@@ -114,3 +91,8 @@ const RandomBut = styled.button`
   display: block;
   margin: 20px auto;
 `;
+const ButText = styled.p`
+    font-weight:700;
+    line-height:0.6rem;
+    font-size:1rem;
+`

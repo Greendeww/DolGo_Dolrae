@@ -2,12 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../../shared/Api";
-<<<<<<< HEAD
 import Like from '../../like/Like';
 import PaginationsLike from "../../pagination/PaginationsLike";
-=======
-import Like from "../../like/Like";
->>>>>>> 7b0ae381ba0d74f30401f8191c284921692acc97
+
 
 const LikeList = () => {
   const navigate = useNavigate();

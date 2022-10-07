@@ -112,7 +112,6 @@ const DetailForm = () => {
 
   const onAddComment = async (e) => {
     e.preventDefault();
-<<<<<<< HEAD
     if(
       title === "" ||
       content === "" ||
@@ -122,13 +121,7 @@ const DetailForm = () => {
     }
     if(isContent !== true || isTitle !== true){
       return alert('형식을 확인해주세요')
-=======
-    if (title === "" || content === "" || star === "") {
-      alert("모든 항목을 입력해주세요.");
-    }
-    if (isContent !== true) {
-      return alert("형식을 확인해주세요");
->>>>>>> 7b0ae381ba0d74f30401f8191c284921692acc97
+
     }
     let json = JSON.stringify(data);
     console.log(json);
@@ -164,20 +157,13 @@ const DetailForm = () => {
     }
   };
   return (
-<<<<<<< HEAD
-   <>
+   <StDetailForm>
      <Box>
       <BoxTitle>
         <BoxTitleP>후기등록</BoxTitleP>
         <BoxSpan><span>*</span>필수항목</BoxSpan>
       </BoxTitle>
       <LiTilte>
-=======
-    <StDetailForm>
-      <Header />
-      <Box>
-        <LiTilte>
->>>>>>> 7b0ae381ba0d74f30401f8191c284921692acc97
           <PTitle>
             제목<span style={{ color: "rgb(255, 80, 88)",fontWeight:"600"}}>*</span>
           </PTitle>
@@ -194,14 +180,7 @@ const DetailForm = () => {
         </Message>
         <LiImg>
           <ImgTitle>
-<<<<<<< HEAD
-            <b>
-              이미지
-             
-            </b>
-=======
             <b>이미지</b>
->>>>>>> 7b0ae381ba0d74f30401f8191c284921692acc97
           </ImgTitle>
           <div style={{ width: "100%" }}>
             <ImgBox>
@@ -230,7 +209,6 @@ const DetailForm = () => {
                 </div>
               ))}
             </ImgBox>
-<<<<<<< HEAD
             </div>
           </LiImg>
           <Wrap>
@@ -269,52 +247,6 @@ const DetailForm = () => {
                 <AddBut onClick={onAddComment}>등록하기</AddBut>
                 <CancelBut onClick={() => navigate('/detail/'+id)}>취소하기</CancelBut>
           </ButDiv>
-=======
-          </div>
-        </LiImg>
-        <Wrap>
-          <RatingText>
-            별점 <span style={{ color: "rgb(255, 80, 88)" }}>*</span>
-          </RatingText>
-          <StarDiv>
-            <Stars>
-              {[0, 1, 2, 3, 4].map((el, idx) => {
-                return (
-                  <FaStar
-                    key={idx}
-                    size="50"
-                    onClick={() => handleStarClick(el)}
-                    className={clicked[el] && "yellowStar"}
-                  />
-                );
-              })}
-            </Stars>
-          </StarDiv>
-        </Wrap>
-        <LiTilte>
-          <PTitle>
-            후기<span style={{ color: "rgb(255, 80, 88)" }}>*</span>
-          </PTitle>
-          <InputCom
-            type="text"
-            name="content"
-            value={content}
-            onChange={onChangeContent}
-            placeholder="후기를 남겨주세요"
-          />
-        </LiTilte>
-        <Message>
-          {content.length > 0 && (
-            <p style={{ color: "red" }}>{contentMessage}</p>
-          )}
-        </Message>
-        <ButDiv>
-          <AddBut onClick={onAddComment}>등록하기</AddBut>
-          <CancelBut onClick={() => navigate("/detail/" + id)}>
-            취소하기
-          </CancelBut>
-        </ButDiv>
->>>>>>> 7b0ae381ba0d74f30401f8191c284921692acc97
       </Box>
     </StDetailForm>
   );

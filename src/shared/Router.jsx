@@ -21,39 +21,6 @@ import RequestEdit from "../pages/manager/RequestPost";
 import RequestDetail from "../pages/manager/RequestDetail";
 import RequestPost from "../pages/manager/RequestEdit";
 
-<<<<<<< HEAD
-
-
-function Router(){
-    return(
-        <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<Main />}/>
-            <Route path="/mypage" element={<MyPage/>}/>
-            <Route path="/mypage/change" element={<MyPageChange/>}/>
-            <Route path="/report" element={<Report/>}/>
-            <Route path="/register" element={<Register/>}/>
-            {/* <Route path="/administrator" element={<Administrator/>}/>
-            <Route path="/request/detail" element={<RequestDetail />}/>
-            <Route path="/request/edit" element={<RequestEdit />}/>
-            <Route path="/request/post" element={<RequestPost />}/> */}
-            <Route path="/signup" element={<SignUp/>}/>
-            <Route path="/login" element= {<Login/>}/>
-            <Route path="/oauth/callback/kakao" element= {<KakaoLogin/>}/>
-            <Route path="/select" element={<Select/>}/>
-            <Route path="/list" element={<List/>}/>
-            <Route path="/detail/:id" element={<Detail />} />
-            <Route path="/detail/update/:placeId/:id" element={<DetailRevise/>}/>
-            <Route path="/detail/form/:id" element={<DetailForm/>}/>
-            <Route path="/random" element={<Random/>}/>
-            <Route path="/rndlocation" element={<RndLocation/>}/>
-            <Route path="/rndselect/:si/:area" element={<RandomSelect/>}/>
-            <Route path="/rnd" element={<RandomList/>}/>
-
-        </Routes>
-        </BrowserRouter>
-    )
-=======
 function Router() {
   return (
     <BrowserRouter>
@@ -82,7 +49,7 @@ function Router() {
       </Routes>
     </BrowserRouter>
   );
->>>>>>> 7b0ae381ba0d74f30401f8191c284921692acc97
+
 }
 
 export default Router;

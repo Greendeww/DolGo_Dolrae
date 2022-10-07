@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { instance } from "../../../shared/Api";
 import Paginations from "../../pagination/Paginations";
 import MypgReview from "./MypgReview";
-import ReviewModal from "./ReviewModal";
+
 
 const ReviewList = () => {
   const navigate = useNavigate();
@@ -38,23 +38,10 @@ const ReviewList = () => {
 
   return (
     <>
-
     <StReviewList>
-<<<<<<< HEAD
       <h2>내가 쓴 후기</h2>
       {currentReview.map((item, index) => (
         <MypgReview key={index} item={item}/>
-=======
-      <h2>내가 작성한 후기</h2>
-      {list.map((item, index) => (
-        <Comment
-          key={index}
-          onClick={() => navigate(`/detail/${item.place_id}`)}
-        >
-          <div style={{ fontWeight: "bold" }}>{item.placeTitle}</div>
-          <div>{item.title}</div>
-        </Comment>
->>>>>>> 7b0ae381ba0d74f30401f8191c284921692acc97
       ))}
       <Paginations
         page={page}
@@ -70,12 +57,8 @@ const ReviewList = () => {
 export default ReviewList;
 
 const StReviewList = styled.div`
-  max-width: 428px;
-  width: 100%;
-  margin-top: 40px;
   & h2 {
     color: #bfb8b8;
-    margin-left: 10px;
   }
 `;
 

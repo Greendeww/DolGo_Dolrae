@@ -315,7 +315,6 @@ const RndLocation = () => {
     console.log("작동");
   };
   return (
-<<<<<<< HEAD
     <>
     <RndDiv>
     <St>
@@ -353,35 +352,6 @@ const RndLocation = () => {
         </BackBut>
     </RndDiv>
     </>
-=======
-    <StRnd>
-      <Header />
-      <RndDiv>
-        <St>
-          <StList>
-            <p>지역</p>
-            <div className="location-set">{Location()}</div>
-          </StList>
-          <StList>
-            <p>세부지역</p>
-            <div className="location-set">{DetailLocation()}</div>
-          </StList>
-          <button
-            onClick={() => {
-              if (GET_AREA_NAME === null || GET_SIGUNGU_NAME === null) {
-                alert("모든 항목을 선택해주세요.");
-              } else {
-                onRandom();
-              }
-            }}
-          >
-            선택완료
-          </button>
-        </St>
-        <BackBut onClick={() => navigate("/random")}>뒤로가기</BackBut>
-      </RndDiv>
-    </StRnd>
->>>>>>> 7b0ae381ba0d74f30401f8191c284921692acc97
   );
 };
 
@@ -412,7 +382,7 @@ const St = styled.div`
     margin: 40px auto;
   }
 `;
-<<<<<<< HEAD
+
 const Title = styled.div`
   display: flex;
   justify-content: space-between;
@@ -447,23 +417,6 @@ const BackBut =styled.button`
     margin: 50px auto;
     margin-top:-20px;
 `
-=======
-const BackBut = styled.button`
-  background-color: #ffc0c0;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  width: 370px;
-  height: 50px;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  display: block;
-  margin: 50px auto;
-  margin-top: -20px;
-`;
->>>>>>> 7b0ae381ba0d74f30401f8191c284921692acc97
 const StList = styled.div`
   width: 428px;
   margin-top: 40px;
