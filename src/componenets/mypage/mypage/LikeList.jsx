@@ -46,6 +46,8 @@ const LikeList = () => {
 export default LikeList;
 
 const StLikeList = styled.div`
+  max-width: 428px;
+  width: 100%;
   margin: 0 auto;
   margin-top: 100px;
   & h2 {
@@ -69,7 +71,7 @@ const StLikeList = styled.div`
 `;
 
 const Title = styled.div`
-margin: 0 15px;
+  margin: 0 15px;
   display: flex;
   font-weight: 900;
   font-size: 23px;

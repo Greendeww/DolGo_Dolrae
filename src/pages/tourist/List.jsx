@@ -1,18 +1,18 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Header from "../../componenets/header/Header";
 import basicImg from "../../assert/image/basic.png";
 import { instance } from "../../shared/Api";
+import { useLocation } from "react-router";
 
 const List = () => {
   const [posts, setPosts] = useState([]);
   const [hasNextPage, setHasNextPage] = useState(true);
   const observerTargetEl = useRef(null);
   const page = useRef(1);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const THEME_CODE = window.localStorage.getItem("THEME_CODE");
   const AREA_CODE = window.localStorage.getItem("AREA_CODE");
@@ -20,17 +20,6 @@ const List = () => {
   const THEME_NAME = window.localStorage.getItem("THEME_NAME");
   const AREA_NAME = window.localStorage.getItem("AREA_NAME");
   const SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
-
-  // const [ list, setList ] = useState();
-
-  // const getList = async() => {
-  //   const res = await instance.get(`/api/place?theme=${THEME_CODE}&areaCode=${AREA_CODE}&sigunguCode=${SIGUNGU_CODE}&pageNum=0`);
-  //   setList(res.data)
-  // }
-
-  // useEffect(() => {
-  //   getList();
-  // }, []);
 
   // const returnHandler = (e) => {
   //   e.preventDefault();
@@ -76,6 +65,10 @@ const List = () => {
     };
   }, [fetch, hasNextPage]);
   // console.log(posts);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <StList>
@@ -125,7 +118,6 @@ const List = () => {
               )}
             </Card>
           ))}
-
       </Content>
       <div ref={observerTargetEl} />
     </StList>
@@ -135,7 +127,8 @@ const List = () => {
 export default List;
 
 const StList = styled.div`
-  width: 428px;
+  max-width: 428px;
+  width: 100%;
   margin: 0 auto;
 
   & button {

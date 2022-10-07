@@ -76,6 +76,8 @@ const Password = () => {
 export default Password;
 
 const StPassword = styled.div`
+  max-width: 428px;
+  width: 100%;
   margin: 50px 30px;
   padding-top: 10px;
 

@@ -41,11 +41,11 @@ const SignUp = () => {
       console.log(response);
 
       if (response.data !== "중복 이메일입니다.") {
-        alert(response.data);
         setAvailableEmail(true);
+        alert(response.data);
       } else {
-        alert("중복된 이메일입니다.");
         setAvailableEmail(false);
+        alert("중복된 이메일입니다.");
       }
     }
   };
@@ -61,9 +61,13 @@ const SignUp = () => {
   const [sameCode, setSameCode] = useState(false);
   // console.log(sameCode);
 
+  // 이메일 인증코드 제출 여부
+  const [codeSubmit, setCodeSubmit] = useState(false);
+
   // 이메일 인증 코드 제출
   const codeSubmitHandler = async (e) => {
     e.preventDefault();
+    setCodeSubmit(true);
     const response = await instance.post("api/member/codeEmail", code, {
       headers: {
         "content-type": "application/json",
@@ -71,12 +75,12 @@ const SignUp = () => {
     });
 
     if (response.data === true) {
-      alert("인증이 완료되었습니다.");
       setSameCode(true);
+      // alert("인증이 완료되었습니다.");
       return false;
     } else {
-      alert("인증 코드를 다시 확인해주세요.");
       setSameCode(false);
+      // alert("인증 코드를 다시 확인해주세요.");
       return false;
     }
   };
@@ -107,10 +111,9 @@ const SignUp = () => {
       alert("비밀번호가 일치하지 않습니다.");
       return false;
     }
-    // dispatch(__signUp(user));
 
     const response = await instance.post("/api/member/signup", user);
-    alert(response.data);
+    alert(`${response.data.nickname}님 회원가입을 축하드립니다.`);
     setUser(initialState);
     navigate("/login");
   };
@@ -167,11 +170,11 @@ const SignUp = () => {
                 <button onClick={codeSubmitHandler}>확인</button>
               </div>
               <div>
-                {sameCode === false ? (
+                {codeSubmit === true && sameCode === false ? (
                   <p style={{ color: "red" }}>인증코드를 다시 확인해주세요.</p>
-                ) : (
+                ) : codeSubmit === true && sameCode === true ? (
                   <p style={{ color: "green" }}>인증되었습니다.</p>
-                )}
+                ) : null}
               </div>
             </EmailConfirm>
           )}
@@ -238,7 +241,8 @@ const SignUp = () => {
 export default SignUp;
 
 const St = styled.div`
-  width: 428px;
+  max-width: 428px;
+  width: 100%;
   margin: 0 auto;
 `;
 

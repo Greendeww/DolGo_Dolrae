@@ -16,7 +16,10 @@ const Nickname = () => {
       alert("변경할 닉네임을 입력해주세요.");
       e.preventDefault();
     } else {
-      const res = await instance.put("/api/auth/member/updatenickname", changeNickname);
+      const res = await instance.put(
+        "/api/auth/member/updatenickname",
+        changeNickname
+      );
       // console.log(res)
       localStorage.setItem("nickname", changeNickname.nickname);
       navigate("/mypage");
@@ -43,6 +46,8 @@ const Nickname = () => {
 export default Nickname;
 
 const StNickname = styled.div`
+  max-width: 428px;
+  width: 100%;
   margin: 50px 30px;
   padding-top: 50px;
 

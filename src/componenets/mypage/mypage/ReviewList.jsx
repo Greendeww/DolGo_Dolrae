@@ -37,6 +37,8 @@ const ReviewList = () => {
 export default ReviewList;
 
 const StReviewList = styled.div`
+  max-width: 428px;
+  width: 100%;
   margin-top: 40px;
   & h2 {
     color: #bfb8b8;

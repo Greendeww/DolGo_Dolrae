@@ -18,5 +18,6 @@ export default Select;
 
 const StSelect = styled.div`
   margin: 0 auto;
-  width: 428px;
+  max-width: 428px;
+  width: 100%;
 `;

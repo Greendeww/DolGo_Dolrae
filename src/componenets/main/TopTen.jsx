@@ -189,6 +189,8 @@ const TopTen = () => {
 export default TopTen;
 
 const StTopTen = styled.div`
+  max-width: 428px;
+  width: 100%;
   text-align: center;
   color: #79b9d3;
   padding-top: 30px;

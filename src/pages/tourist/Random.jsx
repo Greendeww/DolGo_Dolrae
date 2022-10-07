@@ -1,18 +1,21 @@
-import Header from "../../componenets/header/Header"
-import RandomList from "../../componenets/random/RandomList"
-import Randoms from "../../componenets/random/Randoms"
+import Header from "../../componenets/header/Header";
+import RandomList from "../../componenets/random/RandomList";
+import Randoms from "../../componenets/random/Randoms";
+import styled from "styled-components";
 
 const Random = () => {
-   
-      
-        
-
   return (
-    <>  
-        <Randoms/>
-    </>
-  )
-}
+    <StRandom>
+      <Header />
+      <Randoms />
+    </StRandom>
+  );
+};
 
-export default Random
+export default Random;
 
+const StRandom = styled.div`
+  margin: 0 auto;
+  max-width: 428px;
+  width: 100%;
+`;

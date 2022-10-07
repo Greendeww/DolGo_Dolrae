@@ -20,7 +20,7 @@ const Login = () => {
       username: UsernameRef.current.value,
       password: PasswordRef.current.value,
     };
-    console.log(user)
+    console.log(user);
     if (UsernameRef.current.value === "" || PasswordRef.current.value === "") {
       alert("모든 항목을 입력해주세요.");
       return;
@@ -101,7 +101,8 @@ const Login = () => {
 export default Login;
 
 const St = styled.div`
-  width: 428px;
+  max-width: 428px;
+  width: 100%;
   margin: auto;
 `;
 
