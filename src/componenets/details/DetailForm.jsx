@@ -180,13 +180,7 @@ const DetailForm = () => {
         </Message>
         <LiImg>
           <ImgTitle>
-<<<<<<< HEAD
-            <b>
-              이미지
-            </b>
-=======
             <b>이미지</b>
->>>>>>> 2a94b6ea2b8ad9b23a736c3482abc959172708d3
           </ImgTitle>
           <div style={{ width: "100%" }}>
             <ImgBox>

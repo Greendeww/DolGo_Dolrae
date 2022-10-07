@@ -88,11 +88,7 @@ const Login = () => {
         <SignUp>
           <p>아직 돌고돌래 회원이 아니세요?</p>
           <p>
-<<<<<<< HEAD
             <b onClick={() => navigate("/signup")}>회원가입</b>
-=======
-            <b onClick={() => navigate("/signup")}>회원가입 ＞</b>
->>>>>>> 2a94b6ea2b8ad9b23a736c3482abc959172708d3
           </p>
         </SignUp>
       </StLogin>
