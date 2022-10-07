@@ -32,7 +32,6 @@ const Festival = () => {
   if (festival === undefined) {
     return;
   }
-
   return (
     <StFestival>
       <Title>이 달의 축제</Title>
@@ -42,7 +41,7 @@ const Festival = () => {
             return (
               <Card
                 key={festival.id}
-                // onClick={() => {navigate('{festival.linkUrl}')}}
+                onClick={() => (window.open(festival.linkUrl))}
               >
                 <img alt="" src={festival.imageUrl} />
                 <p style={{ fontWeight: "bold" }}>{festival.title}</p>
@@ -59,6 +58,8 @@ const Festival = () => {
 export default Festival;
 
 const StFestival = styled.div`
+  max-width: 428px;
+  width: 100%;
   text-align: center;
   font-size: 37px;
   color: #79b9d3;
