@@ -2,7 +2,7 @@
 
 실전프로젝트 _ 1조
 Frontend GitHub : https://github.com/Greendeww/dolgo-dolrae <br/>
-Backend GitHub :  <br/>
+Backend GitHub : https://github.com/Do-Dolphin/dolphin <br/>
 SA : https://www.notion.so/7-Tway-7f5f845972d24632882c9e52a356fc4a<br/>
 notion : https://www.notion.so/1-695787ebec1e4ecd91a12ff8ae70f7b7 <br/>
 웹 주소 : http://dolgo.site/<br/>
@@ -78,6 +78,9 @@ notion : https://www.notion.so/1-695787ebec1e4ecd91a12ff8ae70f7b7 <br/>
 - Git
 - GitHub
 - kakao
+- styled-component
+- sweetalert 
+- slick-slider
 
 ## 🏳‍🌈 기존 사이트와 다른 점
 
