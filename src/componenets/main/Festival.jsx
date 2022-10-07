@@ -42,7 +42,7 @@ const Festival = () => {
             return (
               <Card
                 key={festival.id}
-                onClick={() => (window.location.href = "{festival.linkUrl}")}
+                onClick={() => (window.open("{festival.linkUrl}"))}
               >
                 <img alt="" src={festival.imageUrl} />
                 <p style={{ fontWeight: "bold" }}>{festival.title}</p>
