@@ -3,41 +3,44 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { KAKAO_AUTH_URL } from "../../shared/OAuth";
-import { __login } from "../../redux/modules/user";
 import Header from "../../componenets/header/Header";
 import kakao from "../../assert/login/kakao_login_medium_wide.png";
 import Swal from "sweetalert2";
+import { instance } from "../../shared/Api";
+import { useRef } from "react";
 
 const Login = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const UsernameRef = useRef();
+  const PasswordRef = useRef();
 
-  const initialState = {
-    username: "",
-    password: "",
-  };
-
-  const [user, setUser] = useState(initialState);
-
-  const onChangeHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
-  };
-
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    if (user.username === "" || user.password === "") {
+    const user = {
+      username: UsernameRef.current.value,
+      password: PasswordRef.current.value,
+    };
+    console.log(user);
+    if (UsernameRef.current.value === "" || PasswordRef.current.value === "") {
       alert("모든 항목을 입력해주세요.");
-      e.preventDefault();
+      return;
     } else {
-      navigate("/");
-      dispatch(__login(user));
+      try {
+        const response = await instance.post("/api/member/login", user);
+        localStorage.setItem("ACCESS_TOKEN", response.headers.authorization);
+        localStorage.setItem("REFRESH_TOKEN", response.headers.refreshtoken);
+        localStorage.setItem("username", response.data.username);
+        localStorage.setItem("nickname", response.data.nickname);
+        alert(`${response.data.nickname}님 환영합니다.`);
+        navigate("/");
+      } catch (error) {
+        alert("이메일 또는 비밀번호를 확인해주세요.");
+      }
     }
   };
 
   return (
-    <StLogin_>
+    <St>
       <Header />
       <StLogin>
         <form onSubmit={onSubmitHandler}>
@@ -48,11 +51,9 @@ const Login = () => {
                   <b>이메일</b>
                 </p>
                 <input
-                  type="email"
-                  name="username"
-                  value={user.username}
-                  onChange={onChangeHandler}
+                  type="text"
                   placeholder="이메일을 입력해주세요."
+                  ref={UsernameRef}
                 />
               </label>
             </Input>
@@ -63,10 +64,8 @@ const Login = () => {
                 </p>
                 <input
                   type="password"
-                  name="password"
-                  value={user.password}
-                  onChange={onChangeHandler}
                   placeholder="비밀번호를 입력해주세요."
+                  ref={PasswordRef}
                 />
               </label>
             </Input>
@@ -91,18 +90,19 @@ const Login = () => {
         <SignUp>
           <p>아직 돌고돌래 회원이 아니세요?</p>
           <p>
-            <b onClick={() => navigate("/signup")}>회원가입 ></b>
+            <b onClick={() => navigate("/signup")}>회원가입 ＞</b>
           </p>
         </SignUp>
       </StLogin>
-    </StLogin_>
+    </St>
   );
 };
 
 export default Login;
 
-const StLogin_ = styled.div`
-  width: 428px;
+const St = styled.div`
+  max-width: 428px;
+  width: 100%;
   margin: auto;
 `;
 

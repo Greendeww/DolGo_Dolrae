@@ -33,11 +33,12 @@ const Info = () => {
 export default Info;
 
 const StInfo = styled.div`
+  max-width: 428px;
+  width: 100%;
   position: relative;
   top: 70px;
-  height: 220px;
+  height: 240px;
   background-color: #eef6fa;
-  padding: 20px 30px;
 
   & button {
     width: 150px;
@@ -59,6 +60,7 @@ const StInfo = styled.div`
 `;
 
 const Email = styled.div`
+  padding: 10px 30px;
   & div {
     display: flex;
     justify-content: space-between;
@@ -66,6 +68,7 @@ const Email = styled.div`
 `;
 
 const Nickname = styled.div`
+  margin: 20px 30px;
   margin-top: 50px;
   & div {
     display: flex;

@@ -41,4 +41,17 @@
   font-family: "tway";
   src: url("./fonts/tway.ttf");
 }
+<<<<<<< HEAD
 /* @font-face {font-family: 'Noto Sans KR';src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.otf) format('opentype');} */
+=======
+
+@font-face {
+  font-family: "Noto Sans KR";
+  src: url("./fonts/AlfaSlabOne-Regular.ttf");
+}
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.otf) format('opentype');
+}
+>>>>>>> 7b0ae381ba0d74f30401f8191c284921692acc97

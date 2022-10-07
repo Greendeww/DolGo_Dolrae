@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../componenets/header/Header";
-import Footer from "../componenets/footer/Footer";
+import Header from "../../componenets/header/Header";
+import Footer from "../../componenets/footer/Footer";
 import { useState, useEffect } from 'react';
-import { getApi } from "../shared/Api";
+import { getApi } from "../../shared/Api";
 
 function Administrator () {
 

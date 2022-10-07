@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../componenets/header/Header";
-import Footer from "../componenets/footer/Footer";
-import LOGO from "../assert/logo/Logo.png"
+import Header from "../../componenets/header/Header";
+import Footer from "../../componenets/footer/Footer";
+import LOGO from "../../assert/logo/Logo.png"
 import { useState } from "react";
 
 
-function RequestPost () {
+function RequestEdit () {
 
     //파일 미리볼 url을 저장해줄 state
     const [fileImage, setFileImage] = useState("");
@@ -26,18 +26,15 @@ function RequestPost () {
 
     return (
         <Div>
-            <Header></Header>
+            <Header/>
             <Body>
                 <UserName>
                     <TextTitle>이름</TextTitle>
                     <Text placeholder="이름을 입력해주세요."></Text>
                 </UserName>
                 <ReportType>
-                    <TextTitle>유형</TextTitle>
-                    <Box01>
-                        <CheckBox type="checkbox"></CheckBox>
-                        <Edit>추가</Edit>
-                    </Box01>
+                    <TextTitle>테마</TextTitle>
+                    <Text placeholder="관광,관람,레포츠,식도락."></Text>
                 </ReportType>
                 <ReportContext>
                     <TextTitle>설명</TextTitle>
@@ -45,6 +42,12 @@ function RequestPost () {
                 </ReportContext>
                 <Address>
                     <TextTitle>주소</TextTitle>
+                    <Box01>
+                        <Text01 placeholder="도"></Text01>
+                        <Text01 placeholder="시/군"></Text01>
+                    </Box01>
+                    
+                    <TextTitle>상세주소</TextTitle>
                     <Text placeholder="주소를 입력해주세요."></Text>
                 </Address>
                 <PostPicture>
@@ -61,7 +64,7 @@ function RequestPost () {
                 <Blank></Blank>
                 <Buttons>
                     <CancelButton>취소</CancelButton>
-                    <PostButton>작성하기</PostButton>
+                    <PostButton>등록하기</PostButton>
                 </Buttons>
             </Body>
             <Footer></Footer>
@@ -69,7 +72,7 @@ function RequestPost () {
     )
 }
 
-export default RequestPost;
+export default RequestEdit;
 
 const Div = styled.div `
     width: 428px;
@@ -77,7 +80,7 @@ const Div = styled.div `
 `
 const Body = styled.div `
     width: 430px;
-    height: 1350px;
+    min-height: 1450px;
     background-color: rgba(121, 185, 211, 0.3);
 `
 const UserName = styled.div `
@@ -144,26 +147,7 @@ const Box01 = styled.div `
     margin: 0px auto 0px auto;
     display: flex;
 `
-const CheckBox = styled.input `
-    width: 30px;
-    height: 30px;
 
-    margin: 20px 0px 0px 50px;
-`
-const Edit = styled.div `
-    width: 50px;
-    height: 30px;
-
-    margin: 20px 0px 0px 50px;
-
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 30px;
-
-    color: #000000;
-`
 const Context = styled.textarea `
     width: 350px;
     height: 200px;
@@ -269,6 +253,25 @@ const PostButton = styled.div `
         color: dodgerblue;
     }
 `
-const Address = styled.div `
+const Text01 = styled.input `
+    width: 160px;
+    height: 35px;
 
+    margin: 20px 0px 0px 35px;
+
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 35px;
+
+    text-align: center;
+
+    background: #FFFFFF;
+    color: grey;
+    border: 1px solid white;
+    border-radius: 30px;
+`
+const Address = styled.div `
+    
 `

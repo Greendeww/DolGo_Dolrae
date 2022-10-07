@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../../shared/Api";
+<<<<<<< HEAD
 import Like from '../../like/Like';
 import PaginationsLike from "../../pagination/PaginationsLike";
+=======
+import Like from "../../like/Like";
+>>>>>>> 7b0ae381ba0d74f30401f8191c284921692acc97
 
 const LikeList = () => {
   const navigate = useNavigate();
@@ -35,7 +39,7 @@ const LikeList = () => {
 
   return (
     <StLikeList>
-      <h2>찜 목록</h2>
+      <h2>내가 찜한 장소</h2>
       <div>
         {currentLike.map((item) => (
           <div key={item.id}>
@@ -46,7 +50,9 @@ const LikeList = () => {
             />
             <Title>
               <p>{item.title}</p>
-              <span><Like id={item.id}/></span>
+              <span>
+                <Like id={item.id} />
+              </span>
             </Title>
           </div>
         ))}
@@ -64,15 +70,20 @@ const LikeList = () => {
 export default LikeList;
 
 const StLikeList = styled.div`
+  max-width: 428px;
+  width: 100%;
   margin: 0 auto;
   margin-top: 100px;
   & h2 {
     color: #bfb8b8;
+    margin-left: 10px;
   }
 
   & img {
-    width: 100%;
-    height: 300px;
+    display: flex;
+    margin: 0 auto;
+    width: 90%;
+    border-radius: 15px;
     &:hover {
       cursor: pointer;
     }
@@ -84,6 +95,7 @@ const StLikeList = styled.div`
 `;
 
 const Title = styled.div`
+  margin: 0 15px;
   display: flex;
   font-weight: 900;
   font-size: 23px;
