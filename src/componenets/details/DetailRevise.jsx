@@ -144,9 +144,9 @@ const DetailRevise = () => {
     if(
       title === "" ||
       content === "" ||
-      star === ""
+      star === 0
     ){
-      alert("모든 항목을 입력해주세요.");
+      alert("필수항목을 입력해주세요.");
     }
     let json = JSON.stringify(data)
     // let imagejson = JSON.stringify(image[0].imageUrl)
@@ -177,6 +177,10 @@ const DetailRevise = () => {
    <>
    <DivBack>
      <Box>
+     <BoxTitle>
+        <BoxTitleP>후기수정</BoxTitleP>
+        <BoxSpan><span>*</span>필수항목</BoxSpan>
+      </BoxTitle>
       <LiTilte>
           <PTitle>
             제목<span style={{ color: "rgb(255, 80, 88)" }}>*</span>
@@ -296,6 +300,21 @@ const Box = styled.div`
   text-align: center;
   border-radius:10px;
 `;
+const BoxTitle = styled.div`
+  display:flex;
+  justify-content:center;
+`
+const BoxTitleP =styled.p`
+  font-weight:700;
+  font-size:1.5rem;
+  margin-right:0.8rem;
+`
+const BoxSpan =styled.p`
+  color:rgb(255, 80, 88);
+  /* font-weight:600; */
+  text-align:center;
+  line-height:2.2rem;
+`
 const LiImg = styled.li`
   width: 90%;
   /* display: flex; */
@@ -362,9 +381,9 @@ const LiTilte = styled.li`
 `;
 const PTitle = styled.b`
   padding-left:1.3rem;
-  width: 100px;
+  width: 80%;
   height: 48px;
-  font-size: 14px;
+  font-size: 15px;
   align-items: center;
   display: flex;
   justify-content: flex-start;
@@ -373,6 +392,7 @@ const InputTit = styled.input`
   font-size: 15px;
   width: 80%;
   border: 3px solid #79B9D3;
+  height:40px;
   color: rgb(195, 194, 204);
   padding: 0px 1rem;
   border-radius:10px;
@@ -389,7 +409,6 @@ const InputCom = styled.textarea`
   height: 100%;
   min-height: 163px;
   padding: 0px 1rem;
-  /* margin-right: 16px; */
   font-size: 14px;
   resize: none;
   border : 3px solid #79B9D3;

@@ -65,8 +65,9 @@ const RandomSelect = () => {
 
     return (
      <>
-     <Box>
+     <BoxDiv>
      <Header/>
+     <Box>
        <LocDiv>
          <PTitle>이번엔 </PTitle>
          <SpanRandom>{random?.area}</SpanRandom>
@@ -179,19 +180,30 @@ const RandomSelect = () => {
          </ButDiv>
        </TemaDiv>
      </Box>
+     </BoxDiv>
     </>
     )
     }
 
 export default RandomSelect;
 
+const BoxDiv = styled.div`
+    width: 100%;
+    max-width:428px;
+    margin: 0 auto;
+    border:2px solid #79B9D3;
+    line-height:40px;
+    height:100%;
+`
 const Box = styled.div`
-  padding-top: 70px;
-  width: 100%;
-  max-width: 428px;
-  margin: 0 auto;
-  line-height: 40px;
-  height: 100%;
+    padding-top:2.5rem;
+    width: 100%;
+    max-width:428px;
+    margin: 0 auto;
+    /* border:2px solid #79B9D3; */
+    line-height:40px;
+    height:100%;
+
 `;
 const LocDiv = styled.div`
   width: 90%;

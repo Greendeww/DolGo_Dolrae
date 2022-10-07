@@ -36,49 +36,50 @@ const RandomList = () => {
   // console.log(random?.placeList[2]?.id)
   // console.log(random?.placeList[3]?.id)
 
-  const onRandom = (e) => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    let timerInterval;
-    Swal.fire({
-      title: "지역을 선정중입니다",
-      html: "잠시만 기다려주세요",
-      timer: 1500,
-      timerProgressBar: true,
-      didOpen: () => {
-        Swal.showLoading();
-        const b = Swal.getHtmlContainer().querySelector("b");
-        timerInterval = setInterval(() => {
-          b.textContent = Swal.getTimerLeft();
-        }, 100);
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-        fetch();
-        window.location.reload();
-      },
-    }).then((result) => {
-      /* Read more about handling dismissals below */
-      if (result.dismiss === Swal.DismissReason.timer) {
-        console.log("I was closed by the timer");
-      }
-    });
-    console.log("작동");
-  };
-  // useEffect(() => {
-  //     window.scrollTo(0,0)
-  // },[])
-  return (
-    <>
-      <Box ref={scrollRef}>
-        <ScrollToTop />
-        <Header />
-        <LocDiv>
-          <PTitle>이번엔 </PTitle>
-          <SpanRandom>{random?.area}</SpanRandom>
-          <PTitle2>어때요? </PTitle2>
-        </LocDiv>
-        <TemaDiv>
-          <TemaBox>
+
+    const onRandom = (e) => {
+        window.scrollTo({ top: 0, behavior: "smooth" })
+        let timerInterval
+        Swal.fire({
+            title: '지역을 선정중입니다',
+            html: '잠시만 기다려주세요',
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading()
+              const b = Swal.getHtmlContainer().querySelector('b')
+              timerInterval = setInterval(() => {
+                b.textContent = Swal.getTimerLeft()
+              }, 100)
+            },
+            willClose: () => {
+              clearInterval(timerInterval)
+              fetch();
+              window.location.reload();
+            }
+          }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+              console.log('I was closed by the timer')
+            }
+          })
+         console.log("작동")
+    }
+    // useEffect(() => {
+    //     window.scrollTo(0,0)
+    // },[])
+    return (
+     <BoxDiv>
+     <Header/>
+     <Box ref={scrollRef}>
+     <ScrollToTop/>
+       <LocDiv>
+         <PTitle>이번엔 </PTitle>
+         <SpanRandom>{random?.area}</SpanRandom>
+         <PTitle2>어때요? </PTitle2> 
+       </LocDiv>
+       <TemaDiv>
+         <TemaBox>
             <TemaP>
               <TemaName>관광</TemaName>
             </TemaP>
@@ -270,19 +271,29 @@ const RandomList = () => {
           </ButDiv>
         </TemaDiv>
       </Box>
-    </>
+    </BoxDiv>
   );
 };
 
-export default RandomList;
 
+export default RandomList
+const BoxDiv = styled.div`
+    width: 100%;
+    max-width:428px;
+    margin: 0 auto;
+    border:2px solid #79B9D3;
+    line-height:40px;
+    height:100%;
+`
 const Box = styled.div`
-  padding-top: 70px;
-  width: 100%;
-  max-width: 428px;
-  margin: 0 auto;
-  line-height: 40px;
-  height: 100%;
+    padding-top:2.5rem;
+    width: 100%;
+    max-width:428px;
+    margin: 0 auto;
+    /* border:2px solid #79B9D3; */
+    line-height:40px;
+    height:100%;
+
 `;
 const LocDiv = styled.div`
   width: 90%;
