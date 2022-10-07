@@ -8,8 +8,6 @@ import { FaImage } from 'react-icons/fa';
 
 
 const Comments = ({comment,arr,isSelected, handleClick, elementIndex}) => {
-  console.log(arr)
-  console.log(comment)
   // const ids = comment.length
   const {id} = useParams();
   let [modal, setModal] = useState(false);
