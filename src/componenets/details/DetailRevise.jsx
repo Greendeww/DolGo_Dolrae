@@ -182,9 +182,9 @@ const DetailRevise = () => {
         <BoxSpan><span>*</span>필수항목</BoxSpan>
       </BoxTitle>
       <LiTilte>
-          <PTitle>
+          <b>
             제목<span style={{ color: "rgb(255, 80, 88)" }}>*</span>
-          </PTitle>
+          </b>
           <InputTit
             type="text"
             name="title"
@@ -200,7 +200,6 @@ const DetailRevise = () => {
           <ImgTitle>
             <b>
               이미지
-              <span style={{ color: "rgb(255, 80, 88)" }}>*</span>
             </b>
           </ImgTitle>
           <div style={{ width: "100%" }}>
@@ -243,7 +242,7 @@ const DetailRevise = () => {
             </div>
           </LiImg>
           <Wrap>
-              <RatingText>별점</RatingText>
+              <RatingText>별점<span style={{ color: "rgb(255, 80, 88)" }}>*</span></RatingText>
               <Stars>
                   {[0,1,2,3,4].map((el, idx) => {
                   return (
@@ -258,9 +257,9 @@ const DetailRevise = () => {
               </Stars>
           </Wrap>
           <LiTilte>
-            <PTitle>
+            <b>
               후기<span style={{ color: "rgb(255, 80, 88)" }}>*</span>
-            </PTitle>
+            </b>
             <InputCom
               type="text"
               name="content"
@@ -376,18 +375,20 @@ const DeleteImg = styled.button`
 `;
 const LiTilte = styled.li`
   padding: 10px 0px;
-  /* display: flex; */
   width: 100%;
+  b{
+    padding-left:1.3rem;
+    width: 80%;
+    height: 48px;
+    font-size: 15px;
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+  }
 `;
-const PTitle = styled.b`
-  padding-left:1.3rem;
-  width: 80%;
-  height: 48px;
-  font-size: 15px;
-  align-items: center;
-  display: flex;
-  justify-content: flex-start;
-`;
+// const PTitle = styled.b`
+ 
+// `;
 const InputTit = styled.input`
   font-size: 15px;
   width: 80%;
@@ -413,6 +414,11 @@ const InputCom = styled.textarea`
   resize: none;
   border : 3px solid #79B9D3;
   border-radius:10px;
+  -webkit-box-sizing: border-box; 
+  -moz-box-sizing: border-box; 
+  box-sizing: border-box; 
+  ::-webkit-inner-spin-button, 
+  ::-webkit-outer-spin-button { -webkit-appearance: none; }
 `;
 const Wrap = styled.div`
   display: flex;
