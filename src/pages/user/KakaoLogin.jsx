@@ -7,12 +7,10 @@ import { setCookie } from "../../shared/Cookie";
 const KaKaoLogin = () => {
   // const dispatch = useDispatch();
   const navigate = useNavigate();
-  
 
   // 인가코드
   let code = new URL(window.location.href).searchParams.get("code");
-  console.log(code)
-
+  console.log(code);
 
   useEffect(() => {
     kakaologin(code);
@@ -22,7 +20,7 @@ const KaKaoLogin = () => {
     try {
       //백엔드로 인가코드 보내기
       const res = await instance.get(`/api/kakao/login?code=${code}`);
-      console.log(res)
+      console.log(res);
 
       // 새로고침하지 않으면 쿠키에 저장이 안 됨 ㅠ
       // setCookie("isLogin", res.headers.authorization);
@@ -36,13 +34,8 @@ const KaKaoLogin = () => {
       localStorage.setItem("username", res.data.username);
       localStorage.setItem("nickname", res.data.nickname);
 
-      // window.location.reload();
-
-      alert('로그인 되었습니다.');
-
-      navigate('/')
-
-
+      alert(`${res.data.nickname}님 환영합니다.`);
+      navigate("/");
     } catch (error) {
       console.log("카카오 로그인 실패");
     }
