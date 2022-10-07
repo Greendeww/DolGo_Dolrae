@@ -16,14 +16,16 @@ import MyPage from "../pages/mypage/MyPage";
 import MyPageChange from "../pages/mypage/MyPageChange";
 import Report from "../pages/request/Report";
 import Register from "../pages/request/Register";
-
-
+import Administrator from "../pages/Administrator";
+import RequestEdit from "../pages/RequestPost";
+import RequestDetail from "../pages/RequestDetail";
+import RequestPost from "../pages/RequestEdit";
 
 function Router(){
     return(
         <BrowserRouter>
         <Routes>
-            <Route path="/" element={<Main />}/>
+            <Route path="/" element={<Main/>}/>
             <Route path="/mypage" element={<MyPage/>}/>
             <Route path="/mypage/change" element={<MyPageChange/>}/>
             <Route path="/report" element={<Report/>}/>
