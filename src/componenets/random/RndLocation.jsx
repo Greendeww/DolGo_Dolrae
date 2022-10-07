@@ -283,32 +283,37 @@ const RndLocation = () => {
   };
 
   const onRandom = (e) => {
-    let timerInterval
+    let timerInterval;
     Swal.fire({
-        title: '지역을 선정중입니다',
-        html: '잠시만 기다려주세요',
-        timer: 1500,
-        timerProgressBar: true,
-        didOpen: () => {
-          Swal.showLoading()
-          const b = Swal.getHtmlContainer().querySelector('b')
-          timerInterval = setInterval(() => {
-            b.textContent = Swal.getTimerLeft()
-          }, 100)
-        },
-        willClose: () => {
-          clearInterval(timerInterval)
-          dispatch(__getTheme(search))
-          navigate("/rndselect/"+localStorage.getItem(SIGUNGU_CODE)+'/'+localStorage.getItem(AREA_CODE));
-        }
-      }).then((result) => {
-        /* Read more about handling dismissals below */
-        if (result.dismiss === Swal.DismissReason.timer) {
-          console.log('I was closed by the timer')
-        }
-      })
-    console.log("작동")
-}
+      title: "지역을 선정중입니다",
+      html: "잠시만 기다려주세요",
+      timer: 1500,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const b = Swal.getHtmlContainer().querySelector("b");
+        timerInterval = setInterval(() => {
+          b.textContent = Swal.getTimerLeft();
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+        dispatch(__getTheme(search));
+        navigate(
+          "/rndselect/" +
+            localStorage.getItem(SIGUNGU_CODE) +
+            "/" +
+            localStorage.getItem(AREA_CODE)
+        );
+      },
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log("I was closed by the timer");
+      }
+    });
+    console.log("작동");
+  };
   return (
     <>
     <RndDiv>
@@ -352,14 +357,18 @@ const RndLocation = () => {
 
 export default RndLocation;
 
+const StRnd = styled.div`
+  max-width: 428px;
+  width: 100%;
+  margin: 0 auto;
+`;
+
 const RndDiv = styled.div`
-  max-width:428px;
-  width:100%;
-  margin:0 auto;
-`
+  padding-top: 60px;
+`;
 const St = styled.div`
   & button {
-    background-color: #79B9D3;
+    background-color: #abd4e2;
     color: white;
     border: none;
     border-radius: 12px;
@@ -373,6 +382,7 @@ const St = styled.div`
     margin: 40px auto;
   }
 `;
+
 const Title = styled.div`
   display: flex;
   justify-content: space-between;
@@ -409,28 +419,14 @@ const BackBut =styled.button`
 `
 const StList = styled.div`
   width: 428px;
-  margin-top: 50px;
-  /* & div {
-    display: inline-block;
-    width: 60%;
-    margin-left: 20px;
-  } */
+  margin-top: 40px;
   & p {
     font-style: normal;
     font-weight: 700;
     font-size: 25px;
-    line-height: 40px;
+    line-height: 60px;
     color: #bfb8b8;
-    margin-left: 20px;
-  }
-`;
-
-const Do = styled.button`
-  border: none;
-`;
-
-const Si = styled.div`
-  & button {
-    border: none;
+    margin-left: 40px;
+    margin-bottom: 20px;
   }
 `;

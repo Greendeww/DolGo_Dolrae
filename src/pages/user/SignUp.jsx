@@ -1,13 +1,11 @@
-import React, { useState, useSelector } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { __signUp, __emailCheck, signUp } from "../../redux/modules/user";
 import { useNavigate } from "react-router-dom";
 import Header from "../../componenets/header/Header";
-import { __submitCode } from "../../redux/modules/user";
+import { instance } from "../../shared/Api";
 
 const SignUp = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const initialState = {
@@ -16,29 +14,75 @@ const SignUp = () => {
     passwordConfirm: "",
   };
 
+  // 회원가입할 때 받을 정보
   const [user, setUser] = useState(initialState);
 
-  // 이메일 인증을 위한 데이터
+  // 이메일 인증을 위한 정보
   const [emailCheck, setEmailCheck] = useState({ username: "" });
 
   const emailChangeHandler = (e) => {
     setEmailCheck({ username: e.target.value });
   };
 
-  // 이메일 인증버튼 클릭 여부
-  const [confirmClick, setConfirmClick] = useState(false);
+  const [availableEmail, setAvailableEmail] = useState(false);
+  console.log(availableEmail);
 
-  // 이메일 인증코드
+  // email 중복확인
+  const emailCheckHandler = async (e) => {
+    e.preventDefault();
+    if (user.username === "" || emailRegex.test(user.username) === false) {
+      alert("올바른 이메일을 입력해주세요.");
+    } else {
+      const response = await instance.post("/api/member/email", emailCheck, {
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      console.log(response);
+
+      if (response.data !== "중복 이메일입니다.") {
+        setAvailableEmail(true);
+        alert(response.data);
+      } else {
+        setAvailableEmail(false);
+        alert("중복된 이메일입니다.");
+      }
+    }
+  };
+
+  // 이메일 인증코드 입력값
   const [code, setCode] = useState({ code: "" });
-  console.log(code);
 
   const codeChangeHandler = (e) => {
     setCode({ code: e.target.value });
   };
 
-  const codeSubmitHandler = (e) => {
+  // 이메일 인증코드 일치 여부
+  const [sameCode, setSameCode] = useState(false);
+  // console.log(sameCode);
+
+  // 이메일 인증코드 제출 여부
+  const [codeSubmit, setCodeSubmit] = useState(false);
+
+  // 이메일 인증 코드 제출
+  const codeSubmitHandler = async (e) => {
     e.preventDefault();
-    dispatch(__submitCode(code));
+    setCodeSubmit(true);
+    const response = await instance.post("api/member/codeEmail", code, {
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+
+    if (response.data === true) {
+      setSameCode(true);
+      // alert("인증이 완료되었습니다.");
+      return false;
+    } else {
+      setSameCode(false);
+      // alert("인증 코드를 다시 확인해주세요.");
+      return false;
+    }
   };
 
   // input에 입력한 값을 state로 저장
@@ -47,36 +91,16 @@ const SignUp = () => {
     setUser({ ...user, [name]: value });
   };
 
-  // email 중복확인을 위한 handler
-  const emailCheckHandler = (e) => {
-    e.preventDefault();
-    if (user.username === "" || emailRegex.test(user.username) === false) {
-      alert("올바른 이메일을 입력해주세요.");
-    } else {
-      setConfirmClick(true);
-      dispatch(__emailCheck(emailCheck));
-    }
-  };
-
-  console.log(confirmClick);
-
-  // const  emailOk  = useSelector((state) => state.user.emailOk);
-  // console.log(emailOk);
-
-  // 회원가입 정보를 전송하기 위한 handler
+  // 회원가입
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    if (confirmClick === false) {
+    if (availableEmail === false) {
       alert("이메일 인증을 해주세요.");
       return false;
-    }
-    // else if (
-    //         emailOk === "false"
-    // ){
-    //   alert("인증코드가 올바르지 않습니다.");
-    //   return false;
-    // }
-    else if (
+    } else if (sameCode === false) {
+      alert("인증코드를 확인해주세요.");
+      return false;
+    } else if (
       user.username === "" ||
       user.password === "" ||
       user.passwordConfirm === ""
@@ -88,18 +112,10 @@ const SignUp = () => {
       return false;
     }
 
-    await dispatch(signUp(user));
+    const response = await instance.post("/api/member/signup", user);
+    alert(`${response.data.nickname}님 회원가입을 축하드립니다.`);
     setUser(initialState);
     navigate("/login");
-
-    // const { data } = await instance.post("api/member/signup", user);
-    // // console.log(data);
-    // if (data.success) {
-    //   alert("회원가입이 완료되었습니다. 로그인 후 이용바랍니다.");    //   navigate("/");
-    // } else {
-    //   window.alert(data.error.message);
-    // }
-    // setUser(initialState);
   };
 
   // 이메일, 비밀번호 정규표현식
@@ -118,7 +134,7 @@ const SignUp = () => {
               </div>
               <div>
                 <input
-                  type="username"
+                  type="text"
                   name="username"
                   value={user.username}
                   onChange={(e) => {
@@ -138,21 +154,30 @@ const SignUp = () => {
                   <p style={{ color: "red" }}>이메일 형식이 맞지 않습니다.</p>
                 )}
               </div>
-              {confirmClick === false ? null : (
-                <EmailConfirm>
-                  <input
-                    placeholder="인증번호를 입력해주세요."
-                    name="code"
-                    value={code.code}
-                    onChange={(e) => {
-                      codeChangeHandler(e);
-                    }}
-                  />
-                  <button onClick={codeSubmitHandler}>확인</button>
-                </EmailConfirm>
-              )}
             </label>
           </Email>
+          {availableEmail === false ? null : (
+            <EmailConfirm>
+              <div>
+                <input
+                  placeholder="인증번호를 입력해주세요."
+                  name="code"
+                  value={code.code}
+                  onChange={(e) => {
+                    codeChangeHandler(e);
+                  }}
+                />
+                <button onClick={codeSubmitHandler}>확인</button>
+              </div>
+              <div>
+                {codeSubmit === true && sameCode === false ? (
+                  <p style={{ color: "red" }}>인증코드를 다시 확인해주세요.</p>
+                ) : codeSubmit === true && sameCode === true ? (
+                  <p style={{ color: "green" }}>인증되었습니다.</p>
+                ) : null}
+              </div>
+            </EmailConfirm>
+          )}
           <Password>
             <label>
               <div>
@@ -160,7 +185,7 @@ const SignUp = () => {
               </div>
               <div>
                 <input
-                  type="text"
+                  type="password"
                   name="password"
                   value={user.password}
                   onChange={(e) => {
@@ -184,7 +209,7 @@ const SignUp = () => {
           </Password>
           <PasswordConfirm>
             <input
-              type="text"
+              type="password"
               name="passwordConfirm"
               value={user.passwordConfirm}
               onChange={onChangeHandler}
@@ -216,7 +241,8 @@ const SignUp = () => {
 export default SignUp;
 
 const St = styled.div`
-  width: 428px;
+  max-width: 428px;
+  width: 100%;
   margin: 0 auto;
 `;
 
@@ -270,7 +296,37 @@ const Email = styled.div`
 `;
 
 const EmailConfirm = styled.div`
-  margin-top: -15px;
+  display: block;
+  margin: 0 20px;
+  margin-top: -40px;
+
+  & div {
+    display: flex;
+    gap: 10px;
+  }
+
+  & input {
+    width: 373px;
+    height: 52px;
+    background-color: rgba(172, 212, 228, 0.35);
+    border-radius: 15px;
+    border: none;
+    padding-left: 10px;
+  }
+
+  & button {
+    background-color: rgba(121, 185, 211, 0.62);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    width: 83px;
+    height: 50px;
+    cursor: pointer;
+    font-weight: 700;
+    line-height: 24px;
+    display: block;
+    margin: 0 auto;
+  }
 `;
 
 const Password = styled.div`

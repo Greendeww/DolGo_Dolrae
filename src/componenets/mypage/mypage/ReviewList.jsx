@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { instance } from "../../../shared/Api";
 import Paginations from "../../pagination/Paginations";
 import MypgReview from "./MypgReview";
-import ReviewModal from "./ReviewModal";
+
 
 const ReviewList = () => {
   const navigate = useNavigate();
@@ -38,7 +38,6 @@ const ReviewList = () => {
 
   return (
     <>
-
     <StReviewList>
       <h2>내가 쓴 후기</h2>
       {currentReview.map((item, index) => (

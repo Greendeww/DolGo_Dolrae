@@ -23,7 +23,8 @@ function MyPageChange() {
 export default MyPageChange;
 
 const StChange = styled.div`
-  width: 428px;
+  max-width: 428px;
+  width: 100%;
   margin: 0 auto;
   background-color: #eef6fa;
   height: 1000px;

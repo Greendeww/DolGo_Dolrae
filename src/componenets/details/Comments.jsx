@@ -83,7 +83,7 @@ const CommentDiv = styled.div`
   /* cursor:pointer;
   margin-top:10px;
   text-align:center; */
-  background-color:#EBF8FF;
+  background-color:#EEF6FA;
   /* border:5px solid #EBF8FF; */
   border-radius:20px;
   margin-top:0.8rem;

@@ -14,11 +14,12 @@ const MyPage = () => {
       <ReviewList />
     </StMyPage>
   );
-}
+};
 
 export default MyPage;
 
 const StMyPage = styled.div`
-  width: 428px;
+  max-width: 428px;
+  width: 100%;
   margin: 0 auto;
 `;

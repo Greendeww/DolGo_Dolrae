@@ -6,7 +6,7 @@ import LOGO from "../../assert/logo/Logo.png"
 import { useState } from "react";
 
 
-function Report () {
+function RequestDetail () {
 
     //파일 미리볼 url을 저장해줄 state
     const [fileImage, setFileImage] = useState("");
@@ -22,27 +22,39 @@ function Report () {
         setFileImage("");
     };
 
+
+
     return (
         <Div>
             <Header></Header>
             <Body>
                 <UserName>
                     <TextTitle>이름</TextTitle>
-                    <Text placeholder="장소의 이름을 입력해주세요."></Text>
+                    <Text placeholder="이름을 입력해주세요."></Text>
                 </UserName>
+                <Date>
+                    <TextTitle>요청 날짜</TextTitle>
+                    <Text placeholder="날짜를 입력해주세요."></Text>
+                </Date>
                 <ReportType>
-                    <TextTitle>신고 유형</TextTitle>
+                    <TextTitle>유형</TextTitle>
                     <Box01>
                         <CheckBox type="checkbox"></CheckBox>
                         <Edit>수정</Edit>
                         <CheckBox type="checkbox"></CheckBox>
-                        <Delete>삭제</Delete>
+                        <Edit>삭제</Edit>
+                        <CheckBox type="checkbox"></CheckBox>
+                        <Edit>추가</Edit>
                     </Box01>
                 </ReportType>
                 <ReportContext>
-                    <TextTitle>신고 내용</TextTitle>
-                    <Context placeholder="신고 사유를 입력해주세요."></Context>
+                    <TextTitle>설명</TextTitle>
+                    <Context placeholder="상세설명을 해주세요."></Context>
                 </ReportContext>
+                <Address>
+                    <TextTitle>주소</TextTitle>
+                    <Text placeholder="주소를 입력해주세요."></Text>
+                </Address>
                 <PostPicture>
                     <Box02>
                         <TextTitle>사진</TextTitle>
@@ -56,8 +68,9 @@ function Report () {
                 </PostPicture>
                 <Blank></Blank>
                 <Buttons>
-                    <CancelButton>취소</CancelButton>
-                    <PostButton>작성하기</PostButton>
+                    <PostButton>수정</PostButton>
+                    <PostButton>등록</PostButton>
+                    <PostButton>삭제</PostButton>
                 </Buttons>
             </Body>
             <Footer></Footer>
@@ -65,7 +78,7 @@ function Report () {
     )
 }
 
-export default Report;
+export default RequestDetail;
 
 const Div = styled.div `
     width: 428px;
@@ -73,10 +86,14 @@ const Div = styled.div `
 `
 const Body = styled.div `
     width: 430px;
-    height: 1200px;
+    height: 1450px;
     background-color: rgba(121, 185, 211, 0.3);
 `
 const UserName = styled.div `
+    width: 428px;
+    margin: 0px auto 0px auto;
+`
+const Date = styled.div `
     width: 428px;
     margin: 0px auto 0px auto;
 `
@@ -144,27 +161,13 @@ const CheckBox = styled.input `
     width: 30px;
     height: 30px;
 
-    margin: 20px 0px 0px 50px;
+    margin: 20px 0px 0px 40px;
 `
 const Edit = styled.div `
     width: 50px;
     height: 30px;
 
-    margin: 20px 0px 0px 50px;
-
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 30px;
-
-    color: #000000;
-`
-const Delete = styled.div `
-    width: 50px;
-    height: 30px;
-
-    margin: 20px 0px 0px 50px;
+    margin: 20px 0px 0px 20px;
 
     font-family: 'Inter';
     font-style: normal;
@@ -226,36 +229,10 @@ const Blank = styled.div `
     width: 428px;
     height: 400px;
 `
-const CancelButton = styled.div `
-    width: 150px;
-    height: 40px;
-    margin: 0px 0px 0px 40px;
-
-    font-family: 'Noto Sans KR';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 15px;
-    line-height: 40px;
-    text-align: center;
-
-    color: #ABD4E2;
-
-    background: white;
-    border: 5px solid #ABD4E2;
-    border-radius: 30px;
-
-    &:hover {
-        cursor: pointer;
-        border: 5px solid dodgerblue;
-        border-radius: 30px;
-
-        color: dodgerblue;
-    }
-`
 const PostButton = styled.div `
-    width: 150px;
+    width: 100px;
     height: 40px;
-    margin: 0px 0px 0px 30px;
+    margin: 0px 0px 0px 25px;
 
     font-family: 'Noto Sans KR';
     font-style: normal;
@@ -278,4 +255,7 @@ const PostButton = styled.div `
 
         color: dodgerblue;
     }
+`
+const Address = styled.div `
+
 `
