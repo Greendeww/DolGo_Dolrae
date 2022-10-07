@@ -14,8 +14,8 @@ import RandomSelect from "../componenets/random/RandomSelect";
 import RandomList from "../componenets/random/RandomList";
 import MyPage from "../pages/mypage/MyPage";
 import MyPageChange from "../pages/mypage/MyPageChange";
-import Report from "../pages/request/Report";
-import Register from "../pages/request/Register";
+import AmendmentRequest from "../pages/request/AmendmentRequest";
+import RegistrationRequest from "../pages/request/RegistrationRequest";
 
 
 
@@ -26,8 +26,8 @@ function Router(){
             <Route path="/" element={<Main />}/>
             <Route path="/mypage" element={<MyPage/>}/>
             <Route path="/mypage/change" element={<MyPageChange/>}/>
-            <Route path="/report" element={<Report/>}/>
-            <Route path="/register" element={<Register/>}/>
+            <Route path="/AmendmentRequest" element={<AmendmentRequest/>}/>
+            <Route path="/RegistrationRequest" element={<RegistrationRequest/>}/>
             <Route path="/signup" element={<SignUp/>}/>
             <Route path="/login" element= {<Login/>}/>
             <Route path="/oauth/callback/kakao" element= {<KakaoLogin/>}/>
