@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { instance } from "../../../shared/Api";
 import Like from '../../like/Like';
 import PaginationsLike from "../../pagination/PaginationsLike";
+import basicImg from "../../../assert/image/basic.png";
+import dolphin from "../../../assert/detail/dolphin_test.png";
 
 
 const LikeList = () => {
@@ -33,26 +35,35 @@ const LikeList = () => {
   useEffect(() => {
     getList();
   }, []);
-
+  console.log(likeList)
   return (
     <StLikeList>
       <h2>내가 찜한 장소</h2>
       <div>
+        <div>
         {currentLike.map((item) => (
           <div key={item.id}>
-            <img
-              alt=""
-              src={item.image}
-              onClick={() => navigate(`/detail/${item.id}`)}
-            />
+            {item.image === null
+            ? <img
+                alt=""
+                src={basicImg}
+                onClick={() => navigate(`/detail/${item.id}`)}
+              />
+            :  <img
+                alt=""
+                src={item.image}
+                onClick={() => navigate(`/detail/${item.id}`)}
+              />
+            }
             <Title>
               <p>{item.title}</p>
               <span>
                 <Like id={item.id} />
               </span>
             </Title>
-          </div>
-        ))}
+        </div>
+      ))}
+      </div> 
          <PaginationsLike
             page={page}
             count={list.length}
@@ -81,6 +92,7 @@ const StLikeList = styled.div`
     margin: 0 auto;
     width: 90%;
     border-radius: 15px;
+    max-height:262px;
     &:hover {
       cursor: pointer;
     }
