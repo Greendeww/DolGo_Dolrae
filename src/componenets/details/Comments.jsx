@@ -24,7 +24,6 @@ const Comments = ({comment,arr,isSelected, handleClick, elementIndex}) => {
   console.log(date)
   return (
     <> 
-      
       {modal === false
       ?
       <CommentDiv>
@@ -34,9 +33,10 @@ const Comments = ({comment,arr,isSelected, handleClick, elementIndex}) => {
         })} */}
         <p style={{width: "9rem"}}>{date}</p>
         {comment.imageList.length === 0
-        ?<span style={{cursor:"pointer", color:"#EBF8FF", fontSize:"1.5rem",lineHeight:"3.4rem"}}><FaImage/></span> 
+        ?<span style={{cursor:"pointer", color:"#EBF8FF", fontSize:"1.5rem",lineHeight:"3.4rem"}}>
+          <FaImage style={{marginTop:"1.3rem"}}/></span> 
         :<span style={{cursor:"pointer", color:"black", fontSize:"1.5rem",lineHeight:"3.4rem"}}>
-          <FaImage style={{marginTop:"1rem"}}/></span> 
+          <FaImage style={{marginTop:"1.3rem"}}/></span> 
         }
         <PCom >{comment.title}</PCom>
         {/* <p>닉네임</p> */}
@@ -52,13 +52,14 @@ const Comments = ({comment,arr,isSelected, handleClick, elementIndex}) => {
        <ContentDiv onClick={() => {handleClick(elementIndex);setModal(false)}}>
         <p style={{width: "9rem"}}>{date}</p>
         {comment.imageList.length === 0
-        ?<span style={{cursor:"pointer", color:"#EBF8FF", fontSize:"1.5rem",lineHeight:"3.4rem"}}><FaImage/></span> 
+        ?<span style={{cursor:"pointer", color:"#EBF8FF", fontSize:"1.5rem",lineHeight:"3.4rem"}}>
+          <FaImage style={{marginTop:"1.3rem"}}/></span> 
         :<span style={{cursor:"pointer", color:"black", fontSize:"1.5rem",lineHeight:"3.4rem"}}>
           <FaImage style={{marginTop:"1rem"}}/></span> 
         }
         <PCom>{comment.title}</PCom>
       </ContentDiv>
-      <div style={{cursor:"pointer"}} id="state">
+      <div id="state">
         {modal === true
         ? <CommentModal key={comment.comment_id} comment={comment}/>
         :null
@@ -83,7 +84,7 @@ const CommentDiv = styled.div`
   /* cursor:pointer;
   margin-top:10px;
   text-align:center; */
-  background-color:#EEF6FA;
+  background-color:#EBF8FF;
   /* border:5px solid #EBF8FF; */
   border-radius:20px;
   margin-top:0.8rem;

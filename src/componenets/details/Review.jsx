@@ -51,7 +51,15 @@ const indexOfFirstPage = indexOfLastPost - postPerPage
   return (
     <div>
         <CommentDiv>
-          <p>Review</p>
+           <p
+              style={{
+                color: "#BFB8B8",
+                fontSize: "1.3rem",
+                marginBottom: "1rem",
+              }}
+            >
+              Review
+            </p>
             <div>
                 {currentComments.map((comment,index) => {
                 return <Comments comment={comment} key={index} arr={arr} isSelected={modal[index]} handleClick={close} elementIndex={index}/>
@@ -81,7 +89,7 @@ const CommentDiv = styled.div`
   margin-top: 45px;
   border-top: 3px solid #DEDDDD;
   text-align: start;
-  width: 90%;
+  width: 95%;
   justify-content: center;
   align-items: center;
 `;

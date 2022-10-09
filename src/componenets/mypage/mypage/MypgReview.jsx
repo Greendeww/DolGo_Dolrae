@@ -15,8 +15,8 @@ const MypgReview = ({item}) => {
         <Comment
             onClick={() => setModal(true)}
         >
-            <div style={{ fontWeight: "bold" }}>{item.placeTitle}</div>
-            <div>{item.title}</div>
+            <div style={{ fontWeight: "bold" }}><p>{item.placeTitle}</p></div>
+            <div><p>{item.title}</p></div>
         </Comment>
         {modal === true
         ? <ReviewModal key ={item.comment_id} item={item} />
@@ -28,8 +28,8 @@ const MypgReview = ({item}) => {
         <Comment
             onClick={() => setModal(false)}
         >
-            <div style={{ fontWeight: "bold" }}>{item.placeTitle}</div>
-            <div>{item.title}</div>
+            <div style={{ fontWeight: "bold" }}><p>{item.placeTitle}</p></div>
+            <div><p>{item.title}</p></div>
         </Comment>
         {modal === true
         ? <ReviewModal key ={item.comment_id} item={item} />
@@ -58,11 +58,19 @@ const Comment = styled.div`
     left: 15px;
     top: 17px;
     font-size: 20px;
+    width:45%;
+    p{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width:100%;
+  }
   }
 
   &:hover {
     cursor: pointer;
   }
+
 `;
 const CommetnList =styled.div`
   width: 410px;
