@@ -179,7 +179,6 @@ const Detail = () => {
               </ALink>
             </SearchDiv>
           </SearchDate>
-<<<<<<< HEAD
           {/* {formOpen === true
           ?<DetailForm close={close}/>
           :null} */}
@@ -195,20 +194,7 @@ const Detail = () => {
 export default Detail;
 
 const BoxDiv =styled.div`
-=======
-          {formOpen === true ? <DetailForm close={close} /> : null}
-          <Review comment={comment} number={number} />
-          <div style={{ height: "20px" }} />
-        </Box>
-      </BoxDiv>
-    </>
-  );
-};
 
-export default Detail;
-
-const BoxDiv = styled.div`
->>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
   width: 100%;
   max-width: 428px;
   margin: 0 auto;
@@ -216,10 +202,6 @@ const BoxDiv = styled.div`
 const Box = styled.div`
   padding-top: 4rem;
   /* border:2px solid #79B9D3; */
-<<<<<<< HEAD
-=======
-  /* font-family: "Noto Sans KR", sans-serif; */
->>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
 `;
 const Cover = styled.div`
   display: flex;
@@ -243,12 +225,10 @@ const ImgCover = styled.div`
 const ThemeDiv = styled.div`
   padding-top: 0rem;
 `;
-<<<<<<< HEAD
 const Div = styled.div`
   padding: 0 15px;
 `;
-=======
->>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
+
 const TitleLikeDiv = styled.div`
   display: flex;
   justify-content: space-between;
@@ -321,7 +301,6 @@ const ImgLink = styled.img`
   width: 100%;
   height: 100%;
 `;
-<<<<<<< HEAD
 // const CommentDiv = styled.div`
 //   border-top: 3px solid #522772;
 //   border-bottom: 3px solid #522772;
@@ -337,8 +316,7 @@ const ReviewDiv =styled.div`
   width:95%;
   margin:0 auto;
 `
-=======
 const Request = styled.span`
   cursor: pointer;
 `;
->>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
+

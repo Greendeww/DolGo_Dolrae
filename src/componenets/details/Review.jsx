@@ -49,37 +49,7 @@ const Review = ({ comment }) => {
   };
   return (
     <div>
-<<<<<<< HEAD
-        <CommentDiv>
-           <p
-              style={{
-                color: "#BFB8B8",
-                fontSize: "1.3rem",
-                marginBottom: "1rem",
-              }}
-            >
-              Review
-            </p>
-            <div>
-                {currentComments.map((comment,index) => {
-                return <Comments comment={comment} key={index} arr={arr} isSelected={modal[index]} handleClick={close} elementIndex={index}/>
-                })}
-            </div>
-            <ButDiv>
-            {nickname === null
-            ?<FormBut onClick={noLogin}>후기작성</FormBut>
-            :<FormBut onClick={() => navigate('/detail/form/'+ id)}>후기작성</FormBut>
-            }
-            </ButDiv>
-            <p style={{color:"white"}}>공백</p>
-            <Paginations
-            page={page}
-            count={comment.length}
-            setPage={handlePageChange}
-            postPerpage={[postPerPage]}
-            />
-        </CommentDiv>
-=======
+
       <CommentDiv>
         <p
           style={{
@@ -121,7 +91,6 @@ const Review = ({ comment }) => {
           postPerpage={[postPerPage]}
         />
       </CommentDiv>
->>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
     </div>
   );
 };

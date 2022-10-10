@@ -8,44 +8,7 @@ const MypgReview = ({ item }) => {
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
 
-<<<<<<< HEAD
-const MypgReview = ({item}) => {
-    const [modal, setModal] = useState(false);
 
-    return (
-      <>
-        {modal === false
-        ?
-        <>     
-        <Comment
-            onClick={() => setModal(true)}
-        >
-            <div style={{ fontWeight: "bold" }}><p>{item.placeTitle}</p></div>
-            <div><p>{item.title}</p></div>
-        </Comment>
-        {modal === true
-        ? <ReviewModal key ={item.comment_id} item={item} />
-        :null
-        }
-        </>     
-        :  
-        <>
-        <Comment
-            onClick={() => setModal(false)}
-        >
-            <div style={{ fontWeight: "bold" }}><p>{item.placeTitle}</p></div>
-            <div><p>{item.title}</p></div>
-        </Comment>
-        {modal === true
-        ? <ReviewModal key ={item.comment_id} item={item} />
-        :null
-        }
-        </>        
-        }
-      </>
-    )
-}
-=======
   return (
     <>
       {modal === false ? (
@@ -56,8 +19,6 @@ const MypgReview = ({item}) => {
             </PlaceTitle>
             <ContentTitle>{item.title}</ContentTitle>
           </Comment>
->>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
-
           {modal === true ? (
             <ReviewModal key={item.comment_id} item={item} />
           ) : null}
@@ -94,7 +55,6 @@ const Comment = styled.div`
 
   & div {
     align-items: center;
-<<<<<<< HEAD
     position: relative;
     left: 15px;
     top: 17px;
@@ -110,8 +70,7 @@ const Comment = styled.div`
 
   &:hover {
     cursor: pointer;
-=======
->>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
+
   }
 
 `;

@@ -5,12 +5,10 @@ import css from "../../css/header.css";
 import dolphin from "../../assert/header/logo_.png";
 import bell from "../../assert/header/bell.png";
 import { instance } from "../../shared/Api";
-<<<<<<< HEAD
 import Search from "./Search";
-=======
 import burger from "../../assert/header/burger.png";
 import { deleteCookie, getCookie } from "../../shared/Cookie";
->>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
+
 
 const Header = () => {
   const navigate = useNavigate();

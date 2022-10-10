@@ -18,16 +18,11 @@ const ReviewModal = ({ item }) => {
   };
 
   const deleteModal = () => {
-<<<<<<< HEAD
-    setModalOn(true)
-  }
-
-=======
     setModalOn(true);
   };
 
-  const dispatch = useDispatch();
->>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
+
+
   return (
     <ComDiv key={item.comment_id}>
       <div>

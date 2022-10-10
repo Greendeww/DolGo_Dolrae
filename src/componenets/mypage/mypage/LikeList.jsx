@@ -4,10 +4,8 @@ import styled from "styled-components";
 import { instance } from "../../../shared/Api";
 import Like from "../../like/Like";
 import PaginationsLike from "../../pagination/PaginationsLike";
-<<<<<<< HEAD
 import basicImg from "../../../assert/image/basic.png";
-=======
->>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
+
 
 const LikeList = () => {
   const navigate = useNavigate();
@@ -63,7 +61,6 @@ const LikeList = () => {
                 <Like id={item.id} />
               </span>
             </Title>
-<<<<<<< HEAD
         </div>
       ))}
       </div> 
@@ -73,16 +70,6 @@ const LikeList = () => {
             setPage={handlePageChange}
             postPerpage={2}
             />
-=======
-          </div>
-        ))}
-        <PaginationsLike
-          page={page}
-          count={list.length}
-          setPage={handlePageChange}
-          postPerpage={2}
-        />
->>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
       </div>
     </StLikeList>
   );

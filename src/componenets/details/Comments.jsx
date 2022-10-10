@@ -21,52 +21,6 @@ const Comments = ({ comment, arr, isSelected, handleClick, elementIndex }) => {
   const date = comment?.createdAt?.substring(2, 10);
   console.log(date);
   return (
-<<<<<<< HEAD
-    <> 
-      {modal === false
-      ?
-      <CommentDiv>
-        <ContentDiv onClick={() => {handleClick(elementIndex);setModal(true)}}>
-        {/* {number.map((number) => {
-         return <Numbers number={number}/>   
-        })} */}
-        <p style={{width: "9rem"}}>{date}</p>
-        {comment.imageList.length === 0
-        ?<span style={{cursor:"pointer", color:"#EBF8FF", fontSize:"1.5rem",lineHeight:"3.4rem"}}>
-          <FaImage style={{marginTop:"1.3rem"}}/></span> 
-        :<span style={{cursor:"pointer", color:"black", fontSize:"1.5rem",lineHeight:"3.4rem"}}>
-          <FaImage style={{marginTop:"1.3rem"}}/></span> 
-        }
-        <PCom >{comment.title}</PCom>
-        {/* <p>닉네임</p> */}
-        </ContentDiv>
-        <div style={{cursor:"pointer"}} id="state">
-          {modal === true
-          ? <CommentModal key ={comment.comment_id} comment={comment} />
-          :null
-          }
-        </div>
-      </CommentDiv>
-      :<CommentDiv>
-       <ContentDiv onClick={() => {handleClick(elementIndex);setModal(false)}}>
-        <p style={{width: "9rem"}}>{date}</p>
-        {comment.imageList.length === 0
-        ?<span style={{cursor:"pointer", color:"#EBF8FF", fontSize:"1.5rem",lineHeight:"3.4rem"}}>
-          <FaImage style={{marginTop:"1.3rem"}}/></span> 
-        :<span style={{cursor:"pointer", color:"black", fontSize:"1.5rem",lineHeight:"3.4rem"}}>
-          <FaImage style={{marginTop:"1rem"}}/></span> 
-        }
-        <PCom>{comment.title}</PCom>
-      </ContentDiv>
-      <div id="state">
-        {modal === true
-        ? <CommentModal key={comment.comment_id} comment={comment}/>
-        :null
-        }
-      </div>
-    </CommentDiv>
-      }
-=======
     <>
       {modal === false ? (
         <CommentDiv>
@@ -153,7 +107,7 @@ const Comments = ({ comment, arr, isSelected, handleClick, elementIndex }) => {
           </div>
         </CommentDiv>
       )}
->>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
+
     </>
   );
 };
