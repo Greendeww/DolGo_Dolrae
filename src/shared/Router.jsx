@@ -1,7 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+// user
 import Login from "../pages/user/Login";
 import KakaoLogin from "../pages/user/KakaoLogin";
 import SignUp from "../pages/user/SignUp";
+
+// list
 import Select from "../pages/tourist/Select";
 import List from "../pages/tourist/List";
 import Detail from "../pages/tourist/Detail";
@@ -12,33 +16,43 @@ import Random from "../pages/tourist/Random";
 import RndLocation from "../componenets/random/RndLocation";
 import RandomSelect from "../componenets/random/RandomSelect";
 import RandomList from "../componenets/random/RandomList";
+
+// mypage
 import MyPage from "../pages/mypage/MyPage";
 import MyPageChange from "../pages/mypage/MyPageChange";
-import AmendmentRequest from "../pages/request/AmendmentRequest";
-import RegistrationRequest from "../pages/request/RegistrationRequest";
-import Administrator from "../pages/manager/Administrator";
-import RequestEdit from "../pages/manager/RequestPost";
+
+// request
+import EditRequest from "../pages/request/EditRequest";
+import PostRequest from "../pages/request/PostRequest";
+
+// manager
+import RequestList from "../pages/manager/RequestList";
 import RequestDetail from "../pages/manager/RequestDetail";
+<<<<<<< HEAD
 import RequestPost from "../pages/manager/RequestEdit";
 import SearchPage from "../pages/tourist/SearchPage";
 import Maps from "../componenets/maps/Maps";
+=======
+import Post from "../pages/manager/Post";
+import Edit from "../pages/manager/Edit";
+>>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/mypage/change" element={<MyPageChange />} />
-        <Route path="/AmendmentRequest" element={<AmendmentRequest />} />
-        <Route path="/RegistrationRequest" element={<RegistrationRequest />} />
-        <Route path="/administrator" element={<Administrator />} />
-        <Route path="/request/detail" element={<RequestDetail />} />
-        <Route path="/request/edit" element={<RequestEdit />} />
-        <Route path="/request/post" element={<RequestPost />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/oauth/callback/kakao" element={<KakaoLogin />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/mypage/change" element={<MyPageChange />} />
+        <Route path="/editRequest" element={<EditRequest />} />
+        <Route path="/postRequest" element={<PostRequest />} />
+        <Route path="/requestList" element={<RequestList />} />
+        <Route path="/request/detail" element={<RequestDetail />} />
+        <Route path="/request/edit" element={<Edit />} />
+        <Route path="/request/post" element={<Post />} />
         <Route path="/select" element={<Select />} />
         <Route path="/list" element={<List />} />
         <Route path="/detail/:id" element={<Detail />} />

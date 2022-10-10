@@ -2,41 +2,44 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../../shared/Api";
-import Like from '../../like/Like';
+import Like from "../../like/Like";
 import PaginationsLike from "../../pagination/PaginationsLike";
+<<<<<<< HEAD
 import basicImg from "../../../assert/image/basic.png";
+=======
+>>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
 
 const LikeList = () => {
   const navigate = useNavigate();
 
   const [list, setList] = useState([]);
-  const [likeList,setLikeList] = useState([...list].reverse())
-  const [currentLike,setCurrnetLike] = useState([])
+  const [likeList, setLikeList] = useState([...list].reverse());
+  const [currentLike, setCurrnetLike] = useState([]);
   const [page, setPage] = useState(1);
-  const [postPerPage] = useState(2)
-  const indexOfLastPost = page*postPerPage;
-  const indexOfFirstPage = indexOfLastPost - postPerPage
+  const [postPerPage] = useState(2);
+  const indexOfLastPost = page * postPerPage;
+  const indexOfFirstPage = indexOfLastPost - postPerPage;
 
   const getList = async () => {
     const res = await instance.get("/api/auth/place/mypage");
     console.log(res.data);
     setList(res?.data);
-    setLikeList([...res?.data].reverse())
+    setLikeList([...res?.data].reverse());
   };
   useEffect(() => {
-    setCurrnetLike(likeList.slice(indexOfFirstPage, indexOfLastPost))
-  },[indexOfFirstPage,indexOfLastPost,page,list]);
+    setCurrnetLike(likeList.slice(indexOfFirstPage, indexOfLastPost));
+  }, [indexOfFirstPage, indexOfLastPost, page, list]);
 
   const handlePageChange = (page) => {
-    setPage(page)
-  }
+    setPage(page);
+  };
   useEffect(() => {
     getList();
   }, []);
   console.log(likeList)
   return (
     <StLikeList>
-      <h2>내가 찜한 장소</h2>
+      <h2>찜한 장소</h2>
       <div>
         <p onClick={() => navigate('/maps')}>지도로 보기</p>
         <div>
@@ -60,6 +63,7 @@ const LikeList = () => {
                 <Like id={item.id} />
               </span>
             </Title>
+<<<<<<< HEAD
         </div>
       ))}
       </div> 
@@ -69,6 +73,16 @@ const LikeList = () => {
             setPage={handlePageChange}
             postPerpage={2}
             />
+=======
+          </div>
+        ))}
+        <PaginationsLike
+          page={page}
+          count={list.length}
+          setPage={handlePageChange}
+          postPerpage={2}
+        />
+>>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
       </div>
     </StLikeList>
   );
@@ -77,9 +91,7 @@ const LikeList = () => {
 export default LikeList;
 
 const StLikeList = styled.div`
-  max-width: 428px;
-  width: 100%;
-  margin: 0 auto;
+  margin: 50px auto;
   margin-top: 100px;
   & h2 {
     color: #bfb8b8;

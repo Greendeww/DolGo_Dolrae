@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Header from "../../componenets/header/Header";
 import { instance } from "../../shared/Api";
 
-const ResistrationRequest = () => {
+const PostRequest = () => {
   const navigate = useNavigate();
 
   const initialState = {
@@ -57,24 +57,27 @@ const ResistrationRequest = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    if (req.title === "" || req.content === "" || req.address === "") {
+      alert("필수 항목을 모두 작성해주세요.");
+      return;
+    } else {
+      const json = JSON.stringify(req);
+      const blob = new Blob([json], { type: "application/json" });
+      const formData = new FormData();
 
-    const json = JSON.stringify(req);
-    const blob = new Blob([json], { type: "application/json" });
-    const formData = new FormData();
+      for (let i = 0; i < image.length; i++) {
+        formData.append("image", image[i]);
+      }
+      formData.append("data", blob);
 
-    for (let i = 0; i < image.length; i++) {
-      formData.append("image", image[i]);
+      const res = await instance.post(`/api/auth/order`, formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
+      alert("게시글 등록 요청 완료되었습니다.");
+      navigate("/");
     }
-    formData.append("data", blob);
-
-    const res = await instance.post(`/api/auth/order`, formData, {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    });
-    alert("게시글 등록 요청 완료되었습니다.");
-    navigate("/");
-    console.log(res);
   };
 
   return (
@@ -98,7 +101,7 @@ const ResistrationRequest = () => {
           <div
             style={{ display: "flex", marginLeft: "35px", marginTop: "15px" }}
           >
-            <CheckBox type="checkbox" checked />
+            <CheckBox type="checkbox" checked readOnly />
             <p style={{ marginLeft: "15px", marginTop: "10px" }}>추가</p>
           </div>
         </div>
@@ -158,7 +161,7 @@ const ResistrationRequest = () => {
           </div>
         </div>
         <Buttons>
-          <CancelBtn>취소</CancelBtn>
+          <CancelBtn onClick={() => navigate(-1)}>취소</CancelBtn>
           <PostBtn onClick={onSubmitHandler}>작성하기</PostBtn>
         </Buttons>
       </Container>
@@ -166,7 +169,7 @@ const ResistrationRequest = () => {
   );
 };
 
-export default ResistrationRequest;
+export default PostRequest;
 
 const StRegistration = styled.div`
   max-width: 428px;
@@ -262,15 +265,6 @@ const PostBtn = styled.div`
   &:hover {
     cursor: pointer;
   }
-`;
-
-const ImgTitle = styled.div`
-  padding-left: 0.5rem;
-  height: 48px;
-  font-size: 20px;
-  align-items: center;
-  display: flex;
-  justify-content: flex-start;
 `;
 
 const ImgBox = styled.div`

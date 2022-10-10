@@ -1,5 +1,5 @@
 /* global kakao */
-import React, { useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -8,13 +8,11 @@ import "swiper/css";
 import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { useDispatch, useSelector } from "react-redux";
-import { onLikeDetail, _getDetail } from "../../redux/modules/post";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { _getComments } from "../../redux/modules/comment";
 import Review from "../../componenets/details/Review";
 import DetailImage from "../../componenets/details/DetailImage";
 import { instance } from "../../shared/Api";
-import StarDetail from "../../componenets/star/StarDetail";
 import Like from "../../componenets/like/Like";
 import Header from "../../componenets/header/Header";
 import { FaStar } from "react-icons/fa";
@@ -61,19 +59,19 @@ const Detail = () => {
 
   return (
     <>
-    <BoxDiv>
-    <Header/>
-      <Box>
-        <Cover>
-          <ImgCover>
-             <DetailImage post={posts} key={posts.id}/>
-             <ThemeDiv>
-              <ThemeList post={posts}/>
-             </ThemeDiv>
-             <TitleLikeDiv>
-              <TitleSpan>{posts.title}</TitleSpan> 
-              <Like id={id}></Like>
-             </TitleLikeDiv>
+      <BoxDiv>
+        <Header />
+        <Box>
+          <Cover>
+            <ImgCover>
+              <DetailImage post={posts} key={posts.id} />
+              <ThemeDiv>
+                <ThemeList post={posts} />
+              </ThemeDiv>
+              <TitleLikeDiv>
+                <TitleSpan>{posts.title}</TitleSpan>
+                <Like id={id}></Like>
+              </TitleLikeDiv>
               {/* {posts.likes} */}
               <StarThemeDiv>
                 <div style={{ display: "flex" }}>
@@ -84,6 +82,18 @@ const Detail = () => {
                   <span style={{ color: "#8f8f8f", lineHeight: "1rem" }}>
                     /5
                   </span>
+                </div>
+                <div>
+                  <Request
+                    style={{ marginRight: "5px" }}
+                    onClick={() => {
+                      localStorage.setItem("place_id", posts.id);
+                      localStorage.setItem("place_title", posts.title);
+                      navigate("/editRequest");
+                    }}
+                  >
+                    🚨
+                  </Request>
                 </div>
               </StarThemeDiv>
             </ImgCover>
@@ -169,6 +179,7 @@ const Detail = () => {
               </ALink>
             </SearchDiv>
           </SearchDate>
+<<<<<<< HEAD
           {/* {formOpen === true
           ?<DetailForm close={close}/>
           :null} */}
@@ -184,13 +195,31 @@ const Detail = () => {
 export default Detail;
 
 const BoxDiv =styled.div`
+=======
+          {formOpen === true ? <DetailForm close={close} /> : null}
+          <Review comment={comment} number={number} />
+          <div style={{ height: "20px" }} />
+        </Box>
+      </BoxDiv>
+    </>
+  );
+};
+
+export default Detail;
+
+const BoxDiv = styled.div`
+>>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
   width: 100%;
-  max-width:428px;
+  max-width: 428px;
   margin: 0 auto;
 `;
 const Box = styled.div`
-  padding-top:4rem;
+  padding-top: 4rem;
   /* border:2px solid #79B9D3; */
+<<<<<<< HEAD
+=======
+  /* font-family: "Noto Sans KR", sans-serif; */
+>>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
 `;
 const Cover = styled.div`
   display: flex;
@@ -214,9 +243,12 @@ const ImgCover = styled.div`
 const ThemeDiv = styled.div`
   padding-top: 0rem;
 `;
+<<<<<<< HEAD
 const Div = styled.div`
   padding: 0 15px;
 `;
+=======
+>>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
 const TitleLikeDiv = styled.div`
   display: flex;
   justify-content: space-between;
@@ -236,7 +268,7 @@ const Title = styled.div`
 const StarThemeDiv = styled.div`
   padding-top: 0.5rem;
   display: flex;
-  /* justify-content:space-between; */
+  justify-content: space-between;
   align-items: center;
 `;
 const Location = styled.div`
@@ -260,7 +292,7 @@ const DescDiv = styled.div`
   padding-top: 50px;
 `;
 const DesP = styled.p`
-    font-family: Noto Sans KR;
+  font-family: Noto Sans KR;
   text-align: justify;
   white-space: pre-wrap;
   line-height: 30px;
@@ -289,6 +321,7 @@ const ImgLink = styled.img`
   width: 100%;
   height: 100%;
 `;
+<<<<<<< HEAD
 // const CommentDiv = styled.div`
 //   border-top: 3px solid #522772;
 //   border-bottom: 3px solid #522772;
@@ -304,3 +337,8 @@ const ReviewDiv =styled.div`
   width:95%;
   margin:0 auto;
 `
+=======
+const Request = styled.span`
+  cursor: pointer;
+`;
+>>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc

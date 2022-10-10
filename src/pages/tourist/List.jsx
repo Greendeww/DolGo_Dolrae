@@ -5,6 +5,7 @@ import Header from "../../componenets/header/Header";
 import basicImg from "../../assert/image/basic.png";
 import { instance } from "../../shared/Api";
 import { useLocation } from "react-router";
+import { FaStar } from "react-icons/fa";
 
 
 const List = () => {
@@ -80,12 +81,17 @@ const List = () => {
               {list.image == null ? (
                 <>
                   <BasicImg src={basicImg} />
-                  <BasicName>
-                    <div>{list.title}</div>
-                    <div>
-                      <Star>★</Star> {list.star}
+                  <Name>
+                    <ListTitle style={{ color: "#414141" }}>
+                      {list.title}
+                    </ListTitle>
+                    <div style={{ display: "flex" }}>
+                      <FaStar
+                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
+                      />
+                      {list.star}
                     </div>
-                  </BasicName>
+                  </Name>
                 </>
               ) : (
                 <>
@@ -95,9 +101,11 @@ const List = () => {
                     </ImgBox>
                   </ImgShadow>
                   <Name>
-                    <div>{list.title}</div>
-                    <div>
-                      <Star>★</Star> {list.star}
+                    <ListTitle>{list.title}</ListTitle>
+                    <div style={{ display: "flex" }}>
+                    <FaStar
+                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
+                      /> {list.star}
                     </div>
                   </Name>
                 </>
@@ -143,7 +151,8 @@ const Title = styled.div`
   margin: 40px 0;
   top: 30px;
   height: 150px;
-  width: 428px;
+  max-width: 428px;
+  width: 100%;
   z-index: 1;
   background-color: #ffffff;
 
@@ -187,7 +196,7 @@ const Content = styled.div`
 
 const BasicImg = styled.img`
   position: relative;
-  width: 420px;
+  width: 100%;
   height: 234px;
   border-radius: 20px;
   &:hover {
@@ -239,33 +248,12 @@ const Name = styled.div`
   margin-block-end: 0;
   margin-block-start: 0;
   gap: 20px;
-
-  & div {
-    display: flex;
-    gap: 5px;
-  }
 `;
 
-const BasicName = styled.div`
-  display: flex;
-  position: relative;
-  top: -55px;
-  text-align: initial;
-  margin-left: 35px;
-  color: #414141;
-  font-size: 23px;
-  line-height: 33px;
-  margin-block-end: 0;
-  margin-block-start: 0;
-  gap: 20px;
-
-  & div {
-    display: flex;
-    gap: 5px;
-  }
-`;
-
-const Star = styled.p`
-  color: gold;
-  font-size: 23px;
+const ListTitle = styled.div`
+  display: block;
+  width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

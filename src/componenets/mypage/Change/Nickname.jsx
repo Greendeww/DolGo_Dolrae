@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../../shared/Api";
@@ -46,32 +45,35 @@ const Nickname = () => {
 export default Nickname;
 
 const StNickname = styled.div`
-  max-width: 428px;
-  width: 100%;
-  margin: 50px 30px;
-  padding-top: 50px;
+  padding-top: 100px;
+  margin: 0 auto;
+  width: 380px;
+
+  & div {
+    display: flex;
+  }
 
   & input {
-    width: 343px;
+    display: flex;
+    margin: 0 auto;
+    width: 320px;
     height: 52px;
     border: none;
     border-radius: 15px;
     padding-left: 15px;
   }
 
-  & div {
-    display: flex;
-  }
-
   & p {
     font-weight: 900;
     font-size: 23px;
-    margin-left: 15px;
+    /* margin-left: 15px; */
     margin-top: 10px;
+    padding-right: 5px;
   }
 
   & button {
     display: flex;
+    margin: 0 auto;
     width: 127px;
     height: 43px;
     font-weight: 700;

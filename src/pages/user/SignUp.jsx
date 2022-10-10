@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Header from "../../componenets/header/Header";
@@ -25,7 +24,6 @@ const SignUp = () => {
   };
 
   const [availableEmail, setAvailableEmail] = useState(false);
-  console.log(availableEmail);
 
   // email 중복확인
   const emailCheckHandler = async (e) => {
@@ -38,7 +36,6 @@ const SignUp = () => {
           "content-type": "application/json",
         },
       });
-      console.log(response);
 
       if (response.data !== "중복 이메일입니다.") {
         setAvailableEmail(true);
@@ -51,10 +48,10 @@ const SignUp = () => {
   };
 
   // 이메일 인증코드 입력값
-  const [code, setCode] = useState({ code: "" });
+  const [code, setCode] = useState({code:"", email:""});
 
   const codeChangeHandler = (e) => {
-    setCode({ code: e.target.value });
+    setCode({ ...code, code: e.target.value,  email: user.username });
   };
 
   // 이메일 인증코드 일치 여부

@@ -61,12 +61,12 @@ const List = () => {
     ));
   };
 
-  const init = () => {
-    let data = localStorage.getItem(THEME_CODE);
-    if (data !== null) setSelectedTheme(data);
-  };
+  // const init = () => {
+  //   let data = localStorage.getItem(THEME_CODE);
+  //   if (data !== null) setSelectedTheme(data);
+  // };
 
-  useEffect(init, []);
+  // useEffect(init, []);
 
   // 필터 초기화
   const initialization = (e) => {
@@ -367,28 +367,33 @@ const List = () => {
       <StLocation>
         <StList>
           <p>지역</p>
-          <div className="location-set">{Location()}</div>
+          <Locations className="location-set">{Location()}</Locations>
         </StList>
         <StList>
           <p>세부지역</p>
-          <div className="location-set">{DetailLocation()}</div>
+          <Locations className="location-set">
+            {DetailLocation()}
+          </Locations>
         </StList>
-        <button
-          onClick={() => {
-            if (
-              GET_THEME_NAME === "" ||
-              GET_AREA_NAME === "" ||
-              GET_SIGUNGU_NAME === ""
-            ) {
-              alert("모든 항목을 선택해주세요.");
-            } else {
-              dispatch(__getTheme(search));
-              navigate("/list");
-            }
-          }}
-        >
-          선택완료
-        </button>
+        <CompleteButton>
+          <button
+            onClick={() => {
+              if (
+                GET_THEME_NAME === null ||
+                GET_AREA_NAME === null ||
+                GET_SIGUNGU_NAME === null
+              ) {
+                alert("모든 항목을 선택해주세요.");
+                return;
+              } else {
+                dispatch(__getTheme(search));
+                navigate("/list");
+              }
+            }}
+          >
+            선택완료
+          </button>
+        </CompleteButton>
       </StLocation>
     </St>
   );
@@ -399,14 +404,12 @@ export default List;
 const St = styled.div`
   max-width: 428px;
   width: 100%;
-  position: relative;
-  top: 80px;
+  padding-top: 80px;
 `;
 
 const StCategory = styled.div`
   margin: 30px auto;
   & p {
-    font-style: normal;
     font-size: 25px;
     line-height: 40px;
     color: #bfb8b8;
@@ -415,18 +418,19 @@ const StCategory = styled.div`
 `;
 
 const Category = styled.div`
-  width: 428px;
+  margin-top: 25px;
+  cursor: pointer;
   & div {
-    cursor: pointer;
+    gap: 30px;
   }
 `;
 
 const Title = styled.div`
   display: flex;
+  width: 95%;
   justify-content: space-between;
 
   & button {
-    margin-right: 20px;
     background: #ffc0c0;
     border: none;
     border-radius: 12px;
@@ -434,10 +438,7 @@ const Title = styled.div`
     font-weight: bold;
     text-align: center;
     color: #ffffff;
-
-    &:hover {
-      cursor: pointer;
-    }
+    cursor: pointer;
   }
 `;
 
@@ -447,7 +448,7 @@ const StLocation = styled.div`
     color: white;
     border: none;
     border-radius: 12px;
-    width: 370px;
+    width: 95%;
     height: 50px;
     cursor: pointer;
     font-size: 20px;
@@ -459,9 +460,8 @@ const StLocation = styled.div`
 `;
 
 const StList = styled.div`
-  width: 428px;
+  width: 100%;
   margin-top: 50px;
-
   & p {
     font-style: normal;
     font-size: 25px;
@@ -470,4 +470,14 @@ const StList = styled.div`
     margin: 20px;
     margin-left: 30px;
   }
+`;
+
+const CompleteButton = styled.div`
+  display: flex;
+  padding-bottom: 20px;
+  margin: 0 auto;
+`;
+
+const Locations = styled.div`
+width: 85%;
 `;

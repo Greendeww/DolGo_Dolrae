@@ -5,7 +5,12 @@ import css from "../../css/header.css";
 import dolphin from "../../assert/header/logo_.png";
 import bell from "../../assert/header/bell.png";
 import { instance } from "../../shared/Api";
+<<<<<<< HEAD
 import Search from "./Search";
+=======
+import burger from "../../assert/header/burger.png";
+import { deleteCookie, getCookie } from "../../shared/Cookie";
+>>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
 
 const Header = () => {
   const navigate = useNavigate();
@@ -13,6 +18,7 @@ const Header = () => {
   const [modal, setModal] = useState(false);
 
   const username = localStorage.getItem("username");
+  const getToken = getCookie("ACCESS_TOKEN");
 
   const onModalHandler = (e) => {
     // e.preventDefault();
@@ -25,13 +31,13 @@ const Header = () => {
   //   event.currentTarget.classList.toggle("active-1");
   // });
 
-  window.onload = () => {
-    const menuTrigger = document.querySelector(".menu-trigger");
+  // window.onload = () => {
+  //   const menuTrigger = document.querySelector(".menu-trigger");
 
-    menuTrigger.addEventListener("click", (event) => {
-      event.currentTarget.classList.toggle("active-1");
-    });
-  };
+  //   menuTrigger.addEventListener("click", (event) => {
+  //     event.currentTarget.classList.toggle("active-1");
+  //   });
+  // };
 
   const logout = async () => {
     const response = await instance.post("/api/auth/member/logout");
@@ -47,18 +53,27 @@ const Header = () => {
     localStorage.removeItem("AREA_NAME");
     localStorage.removeItem("SIGUNGU_CODE");
     localStorage.removeItem("SIGUNGU_NAME");
+
+    deleteCookie("ACCESS_TOKEN")
+    deleteCookie("REFRESH_TOKEN")
   };
 
   return (
     <StHeader>
       <Top>
-        <Bell alt="" src={bell} />
+        <Bell alt="" src={bell} style={{ paddingLeft: "8px" }} />
         <img alt="" src={dolphin} onClick={() => navigate("/")} />
-        <div className="menu-trigger" onClick={onModalHandler}>
+        <img
+          alt=""
+          src={burger}
+          onClick={onModalHandler}
+          style={{ paddingBottom: "7px", paddingRight: "12px" }}
+        />
+        {/* <div className="menu-trigger" onClick={onModalHandler}>
           <span />
           <span />
           <span />
-        </div>
+        </div> */}
       </Top>
       {modal === true ? (
         <MenuContainer>
@@ -66,16 +81,16 @@ const Header = () => {
             <h2 onClick={() => navigate("/")}>홈</h2>
             <h2 onClick={() => navigate("/select")}>지역별 조회</h2>
             <h2 onClick={() => navigate("/random")}>랜덤 추천</h2>
-            {username !== null ? (
+            {getToken !== undefined ? (
               <>
                 <h2 onClick={() => navigate("/mypage")}>마이페이지</h2>
-                <h2 onClick={() => navigate("/RegistrationRequest")}>
+                <h2 onClick={() => navigate("/EditRequest")}>
                   장소 등록 요청
                 </h2>
               </>
             ) : null}
-            <Log>
-              {username === null ? (
+            <div>
+              {getToken === undefined ? (
                 <h2 onClick={() => navigate("/login")}>로그인 ＞</h2>
               ) : (
                 <h2
@@ -87,7 +102,7 @@ const Header = () => {
                   로그아웃 ＞
                 </h2>
               )}
-            </Log>
+            </div>
           </Menu>
         </MenuContainer>
       ) : null}
@@ -116,7 +131,8 @@ const StHeader = styled.div`
 const Top = styled.div`
   background-color: #abd4e2;
   height: 70px;
-  width: 430px;
+  max-width: 428px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   vertical-align: middle;
@@ -167,7 +183,7 @@ const MenuContainer = styled.div`
 const Menu = styled.div`
   position: absolute;
   left: 50%;
-  width: 216px;
+  width: 50%;
   float: right;
   height: 100vh;
   top: calc(0vh + 70px);
@@ -193,8 +209,4 @@ const Menu = styled.div`
       text-decoration: none;
     }
   }
-`;
-
-const Log = styled.div`
-
 `;

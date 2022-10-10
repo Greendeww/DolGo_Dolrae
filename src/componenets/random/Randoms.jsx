@@ -64,12 +64,12 @@ const Randoms = () => {
     });
   };
 
-
-    return (
+  return (
     <>
       <BoxDiv>
-        <Header/>
+        <Header />
         <Box>
+<<<<<<< HEAD
             <div>
                 <Img alt='logo' src={backgroundImg}/>
             </div>
@@ -77,19 +77,35 @@ const Randoms = () => {
                 <RandomBut><ButText onClick={() => random()}>랜덤</ButText></RandomBut>
                 <RandomBut><ButText onClick={()=>navigate('/rndlocation')}>지역 선택</ButText></RandomBut>
             </ButDiv>
+=======
+          <div>
+            <Img alt="logo" src={basicImg} />
+          </div>
+          <ButDiv>
+            <RandomBut>
+              <ButText onClick={() => random()}>전체 랜덤</ButText>
+            </RandomBut>
+            <RandomBut>
+              <ButText onClick={() => navigate("/rndlocation")}>
+                지역 선택 후 랜덤
+              </ButText>
+            </RandomBut>
+          </ButDiv>
+>>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
         </Box>
       </BoxDiv>
     </>
-    )
-}
+  );
+};
 
-export default Randoms
+export default Randoms;
 const BoxDiv = styled.div`
-    width: 100%;
-    max-width:428px;
-    margin: 0 auto;
+  width: 100%;
+  max-width: 428px;
+  margin: 0 auto;
 `;
 const Box = styled.div`
+<<<<<<< HEAD
     width: 100%;
     max-width:428px;
     margin: 0 auto;
@@ -99,6 +115,13 @@ const Box = styled.div`
       margin-bottom:5rem;
     }
 `
+=======
+  width: 100%;
+  max-width: 428px;
+  margin: 0 auto;
+  padding-top: 4.5rem;
+`;
+>>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
 const Img = styled.img`
   min-height:317px;
   max-height:317px;
@@ -129,7 +152,7 @@ const RandomBut = styled.button`
   margin: 20px auto;
 `;
 const ButText = styled.p`
-    font-weight:700;
-    line-height:0.6rem;
-    font-size:1rem;
-`
+  font-weight: 700;
+  line-height: 0.6rem;
+  font-size: 1rem;
+`;
