@@ -21,6 +21,7 @@ import RequestEdit from "../pages/manager/RequestPost";
 import RequestDetail from "../pages/manager/RequestDetail";
 import RequestPost from "../pages/manager/RequestEdit";
 import SearchPage from "../pages/tourist/SearchPage";
+import Maps from "../componenets/maps/Maps";
 
 function Router() {
   return (
@@ -48,6 +49,7 @@ function Router() {
         <Route path="/rndselect/:si/:area" element={<RandomSelect />} />
         <Route path="/rnd" element={<RandomList />} />
         <Route path="/search/:title" element={<SearchPage />} />
+        <Route path="/maps" element={<Maps />} />
       </Routes>
     </BrowserRouter>
   );
