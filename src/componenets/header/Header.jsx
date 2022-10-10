@@ -5,6 +5,7 @@ import css from "../../css/header.css";
 import dolphin from "../../assert/header/logo_.png";
 import bell from "../../assert/header/bell.png";
 import { instance } from "../../shared/Api";
+import Search from "./Search";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -90,6 +91,7 @@ const Header = () => {
           </Menu>
         </MenuContainer>
       ) : null}
+      <Search/>
     </StHeader>
   );
 };
