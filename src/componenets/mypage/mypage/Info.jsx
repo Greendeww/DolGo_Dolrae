@@ -69,7 +69,7 @@ const Email = styled.div`
 
 const Nickname = styled.div`
   margin: 20px 30px;
-  margin-top: 50px;
+  margin-top: 40px;
   & div {
     display: flex;
     justify-content: space-between;

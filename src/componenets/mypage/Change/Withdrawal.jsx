@@ -2,40 +2,43 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../../shared/Api";
+import { useRef } from "react";
 
 const Withdrawal = () => {
   const navigate = useNavigate();
   const username = localStorage.getItem("username");
-
-  const [req, setReq] = useState({
-    username: username,
-    content: "",
-  });
+  const memberOutRef = useRef();
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    if (req.content !== "회원탈퇴를 동의합니다." || req.content === "") {
+    const req = {
+      memberOut: memberOutRef.current.value,
+      email: username,
+    };
+    console.log(req);
+    if (
+      memberOutRef.current.value !== "회원탈퇴를 동의합니다" ||
+      memberOutRef.current.value === ""
+    ) {
       alert("위 문구를 올바르게 따라 작성해주세요.");
-      e.preventDefault();
+      return;
     } else {
-      const res = await instance.put("/api/auth/member/withdrawal", req);
-      console.log(res);
-      navigate("-1");
+      try {
+        const res = await instance.post("/api/auth/member/memberout", req);
+        alert(res.data);
+        console.log(res);
+        navigate(-1);
+      } catch (error) {
+        alert("'.'은 포함되지 않습니다.");
+      }
     }
   };
 
   return (
     <StWithdrawal>
       <h2>회원탈퇴</h2>
-      <p>회원탈퇴를 동의합니다.</p>
-      <input
-        placeholder="위 문구를 따라 작성해주세요."
-        name="content"
-        value={req.content}
-        onChange={(e) => {
-          setReq({ ...req, content: e.target.value });
-        }}
-      />
+      <p>회원탈퇴를 동의합니다</p>
+      <input placeholder="위 문구를 따라 작성해주세요." ref={memberOutRef} />
       <button onClick={onSubmitHandler}>탈퇴하기</button>
     </StWithdrawal>
   );
@@ -44,10 +47,10 @@ const Withdrawal = () => {
 export default Withdrawal;
 
 const StWithdrawal = styled.div`
-  max-width: 428px;
-  width: 100%;
-  margin: 50px 30px;
-  padding-top: 10px;
+  margin: 20px auto;
+  width: 380px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 
   & p {
     margin-top: 20px;
@@ -57,7 +60,7 @@ const StWithdrawal = styled.div`
   }
 
   & input {
-    width: 343px;
+    width: 350px;
     height: 52px;
     border: none;
     border-radius: 15px;

@@ -8,7 +8,7 @@ import { instance } from '../../shared/Api';
 import { useEffect } from 'react';
 
 const Like = ({id}) => {
-    console.log(id)
+    // console.log(id)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [like, setLike] = useState(false);
@@ -20,7 +20,7 @@ const Like = ({id}) => {
             }else{
                 const response = await instance.get(`/api/place/like/${id}`); 
                 setLike(response?.data)
-                console.log("작동")
+                // console.log("작동")
             }
         }   
 
@@ -70,7 +70,8 @@ const Liked = styled.span`
 `
 const UnLiked = styled.span`
     cursor:pointer;
-    color:black; 
+    color:#FF8585; 
+    font-weight: bold;
     font-size:2.1rem;
     line-height:1rem;
 `
