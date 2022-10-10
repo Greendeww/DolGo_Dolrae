@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../componenets/header/Header";
 import basicImg from "../../assert/image/basic.png";
 import { instance } from "../../shared/Api";
@@ -14,12 +14,15 @@ const List = () => {
   const page = useRef(0);
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const {title} = useParams();
 
   const fetch = useCallback(async () => {
     try {
       const data = await instance.get(
         `/api/place?theme=12&areaCode=1&sigunguCode=0&pageNum=${page.current}`
       );
+
+      console.log(data)
       setPosts((prevPosts) => [...prevPosts, ...data.data]);
       setHasNextPage(data.data.length === 10);
       if (data.data.length) {
