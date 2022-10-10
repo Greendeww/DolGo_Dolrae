@@ -49,6 +49,7 @@ const Review = ({ comment }) => {
   };
   return (
     <div>
+
       <CommentDiv>
         <p
           style={{
@@ -100,7 +101,7 @@ const CommentDiv = styled.div`
   margin-top: 45px;
   border-top: 3px solid #dedddd;
   text-align: start;
-  width: 90%;
+  width: 95%;
   justify-content: center;
   align-items: center;
 `;

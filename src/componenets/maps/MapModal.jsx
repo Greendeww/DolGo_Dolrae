@@ -57,7 +57,7 @@ const MapModal = ({pos, close, setIsOpen}) => {
                 style={{
                     cursor: "pointer",
                     textAlign:"end",
-                    position:"absolute"
+                    // position:"absolute"
                     // marginLeft:"3rem"
                 }}
                 onClick={close}
@@ -71,10 +71,11 @@ const MapModal = ({pos, close, setIsOpen}) => {
 export default MapModal
 const DescDiv = styled.div`
   display:flex;
-  width:98%;
+  width:99%;
   max-width:428px;
-  border: 3px solid #79B9D3;
+  border: 2px solid #79B9D3;
   margin:0 auto;
+  /* max-height:8.7rem; */
 `
 const Img = styled.img`
   width:100%;
@@ -89,6 +90,7 @@ const NoneImg =styled.img`
 const TotalDiv =styled.div`
     width:98%;
     padding-top:1rem;
+    /* display:flex; */
 `
 const TitleDIv = styled.div`
     margin-top:0.8rem;
@@ -110,9 +112,11 @@ const TemaP = styled.p`
 const StarDiv = styled.div`
     display:flex;
     margin-bottom:0.7rem;
+    align-items:center;
 `
 const StarP = styled.p`
-    line-height:1rem;
+    margin-top:0.2rem;
+    line-height:1.2rem;
     margin-left:0.2rem;
     font-weight:600;
 `

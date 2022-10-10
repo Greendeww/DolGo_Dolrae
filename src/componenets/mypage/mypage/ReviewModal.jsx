@@ -21,7 +21,8 @@ const ReviewModal = ({ item }) => {
     setModalOn(true);
   };
 
-  const dispatch = useDispatch();
+
+
   return (
     <ComDiv key={item.comment_id}>
       <div>

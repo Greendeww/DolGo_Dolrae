@@ -5,8 +5,38 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Header from "../header/Header";
 
+//랜덤이미지
+import img1 from "../../assert/random/img1.jpg"
+import img2 from "../../assert/random/img2.jpg"
+import img3 from "../../assert/random/img3.jpg"
+import img4 from "../../assert/random/img4.jpg"
+import img5 from "../../assert/random/img5.jpg"
+import img6 from "../../assert/random/img6.jpg"
+import img7 from "../../assert/random/img7.jpg"
+import img8 from "../../assert/random/img8.jpg"
+import img9 from "../../assert/random/img9.jpg"
+import img10 from "../../assert/random/img10.jpg"
+import img11 from "../../assert/random/img11.jpg"
+
 const Randoms = () => {
   const navigate = useNavigate();
+
+  const backgroundArr = [
+    img1,
+    img2,
+    img3,
+    img4,
+    img5,
+    img6,
+    img7,
+    img8,
+    img9,
+    img10,
+    img11,
+  ]
+
+  const randomIndex = Math.floor(Math.random() * backgroundArr.length);
+  const backgroundImg = backgroundArr[randomIndex];
 
   const random = (e) => {
     let timerInterval;
@@ -39,19 +69,13 @@ const Randoms = () => {
       <BoxDiv>
         <Header />
         <Box>
-          <div>
-            <Img alt="logo" src={basicImg} />
-          </div>
-          <ButDiv>
-            <RandomBut>
-              <ButText onClick={() => random()}>전체 랜덤</ButText>
-            </RandomBut>
-            <RandomBut>
-              <ButText onClick={() => navigate("/rndlocation")}>
-                지역 선택 후 랜덤
-              </ButText>
-            </RandomBut>
-          </ButDiv>
+            <div>
+                <Img alt='logo' src={backgroundImg}/>
+            </div>
+            <ButDiv>
+                <RandomBut><ButText onClick={() => random()}>랜덤</ButText></RandomBut>
+                <RandomBut><ButText onClick={()=>navigate('/rndlocation')}>지역 선택</ButText></RandomBut>
+            </ButDiv>
         </Box>
       </BoxDiv>
     </>
@@ -65,15 +89,23 @@ const BoxDiv = styled.div`
   margin: 0 auto;
 `;
 const Box = styled.div`
-  width: 100%;
-  max-width: 428px;
-  margin: 0 auto;
-  padding-top: 4.5rem;
-`;
+    width: 100%;
+    max-width:428px;
+    margin: 0 auto;
+    padding-top:4.5rem;
+    div{
+      margin-top:3rem;
+      margin-bottom:5rem;
+    }
+`
+
 const Img = styled.img`
+  min-height:317px;
+  max-height:317px;
   display: flex;
-  width: 400px;
-  margin: 70px auto;
+  width:100%;
+  max-width: 370px;
+  margin: 20px auto;
   border-radius: 15px;
 `;
 const ButDiv = styled.div`

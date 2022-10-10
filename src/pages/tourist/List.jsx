@@ -7,6 +7,7 @@ import { instance } from "../../shared/Api";
 import { useLocation } from "react-router";
 import { FaStar } from "react-icons/fa";
 
+
 const List = () => {
   const [posts, setPosts] = useState([]);
   const [hasNextPage, setHasNextPage] = useState(true);
@@ -22,23 +23,11 @@ const List = () => {
   const AREA_NAME = window.localStorage.getItem("AREA_NAME");
   const SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
 
-  // const returnHandler = (e) => {
-  //   e.preventDefault();
-  //   localStorage.removeItem("THEME_CODE");
-  //   localStorage.removeItem("THEME_NAME");
-  //   localStorage.removeItem("AREA_CODE");
-  //   localStorage.removeItem("AREA_NAME");
-  //   localStorage.removeItem("SIGUNGU_CODE");
-  //   localStorage.removeItem("SIGUNGU_NAME");
-  //   navigate("/select");
-  // };
-
   const fetch = useCallback(async () => {
     try {
       const data = await instance.get(
         `/api/place?theme=${THEME_CODE}&areaCode=${AREA_CODE}&sigunguCode=${SIGUNGU_CODE}&pageNum=${page.current}`
       );
-      console.log(data);
       setPosts((prevPosts) => [...prevPosts, ...data.data]);
       setHasNextPage(data.data.length === 10);
       if (data.data.length) {
@@ -48,24 +37,21 @@ const List = () => {
       console.error(err);
     }
   }, []);
-
+  console.log(posts)
   useEffect(() => {
     if (!observerTargetEl.current || !hasNextPage) return;
 
     const io = new IntersectionObserver((entries, observer) => {
-      // console.log(entries);
       if (entries[0].isIntersecting) {
         fetch();
       }
     });
     io.observe(observerTargetEl.current);
-    // console.log(io.observe(observerTargetEl.current));
 
     return () => {
       io.disconnect();
     };
   }, [fetch, hasNextPage]);
-  // console.log(posts);
 
   useEffect(() => {
     window.scrollTo(0, 0);

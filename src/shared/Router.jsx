@@ -16,10 +16,12 @@ import Random from "../pages/tourist/Random";
 import RndLocation from "../componenets/random/RndLocation";
 import RandomSelect from "../componenets/random/RandomSelect";
 import RandomList from "../componenets/random/RandomList";
+import SearchPage from "../pages/tourist/SearchPage";
 
 // mypage
 import MyPage from "../pages/mypage/MyPage";
 import MyPageChange from "../pages/mypage/MyPageChange";
+import Maps from "../componenets/maps/Maps";
 
 // request
 import EditRequest from "../pages/request/EditRequest";
@@ -30,6 +32,7 @@ import RequestList from "../pages/manager/RequestList";
 import RequestDetail from "../pages/manager/RequestDetail";
 import Post from "../pages/manager/Post";
 import Edit from "../pages/manager/Edit";
+
 
 function Router() {
   return (
@@ -56,6 +59,8 @@ function Router() {
         <Route path="/rndlocation" element={<RndLocation />} />
         <Route path="/rndselect/:si/:area" element={<RandomSelect />} />
         <Route path="/rnd" element={<RandomList />} />
+        <Route path="/search/:title" element={<SearchPage />} />
+        <Route path="/maps" element={<Maps />} />
       </Routes>
     </BrowserRouter>
   );

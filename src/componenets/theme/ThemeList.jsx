@@ -31,5 +31,5 @@ const ThemeList = ({ post }) => {
 export default ThemeList;
 const Wrap = styled.div`
   color: #bfb8b8;
-  margin-top: 2rem;
+  margin-top: 0.2rem;
 `;

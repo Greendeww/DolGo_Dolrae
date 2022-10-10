@@ -38,7 +38,7 @@ const Login = () => {
         localStorage.setItem("nickname", response.data.nickname);
 
         alert(`${response.data.nickname}님 환영합니다.`);
-        navigate("/");
+          navigate(-1);
       } catch (error) {
         alert("이메일 또는 비밀번호를 확인해주세요.");
       }

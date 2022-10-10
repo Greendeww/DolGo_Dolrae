@@ -8,6 +8,7 @@ const MypgReview = ({ item }) => {
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
 
+
   return (
     <>
       {modal === false ? (
@@ -18,7 +19,6 @@ const MypgReview = ({ item }) => {
             </PlaceTitle>
             <ContentTitle>{item.title}</ContentTitle>
           </Comment>
-
           {modal === true ? (
             <ReviewModal key={item.comment_id} item={item} />
           ) : null}
@@ -55,7 +55,24 @@ const Comment = styled.div`
 
   & div {
     align-items: center;
+    position: relative;
+    left: 15px;
+    top: 17px;
+    font-size: 20px;
+    width:45%;
+    p{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width:100%;
   }
+  }
+
+  &:hover {
+    cursor: pointer;
+
+  }
+
 `;
 
 const PlaceTitle = styled.div`

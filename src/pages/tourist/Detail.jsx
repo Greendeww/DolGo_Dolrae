@@ -7,7 +7,6 @@ import "swiper/css/scrollbar";
 import "swiper/css";
 import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import DetailForm from "../../componenets/details/DetailForm";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { _getComments } from "../../redux/modules/comment";
@@ -23,20 +22,11 @@ const Detail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [formOpen, setFormOpen] = useState(false);
   const [posts, setPosts] = useState("");
-  const [commentList, setCommentList] = useState([]);
-  const [currentComments, setCurrnetComments] = useState([]);
   const [page, setPage] = useState(1);
   const [postPerPage] = useState(5);
   const [number, setNumber] = useState(1);
-  const indexOfLastPost = page * postPerPage;
-  const indexOfFirstPage = indexOfLastPost - postPerPage;
-  // console.log(posts)
 
-  const close = () => {
-    setFormOpen(false);
-  };
   const { isLoading, error, comment } = useSelector((state) => state.comment);
 
   const fetch = async () => {
@@ -49,10 +39,6 @@ const Detail = () => {
     fetch();
   }, []);
 
-  useEffect(() => {
-    setCommentList([...comment].reverse());
-    setCurrnetComments(commentList.slice(indexOfFirstPage, indexOfLastPost));
-  }, [indexOfFirstPage, indexOfLastPost, page, comment]);
 
   if (isLoading) {
     return <div>로딩중....</div>;
@@ -62,9 +48,6 @@ const Detail = () => {
     return <div>{error.message}</div>;
   }
 
-  const handlePageChange = (page) => {
-    setPage(page);
-  };
   // const onLike = async (event) => {
   //   event.preventDefault();
   //   dispatch(onLikeDetail(id));
@@ -92,7 +75,7 @@ const Detail = () => {
               {/* {posts.likes} */}
               <StarThemeDiv>
                 <div style={{ display: "flex" }}>
-                  <FaStar style={{ color: "#fcc419", marginRight: "0.3rem" }} />
+                  <FaStar style={{ color: "#fcc419", marginRight: "0.3rem",marginTop:"-0.1rem" }} />
                   <span style={{ fontWeight: "600", lineHeight: "1rem" }}>
                     {posts.star}
                   </span>
@@ -196,18 +179,22 @@ const Detail = () => {
               </ALink>
             </SearchDiv>
           </SearchDate>
-          {formOpen === true ? <DetailForm close={close} /> : null}
-          <Review comment={comment} number={number} />
-          <div style={{ height: "20px" }} />
-        </Box>
-      </BoxDiv>
+          {/* {formOpen === true
+          ?<DetailForm close={close}/>
+          :null} */}
+          <ReviewDiv>
+          <Review comment={comment} number={number}/>
+          {/* <h1 style={{color:"white"}}>공백</h1> */}
+          </ReviewDiv>
+      </Box>
+    </BoxDiv>
     </>
-  );
-};
-
+  )
+}
 export default Detail;
 
-const BoxDiv = styled.div`
+const BoxDiv =styled.div`
+
   width: 100%;
   max-width: 428px;
   margin: 0 auto;
@@ -215,7 +202,6 @@ const BoxDiv = styled.div`
 const Box = styled.div`
   padding-top: 4rem;
   /* border:2px solid #79B9D3; */
-  /* font-family: "Noto Sans KR", sans-serif; */
 `;
 const Cover = styled.div`
   display: flex;
@@ -237,8 +223,12 @@ const ImgCover = styled.div`
   margin: 0 auto;
 `;
 const ThemeDiv = styled.div`
-  padding-top: 0.4rem;
+  padding-top: 0rem;
 `;
+const Div = styled.div`
+  padding: 0 15px;
+`;
+
 const TitleLikeDiv = styled.div`
   display: flex;
   justify-content: space-between;
@@ -311,6 +301,22 @@ const ImgLink = styled.img`
   width: 100%;
   height: 100%;
 `;
+// const CommentDiv = styled.div`
+//   border-top: 3px solid #522772;
+//   border-bottom: 3px solid #522772;
+//   text-align:start;
+//   margin-top:10px;
+// `
+// const FormBut = styled.div`
+//  display:flex;
+//  justify-content:flex-end;
+//  margin-top:60px;
+// `
+const ReviewDiv =styled.div`
+  width:95%;
+  margin:0 auto;
+`
 const Request = styled.span`
   cursor: pointer;
 `;
+

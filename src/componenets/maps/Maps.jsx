@@ -5,9 +5,9 @@ import { useState } from 'react';
 import { Map, MapMarker,MarkerClusterer, useMap, } from "react-kakao-maps-sdk";
 import { useNavigate } from 'react-router-dom';
 import { instance } from '../../shared/Api';
-import Header from '../header/Header';
 import MapInfo from './MapInfo';
-
+import styled from "styled-components";
+import Header from '../header/Header';
 
 const Maps = () => {
 const navigate = useNavigate();
@@ -30,8 +30,10 @@ const [isOpen, setIsOpen] = useState(false)
   
   return (
     <>
-    <div style={{margin:"0 auto", maxWidth:"428px"}}>
-      <h1 style={{textAligin:"center",alginItmes:"center"}}>지도</h1>
+    <MapDiv>
+      <Header/>
+      <MapBox>
+      {/* <h1 style={{textAligin:"center",alginItmes:"center"}}>지도</h1> */}
       <Map // 지도를 표시할 Container
         center={{
           // 지도의 중심좌표
@@ -56,9 +58,21 @@ const [isOpen, setIsOpen] = useState(false)
            })}
         </MarkerClusterer>
       </Map>
-    </div>
+      </MapBox>
+    </MapDiv>
     </>
   )
 }
 
 export default Maps
+
+const MapDiv = styled.div`
+  max-width:428px;
+  width:100%;
+  margin:0 auto;
+`
+const MapBox = styled.div`
+  max-width:428px;
+  width:100%;
+  margin-top:7.5rem;
+`
