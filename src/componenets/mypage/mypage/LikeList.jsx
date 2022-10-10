@@ -5,8 +5,6 @@ import { instance } from "../../../shared/Api";
 import Like from '../../like/Like';
 import PaginationsLike from "../../pagination/PaginationsLike";
 import basicImg from "../../../assert/image/basic.png";
-import dolphin from "../../../assert/detail/dolphin_test.png";
-
 
 const LikeList = () => {
   const navigate = useNavigate();
@@ -40,6 +38,7 @@ const LikeList = () => {
     <StLikeList>
       <h2>내가 찜한 장소</h2>
       <div>
+        <p onClick={() => navigate('/maps')}>지도로 보기</p>
         <div>
         {currentLike.map((item) => (
           <div key={item.id}>
