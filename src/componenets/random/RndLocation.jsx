@@ -315,43 +315,36 @@ const RndLocation = () => {
     console.log("작동");
   };
   return (
-    <>
-    <RndDiv>
-    <St>
-    <Header/>
-    <Title>
-          <button onClick={initialization}>필터 초기화 ↺</button>
-    </Title>
-      <StList>
-        <p>지역</p>
-        <div className="location-set">{Location()}</div>
-      </StList>
-      <StList>
-        <p>세부지역</p>
-        <div className="location-set">{DetailLocation()}</div>
-      </StList>
-      <button
-        onClick={() => {
-          if (
-            GET_AREA_NAME === null ||
-            GET_SIGUNGU_NAME === null
-          ) {
-            alert("모든 항목을 선택해주세요.");
-          } else {
-            onRandom()
-          }
-        }}
-      >
-        선택완료
-      </button>
-    </St>
-      <BackBut
-          onClick={() => navigate('/random')}
-        >
-          뒤로가기
-        </BackBut>
-    </RndDiv>
-    </>
+    <StRnd>
+      <RndDiv>
+        <St>
+          <Header />
+          <Title>
+            <button onClick={initialization}>필터 초기화 ↺</button>
+          </Title>
+          <StList style={{ marginTop: "-20px" }}>
+            <p>지역</p>
+            <div className="location-set">{Location()}</div>
+          </StList>
+          <StList>
+            <p>세부지역</p>
+            <div className="location-set">{DetailLocation()}</div>
+          </StList>
+          <button
+            onClick={() => {
+              if (GET_AREA_NAME === null || GET_SIGUNGU_NAME === null) {
+                alert("모든 항목을 선택해주세요.");
+              } else {
+                onRandom();
+              }
+            }}
+          >
+            선택완료
+          </button>
+        </St>
+        <BackBut onClick={() => navigate("/random")}>뒤로가기</BackBut>
+      </RndDiv>
+    </StRnd>
   );
 };
 
@@ -386,9 +379,8 @@ const St = styled.div`
 const Title = styled.div`
   display: flex;
   justify-content: space-between;
-
   & button {
-    margin-right: 20px;
+    width: 200px;
     background: #ffc0c0;
     border: none;
     border-radius: 12px;
@@ -396,27 +388,26 @@ const Title = styled.div`
     font-weight: bold;
     text-align: center;
     color: #ffffff;
-
     &:hover {
       cursor: pointer;
     }
   }
 `;
-const BackBut =styled.button`
-    background-color: #ffc0c0;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    width: 370px;
-    height: 50px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 24px;
-    display: block;
-    margin: 50px auto;
-    margin-top:-20px;
-`
+const BackBut = styled.button`
+  background-color: white;
+  border: 3px solid #abd4e2;
+  color: #abd4e2;
+  border-radius: 12px;
+  width: 370px;
+  height: 50px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  display: block;
+  margin: 0 auto;
+  margin-top: -20px;
+`;
 const StList = styled.div`
   width: 428px;
   margin-top: 40px;

@@ -34,37 +34,42 @@ const Randoms = () => {
     });
   };
 
-
-    return (
+  return (
     <>
       <BoxDiv>
-        <Header/>
+        <Header />
         <Box>
-            <div>
-                <Img alt='logo' src={basicImg}/>
-            </div>
-            <ButDiv>
-                <RandomBut><ButText onClick={() => random()}>랜덤</ButText></RandomBut>
-                <RandomBut><ButText onClick={()=>navigate('/rndlocation')}>지역 선택</ButText></RandomBut>
-            </ButDiv>
+          <div>
+            <Img alt="logo" src={basicImg} />
+          </div>
+          <ButDiv>
+            <RandomBut>
+              <ButText onClick={() => random()}>전체 랜덤</ButText>
+            </RandomBut>
+            <RandomBut>
+              <ButText onClick={() => navigate("/rndlocation")}>
+                지역 선택 후 랜덤
+              </ButText>
+            </RandomBut>
+          </ButDiv>
         </Box>
       </BoxDiv>
     </>
-    )
-}
+  );
+};
 
-export default Randoms
+export default Randoms;
 const BoxDiv = styled.div`
-    width: 100%;
-    max-width:428px;
-    margin: 0 auto;
+  width: 100%;
+  max-width: 428px;
+  margin: 0 auto;
 `;
 const Box = styled.div`
-    width: 100%;
-    max-width:428px;
-    margin: 0 auto;
-    padding-top:4.5rem;
-`
+  width: 100%;
+  max-width: 428px;
+  margin: 0 auto;
+  padding-top: 4.5rem;
+`;
 const Img = styled.img`
   display: flex;
   width: 400px;
@@ -92,7 +97,7 @@ const RandomBut = styled.button`
   margin: 20px auto;
 `;
 const ButText = styled.p`
-    font-weight:700;
-    line-height:0.6rem;
-    font-size:1rem;
-`
+  font-weight: 700;
+  line-height: 0.6rem;
+  font-size: 1rem;
+`;

@@ -19,12 +19,17 @@ export const instance = axios.create({
 // });
 
 // 토큰을 로컬 스토리지에 저장할 때
+// 토큰을 쿠키에 저장할 때
 instance.interceptors.request.use((config) => {
     const token = localStorage.getItem("ACCESS_TOKEN");
     const refreshToken = localStorage.getItem("REFRESH_TOKEN");
+    const cookieToken = getCookie("ACCESS_TOKEN");
+    const cookieRefreshToken = getCookie("REFRESH_TOKEN");
   
     config.headers.authorization = token;
     config.headers.refreshtoken = refreshToken;
+    config.headers.authorization = cookieToken;
+    config.headers.refreshtoken = cookieRefreshToken;
   
     return config;
   });

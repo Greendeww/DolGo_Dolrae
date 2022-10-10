@@ -36,7 +36,9 @@ const Password = () => {
 
   return (
     <StPassword>
-      <h2>비밀번호 변경</h2>
+      <div>
+        <h2>비밀번호 변경</h2>
+      </div>
       <div>
         <input
           type="password"
@@ -68,7 +70,9 @@ const Password = () => {
           }
         />
       </div>
-      <button onClick={onSubmitHandler}>변경하기</button>
+      <div>
+        <button onClick={onSubmitHandler}>변경하기</button>
+      </div>
     </StPassword>
   );
 };
@@ -76,13 +80,12 @@ const Password = () => {
 export default Password;
 
 const StPassword = styled.div`
-  max-width: 428px;
-  width: 100%;
-  margin: 50px 30px;
-  padding-top: 10px;
+  margin: 0 auto;
+  width: 380px;
+  padding-top: 30px;
 
   & input {
-    width: 343px;
+    width: 350px;
     height: 52px;
     border: none;
     border-radius: 15px;

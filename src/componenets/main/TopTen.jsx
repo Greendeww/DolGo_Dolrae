@@ -7,18 +7,20 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useNavigate } from "react-router-dom";
+import { FaStar } from "react-icons/fa";
 
 const TopTen = () => {
   const navigate = useNavigate();
 
   const settings = {
-    // dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     pauseOnHover: true,
+    arrow: false
   };
 
   const [foodList, setFoodList] = useState();
@@ -55,9 +57,11 @@ const TopTen = () => {
                 <>
                   <BasicImg src={basicImg} />
                   <BasicName>
-                    <div>{item.title}</div>
+                    <ItemTitle style={{display: "block"}} >{item.title}</ItemTitle>
                     <div>
-                      <Star>★</Star> {item.star}
+                    <FaStar
+                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
+                      /> {item.star}
                     </div>
                   </BasicName>
                 </>
@@ -69,9 +73,11 @@ const TopTen = () => {
                     </ImgBox>
                   </ImgShadow>
                   <Name>
-                    <div>{item.title}</div>
+                    <ItemTitle style={{ display: "block" }} >{item.title}</ItemTitle>
                     <div>
-                      <Star>★</Star> {item.star}
+                    <FaStar
+                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
+                      /> {item.star}
                     </div>
                   </Name>
                 </>
@@ -89,9 +95,11 @@ const TopTen = () => {
                 <>
                   <BasicImg src={basicImg} />
                   <BasicName>
-                    <div>{item.title}</div>
+                    <ItemTitle style={{ display: "block" }} >{item.title}</ItemTitle>
                     <div>
-                      <Star>★</Star> {item.star}
+                      <FaStar
+                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
+                      /> {item.star}
                     </div>
                   </BasicName>
                 </>
@@ -103,9 +111,11 @@ const TopTen = () => {
                     </ImgBox>
                   </ImgShadow>
                   <Name>
-                    <div>{item.title}</div>
+                    <ItemTitle style={{ display: "block" }} >{item.title}</ItemTitle>
                     <div>
-                      <Star>★</Star> {item.star}
+                    <FaStar
+                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
+                      /> {item.star}
                     </div>
                   </Name>
                 </>
@@ -123,9 +133,11 @@ const TopTen = () => {
                 <>
                   <BasicImg src={basicImg} />
                   <BasicName>
-                    <div>{item.title}</div>
+                    <ItemTitle style={{ display: "block" }} >{item.title}</ItemTitle>
                     <div>
-                      <Star>★</Star> {item.star}
+                    <FaStar
+                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
+                      /> {item.star}
                     </div>
                   </BasicName>
                 </>
@@ -137,9 +149,11 @@ const TopTen = () => {
                     </ImgBox>
                   </ImgShadow>
                   <Name>
-                    <div>{item.title}</div>
+                    <ItemTitle style={{ display: "block" }} >{item.title}</ItemTitle>
                     <div>
-                      <Star>★</Star> {item.star}
+                    <FaStar
+                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
+                      /> {item.star}
                     </div>
                   </Name>
                 </>
@@ -157,9 +171,11 @@ const TopTen = () => {
                 <>
                   <BasicImg src={basicImg} />
                   <BasicName>
-                    <div>{item.title}</div>
+                    <ItemTitle style={{ display: "block" }} >{item.title}</ItemTitle>
                     <div>
-                      <Star>★</Star> {item.star}
+                    <FaStar
+                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
+                      /> {item.star}
                     </div>
                   </BasicName>
                 </>
@@ -171,9 +187,11 @@ const TopTen = () => {
                     </ImgBox>
                   </ImgShadow>
                   <Name>
-                    <div>{item.title}</div>
+                    <ItemTitle style={{ display: "block" }}>{item.title}</ItemTitle>
                     <div>
-                      <Star>★</Star> {item.star}
+                    <FaStar
+                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
+                      />{item.star}
                     </div>
                   </Name>
                 </>
@@ -194,6 +212,7 @@ const StTopTen = styled.div`
   text-align: center;
   color: #79b9d3;
   padding-top: 30px;
+  margin: 0 auto;
 
   & h4 {
     font-size: 35px;
@@ -225,13 +244,13 @@ const Name = styled.div`
   position: relative;
   top: -55px;
   text-align: initial;
-  margin-left: 35px;
   color: #ffffff;
   font-size: 23px;
   line-height: 33px;
   margin-block-end: 0;
   margin-block-start: 0;
   gap: 20px;
+  padding: 0 30px;
 
   & div {
     display: flex;
@@ -244,7 +263,6 @@ const BasicName = styled.div`
   position: relative;
   top: -55px;
   text-align: initial;
-  margin-left: 35px;
   color: #414141;
   font-size: 23px;
   font-weight: bold;
@@ -252,6 +270,7 @@ const BasicName = styled.div`
   margin-block-end: 0;
   margin-block-start: 0;
   gap: 20px;
+  padding: 0 30px;
 
   & div {
     display: flex;
@@ -265,7 +284,7 @@ const Card = styled.div`
 
 const BasicImg = styled.img`
   position: relative;
-  width: 420px;
+  width: 100%;
   height: 280px;
   border-radius: 20px;
   &:hover {
@@ -276,7 +295,7 @@ const BasicImg = styled.img`
 
 const ImgShadow = styled.div`
   margin: 0 auto;
-  width: 420px;
+  width: 100%;
   height: 280px;
   border-radius: 20px;
   /* z-index: 3; */
@@ -300,12 +319,16 @@ const ImgBox = styled.div`
 const Img = styled.img`
   position: relative;
   width: 100%;
+  max-width: 428px;
   height: 280px;
   z-index: -2;
   border-radius: 20px;
 `;
 
-const Star = styled.p`
-  color: gold;
-  font-size: 23px;
+const ItemTitle = styled.div`
+  width: 280px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

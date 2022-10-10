@@ -112,16 +112,11 @@ const DetailForm = () => {
 
   const onAddComment = async (e) => {
     e.preventDefault();
-    if(
-      title === "" ||
-      content === "" ||
-      star === 0
-    ){
+    if (title === "" || content === "" || star === 0) {
       return alert("필수항목을 입력해주세요.");
     }
-    if(isContent !== true || isTitle !== true){
-      return alert('형식을 확인해주세요')
-
+    if (isContent !== true || isTitle !== true) {
+      return alert("형식을 확인해주세요");
     }
     let json = JSON.stringify(data);
     console.log(json);
@@ -157,15 +152,20 @@ const DetailForm = () => {
     }
   };
   return (
-   <StDetailForm>
-     <Box>
-      <BoxTitle>
-        <BoxTitleP>후기등록</BoxTitleP>
-        <BoxSpan><span>*</span>필수항목</BoxSpan>
-      </BoxTitle>
-      <LiTilte>
+    <StDetailForm>
+      <Header />
+      <Box>
+        <BoxTitle>
+          <BoxSpan>
+            <span>*</span>은 필수항목입니다.
+          </BoxSpan>
+        </BoxTitle>
+        <LiTilte>
           <PTitle>
-            제목<span style={{ color: "rgb(255, 80, 88)",fontWeight:"600"}}>*</span>
+            제목
+            <span style={{ color: "rgb(255, 80, 88)", fontWeight: "600" }}>
+              *
+            </span>
           </PTitle>
           <InputTit
             type="text"
@@ -209,44 +209,56 @@ const DetailForm = () => {
                 </div>
               ))}
             </ImgBox>
-            </div>
-          </LiImg>
-          <Wrap>
-              <RatingText>별점 <span style={{ color: "rgb(255, 80, 88)",fontWeight:"600" }}>*</span></RatingText>
-              <StarDiv>
-                <Stars>
-                    {[0,1,2,3,4].map((el, idx) => {
-                    return (
-                        <FaStar
-                        key={idx}
-                        size="50"
-                        onClick={() => handleStarClick(el)}
-                        className={clicked[el] && 'yellowStar'}
-                        />
-                    );
-                    })}
-                </Stars>
-              </StarDiv>
-          </Wrap>
-          <LiTilte>
-            <PTitle>
-              후기<span style={{ color: "rgb(255, 80, 88)",fontWeight:"600" }}>*</span>
-            </PTitle>
-            <InputCom
-              type="text"
-              name="content"
-              value={content}
-              onChange={onChangeContent}
-              placeholder="후기를 남겨주세요"
-            />
-          </LiTilte>
-          <Message>
-             {content.length > 0 && <p style={{color:'red'}}>{contentMessage}</p>}
-          </Message>
-          <ButDiv>
-                <AddBut onClick={onAddComment}>등록하기</AddBut>
-                <CancelBut onClick={() => navigate('/detail/'+id)}>취소하기</CancelBut>
-          </ButDiv>
+          </div>
+        </LiImg>
+        <Wrap>
+          <RatingText>
+            별점{" "}
+            <span style={{ color: "rgb(255, 80, 88)", fontWeight: "600" }}>
+              *
+            </span>
+          </RatingText>
+          <StarDiv>
+            <Stars>
+              {[0, 1, 2, 3, 4].map((el, idx) => {
+                return (
+                  <FaStar
+                    key={idx}
+                    size="50"
+                    onClick={() => handleStarClick(el)}
+                    className={clicked[el] && "yellowStar"}
+                  />
+                );
+              })}
+            </Stars>
+          </StarDiv>
+        </Wrap>
+        <LiTilte>
+          <PTitle>
+            후기
+            <span style={{ color: "rgb(255, 80, 88)", fontWeight: "600" }}>
+              *
+            </span>
+          </PTitle>
+          <InputCom
+            type="text"
+            name="content"
+            value={content}
+            onChange={onChangeContent}
+            placeholder="후기를 남겨주세요"
+          />
+        </LiTilte>
+        <Message>
+          {content.length > 0 && (
+            <p style={{ color: "red" }}>{contentMessage}</p>
+          )}
+        </Message>
+        <ButDiv>
+          <AddBut onClick={onAddComment}>작성하기</AddBut>
+          <CancelBut onClick={() => navigate("/detail/" + id)}>
+            취소하기
+          </CancelBut>
+        </ButDiv>
       </Box>
     </StDetailForm>
   );
@@ -255,13 +267,14 @@ const DetailForm = () => {
 export default DetailForm;
 
 const StDetailForm = styled.div`
-  width: 428px;
+  max-width: 428px;
+  width: 100%;
   margin: 0 auto;
 `;
 
 const Box = styled.div`
   margin: 0 20px;
-  margin-top: 80px;
+  margin-top: 90px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -269,20 +282,15 @@ const Box = styled.div`
   border-radius: 10px;
 `;
 const BoxTitle = styled.div`
-  display:flex;
-  justify-content:center;
-`
-const BoxTitleP =styled.p`
-  font-weight:700;
-  font-size:1.5rem;
-  margin-right:0.8rem;
-`
-const BoxSpan =styled.p`
-  color:rgb(255, 80, 88);
-  /* font-weight:600; */
-  text-align:center;
-  line-height:2.2rem;
-`
+  justify-content: center;
+`;
+
+const BoxSpan = styled.p`
+  color: rgb(255, 80, 88);
+  text-align: right;
+  line-height: 2rem;
+  padding-right: 10px;
+`;
 const LiImg = styled.li`
   width: 90%;
   /* display: flex; */
@@ -375,26 +383,25 @@ const Message = styled.div`
 const InputCom = styled.textarea`
   width: 373px;
   min-height: 163px;
-<<<<<<< HEAD
   padding: 0px 1rem;
   font-size: 14px;
   resize: none;
-  border : 3px solid #79B9D3;
-  border-radius:10px;
-  -webkit-box-sizing: border-box; 
-  -moz-box-sizing: border-box; 
-  box-sizing: border-box; 
-  ::-webkit-inner-spin-button, 
-  ::-webkit-outer-spin-button { -webkit-appearance: none; }
+  border: 3px solid #79b9d3;
+  border-radius: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  ::-webkit-inner-spin-button,
+  ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
 
-=======
   height: 100%;
   background-color: rgba(172, 212, 228, 0.35);
   border-radius: 15px;
   border: none;
   padding-top: 15px;
   padding-left: 10px;
->>>>>>> 2a94b6ea2b8ad9b23a736c3482abc959172708d3
 `;
 const Wrap = styled.div`
   display: flex;
@@ -440,9 +447,8 @@ const Stars = styled.div`
 `;
 const ButDiv = styled.div`
   display: flex;
-  margin: 0 auto;
+  margin: 40px auto;
   width: 80%;
-  margin-bottom: 20px;
 `;
 const AddBut = styled.button`
   cursor: pointer;

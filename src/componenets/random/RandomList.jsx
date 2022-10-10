@@ -281,7 +281,7 @@ const BoxDiv = styled.div`
     width: 100%;
     max-width:428px;
     margin: 0 auto;
-    border:2px solid #79B9D3;
+    /* border:2px solid #79B9D3; */
     line-height:40px;
     height:100%;
 `
@@ -317,7 +317,7 @@ const PTitle2 = styled.p`
 `;
 const SpanRandom = styled.span`
   font-size: 2.2rem;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 54.5px;
   color: #acd4e4;
 `;
