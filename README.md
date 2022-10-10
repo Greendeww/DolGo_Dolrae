@@ -1,76 +1,85 @@
-# 🐬 돌고돌래 🐬
+# 🐋돌고돌래🐋
 
-어딘가 여행을 떠나고 싶으신가요?
-테마별로, 지역별로, 그리고 랜덤 추천으로!
-돌고돌래가 도와드리겠습니다. 👍
+실전프로젝트 _ 1조
+Frontend GitHub : https://github.com/Greendeww/dolgo-dolrae <br/>
+Backend GitHub :  <br/>
+SA : https://www.notion.so/7-Tway-7f5f845972d24632882c9e52a356fc4a<br/>
+notion : https://www.notion.so/1-695787ebec1e4ecd91a12ff8ae70f7b7 <br/>
+웹 주소 : http://dolgo.site/<br/>
 
-<!-- # Getting Started with Create React App
+## 📅 제작 기간
+2022.09.16 ~ 2022.10.28
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 👪 구성원 & 담당 
 
-## Available Scripts
+|이름|포지션|담당 기능|
+|------|---|---|
+|서나연|Backend|여행지 관리|
+|강민승|Backend|후기 관리, 축제 관리|
+|류경현|Backend|페이지 관리|
+|박성수|Backend|회원 관리|
+|김소연|Frontend|회원 관리, 여행지 관리|
+|이윤재|Frontend|후기 관리, 여행지 관리|
+|최도규|Frontend|페이지 관리, 여행지 관리|
 
-In the project directory, you can run:
+## 🎞 시연 영상
 
-### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 📗 와이어프레임
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/18ddd018-946d-40e2-91e9-cdff846a827a/Untitled.png)
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/decad145-b3d0-4068-8191-26a17fcdf720/Untitled.png)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📘 ERD
+![엔티티 관계도.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7bc2fddd-3605-4b61-bc63-8829ad281370/%EC%97%94%ED%8B%B0%ED%8B%B0_%EA%B4%80%EA%B3%84%EB%8F%84.png)
 
-### `yarn test`
+## 📙 API
+![image](https://user-images.githubusercontent.com/110370672/190383061-d919245e-7f5c-477e-a2a2-d5b350400f18.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🖼 구현 이미지
 
-### `yarn build`
+## 👷 사용한 기술
+`Back-end`
+- Spring boot 2.7.3 JDK11
+- Github Action
+- AWS S3
+- AWS EC2
+- NginX
+- CodeDeploy
+- MySQL
+- lombok
+- Jpa
+- Spring security
+- H2
+- Mysql
+- Spring Web
+- Redis
+- Jwt
+- Tika
+- Marvin
+- email
+- kakao
+- json-simple
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+`Front-end`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Javascripts
+- React
+- HTML5
+- CSS
+- react-redux
+- react-router-dom
+- react-kakao-maps-sdk
+- react-icons
+- react-js-pagination
+- styled-components
+- react-redux @reduxjs/toolkit
+- axios
+- Visual Studio Code
+- Git
+- GitHub
+- kakao
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🏳‍🌈 기존 사이트와 다른 점
 
-### `yarn eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify) -->
+## 😡 Trouble Shooting
