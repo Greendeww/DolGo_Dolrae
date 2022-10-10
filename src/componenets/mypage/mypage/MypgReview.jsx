@@ -45,7 +45,7 @@ export default MypgReview;
 
 const Comment = styled.div`
   width: 410px;
-  min-height: 40px;
+  height: 50px;
   margin: 20px auto;
   background: #eef6fa;
   border-radius: 15px;
@@ -83,7 +83,6 @@ const PlaceTitle = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 18px;
-  padding-top: 10px;
   padding-left: 20px;
 `;
 
@@ -95,7 +94,6 @@ const ContentTitle = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 18px;
-  padding-top: 10px;
 `;
 
 const Open = styled.div`
