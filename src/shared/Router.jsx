@@ -20,6 +20,7 @@ import Administrator from "../pages/manager/Administrator";
 import RequestEdit from "../pages/manager/RequestPost";
 import RequestDetail from "../pages/manager/RequestDetail";
 import RequestPost from "../pages/manager/RequestEdit";
+import SearchPage from "../pages/tourist/SearchPage";
 
 function Router() {
   return (
@@ -46,6 +47,7 @@ function Router() {
         <Route path="/rndlocation" element={<RndLocation />} />
         <Route path="/rndselect/:si/:area" element={<RandomSelect />} />
         <Route path="/rnd" element={<RandomList />} />
+        <Route path="/search/:title" element={<SearchPage />} />
       </Routes>
     </BrowserRouter>
   );
