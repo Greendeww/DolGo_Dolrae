@@ -8,29 +8,36 @@ import kakao from "../../assert/login/kakao_login_medium_wide.png";
 import Swal from "sweetalert2";
 import { instance } from "../../shared/Api";
 import { useRef } from "react";
+import { setCookie } from "../../shared/Cookie";
 
 const Login = () => {
   const navigate = useNavigate();
-  const UsernameRef = useRef();
-  const PasswordRef = useRef();
+  const usernameRef = useRef();
+  const passwordRef = useRef();
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    // console.log(usernameRef.current.value)
     const user = {
-      username: UsernameRef.current.value,
-      password: PasswordRef.current.value,
+      username: usernameRef.current.value,
+      password: passwordRef.current.value,
     };
-    console.log(user);
-    if (UsernameRef.current.value === "" || PasswordRef.current.value === "") {
+    // console.log(user);
+    if (usernameRef.current.value === "" || passwordRef.current.value === "") {
       alert("모든 항목을 입력해주세요.");
       return;
     } else {
       try {
         const response = await instance.post("/api/member/login", user);
+
+        setCookie("ACCESS_TOKEN", response.headers.authorization, 0.5);
+        setCookie("REFRESH_TOKEN", response.headers.refreshtoken, 0.5);
+
         localStorage.setItem("ACCESS_TOKEN", response.headers.authorization);
         localStorage.setItem("REFRESH_TOKEN", response.headers.refreshtoken);
         localStorage.setItem("username", response.data.username);
         localStorage.setItem("nickname", response.data.nickname);
+
         alert(`${response.data.nickname}님 환영합니다.`);
         navigate("/");
       } catch (error) {
@@ -53,7 +60,7 @@ const Login = () => {
                 <input
                   type="text"
                   placeholder="이메일을 입력해주세요."
-                  ref={UsernameRef}
+                  ref={usernameRef}
                 />
               </label>
             </Input>
@@ -65,7 +72,7 @@ const Login = () => {
                 <input
                   type="password"
                   placeholder="비밀번호를 입력해주세요."
-                  ref={PasswordRef}
+                  ref={passwordRef}
                 />
               </label>
             </Input>
@@ -88,7 +95,7 @@ const Login = () => {
         <SignUp>
           <p>아직 돌고돌래 회원이 아니세요?</p>
           <p>
-            <b onClick={() => navigate("/signup")}>회원가입</b>
+            <b onClick={() => navigate("/signup")}>회원가입 ＞</b>
           </p>
         </SignUp>
       </StLogin>
@@ -112,7 +119,7 @@ const StLogin = styled.div`
     margin-bottom: 10px;
   }
   & input {
-    width: 373px;
+    width: 98%;
     height: 52px;
     background-color: rgba(172, 212, 228, 0.35);
     border-radius: 15px;
@@ -125,7 +132,7 @@ const StLogin = styled.div`
     color: white;
     border: none;
     border-radius: 12px;
-    width: 370px;
+    width: 95%;
     height: 50px;
     cursor: pointer;
     font-weight: 700;
@@ -149,7 +156,7 @@ const Social = styled.div`
   & img {
     display: block;
     margin: 20px auto;
-    width: 370px;
+    width: 95%;
     height: 50px;
 
     &:hover {
