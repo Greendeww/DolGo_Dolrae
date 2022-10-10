@@ -104,7 +104,7 @@ const Header = () => {
           </Menu>
         </MenuContainer>
       ) : null}
-      <Search/>
+      {/* <Search/> */}
     </StHeader>
   );
 };
