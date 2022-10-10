@@ -11,21 +11,25 @@ import Withdrawal from "../../componenets/mypage/Change/Withdrawal";
 
 function MyPageChange() {
   return (
-    <StChange>
+    <St>
       <Header />
-      <Nickname />
-      <Password />
-      <Withdrawal />
-    </StChange>
+      <StChange>
+        <Nickname />
+        <Password />
+        <Withdrawal />
+      </StChange>
+    </St>
   );
 }
 
 export default MyPageChange;
 
-const StChange = styled.div`
+const St = styled.div`
   max-width: 428px;
   width: 100%;
   margin: 0 auto;
+`;
+
+const StChange = styled.div`
   background-color: #eef6fa;
-  height: 1000px;
 `;
