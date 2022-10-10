@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../shared/Api";
 import Slider from "react-slick";
 
 const Festival = () => {
-  const navigate = useNavigate();
 
   const settings = {
     // dots: true,

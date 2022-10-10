@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
 import { KAKAO_AUTH_URL } from "../../shared/OAuth";
 import Header from "../../componenets/header/Header";
 import kakao from "../../assert/login/kakao_login_medium_wide.png";
