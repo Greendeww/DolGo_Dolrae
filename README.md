@@ -26,14 +26,14 @@ notion : https://www.notion.so/1-695787ebec1e4ecd91a12ff8ae70f7b7 <br/>
 
 
 ## 📗 와이어프레임
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/18ddd018-946d-40e2-91e9-cdff846a827a/Untitled.png)
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/decad145-b3d0-4068-8191-26a17fcdf720/Untitled.png)
 
 ## 📘 ERD
-![엔티티 관계도.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7bc2fddd-3605-4b61-bc63-8829ad281370/%EC%97%94%ED%8B%B0%ED%8B%B0_%EA%B4%80%EA%B3%84%EB%8F%84.png)
+![image](https://user-images.githubusercontent.com/110370672/194831500-fac710cc-8da5-4d68-b0a3-c827b7ecc098.png)
 
 ## 📙 API
-<!-- ![image](https://user-images.githubusercontent.com/110370672/190383061-d919245e-7f5c-477e-a2a2-d5b350400f18.png) -->
+![API](https://user-images.githubusercontent.com/110370672/194831335-f11ce610-7e4c-40a7-b004-b3562a319d35.png)
+
+
 
 ## 🖼 구현 이미지
 
@@ -72,17 +72,13 @@ notion : https://www.notion.so/1-695787ebec1e4ecd91a12ff8ae70f7b7 <br/>
 - react-icons
 - react-js-pagination
 - styled-components
+- sweetalert 
+- slick-slider
 - react-redux @reduxjs/toolkit
 - axios
 - Visual Studio Code
 - Git
 - GitHub
 - kakao
-- styled-component
-- sweetalert 
-- slick-slider
-
-## 🏳‍🌈 기존 사이트와 다른 점
-
 
 ## 😡 Trouble Shooting
