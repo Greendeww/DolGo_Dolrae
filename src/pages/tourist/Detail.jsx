@@ -200,7 +200,7 @@ const BoxDiv =styled.div`
   margin: 0 auto;
 `;
 const Box = styled.div`
-  padding-top: 4rem;
+  padding-top: 7.4rem;
   /* border:2px solid #79B9D3; */
 `;
 const Cover = styled.div`

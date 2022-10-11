@@ -54,7 +54,7 @@ const List = () => {
 
   return (
     <StList>
-      <Header />
+      <Header title={title}/>
       <Content>
         {posts &&
           posts.map((list) => (

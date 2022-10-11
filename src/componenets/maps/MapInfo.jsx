@@ -16,6 +16,7 @@ const MapInfo = ({pos}) => {
     setIsOpen(false)
   }
   
+  
   const EventMarkerContainer = ({ position, content }) => {
     const map = useMap()
     const [isVisible, setIsVisible] = useState(false)
@@ -36,9 +37,6 @@ const MapInfo = ({pos}) => {
   }
   return (
     <>    
-      {isOpen === false
-      ? 
-      <>
         <EventMarkerContainer
         key={`${pos.lat}-${pos.lng}`}
         position={{
@@ -52,24 +50,6 @@ const MapInfo = ({pos}) => {
       {isOpen && (
         <MapModal pos={pos} close={close}/> 
       )} 
-      </>
-      : 
-      <>
-        <EventMarkerContainer
-        key={`${pos.lat}-${pos.lng}`}
-        position={{
-          lat: pos.lat,
-          lng: pos.lng,
-        }}
-        content={pos.lat}
-        onClick={(marker) => {map.panTo(marker.getPosition());setIsOpen(false)}}
-      >
-      </EventMarkerContainer>  
-         {isOpen && (
-          <MapModal pos={pos} close={close}/> 
-        )} 
-        </> 
-      }
     </>
   )
 }

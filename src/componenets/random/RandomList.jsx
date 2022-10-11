@@ -286,14 +286,13 @@ const BoxDiv = styled.div`
     height:100%;
 `
 const Box = styled.div`
-    padding-top:2.5rem;
+    padding-top:5rem;
     width: 100%;
     max-width:428px;
     margin: 0 auto;
     /* border:2px solid #79B9D3; */
     line-height:40px;
     height:100%;
-
 `;
 const LocDiv = styled.div`
   width: 90%;

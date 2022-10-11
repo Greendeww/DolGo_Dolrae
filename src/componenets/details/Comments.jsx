@@ -125,11 +125,8 @@ const CommentDiv = styled.div`
   /* cursor:pointer;
   margin-top:10px;
   text-align:center; */
-<<<<<<< HEAD
-  background-color:#EBF8FF;
-=======
   background-color: #eef6fa;
->>>>>>> 884b2218cf86fa79c5a8028602d4770bb132f4bc
+
   /* border:5px solid #EBF8FF; */
   border-radius: 20px;
   margin-top: 0.8rem;

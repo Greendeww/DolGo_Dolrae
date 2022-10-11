@@ -196,7 +196,7 @@ const BoxDiv = styled.div`
     height:100%;
 `
 const Box = styled.div`
-    padding-top:2.5rem;
+    padding-top:5rem;
     width: 100%;
     max-width:428px;
     margin: 0 auto;
