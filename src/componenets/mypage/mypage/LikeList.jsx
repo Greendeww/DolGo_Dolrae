@@ -120,6 +120,7 @@ const MapsDiv =styled.div`
   margin:0 auto;
   padding-bottom:1rem;
   display:flex;
+
   p{cursor: pointer;
     font-weight:700;
     font-size:1.2rem;
@@ -129,8 +130,9 @@ const MapsDiv =styled.div`
   }
 `
 const Triangle =styled.span`
+    display:inline-block;
     transition: transform 200ms ease-out 0s;
-    transform: rotateZ(90deg);
+    transform: rotateZ(0deg);
 `
 const MapOpen = styled.div`
   
