@@ -5,11 +5,13 @@ import { instance } from "../../../shared/Api";
 import Like from "../../like/Like";
 import PaginationsLike from "../../pagination/PaginationsLike";
 import basicImg from "../../../assert/image/basic.png";
+import Maps from "../../maps/Maps";
 
 
 const LikeList = () => {
   const navigate = useNavigate();
 
+  const [modal, setModal] = useState(false);
   const [list, setList] = useState([]);
   const [likeList, setLikeList] = useState([...list].reverse());
   const [currentLike, setCurrnetLike] = useState([]);
@@ -38,11 +40,24 @@ const LikeList = () => {
   return (
     <StLikeList>
       <h2>찜한 장소</h2>
+      {modal === false
+      ?
+      <MapsDiv>
+        <p onClick={() => setModal(true)}>지도로 보기<Triangle>▶</Triangle></p>
+      </MapsDiv>
+      :
+      <MapsDiv>
+        <p onClick={() => setModal(false)}>지도로 보기<Triangle>▼</Triangle></p>
+      </MapsDiv>
+      }
+      {modal === true
+      ? <MapOpen><Maps/></MapOpen> 
+      : null
+      }
       <div>
-        <p onClick={() => navigate('/maps')}>지도로 보기</p>
         <div>
         {currentLike.map((item) => (
-          <div key={item.id}>
+          <ImgDiv key={item.id}>
             {item.image === null
             ? <img
                 alt=""
@@ -61,7 +76,7 @@ const LikeList = () => {
                 <Like id={item.id} />
               </span>
             </Title>
-        </div>
+        </ImgDiv>
       ))}
       </div> 
          <PaginationsLike
@@ -97,10 +112,33 @@ const StLikeList = styled.div`
   }
 
   & div > div {
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
   }
 `;
+const MapsDiv =styled.div`
+  width:95.5%;
+  margin:0 auto;
+  padding-bottom:1rem;
+  display:flex;
+  p{cursor: pointer;
+    font-weight:700;
+    font-size:1.2rem;
+  }
+  &:hover{
+    color:#abd4e2;
+  }
+`
+const Triangle =styled.span`
+    transition: transform 200ms ease-out 0s;
+    transform: rotateZ(90deg);
+`
+const MapOpen = styled.div`
+  
+`
+const ImgDiv =styled.div`
+  margin-top:30px;
 
+`
 const Title = styled.div`
   margin: 0 15px;
   display: flex;

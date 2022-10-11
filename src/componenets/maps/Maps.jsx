@@ -12,7 +12,7 @@ import Header from '../header/Header';
 const Maps = () => {
 const navigate = useNavigate();
 const [positions, setPositions] = useState([]);
-const [isOpen, setIsOpen] = useState(false)
+
 // const fetch = async () => {
 //     const response = await axios.get(`http://localhost:3001/positions`); 
 //     setPositions(response.data)
@@ -31,7 +31,6 @@ const [isOpen, setIsOpen] = useState(false)
   return (
     <>
     <MapDiv>
-      <Header/>
       <MapBox>
       {/* <h1 style={{textAligin:"center",alginItmes:"center"}}>지도</h1> */}
       <Map // 지도를 표시할 Container
@@ -68,11 +67,12 @@ export default Maps
 
 const MapDiv = styled.div`
   max-width:428px;
-  width:100%;
+  width:95.5%;
   margin:0 auto;
 `
 const MapBox = styled.div`
   max-width:428px;
   width:100%;
-  margin-top:7.5rem;
+  transition: transform 200ms ease-out 0s;
+  /* margin-top:7.5rem; */
 `

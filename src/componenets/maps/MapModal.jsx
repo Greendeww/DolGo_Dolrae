@@ -30,14 +30,14 @@ const MapModal = ({pos, close, setIsOpen}) => {
 
     return (
         <>
-            <DescDiv ref={modalRef}>
-                {pos.image === null
-                ?<NoneImg alt='mapsImage' src={dolphin}/>
-                :<Img alt='mapsImage' src={pos.image}/> 
-                }
-                <TotalDiv>
-                    <div style={{ padding: "5px", color: "#000" }}>
-                        <TitleDIv>
+          <DescDiv ref={modalRef}>
+            {pos.image === null
+            ?<NoneImg alt='mapsImage' src={dolphin}/>
+            :<Img alt='mapsImage' src={pos.image}/> 
+            }
+            <TotalDiv>
+                <div style={{ padding: "5px", color: "#000" }}>
+                    <TitleDIv>
                             <TitleB>{pos.title}</TitleB>
                         </TitleDIv>
                         <StarDiv>
@@ -63,34 +63,32 @@ const MapModal = ({pos, close, setIsOpen}) => {
                 onClick={close}
                     />
             </DeleteDiv>
-            </DescDiv>
+          </DescDiv>
         </>
     )
 }
 
 export default MapModal
 const DescDiv = styled.div`
-  display:flex;
-  width:99%;
-  max-width:428px;
-  border: 2px solid #79B9D3;
-  margin:0 auto;
-  /* max-height:8.7rem; */
+    display:flex;
+    width:99%;
+    max-width:428px;
+    border: 2px solid #79B9D3;
+    margin:0 auto;
 `
 const Img = styled.img`
-  width:100%;
-  max-width:10rem;
-  height:8.7rem;
+    width:100%;
+    max-width:10rem;
+    height:8.7rem;
 `
 const NoneImg =styled.img`
-  width:100%;
-  max-width:10rem;
-  height:8.7rem;
+    width:100%;
+    max-width:10rem;
+    height:8.7rem;
 `
 const TotalDiv =styled.div`
     width:98%;
     padding-top:1rem;
-    /* display:flex; */
 `
 const TitleDIv = styled.div`
     margin-top:0.8rem;
