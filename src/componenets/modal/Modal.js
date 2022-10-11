@@ -15,13 +15,6 @@ const Modal = ({ onClose, comment}) => {
             <PageDel>
               <p>정말 삭제하시겠습니까?</p>
               <Button>
-                <Bunbut
-                  onClick={() => {
-                    onClose(false);
-                  }}
-                >
-                  취소
-                </Bunbut>
                 <Jimbut
                   onClick={() => {
                     dispatch(_deleteComment(comment.comment_id));
@@ -29,6 +22,13 @@ const Modal = ({ onClose, comment}) => {
                 >
                   삭제
                 </Jimbut>
+                <Bunbut
+                  onClick={() => {
+                    onClose(false);
+                  }}
+                >
+                  취소
+                </Bunbut>
               </Button>
             </PageDel>
           </DivBack>

@@ -23,8 +23,6 @@ const Detail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [posts, setPosts] = useState("");
-  const [page, setPage] = useState(1);
-  const [postPerPage] = useState(5);
   const [number, setNumber] = useState(1);
 
   const { isLoading, error, comment } = useSelector((state) => state.comment);
@@ -223,7 +221,7 @@ const ImgCover = styled.div`
   margin: 0 auto;
 `;
 const ThemeDiv = styled.div`
-  padding-top: 0rem;
+  padding-top: 1.5rem;
 `;
 const Div = styled.div`
   padding: 0 15px;
