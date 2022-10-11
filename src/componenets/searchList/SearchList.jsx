@@ -5,7 +5,7 @@ import Header from "../../componenets/header/Header";
 import basicImg from "../../assert/image/basic.png";
 import { instance } from "../../shared/Api";
 import { useLocation } from "react-router";
-
+import { FaStar } from "react-icons/fa";
 
 const List = () => {
   const [posts, setPosts] = useState([]);
@@ -18,21 +18,20 @@ const List = () => {
 
   const fetch = useCallback(async () => {
     try {
-      const data = await instance.get(
-        `/api/place?theme=12&areaCode=1&sigunguCode=0&pageNum=${page.current}`
+      const {data} = await instance.get(
+        `/api/place/search?keyword=${title}&pageNum=${page.current}`
       );
 
-      console.log(data)
-      setPosts((prevPosts) => [...prevPosts, ...data.data]);
-      setHasNextPage(data.data.length === 10);
-      if (data.data.length) {
+      console.log(data.content)
+      setPosts((prevPosts) => [...prevPosts, ...data.content]);
+      setHasNextPage(data.content.length === 10);
+      if (data.content.length) {
         page.current += 1;
       }
     } catch (err) {
       console.error(err);
     }
   }, []);
-  console.log(posts)
   useEffect(() => {
     if (!observerTargetEl.current || !hasNextPage) return;
 
@@ -58,16 +57,21 @@ const List = () => {
       <Content>
         {posts &&
           posts.map((list) => (
-            <Card key={list.id} onClick={() => navigate(`/detail/${list.id}`)}>
+            <Card key={list.placeId} onClick={() => navigate(`/detail/${list.placeId}`)}>
               {list.image == null ? (
                 <>
                   <BasicImg src={basicImg} />
-                  <BasicName>
-                    <div>{list.title}</div>
-                    <div>
-                      <Star>★</Star> {list.star}
+                  <Name>
+                    <ListTitle style={{ color: "#414141" }}>
+                      {list.title}
+                    </ListTitle>
+                    <div style={{ display: "flex" }}>
+                      <FaStar
+                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
+                      />
+                      {list.star}
                     </div>
-                  </BasicName>
+                  </Name>
                 </>
               ) : (
                 <>
@@ -77,9 +81,11 @@ const List = () => {
                     </ImgBox>
                   </ImgShadow>
                   <Name>
-                    <div>{list.title}</div>
-                    <div>
-                      <Star>★</Star> {list.star}
+                    <ListTitle>{list.title}</ListTitle>
+                    <div style={{ display: "flex" }}>
+                    <FaStar
+                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
+                      /> {list.star}
                     </div>
                   </Name>
                 </>
@@ -125,7 +131,8 @@ const Title = styled.div`
   margin: 40px 0;
   top: 30px;
   height: 150px;
-  width: 428px;
+  max-width: 428px;
+  width: 100%;
   z-index: 1;
   background-color: #ffffff;
 
@@ -164,12 +171,12 @@ const Card = styled.div`
 
 const Content = styled.div`
   position: relative;
-  top: 180px;
+  top: 160px;
 `;
 
 const BasicImg = styled.img`
   position: relative;
-  width: 420px;
+  width: 100%;
   height: 234px;
   border-radius: 20px;
   &:hover {
@@ -221,33 +228,12 @@ const Name = styled.div`
   margin-block-end: 0;
   margin-block-start: 0;
   gap: 20px;
-
-  & div {
-    display: flex;
-    gap: 5px;
-  }
 `;
 
-const BasicName = styled.div`
-  display: flex;
-  position: relative;
-  top: -55px;
-  text-align: initial;
-  margin-left: 35px;
-  color: #414141;
-  font-size: 23px;
-  line-height: 33px;
-  margin-block-end: 0;
-  margin-block-start: 0;
-  gap: 20px;
-
-  & div {
-    display: flex;
-    gap: 5px;
-  }
-`;
-
-const Star = styled.p`
-  color: gold;
-  font-size: 23px;
+const ListTitle = styled.div`
+  display: block;
+  width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
