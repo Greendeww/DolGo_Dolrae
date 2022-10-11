@@ -6,15 +6,16 @@ import Star from "../star/Star";
 import DetailRevise from "./DetailRevise";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-
 import styled from "styled-components";
 import ModalPortal from "../modal/ModalPortal";
 import Modal from "../modal/Modal";
+import { getCookie } from "../../shared/Cookie";
 
 const CommentModal = ({ comment }) => {
   console.log(comment);
   const [modalOn, setModalOn] = useState(false);
   const nickname = localStorage.getItem("nickname");
+  const getToken = getCookie("ACCESS_TOKEN");
   console.log(modalOn);
   const navigate = useNavigate();
 
@@ -23,6 +24,11 @@ const CommentModal = ({ comment }) => {
   };
   const deleteModal = () => {
     setModalOn(true);
+  };
+  const noLogin = (e) => {
+    e.preventDefault();
+    alert("로그인이 필요한 서비스 입니다");
+    navigate("/login");
   };
 
   return (
@@ -40,7 +46,12 @@ const CommentModal = ({ comment }) => {
             <p style={{ marginTop: "20px", lineHeight: "28px" }}>
               {comment.content}
             </p>
-            {nickname === comment.nickname ? (
+            {getToken === undefined
+              ? <ModalPortal>
+              {modalOn && <Modal onClose={handleModal} comment={comment} />}
+              </ModalPortal>
+              :<div>
+              {nickname === comment.nickname ? (
               <ButtonDiv>
                 <ReviseBut onClick={deleteModal}>삭제하기</ReviseBut>
                 <DelBut
@@ -53,13 +64,15 @@ const CommentModal = ({ comment }) => {
                     )
                   }
                 >
-                  수정하기
-                </DelBut>
-              </ButtonDiv>
-            ) : null}
-            <ModalPortal>
-              {modalOn && <Modal onClose={handleModal} comment={comment} />}
-            </ModalPortal>
+                    수정하기
+                  </DelBut>
+                </ButtonDiv>
+              ) : null}
+              <ModalPortal>
+                {modalOn && <Modal onClose={handleModal} comment={comment} />}
+              </ModalPortal>
+              </div>
+              }
           </div>
         </BoxDiv>
       </ComDiv>

@@ -11,6 +11,7 @@ import Header from "../header/Header";
 const DetailForm = () => {
   const navigate = useNavigate();
 
+  
   const { id } = useParams();
   console.log(id);
   const [content, setContent] = useState("");
