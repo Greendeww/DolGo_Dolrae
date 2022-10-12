@@ -76,7 +76,7 @@ const StAdministrator = styled.div`
 `;
 
 const Container = styled.div`
-  padding-top: 100px;
+  padding-top: 160px;
 `;
 
 const Title = styled.div`
