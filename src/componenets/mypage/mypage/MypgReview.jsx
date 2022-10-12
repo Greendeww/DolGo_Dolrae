@@ -6,7 +6,6 @@ import ReviewModal from "./ReviewModal";
 const MypgReview = ({ item }) => {
   const [modal, setModal] = useState(false);
 
-
   return (
     <>
       {modal === false ? (
@@ -29,7 +28,7 @@ const MypgReview = ({ item }) => {
             </OpenTitle>
           </Open>
           <Line />
-            <OpenContent>{item.title}</OpenContent>
+          <OpenContent>{item.title}</OpenContent>
           {modal === true ? (
             <ReviewModal key={item.comment_id} item={item} />
           ) : null}
@@ -42,8 +41,8 @@ const MypgReview = ({ item }) => {
 export default MypgReview;
 
 const Comment = styled.div`
-  width: 410px;
-  min-height: 40px;
+  width: 90%;
+  height: 50px;
   margin: 20px auto;
   background: #eef6fa;
   border-radius: 15px;
@@ -57,47 +56,43 @@ const Comment = styled.div`
     left: 15px;
     top: 17px;
     font-size: 20px;
-    width:45%;
-    p{
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    width:100%;
-  }
+    width: 45%;
+    p {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      width: 100%;
+    }
   }
 
   &:hover {
     cursor: pointer;
-
   }
-
 `;
 
 const PlaceTitle = styled.div`
   display: block;
-  width: 200px;
+  width: 60%;
   height: 20px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 18px;
-  padding-top: 10px;
-  padding-left: 20px;
+  padding-left: 10px;
 `;
 
 const ContentTitle = styled.div`
   display: block;
-  width: 150px;
+  width: 60%;
   height: 20px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 18px;
-  padding-top: 10px;
 `;
 
 const Open = styled.div`
-  width: 400px;
+  width: 90%;
   min-height: 40px;
   margin: 20px auto;
   background: #eef6fa;
@@ -114,20 +109,20 @@ const Open = styled.div`
 const St = styled.div`
   background: #eef6fa;
   border-radius: 15px;
-  width: 410px;
+  max-width: 428px;
   margin: 0 auto;
+  width: 90%;
 `;
 
 const OpenTitle = styled.div`
   display: block;
-  width: 400px;
   height: 20px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 18px;
   padding-top: 20px;
-  padding-left: 15px;
+  padding-left: 8px;
 `;
 
 const OpenContent = styled.div`

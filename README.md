@@ -27,12 +27,12 @@ notion : https://www.notion.so/1-695787ebec1e4ecd91a12ff8ae70f7b7 <br/>
 
 ## 📗 와이어프레임
 
-
 ## 📘 ERD
 ![image](https://user-images.githubusercontent.com/110370672/194831500-fac710cc-8da5-4d68-b0a3-c827b7ecc098.png)
 
 ## 📙 API
 ![API](https://user-images.githubusercontent.com/110370672/194831335-f11ce610-7e4c-40a7-b004-b3562a319d35.png)
+
 
 
 ## 🖼 구현 이미지
@@ -72,6 +72,8 @@ notion : https://www.notion.so/1-695787ebec1e4ecd91a12ff8ae70f7b7 <br/>
 - react-icons
 - react-js-pagination
 - styled-components
+- sweetalert 
+- slick-slider
 - react-redux @reduxjs/toolkit
 - axios
 - Visual Studio Code

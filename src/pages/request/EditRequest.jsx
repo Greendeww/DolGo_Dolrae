@@ -9,18 +9,17 @@ const EditRequest = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState([]);
   const [fileImage, setFileImage] = useState([]);
-  const place_id = localStorage.getItem("place_id");
-  const place_title = localStorage.getItem("place_title");
-
+  const id = localStorage.getItem("place_id");
+  const title = localStorage.getItem("place_title");
 
   const initialState = {
-    title: place_title,
+    title: title,
     content: "",
     type: "",
   };
 
   const [req, setReq] = useState(initialState);
-  console.log(req)
+  console.log(req);
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -73,13 +72,14 @@ const EditRequest = () => {
       }
       formData.append("data", blob);
 
-      const res = await instance.post(`/api/auth/order/${place_id}`, formData, {
+      const res = await instance.post(`/api/auth/order/${id}`, formData, {
         headers: {
           "content-type": "multipart/form-data",
         },
       });
+      console.log(res);
       alert("게시글 수정 또는 삭제 요청이 완료되었습니다.");
-      navigate("/");
+      navigate(-1);
     }
   };
 
@@ -91,7 +91,7 @@ const EditRequest = () => {
           <Title>
             여행지 <span style={{ color: "rgb(255, 80, 88)" }}>*</span>
           </Title>
-          <Name>{place_title}</Name>
+          <Name>{title}</Name>
         </div>
         <div>
           <Title>
@@ -166,14 +166,6 @@ const EditRequest = () => {
           </div>
         </div>
         <Buttons>
-          <CancelBtn
-            onClick={() => {
-              navigate(-1);
-              localStorage.removeItem("place_id");
-            }}
-          >
-            취소
-          </CancelBtn>
           <PostBtn
             onClick={() => {
               onSubmitHandler();
@@ -182,6 +174,14 @@ const EditRequest = () => {
           >
             작성하기
           </PostBtn>
+          <CancelBtn
+            onClick={() => {
+              navigate(-1);
+              localStorage.removeItem("place_id");
+            }}
+          >
+            취소
+          </CancelBtn>
         </Buttons>
       </Container>
     </StEditRequest>
@@ -197,7 +197,7 @@ const StEditRequest = styled.div`
   background-color: #eef6fa;
 `;
 const Container = styled.div`
-  padding-top: 70px;
+  padding-top: 120px;
 `;
 const Title = styled.p`
   width: 200px;
@@ -217,24 +217,27 @@ const Buttons = styled.div`
   display: flex;
   padding-top: 40px;
   padding-bottom: 50px;
+  gap: 20px;
+  margin: 0 auto;
+  width: 90%;
 `;
 const Context = styled.textarea`
-  width: 350px;
+  width: 80%;
   height: 200px;
   display: flex;
   margin: 0 auto;
-  padding: 15px;
   border: none;
   border-radius: 15px;
   resize: none;
   font-size: 14px;
   font-family: tway;
   font-weight: lighter;
+  padding: 15px;
+  line-height: 30px;
 `;
 const CancelBtn = styled.div`
   width: 150px;
   height: 40px;
-  margin: 0px 0px 0px 40px;
   font-weight: 700;
   font-size: 15px;
   line-height: 40px;
@@ -244,12 +247,11 @@ const CancelBtn = styled.div`
   border: 3px solid #abd4e2;
   border-radius: 15px;
   cursor: pointer;
+  margin: 0 auto;
 `;
-
 const PostBtn = styled.div`
   width: 150px;
   height: 40px;
-  margin: 0px 0px 0px 30px;
   font-weight: 700;
   font-size: 15px;
   line-height: 40px;
@@ -258,19 +260,17 @@ const PostBtn = styled.div`
   background: #abd4e2;
   border-radius: 15px;
   cursor: pointer;
+  margin: 0 auto;
 `;
-
 const ImgBox = styled.div`
   display: flex;
   margin: 20px 30px;
   flex-wrap: wrap;
   gap: 30px;
 `;
-
 const ImgInput = styled.input`
   display: none;
 `;
-
 const ImgLabel = styled.label`
   width: 100px;
   height: 100px;
@@ -287,7 +287,6 @@ const ImgLabel = styled.label`
   border-radius: 15px;
   cursor: pointer;
 `;
-
 const Img = styled.img`
   width: 100px;
   height: 100px;

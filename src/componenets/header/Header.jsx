@@ -40,7 +40,6 @@ const Header = ({title}) => {
   const logout = async () => {
     const response = await instance.post("/api/auth/member/logout");
     alert(response.data);
-    navigate("/");
     localStorage.removeItem("username");
     localStorage.removeItem("nickname");
     localStorage.removeItem("ACCESS_TOKEN");
@@ -52,8 +51,8 @@ const Header = ({title}) => {
     localStorage.removeItem("SIGUNGU_CODE");
     localStorage.removeItem("SIGUNGU_NAME");
 
-    deleteCookie("ACCESS_TOKEN")
-    deleteCookie("REFRESH_TOKEN")
+    deleteCookie("ACCESS_TOKEN");
+    deleteCookie("REFRESH_TOKEN");
   };
 
   return (
@@ -82,9 +81,15 @@ const Header = ({title}) => {
             {getToken !== undefined ? (
               <>
                 <h2 onClick={() => navigate("/mypage")}>마이페이지</h2>
-                <h2 onClick={() => navigate("/EditRequest")}>
+                <h2 onClick={() => navigate("/request/post")}>
                   장소 등록 요청
                 </h2>
+              </>
+            ) : null}
+            {username === "kthdus96@nate.com" ? (
+              <>
+                <h2 onClick={() => navigate("/request/list")}>요청 목록</h2>
+                <h2 onClick={() => navigate("/post")}>게시글 추가</h2>
               </>
             ) : null}
             <div>
@@ -94,7 +99,7 @@ const Header = ({title}) => {
                 <h2
                   onClick={() => {
                     logout();
-                    navigate("/");
+                    setModal(!modal);
                   }}
                 >
                   로그아웃 ＞
