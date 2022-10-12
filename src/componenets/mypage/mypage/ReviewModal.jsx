@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Star from "../../star/Star";
@@ -16,12 +15,6 @@ const ReviewModal = ({ item }) => {
   const handleModal = () => {
     setModalOn(false);
   };
-
-  const deleteModal = () => {
-    setModalOn(true);
-  };
-
-
 
   return (
     <ComDiv key={item.comment_id}>

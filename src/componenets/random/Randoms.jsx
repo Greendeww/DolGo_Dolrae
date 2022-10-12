@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import basicImg from "../../assert/image/basic.png";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Header from "../header/Header";

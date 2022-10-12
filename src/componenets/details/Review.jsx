@@ -43,11 +43,13 @@ const Review = ({ comment }) => {
     newComment[idx] = true;
     setModal(newComment);
   };
+  
   const noLogin = (e) => {
     e.preventDefault();
     alert("로그인이 필요한 서비스 입니다");
     navigate("/login");
   };
+
   return (
     <div>
 

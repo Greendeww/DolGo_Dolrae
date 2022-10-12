@@ -1,16 +1,13 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import dolphin from "../../assert/detail/dolphin_test.png";
-import { Map, MapMarker,MarkerClusterer, useMap, } from "react-kakao-maps-sdk";
 import styled from "styled-components";
-import { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
 import { FaStar } from 'react-icons/fa';
 import ThemeList from '../theme/ThemeList'
 
 const MapModal = ({pos, close, setIsOpen}) => {
-    console.log(pos)
     const modalRef = useRef();
     const navigate = useNavigate();
 

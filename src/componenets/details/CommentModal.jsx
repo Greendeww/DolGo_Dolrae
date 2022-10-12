@@ -12,11 +12,9 @@ import Modal from "../modal/Modal";
 import { getCookie } from "../../shared/Cookie";
 
 const CommentModal = ({ comment }) => {
-  console.log(comment);
   const [modalOn, setModalOn] = useState(false);
   const nickname = localStorage.getItem("nickname");
   const getToken = getCookie("ACCESS_TOKEN");
-  console.log(modalOn);
   const navigate = useNavigate();
 
   const handleModal = () => {

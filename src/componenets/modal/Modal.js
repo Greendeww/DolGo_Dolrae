@@ -1,11 +1,9 @@
 import React from "react";
-import ModalPortal from "./ModalPortal";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { _deleteComment } from "../../redux/modules/comment";
 
 const Modal = ({ onClose, comment}) => {
-  console.log(comment)
   const dispatch = useDispatch();
 
   return (

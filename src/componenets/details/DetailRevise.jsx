@@ -15,6 +15,7 @@ const DetailRevise = () => {
 
   const { id } = useParams();
   const { placeId } = useParams();
+  const [isActive, setIsActive] =useState(false);
   const [content, setContent] = useState("");
   const [contentMessage, setContentMessage] = useState("");
   const [isContent, setIsContent] = useState(false);
@@ -26,7 +27,6 @@ const DetailRevise = () => {
   const [fileImage1, setFileImage1] = useState([]);
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
-  const [imagenull] = useState(null);
 
   const fetch = async () => {
     const response = await instance.get(`/api/comment/${placeId}`);
@@ -65,6 +65,15 @@ const DetailRevise = () => {
     setStar(score);
   };
 
+  //필수항목 입력시 버튼 색 변경
+  const isSubmmitComment = () => {
+    if(isContent !== true || isTitle !== true|| star === 0) {
+      setIsActive(false)
+    }else{
+      setIsActive(true)
+    }
+  };
+
   const onChangeImg = (e) => {
     const maxImageCnt = 3;
     const imageList = e.target.files;
@@ -89,14 +98,17 @@ const DetailRevise = () => {
     setFileImage(imgFiles);
     // setImage(imageList);
   };
+
   const handleDeleteImage = (id) => {
     setFileImage(fileImage.filter((_, index) => index !== id));
     setImage(image.filter((_, index) => index !== id));
   };
+
   const handleDeleteImage1 = (id) => {
     setFileImage1(fileImage1.filter((_, index) => index !== id));
     // setImage(image.filter((_, index) => index !== id));
   };
+
   const onChangeContent = (e) => {
     const contentRegex =
       /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{10,300}$/;
@@ -111,6 +123,7 @@ const DetailRevise = () => {
       setIsContent(true);
     }
   };
+
   const onChangeTitle = (e) => {
     const TitleRegex = /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{1,20}$/;
     const TitleCurrnet = e.target.value;
@@ -124,6 +137,7 @@ const DetailRevise = () => {
       setIsTitle(true);
     }
   };
+  
   const data = {
     title: title,
     content: content,
@@ -184,6 +198,7 @@ const DetailRevise = () => {
             name="title"
             value={title}
             onChange={onChangeTitle}
+            onKeyUp={isSubmmitComment}
             placeholder="제목을 입력해주세요."
           />
         </LiTilte>
@@ -247,6 +262,7 @@ const DetailRevise = () => {
                   size="50"
                   onClick={() => handleStarClick(el)}
                   className={clicked[el] && "yellowStar"}
+                  onKeyup={isSubmmitComment}
                 />
               );
             })}
@@ -261,6 +277,7 @@ const DetailRevise = () => {
             name="content"
             value={content}
             onChange={onChangeContent}
+            onKeyUp={isSubmmitComment}
             placeholder="후기를 남겨주세요"
           />
         </LiTilte>
@@ -270,8 +287,17 @@ const DetailRevise = () => {
           )}
         </Message>
         <ButtonDiv>
-          <ReviseBut onClick={() => navigate("/detail/" + placeId)}>뒤로가기</ReviseBut>
-          <DelBut onClick={onUpdatePost}>수정하기</DelBut>
+        {isActive 
+          ? <ReviseBut 
+              onClick={{onUpdatePost}}
+              disabled={isContent !== true || isTitle !== true|| star === 0 ? false : true}
+              >수정하기</ReviseBut>
+          : <NotBut 
+              onClick={{onUpdatePost}}
+              disabled={isContent !== true || isTitle !== true|| star === 0 ? false : true}
+              >수정하기</NotBut>
+          }
+          <DelBut onClick={() => navigate("/detail/" + placeId)}>뒤로가기</DelBut>
         </ButtonDiv>
       </Box>
     </St>
@@ -291,9 +317,8 @@ const St = styled.div`
 
 const Box = styled.div`
   height: 100%;
-  padding-top: 90px;
+  padding-top: 130px;
   background-color: #eef6fa;
-  margin: auto;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -314,9 +339,7 @@ const BoxSpan = styled.p`
 
 const LiImg = styled.li`
   width: 90%;
-  /* display: flex; */
   padding: 10px 0px;
-  /* border-bottom: 1px solid rgb(204, 204, 204); */
 `;
 
 const ImgTitle = styled.div`
@@ -326,7 +349,7 @@ const ImgTitle = styled.div`
   align-items: center;
   display: flex;
   justify-content: flex-start;
-  font-size: 15px;
+  font-size: 20px;
 `;
 
 const ImgBox = styled.div`
@@ -394,17 +417,16 @@ const LiTilte = styled.li`
     font-size: 20px;
   }
 `;
-// const PTitle = styled.b`
 
-// `;
 const InputTit = styled.input`
   font-size: 15px;
-  width: 80%;
+  width: 83%;
   border: none;
   height: 40px;
-  color: rgb(195, 194, 204);
+  color: rgb(155, 153, 169);
   padding: 0px 1rem;
   border-radius: 15px;
+  height: 52px;
 `;
 const Message = styled.div`
   margin-bottom: 25px;
@@ -415,13 +437,14 @@ const Message = styled.div`
   text-align: end;
 `;
 const InputCom = styled.textarea`
-  width: 85%;
+  width: 90%;
   height: 100%;
   min-height: 163px;
   padding: 1rem;
   font-size: 14px;
   resize: none;
   border: none;
+  color:rgb(155, 153, 169);
   border-radius: 15px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -472,7 +495,7 @@ const Stars = styled.div`
   }
 `;
 
-const ReviseBut = styled.button`
+const DelBut = styled.button`
   cursor: pointer;
   font-weight: 600;
   color: #79b9d3;
@@ -485,7 +508,20 @@ const ReviseBut = styled.button`
   /* margin-left:1rem; */
   width: 150px;
 `;
-const DelBut = styled.button`
+const NotBut = styled.button`
+  cursor: pointer;
+  color: #79b9d3;
+  border: 3px solid #abd4e2;
+  background-color: white;
+  height: 2.5rem;
+  border-radius: 5px;
+  line-height: 2.1rem;
+  /* margin-right:1rem; */
+  width: 150px;
+  font-weight: bold;
+`;
+
+const ReviseBut = styled.button`
   cursor: pointer;
   color: white;
   background-color: #abd4e2;

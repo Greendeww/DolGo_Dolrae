@@ -4,14 +4,12 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useEffect } from "react";
 import { FaStar } from "react-icons/fa";
-import axios from "axios";
 import Like from "../like/Like";
 import Header from "../header/Header";
 import basicImg from "../../assert/image/basic.png";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useRef } from "react";
-import { useCallback } from "react";
 import ScrollToTop from "../scroll/ScrollToTop";
 
 const RandomList = () => {
@@ -30,12 +28,6 @@ const RandomList = () => {
     window.scrollTo(0, 0);
     fetch();
   }, []);
-
-  // console.log(random?.placeList[0]?.id)
-  // console.log(random?.placeList[1]?.id)
-  // console.log(random?.placeList[2]?.id)
-  // console.log(random?.placeList[3]?.id)
-
 
     const onRandom = (e) => {
         window.scrollTo({ top: 0, behavior: "smooth" })
@@ -65,9 +57,6 @@ const RandomList = () => {
           })
          console.log("작동")
     }
-    // useEffect(() => {
-    //     window.scrollTo(0,0)
-    // },[])
     return (
      <BoxDiv>
      <Header/>

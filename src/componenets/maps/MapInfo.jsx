@@ -1,14 +1,10 @@
 import React from 'react'
-import { useEffect } from 'react'
 import { useState } from 'react';
-import { Map, MapMarker,MarkerClusterer, useMap, } from "react-kakao-maps-sdk";
-import { useNavigate } from 'react-router-dom';
-import dolphin from "../../assert/detail/dolphin_test.png";
+import { MapMarker, useMap, } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 import MapModal from './MapModal';
 
 const MapInfo = ({pos}) => {
-  const navigate=useNavigate();
   const map = useMap()
   console.log(pos)
   const [isOpen, setIsOpen] = useState(false)
@@ -56,12 +52,3 @@ const MapInfo = ({pos}) => {
 
 export default MapInfo
 
-// const DescDiv = styled.div`
-//   display:flex;
-//   width:60%;
-//   max-width:16rem;
-//   height:100px;
-// `
-// const Img = styled.img`
-//   max-width:6rem;
-// `

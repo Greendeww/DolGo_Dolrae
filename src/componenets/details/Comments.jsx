@@ -1,25 +1,13 @@
-import userEvent from "@testing-library/user-event";
 import React, { useState, useRef, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import CommentModal from "./CommentModal";
 import styled from "styled-components";
 import { FaImage } from "react-icons/fa";
 
 const Comments = ({ comment, arr, isSelected, handleClick, elementIndex }) => {
-  // const ids = comment.length
-  const { id } = useParams();
-  let [modal, setModal] = useState(false);
-  // const close = (idx) => {
-  //   const newComment = Array(comment.length).fill(false);
-  //   newComment[idx] = true;
-  //   setModal(newComment)
-  // };
+  const [modal, setModal] = useState(false);
   const number = [...arr].reverse();
-  console.log(number);
-  // comment.number = number
-  console.log(comment.createdAt);
   const date = comment?.createdAt?.substring(2, 10);
-  console.log(date);
+
   return (
     <>
       {modal === false ? (

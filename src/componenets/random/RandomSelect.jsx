@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { FaStar } from 'react-icons/fa';
-import axios from 'axios';
 import Like from '../like/Like';
 import Header from '../header/Header';
 import basicImg from "../../assert/image/basic.png";
@@ -28,11 +27,6 @@ const RandomSelect = () => {
         window.scrollTo(0,0)
         fetch()
     }, []);
-   
-    // console.log(random?.placeList[0]?.id)
-    // console.log(random?.placeList[1]?.id)
-    // console.log(random?.placeList[2]?.id)
-    // console.log(random?.placeList[3]?.id)
 
     const onRandom = (e) => {
         window.scrollTo({ top: 0, behavior: "smooth" })

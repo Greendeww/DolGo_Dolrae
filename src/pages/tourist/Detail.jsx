@@ -46,10 +46,6 @@ const Detail = () => {
     return <div>{error.message}</div>;
   }
 
-  // const onLike = async (event) => {
-  //   event.preventDefault();
-  //   dispatch(onLikeDetail(id));
-  // };
   const newText = posts?.content?.replace(/(<([^>]+)>)/gi, "\n"); //태그 제거
   const tmp = newText?.replace(/&nbsp;/gi, " "); //공백 제거
   const tmp2 = tmp?.replace(/&lt;/gi, ""); //부등호(<) 제거
