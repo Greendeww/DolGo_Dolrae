@@ -9,12 +9,11 @@ const EditRequest = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState([]);
   const [fileImage, setFileImage] = useState([]);
-  const place_id = localStorage.getItem("place_id");
-  const place_title = localStorage.getItem("place_title");
-
+  const id = localStorage.getItem("place_id");
+  const title = localStorage.getItem("place_title");
 
   const initialState = {
-    title: place_title,
+    title: title,
     content: "",
     type: "",
   };
@@ -73,11 +72,12 @@ const EditRequest = () => {
       }
       formData.append("data", blob);
 
-      const res = await instance.post(`/api/auth/order/${place_id}`, formData, {
+      const res = await instance.post(`/api/auth/order/${id}`, formData, {
         headers: {
           "content-type": "multipart/form-data",
         },
       });
+      console.log(res)
       alert("게시글 수정 또는 삭제 요청이 완료되었습니다.");
       navigate("/");
     }
@@ -91,7 +91,7 @@ const EditRequest = () => {
           <Title>
             여행지 <span style={{ color: "rgb(255, 80, 88)" }}>*</span>
           </Title>
-          <Name>{place_title}</Name>
+          <Name>{title}</Name>
         </div>
         <div>
           <Title>
