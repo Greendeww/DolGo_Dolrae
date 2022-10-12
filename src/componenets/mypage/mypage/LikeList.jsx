@@ -36,7 +36,7 @@ const LikeList = () => {
   useEffect(() => {
     getList();
   }, []);
-  console.log(likeList)
+
   return (
     <StLikeList>
       <h2>찜한 장소</h2>
