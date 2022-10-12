@@ -157,7 +157,6 @@ const Post = () => {
 
   // 세부 지역별 해당 do, name, value
   const siList = [
-    { do: "", name: "", value: "" },
     { do: "서울", name: "시/군", value: 0 },
     { do: "서울", name: "서울", value: 0 },
     { do: "인천", name: "시/군", value: 0 },
@@ -489,7 +488,7 @@ const StPost = styled.div`
   background-color: #eef6fa;
 `;
 const Container = styled.div`
-  padding-top: 70px;
+  padding-top: 120px;
 `;
 const Title = styled.p`
   width: 200px;
@@ -534,7 +533,6 @@ const CancelBtn = styled.div`
   cursor: pointer;
   margin: 0 auto;
 `;
-
 const PostBtn = styled.div`
   width: 40%;
   height: 40px;
@@ -548,18 +546,15 @@ const PostBtn = styled.div`
   cursor: pointer;
   margin: 0 auto;
 `;
-
 const ImgBox = styled.div`
   display: flex;
   margin: 20px 30px;
   flex-wrap: wrap;
   gap: 30px;
 `;
-
 const ImgInput = styled.input`
   display: none;
 `;
-
 const ImgLabel = styled.label`
   width: 100px;
   height: 100px;
@@ -576,7 +571,6 @@ const ImgLabel = styled.label`
   border-radius: 15px;
   cursor: pointer;
 `;
-
 const Img = styled.img`
   width: 100px;
   height: 100px;

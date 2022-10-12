@@ -106,7 +106,7 @@ const Post = () => {
 
   // 지역별 name, value
   const doList = [
-    { name: "", value: "" },
+    { name: "도", value: "" },
     { name: "서울", value: 1 },
     { name: "인천", value: 2 },
     { name: "대전", value: 3 },
@@ -136,16 +136,23 @@ const Post = () => {
 
   // 세부 지역별 해당 do, name, value
   const siList = [
-    { do: "", name: "", value: "" },
-    { do: "서울", name: "", value: 0 },
-    { do: "인천", name: "", value: 0 },
-    { do: "대전", name: "", value: 0 },
-    { do: "대구", name: "", value: 0 },
-    { do: "광주", name: "", value: 0 },
-    { do: "부산", name: "", value: 0 },
-    { do: "울산", name: "", value: 0 },
-    { do: "세종", name: "", value: 0 },
-    { do: "경기", name: "", value: "" },
+    { do: "서울", name: "시/군", value: 0 },
+    { do: "서울", name: "서울", value: 0 },
+    { do: "인천", name: "시/군", value: 0 },
+    { do: "인천", name: "인천", value: 0 },
+    { do: "대전", name: "시/군", value: 0 },
+    { do: "대전", name: "대전", value: 0 },
+    { do: "대구", name: "시/군", value: 0 },
+    { do: "대구", name: "대구", value: 0 },
+    { do: "광주", name: "시/군", value: 0 },
+    { do: "광주", name: "광주", value: 0 },
+    { do: "부산", name: "시/군", value: 0 },
+    { do: "부산", name: "부산", value: 0 },
+    { do: "울산", name: "시/군", value: 0 },
+    { do: "울산", name: "울산", value: 0 },
+    { do: "세종", name: "시/군.", value: 0 },
+    { do: "세종", name: "세종", value: 0 },
+    { do: "경기", name: "시/군", value: "" },
     { do: "경기", name: "가평", value: 1 },
     { do: "경기", name: "고양", value: 2 },
     { do: "경기", name: "과천", value: 3 },
@@ -177,7 +184,7 @@ const Post = () => {
     { do: "경기", name: "포천", value: 29 },
     { do: "경기", name: "하남", value: 30 },
     { do: "경기", name: "화성", value: 31 },
-    { do: "강원", name: "", value: "" },
+    { do: "강원", name: "시/군", value: "" },
     { do: "강원", name: "강릉", value: 1 },
     { do: "강원", name: "고성", value: 2 },
     { do: "강원", name: "동해", value: 3 },
@@ -196,7 +203,7 @@ const Post = () => {
     { do: "강원", name: "홍천", value: 16 },
     { do: "강원", name: "화천", value: 17 },
     { do: "강원", name: "횡성", value: 18 },
-    { do: "충북", name: "", value: "" },
+    { do: "충북", name: "시/군", value: "" },
     { do: "충북", name: "괴산", value: 1 },
     { do: "충북", name: "단양", value: 2 },
     { do: "충북", name: "보은", value: 3 },
@@ -210,7 +217,7 @@ const Post = () => {
     { do: "충북", name: "청주", value: 11 },
     { do: "충북", name: "충주", value: 12 },
     { do: "충남", name: "계룡", value: 16 },
-    { do: "충남", name: "", value: "" },
+    { do: "충남", name: "시/군", value: "" },
     { do: "충남", name: "공주", value: 1 },
     { do: "충남", name: "금산", value: 2 },
     { do: "충남", name: "논산", value: 3 },
@@ -225,7 +232,7 @@ const Post = () => {
     { do: "충남", name: "청양", value: 13 },
     { do: "충남", name: "태안", value: 14 },
     { do: "충남", name: "홍성", value: 15 },
-    { do: "경북", name: "", value: "" },
+    { do: "경북", name: "시/군", value: "" },
     { do: "경북", name: "경산", value: 1 },
     { do: "경북", name: "경주", value: 2 },
     { do: "경북", name: "고령", value: 3 },
@@ -249,7 +256,7 @@ const Post = () => {
     { do: "경북", name: "청송", value: 21 },
     { do: "경북", name: "칠곡", value: 22 },
     { do: "경북", name: "포항", value: 23 },
-    { do: "경남", name: "", value: "" },
+    { do: "경남", name: "시/군", value: "" },
     { do: "경남", name: "거제", value: 1 },
     { do: "경남", name: "거창", value: 2 },
     { do: "경남", name: "고성", value: 3 },
@@ -270,7 +277,7 @@ const Post = () => {
     { do: "경남", name: "함안", value: 18 },
     { do: "경남", name: "함양", value: 19 },
     { do: "경남", name: "합천", value: 20 },
-    { do: "전북", name: "", value: "" },
+    { do: "전북", name: "시/군", value: "" },
     { do: "전북", name: "고창", value: 1 },
     { do: "전북", name: "군산", value: 2 },
     { do: "전북", name: "김제", value: 3 },
@@ -285,7 +292,7 @@ const Post = () => {
     { do: "전북", name: "전주", value: 12 },
     { do: "전북", name: "정읍", value: 13 },
     { do: "전북", name: "진안", value: 14 },
-    { do: "전남", name: "", value: "" },
+    { do: "전남", name: "시/군", value: "" },
     { do: "전남", name: "강진", value: 1 },
     { do: "전남", name: "고흥", value: 2 },
     { do: "전남", name: "곡성", value: 3 },
@@ -308,7 +315,7 @@ const Post = () => {
     { do: "전남", name: "함평", value: 20 },
     { do: "전남", name: "해남", value: 21 },
     { do: "전남", name: "화순", value: 22 },
-    { do: "제주", name: "", value: "" },
+    { do: "제주", name: "시/군", value: "" },
     { do: "제주", name: "서귀포", value: 3 },
     { do: "제주", name: "제주", value: 4 },
   ];
@@ -319,7 +326,7 @@ const Post = () => {
 
   // 테마 선택
   const themeList = [
-    { name: "", value: "" },
+    { name: "테마", value: "" },
     { name: "관광", value: "12" },
     { name: "관람", value: "14" },
     { name: "액티비티", value: "28" },
@@ -457,7 +464,7 @@ const StPost = styled.div`
   background-color: #eef6fa;
 `;
 const Container = styled.div`
-  padding-top: 70px;
+  padding-top: 120px;
 `;
 const Title = styled.p`
   width: 200px;
@@ -587,6 +594,7 @@ const Theme = styled.select`
   text-align: center;
   font-family: tway;
   font-size: 16px;
+  cursor: pointer;
 `;
 const Address = styled.select`
   width: 47%;
@@ -599,4 +607,5 @@ const Address = styled.select`
   text-align: center;
   font-family: tway;
   font-size: 16px;
+  cursor: pointer;
 `;
