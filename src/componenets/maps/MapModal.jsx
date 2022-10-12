@@ -1,16 +1,13 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import dolphin from "../../assert/detail/dolphin_test.png";
-import { Map, MapMarker,MarkerClusterer, useMap, } from "react-kakao-maps-sdk";
 import styled from "styled-components";
-import { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
 import { FaStar } from 'react-icons/fa';
 import ThemeList from '../theme/ThemeList'
 
 const MapModal = ({pos, close, setIsOpen}) => {
-    console.log(pos)
     const modalRef = useRef();
     const navigate = useNavigate();
 
@@ -30,14 +27,14 @@ const MapModal = ({pos, close, setIsOpen}) => {
 
     return (
         <>
-            <DescDiv ref={modalRef}>
-                {pos.image === null
-                ?<NoneImg alt='mapsImage' src={dolphin}/>
-                :<Img alt='mapsImage' src={pos.image}/> 
-                }
-                <TotalDiv>
-                    <div style={{ padding: "5px", color: "#000" }}>
-                        <TitleDIv>
+          <DescDiv ref={modalRef}>
+            {pos.image === null
+            ?<NoneImg alt='mapsImage' src={dolphin}/>
+            :<Img alt='mapsImage' src={pos.image}/> 
+            }
+            <TotalDiv>
+                <div style={{ padding: "5px", color: "#000" }}>
+                    <TitleDIv>
                             <TitleB>{pos.title}</TitleB>
                         </TitleDIv>
                         <StarDiv>
@@ -57,34 +54,34 @@ const MapModal = ({pos, close, setIsOpen}) => {
                 style={{
                     cursor: "pointer",
                     textAlign:"end",
-                    position:"absolute"
+                    // position:"absolute"
                     // marginLeft:"3rem"
                 }}
                 onClick={close}
                     />
             </DeleteDiv>
-            </DescDiv>
+          </DescDiv>
         </>
     )
 }
 
 export default MapModal
 const DescDiv = styled.div`
-  display:flex;
-  width:98%;
-  max-width:428px;
-  border: 3px solid #79B9D3;
-  margin:0 auto;
+    display:flex;
+    width:99%;
+    max-width:428px;
+    border: 2px solid #79B9D3;
+    margin:0 auto;
 `
 const Img = styled.img`
-  width:100%;
-  max-width:10rem;
-  height:8.7rem;
+    width:100%;
+    max-width:10rem;
+    height:8.7rem;
 `
 const NoneImg =styled.img`
-  width:100%;
-  max-width:10rem;
-  height:8.7rem;
+    width:100%;
+    max-width:10rem;
+    height:8.7rem;
 `
 const TotalDiv =styled.div`
     width:98%;
@@ -110,9 +107,11 @@ const TemaP = styled.p`
 const StarDiv = styled.div`
     display:flex;
     margin-bottom:0.7rem;
+    align-items:center;
 `
 const StarP = styled.p`
-    line-height:1rem;
+    margin-top:0.2rem;
+    line-height:1.2rem;
     margin-left:0.2rem;
     font-weight:600;
 `

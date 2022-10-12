@@ -1,20 +1,17 @@
 import React from 'react'
-import { useEffect } from 'react'
 import { useState } from 'react';
-import { Map, MapMarker,MarkerClusterer, useMap, } from "react-kakao-maps-sdk";
-import { useNavigate } from 'react-router-dom';
-import dolphin from "../../assert/detail/dolphin_test.png";
+import { MapMarker, useMap, } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 import MapModal from './MapModal';
 
 const MapInfo = ({pos}) => {
-  const navigate=useNavigate();
   const map = useMap()
   console.log(pos)
   const [isOpen, setIsOpen] = useState(false)
   const close = () => {
     setIsOpen(false)
   }
+  
   
   const EventMarkerContainer = ({ position, content }) => {
     const map = useMap()
@@ -36,9 +33,6 @@ const MapInfo = ({pos}) => {
   }
   return (
     <>    
-      {isOpen === false
-      ? 
-      <>
         <EventMarkerContainer
         key={`${pos.lat}-${pos.lng}`}
         position={{
@@ -52,36 +46,9 @@ const MapInfo = ({pos}) => {
       {isOpen && (
         <MapModal pos={pos} close={close}/> 
       )} 
-      </>
-      : 
-      <>
-        <EventMarkerContainer
-        key={`${pos.lat}-${pos.lng}`}
-        position={{
-          lat: pos.lat,
-          lng: pos.lng,
-        }}
-        content={pos.lat}
-        onClick={(marker) => {map.panTo(marker.getPosition());setIsOpen(false)}}
-      >
-      </EventMarkerContainer>  
-         {isOpen && (
-          <MapModal pos={pos} close={close}/> 
-        )} 
-        </> 
-      }
     </>
   )
 }
 
 export default MapInfo
 
-// const DescDiv = styled.div`
-//   display:flex;
-//   width:60%;
-//   max-width:16rem;
-//   height:100px;
-// `
-// const Img = styled.img`
-//   max-width:6rem;
-// `

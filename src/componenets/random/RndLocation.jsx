@@ -31,7 +31,16 @@ const RndLocation = () => {
     sigunguCode: GET_SIGUNGU_CODE,
     sigunguName: GET_SIGUNGU_NAME,
   };
+  const initialization = (e) => {
+    // e.preventDefault();
+    localStorage.removeItem("AREA_CODE");
+    localStorage.removeItem("AREA_NAME");
+    localStorage.removeItem("SIGUNGU_CODE");
+    localStorage.removeItem("SIGUNGU_NAME");
 
+    setSelectedDo("");
+    setSelectedSi("");
+  };
   const [selectedDo, setSelectedDo] = useState("");
   const [selectedSi, setSelectedSi] = useState("");
 
@@ -129,16 +138,16 @@ const RndLocation = () => {
     { do: "충북", name: "청주", value: 11 },
     { do: "충북", name: "충주", value: 12 },
     { do: "충남", name: "전체", value: 0 },
-    { do: "충남", name: "계룡", value: 1 },
-    { do: "충남", name: "공주", value: 2 },
-    { do: "충남", name: "금산", value: 3 },
-    { do: "충남", name: "논산", value: 4 },
-    { do: "충남", name: "당진", value: 5 },
-    { do: "충남", name: "보령", value: 6 },
-    { do: "충남", name: "부여", value: 7 },
-    { do: "충남", name: "서산", value: 8 },
-    { do: "충남", name: "서천", value: 9 },
-    { do: "충남", name: "아산", value: 10 },
+    { do: "충남", name: "계룡", value: 16 },
+    { do: "충남", name: "공주", value: 1 },
+    { do: "충남", name: "금산", value: 2 },
+    { do: "충남", name: "논산", value: 3 },
+    { do: "충남", name: "당진", value: 4 },
+    { do: "충남", name: "보령", value: 5 },
+    { do: "충남", name: "부여", value: 6 },
+    { do: "충남", name: "서산", value: 7 },
+    { do: "충남", name: "서천", value: 8 },
+    { do: "충남", name: "아산", value: 9 },
     { do: "충남", name: "예산", value: 11 },
     { do: "충남", name: "천안", value: 12 },
     { do: "충남", name: "청양", value: 13 },
@@ -253,7 +262,7 @@ const RndLocation = () => {
   };
   const DetailLocation = () => {
     return siList.map((item, idx) =>
-      item.do == GET_AREA_NAME ? (
+      item.do === GET_AREA_NAME ? (
         <div
           key={idx}
           className={
@@ -274,80 +283,86 @@ const RndLocation = () => {
   };
 
   const onRandom = (e) => {
-    let timerInterval
+    let timerInterval;
     Swal.fire({
-        title: '지역을 선정중입니다',
-        html: '잠시만 기다려주세요',
-        timer: 1500,
-        timerProgressBar: true,
-        didOpen: () => {
-          Swal.showLoading()
-          const b = Swal.getHtmlContainer().querySelector('b')
-          timerInterval = setInterval(() => {
-            b.textContent = Swal.getTimerLeft()
-          }, 100)
-        },
-        willClose: () => {
-          clearInterval(timerInterval)
-          dispatch(__getTheme(search))
-          navigate("/rndselect/"+localStorage.getItem(AREA_CODE)+'/'+localStorage.getItem(SIGUNGU_CODE));
-        }
-      }).then((result) => {
-        /* Read more about handling dismissals below */
-        if (result.dismiss === Swal.DismissReason.timer) {
-          console.log('I was closed by the timer')
-        }
-      })
-    console.log("작동")
-}
+      title: "지역을 선정중입니다",
+      html: "잠시만 기다려주세요",
+      timer: 1500,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const b = Swal.getHtmlContainer().querySelector("b");
+        timerInterval = setInterval(() => {
+          b.textContent = Swal.getTimerLeft();
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+        dispatch(__getTheme(search));
+        navigate(
+          "/rndselect/" +
+            localStorage.getItem(SIGUNGU_CODE) +
+            "/" +
+            localStorage.getItem(AREA_CODE)
+        );
+      },
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log("I was closed by the timer");
+      }
+    });
+    console.log("작동");
+  };
   return (
-    <>
-    <Header/>
-    <RndDiv>
-    <St>
-      <StList>
-        <p>지역</p>
-        <div className="location-set">{Location()}</div>
-      </StList>
-      <StList>
-        <p>세부지역</p>
-        <div className="location-set">{DetailLocation()}</div>
-      </StList>
-      <button
-        onClick={() => {
-          if (
-            GET_AREA_NAME === null ||
-            GET_SIGUNGU_NAME === null
-          ) {
-            alert("모든 항목을 선택해주세요.");
-          } else {
-            onRandom()
-          }
-        }}
-      >
-        선택완료
-      </button>
-    </St>
-      <BackBut
-          onClick={() => navigate('/random')}
-        >
-          뒤로가기
-        </BackBut>
-    </RndDiv>
-    </>
+    <StRnd>
+      <RndDiv>
+        <St>
+          <Header />
+          <Title>
+            <button onClick={initialization}>필터 초기화 ↺</button>
+          </Title>
+          <StList>
+            <p>지역</p>
+            <div>
+              <div className="location-set">{Location()}</div>
+            </div>
+          </StList>
+          <StList>
+            <p style={{marginTop:"30px"}}>세부지역</p>
+            <div className="location-set">{DetailLocation()}</div>
+          </StList>
+          <button
+            onClick={() => {
+              if (GET_AREA_NAME === null || GET_SIGUNGU_NAME === null) {
+                alert("모든 항목을 선택해주세요.");
+              } else {
+                onRandom();
+              }
+            }}
+          >
+            선택완료
+          </button>
+        </St>
+        <BackBut onClick={() => navigate("/random")}>뒤로가기</BackBut>
+      </RndDiv>
+    </StRnd>
   );
 };
 
 export default RndLocation;
 
+const StRnd = styled.div`
+  max-width: 428px;
+  width: 100%;
+  margin: 0 auto;
+`;
 const RndDiv = styled.div`
-  max-width:428px;
-  width:100%;
-  margin:0 auto;
-`
+  padding-top:7rem;
+`;
 const St = styled.div`
   & button {
-    background-color: #79B9D3;
+    background-color: #abd4e2;
     color: white;
     border: none;
     border-radius: 12px;
@@ -361,45 +376,51 @@ const St = styled.div`
     margin: 40px auto;
   }
 `;
-const BackBut =styled.button`
-    background-color: #ffc0c0;
-    color: white;
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  & button {
+    width: 200px;
+    background: #ffc0c0;
     border: none;
     border-radius: 12px;
-    width: 370px;
-    height: 50px;
-    cursor: pointer;
-    font-weight: 700;
     font-size: 20px;
-    line-height: 24px;
-    display: block;
-    margin: 50px auto;
-    margin-top:-20px;
-`
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+`;
+const BackBut = styled.button`
+  background-color: white;
+  border: 3px solid #abd4e2;
+  color: #abd4e2;
+  border-radius: 12px;
+  width: 370px;
+  height: 50px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  display: block;
+  margin: 0 auto;
+  margin-top: -20px;
+`;
 const StList = styled.div`
-  width: 428px;
-  margin-top: 50px;
-  /* & div {
-    display: inline-block;
-    width: 60%;
-    margin-left: 20px;
-  } */
+  width: 80%;
+  margin: 0 auto;
   & p {
     font-style: normal;
     font-weight: 700;
     font-size: 25px;
-    line-height: 40px;
+    line-height: 60px;
     color: #bfb8b8;
-    margin-left: 20px;
+    /* margin-left: 40px; */
+    margin-bottom: 20px;
   }
-`;
-
-const Do = styled.button`
-  border: none;
-`;
-
-const Si = styled.div`
-  & button {
-    border: none;
+  & div{
+    margin:0 auto;
   }
 `;
