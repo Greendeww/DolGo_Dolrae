@@ -89,7 +89,7 @@ const Detail = () => {
                     onClick={() => {
                       localStorage.setItem("place_id", posts.id);
                       localStorage.setItem("place_title", posts.title);
-                      navigate("/editRequest");
+                      navigate(`/request/edit/${posts.id}`);
                     }}
                   >
                     🚨
@@ -223,10 +223,7 @@ const ImgCover = styled.div`
   margin: 0 auto;
 `;
 const ThemeDiv = styled.div`
-  padding-top: 0rem;
-`;
-const Div = styled.div`
-  padding: 0 15px;
+  padding-top: 2rem;
 `;
 
 const TitleLikeDiv = styled.div`
