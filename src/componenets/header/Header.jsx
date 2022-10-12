@@ -100,7 +100,7 @@ const Header = ({title}) => {
                 <h2
                   onClick={() => {
                     logout();
-                    navigate("/");
+                    navigate(-1);
                   }}
                 >
                   로그아웃 ＞
