@@ -35,7 +35,6 @@ const LikeList = () => {
   useEffect(() => {
     getList();
   }, []);
-  console.log(likeList);
   return (
     <StLikeList>
       <div
@@ -45,13 +44,21 @@ const LikeList = () => {
           width: "95%",
         }}
       >
-        <h2>찜한 장소</h2>
-        <p
-          style={{ cursor: "pointer", marginTop: "23px" }}
-          onClick={() => navigate("/maps")}
-        >
-          지도로 보기
-        </p>
+      <h2>찜한 장소</h2>
+        {modal === false
+        ?
+        <MapsDiv>
+          <p onClick={() => setModal(true)}>지도로 보기<Triangle>▶</Triangle></p>
+        </MapsDiv>
+        :
+        <MapsDiv>
+          <p onClick={() => setModal(false)}>지도로 보기<Triangle>▼</Triangle></p>
+        </MapsDiv>
+        }
+        {modal === true
+        ? <MapOpen><Maps/></MapOpen> 
+        : null
+        }
       </div>
       <div>
         <div>
