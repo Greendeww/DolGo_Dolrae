@@ -60,6 +60,8 @@ export default ReviewModal;
 const ComDiv = styled.div`
   padding-bottom: 2rem;
   margin: 0rem 1rem 0rem 1rem;
+  max-width: 428px;
+  width: 90%;
 `;
 const StarDiv = styled.div`
   display: flex;

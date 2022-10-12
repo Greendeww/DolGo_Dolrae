@@ -404,7 +404,7 @@ export default List;
 const St = styled.div`
   max-width: 428px;
   width: 100%;
-  padding-top: 80px;
+  padding-top: 130px;
 `;
 
 const StCategory = styled.div`
@@ -462,12 +462,14 @@ const StLocation = styled.div`
 const StList = styled.div`
   width: 100%;
   margin-top: 50px;
+  margin: 0 auto;
   & p {
     font-style: normal;
     font-size: 25px;
     line-height: 40px;
     color: #bfb8b8;
     margin: 20px;
+    margin-top: 50px;
     margin-left: 30px;
   }
 `;
@@ -479,5 +481,7 @@ const CompleteButton = styled.div`
 `;
 
 const Locations = styled.div`
-width: 85%;
+  display: flex;
+  margin: 0 auto;
+  width: 323px;
 `;

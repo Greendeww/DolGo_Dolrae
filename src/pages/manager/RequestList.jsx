@@ -3,15 +3,32 @@ import styled from "styled-components";
 import Header from "../../componenets/header/Header";
 import { useState, useEffect } from "react";
 import { getApi } from "../../shared/Api";
+import { useNavigate } from "react-router-dom";
+import PaginationRequest from "../../componenets/pagination/PaginationRequest";
 
-const Administrator = () => {
-
+const RequestList = () => {
+  const navigate = useNavigate();
   const [list, setList] = useState([]);
+  const [reviewList, setReviewList] = useState([...list].reverse());
+  const [currentReview, setCurrnetReview] = useState([]);
+  const [page, setPage] = useState(1);
+  const [postPerPage] = useState(5);
+  const indexOfLastPost = page * postPerPage;
+  const indexOfFirstPage = indexOfLastPost - postPerPage;
 
   const getList = async () => {
-    const response = await getApi("/api/auth/order?pageNum=1");
-    console.log(response.data);
+    const response = await getApi("/api/auth/order");
+    // console.log(response.data);
     setList(response.data);
+    setReviewList([...response?.data].reverse());
+    console.log(response);
+  };
+  useEffect(() => {
+    setCurrnetReview(reviewList.slice(indexOfFirstPage, indexOfLastPost));
+  }, [indexOfFirstPage, indexOfLastPost, page, list]);
+
+  const handlePageChange = (page) => {
+    setPage(page);
   };
 
   useEffect(() => {
@@ -23,20 +40,33 @@ const Administrator = () => {
       <Header />
       <Container>
         <Title>요청 목록</Title>
-        {list.map((item) => {
+        {currentReview.map((item) => {
           return (
-            <Contents key={item.id}>
-              <Date>{item.createdAt}</Date>
-              <Report>{item.state}</Report>
+            <Contents
+              key={item.id}
+              onClick={() => navigate(`/request/detail/${item.id}`)}
+            >
+              <p>{item.createdAt.substr(0, 10)}</p>
+              <p style={{ width: "170px" }}>{item.title}</p>
+              {item.state === false ? (
+                <p style={{ color: "red" }}> false </p>
+              ) : (
+                <p style={{ color: "green" }}> true </p>
+              )}
             </Contents>
           );
         })}
       </Container>
+      <PaginationRequest
+        page={page}
+        count={list.length}
+        setPage={handlePageChange}
+      />
     </StAdministrator>
   );
-}
+};
 
-export default Administrator;
+export default RequestList;
 
 const StAdministrator = styled.div`
   max-width: 428px;
@@ -46,11 +76,10 @@ const StAdministrator = styled.div`
 `;
 
 const Container = styled.div`
-  padding-top: 100px;
+  padding-top: 160px;
 `;
 
 const Title = styled.div`
-  font-weight: ;
   font-size: 29px;
   line-height: 40px;
   text-align: center;
@@ -65,22 +94,16 @@ const Contents = styled.div`
   margin: 30px auto;
   display: flex;
   justify-content: space-between;
-`;
+  vertical-align: middle;
+  cursor: pointer;
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
 
-const Date = styled.div`
-  margin: 0px 0px 0px 60px;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 35px;
-  text-align: center;
-  color: #696969;
-`;
-
-const Report = styled.div`
-  margin: 0px 0px 0px 60px;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 35px;
-  text-align: center;
-  color: #696969;
+  & p {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;

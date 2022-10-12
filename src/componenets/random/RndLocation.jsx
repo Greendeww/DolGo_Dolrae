@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -31,6 +31,7 @@ const RndLocation = () => {
     sigunguCode: GET_SIGUNGU_CODE,
     sigunguName: GET_SIGUNGU_NAME,
   };
+
   const initialization = (e) => {
     // e.preventDefault();
     localStorage.removeItem("AREA_CODE");
@@ -41,6 +42,7 @@ const RndLocation = () => {
     setSelectedDo("");
     setSelectedSi("");
   };
+
   const [selectedDo, setSelectedDo] = useState("");
   const [selectedSi, setSelectedSi] = useState("");
 
@@ -260,6 +262,7 @@ const RndLocation = () => {
       </div>
     ));
   };
+
   const DetailLocation = () => {
     return siList.map((item, idx) =>
       item.do === GET_AREA_NAME ? (
@@ -314,25 +317,32 @@ const RndLocation = () => {
     });
     console.log("작동");
   };
+
+  useEffect(() => {
+    initialization();
+  }, []);
+
   return (
     <StRnd>
+      <Header />
       <RndDiv>
-        <St>
-          <Header />
-          <Title>
-            <button onClick={initialization}>필터 초기화 ↺</button>
-          </Title>
-          <StList>
+        <StList>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
             <p>지역</p>
-            <div>
-              <div className="location-set">{Location()}</div>
-            </div>
-          </StList>
-          <StList>
-            <p style={{marginTop:"30px"}}>세부지역</p>
-            <div className="location-set">{DetailLocation()}</div>
-          </StList>
-          <button
+            <ResetBtn style={{ marginRight: "20px" }} onClick={initialization}>
+              필터 초기화 ↺
+            </ResetBtn>
+          </div>
+          <div>
+            <Locations className="location-set">{Location()}</Locations>
+          </div>
+        </StList>
+        <StList>
+          <p style={{ marginTop: "50px" }}>세부지역</p>
+          <Locations className="location-set">{DetailLocation()}</Locations>
+        </StList>
+        <BtnDiv>
+          <CompleteBtn
             onClick={() => {
               if (GET_AREA_NAME === null || GET_SIGUNGU_NAME === null) {
                 alert("모든 항목을 선택해주세요.");
@@ -342,9 +352,9 @@ const RndLocation = () => {
             }}
           >
             선택완료
-          </button>
-        </St>
-        <BackBut onClick={() => navigate("/random")}>뒤로가기</BackBut>
+          </CompleteBtn>
+          <BackBtn onClick={() => navigate("/random")}>뒤로가기</BackBtn>
+        </BtnDiv>
       </RndDiv>
     </StRnd>
   );
@@ -357,48 +367,48 @@ const StRnd = styled.div`
   width: 100%;
   margin: 0 auto;
 `;
+
 const RndDiv = styled.div`
-  padding-top:7rem;
+  padding-top: 9rem;
 `;
-const St = styled.div`
-  & button {
-    background-color: #abd4e2;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    width: 370px;
-    height: 50px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 24px;
-    display: block;
-    margin: 40px auto;
-  }
+
+const ResetBtn = styled.button`
+  width: 150px;
+  height: 40px;
+  background: #ffc0c0;
+  border: none;
+  border-radius: 12px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #ffffff;
+  cursor: pointer;
+  margin-top: 21px;
 `;
-const Title = styled.div`
-  display: flex;
-  justify-content: space-between;
-  & button {
-    width: 200px;
-    background: #ffc0c0;
-    border: none;
-    border-radius: 12px;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    color: #ffffff;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-`;
-const BackBut = styled.button`
+
+const BackBtn = styled.button`
   background-color: white;
   border: 3px solid #abd4e2;
   color: #abd4e2;
   border-radius: 12px;
-  width: 370px;
+  width: 90%;
+  height: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 24px;
+  display: block;
+  margin: 0 auto;
+  margin-top: -20px;
+`;
+
+const CompleteBtn = styled.button`
+  background-color: #abd4e2;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  width: 90%;
   height: 50px;
   cursor: pointer;
   font-weight: 700;
@@ -408,19 +418,31 @@ const BackBut = styled.button`
   margin: 0 auto;
   margin-top: -20px;
 `;
+
 const StList = styled.div`
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   & p {
     font-style: normal;
-    font-weight: 700;
     font-size: 25px;
-    line-height: 60px;
+    line-height: 40px;
     color: #bfb8b8;
-    /* margin-left: 40px; */
-    margin-bottom: 20px;
+    margin: 20px;
+    margin-left: 30px;
   }
-  & div{
-    margin:0 auto;
+`;
+
+const BtnDiv = styled.div`
+  margin: 40px auto;
+  gap: 15px;
+
+  & button {
+    margin-top: 20px;
   }
+`;
+
+const Locations = styled.div`
+  display: flex;
+  margin: 20px auto;
+  width: 323px;
 `;
