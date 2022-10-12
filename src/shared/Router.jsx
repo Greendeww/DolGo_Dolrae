@@ -43,12 +43,12 @@ function Router() {
         <Route path="/oauth/callback/kakao" element={<KakaoLogin />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/change" element={<MyPageChange />} />
-        <Route path="/editRequest" element={<EditRequest />} />
-        <Route path="/postRequest" element={<PostRequest />} />
-        <Route path="/requestList" element={<RequestList />} />
-        <Route path="/request/detail" element={<RequestDetail />} />
-        <Route path="/request/edit" element={<Edit />} />
-        <Route path="/request/post" element={<Post />} />
+        <Route path="/request/edit/:id" element={<EditRequest />} />
+        <Route path="/request/post" element={<PostRequest />} />
+        <Route path="/request/list" element={<RequestList />} />
+        <Route path="/request/detail/:id" element={<RequestDetail />} />
+        <Route path="/edit/:id" element={<Edit />} />
+        <Route path="/post" element={<Post />} />
         <Route path="/select" element={<Select />} />
         <Route path="/list" element={<List />} />
         <Route path="/detail/:id" element={<Detail />} />

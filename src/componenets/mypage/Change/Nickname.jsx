@@ -47,7 +47,8 @@ export default Nickname;
 const StNickname = styled.div`
   padding-top: 100px;
   margin: 0 auto;
-  width: 380px;
+  max-width: 428px;
+  width: 100%;
 
   & div {
     display: flex;

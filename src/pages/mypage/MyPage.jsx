@@ -14,7 +14,7 @@ const MyPage = () => {
   
   useEffect(() => {
     if(getToken === undefined){
-      alert("로그인이필요합니다")
+      alert("로그인이 필요한 서비스입니다.")
       navigate('/login')
     }
   },[])

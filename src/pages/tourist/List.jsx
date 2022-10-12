@@ -149,7 +149,7 @@ const Title = styled.div`
   justify-content: center;
   align-items: center;
   margin: 40px 0;
-  top: 30px;
+  top: 80px;
   height: 150px;
   max-width: 428px;
   width: 100%;
@@ -191,7 +191,7 @@ const Card = styled.div`
 
 const Content = styled.div`
   position: relative;
-  top: 230px;
+  top: 280px;
 `;
 
 const BasicImg = styled.img`
@@ -248,6 +248,7 @@ const Name = styled.div`
   margin-block-end: 0;
   margin-block-start: 0;
   gap: 20px;
+  width: 70%;
 `;
 
 const ListTitle = styled.div`

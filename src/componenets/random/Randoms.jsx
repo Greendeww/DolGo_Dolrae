@@ -5,17 +5,17 @@ import Swal from "sweetalert2";
 import Header from "../header/Header";
 
 //랜덤이미지
-import img1 from "../../assert/random/img1.jpg"
-import img2 from "../../assert/random/img2.jpg"
-import img3 from "../../assert/random/img3.jpg"
-import img4 from "../../assert/random/img4.jpg"
-import img5 from "../../assert/random/img5.jpg"
-import img6 from "../../assert/random/img6.jpg"
-import img7 from "../../assert/random/img7.jpg"
-import img8 from "../../assert/random/img8.jpg"
-import img9 from "../../assert/random/img9.jpg"
-import img10 from "../../assert/random/img10.jpg"
-import img11 from "../../assert/random/img11.jpg"
+import img1 from "../../assert/random/img1.jpg";
+import img2 from "../../assert/random/img2.jpg";
+import img3 from "../../assert/random/img3.jpg";
+import img4 from "../../assert/random/img4.jpg";
+import img5 from "../../assert/random/img5.jpg";
+import img6 from "../../assert/random/img6.jpg";
+import img7 from "../../assert/random/img7.jpg";
+import img8 from "../../assert/random/img8.jpg";
+import img9 from "../../assert/random/img9.jpg";
+import img10 from "../../assert/random/img10.jpg";
+import img11 from "../../assert/random/img11.jpg";
 
 const Randoms = () => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const Randoms = () => {
     img9,
     img10,
     img11,
-  ]
+  ];
 
   const randomIndex = Math.floor(Math.random() * backgroundArr.length);
   const backgroundImg = backgroundArr[randomIndex];
@@ -68,13 +68,13 @@ const Randoms = () => {
       <BoxDiv>
         <Header />
         <Box>
-            <div>
-                <Img alt='logo' src={backgroundImg}/>
-            </div>
-            <ButDiv>
-                <RandomBut><ButText onClick={() => random()}>랜덤</ButText></RandomBut>
-                <RandomBut><ButText onClick={()=>navigate('/rndlocation')}>지역 선택</ButText></RandomBut>
-            </ButDiv>
+          <ImgBox>
+            <Img alt="logo" src={backgroundImg} />
+          </ImgBox>
+          <ButDiv>
+            <button onClick={() => random()}>랜덤</button>
+            <button onClick={() => navigate("/rndlocation")}>지역 선택</button>
+          </ButDiv>
         </Box>
       </BoxDiv>
     </>
@@ -87,37 +87,37 @@ const BoxDiv = styled.div`
   max-width: 428px;
   margin: 0 auto;
 `;
+
 const Box = styled.div`
-    width: 100%;
-    max-width:428px;
-    margin: 0 auto;
-    padding-top:7rem;
-    div{
-      margin-top:3rem;
-      margin-bottom:5rem;
-    }
-`
+  padding-top: 10rem;
+`;
+
+const ImgBox = styled.div`
+  max-width: 428px;
+  width: 100%;
+  margin: 0 auto;
+`;
+
 const Img = styled.img`
-  min-height:317px;
-  max-height:317px;
+  min-height: 317px;
+  max-height: 317px;
   display: flex;
-  width:100%;
+  width: 100%;
   max-width: 370px;
   margin: 20px auto;
   border-radius: 15px;
 `;
+
 const ButDiv = styled.div`
-  text-align: center;
-  margin-bottom: 100px;
   width: 90%;
-  margin: 0 auto;
-`;
-const RandomBut = styled.button`
+  margin: 60px auto;
+
+  & button {
   background-color: #abd4e2;
   color: white;
   border: none;
   border-radius: 12px;
-  width: 370px;
+  width: 100%;
   height: 50px;
   cursor: pointer;
   font-weight: 700;
@@ -125,9 +125,9 @@ const RandomBut = styled.button`
   line-height: 24px;
   display: block;
   margin: 20px auto;
-`;
-const ButText = styled.p`
-  font-weight: 700;
-  line-height: 0.6rem;
-  font-size: 1rem;
+
+  &:hover {
+    background-color: #ffaeae;
+  }
+  }
 `;
