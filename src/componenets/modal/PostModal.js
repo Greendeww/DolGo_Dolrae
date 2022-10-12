@@ -1,21 +1,38 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../shared/Api";
 
 const PostModal = ({ modal, setModal, data }) => {
-  console.log(data)
+  const navigate = useNavigate();
   return (
     <Background>
       <Content>
         <PageDel>
           <p>정말 삭제하시겠습니까?</p>
-          <Button>
+          <Buttons>
+            <button
+              onClick={async () => {
+                try {
+                  const res = await instance.delete(
+                    `/api/auth/place/${data.place_id}`
+                  );
+                  console.log(res);
+                  alert("삭제되었습니다.");
+                  setModal(false);
+                } catch {
+                  alert("존재하는 여행지가 아닙니다.");
+                  setModal(false);
+                }
+              }}
+            >
+              삭제
+            </button>
             <button
               style={{
                 backgroundColor: "white",
                 color: "#abd4e2",
                 border: "3px solid #abd4e2",
-                
               }}
               onClick={() => {
                 setModal(false);
@@ -23,11 +40,7 @@ const PostModal = ({ modal, setModal, data }) => {
             >
               취소
             </button>
-            <button onClick={async () => {
-              const res = await instance.delete(`/api/auth/place/${data.place_id}`);
-              console.log(res)
-            }}>삭제</button>
-          </Button>
+          </Buttons>
         </PageDel>
       </Content>
     </Background>
@@ -77,11 +90,16 @@ const PageDel = styled.div`
   z-index: 99;
   border-radius: 20px;
 `;
-const Button = styled.div`
-  height: 35px;
+const Buttons = styled.div`
   display: flex;
   -webkit-box-pack: justify;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 25px;
   gap: 20px;
+  width: 60%;
+  height: 45px;
+
+  & button {
+    width: 60px;
+  }
 `;
