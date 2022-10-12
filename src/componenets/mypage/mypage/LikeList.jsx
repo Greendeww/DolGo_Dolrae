@@ -37,13 +37,6 @@ const LikeList = () => {
   }, []);
   return (
     <StLikeList>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          width: "95%",
-        }}
-      >
       <h2>찜한 장소</h2>
         {modal === false
         ?
@@ -59,7 +52,6 @@ const LikeList = () => {
         ? <MapOpen><Maps/></MapOpen> 
         : null
         }
-      </div>
       <div>
         <div>
           {currentLike.map((item) => (
