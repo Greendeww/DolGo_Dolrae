@@ -6,22 +6,18 @@ import MapModal from './MapModal';
 
 const MapInfo = ({pos}) => {
   const map = useMap()
-  console.log(pos)
   const [isOpen, setIsOpen] = useState(false)
   const close = () => {
     setIsOpen(false)
   }
-  
   
   const EventMarkerContainer = ({ position, content }) => {
     const map = useMap()
     const [isVisible, setIsVisible] = useState(false)
     
     return (
-      
       <MapMarker
         position={position} // 마커를 표시할 위치
-        // @ts-ignore
         onClick={(marker) => {map.panTo(marker.getPosition());setIsOpen(true)}}
         onMouseOver={() => setIsVisible(true)}
         onMouseOut={() => setIsVisible(false)}
@@ -33,7 +29,7 @@ const MapInfo = ({pos}) => {
   }
   return (
     <>    
-        <EventMarkerContainer
+      <EventMarkerContainer
         key={`${pos.lat}-${pos.lng}`}
         position={{
           lat: pos.mapY,
