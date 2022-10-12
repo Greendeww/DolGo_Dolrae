@@ -146,17 +146,14 @@ const DetailRevise = () => {
       return;
     }
     let json = JSON.stringify(data);
-    // let imagejson = JSON.stringify(image[0].imageUrl)
     console.log(json);
     const blob = new Blob([json], { type: "application/json" });
-    // const imageBlob = new Blob([imagejson],{ type: 'image/png' })
     const formData = new FormData();
     for (let i = 0; i < image.length; i++) {
       formData.append("image", image[i]);
       console.log(image);
       console.log(image[i]);
     }
-    // formData.append("image",imageBlob)
     formData.append("data", blob);
 
     const payload = {

@@ -105,7 +105,7 @@ extraReducers:(builder) => {
             })
             .addCase(_updateComment.fulfilled, (state,action) => {
                 state.isLoading = true;
-                state.data = action.payload;
+                state.comment = action.payload;
             })
             .addCase(_updateComment.rejected, (state,action) => {
                 state.isLoading = true;
