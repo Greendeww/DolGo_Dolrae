@@ -27,6 +27,7 @@ const RequestDetail = () => {
   const completeBtn = async () => {
     const res = await instance.post(`/api/auth/order/state/${param.id}`);
     console.log(res);
+    alert("상태가 변경되었습니다.");
   };
 
   useEffect(() => {
@@ -84,6 +85,7 @@ const RequestDetail = () => {
               background: "white",
               border: "3px solid #abd4e2",
               color: "#abd4e2",
+              letterSpacing: "-3px"
             }}
           >
             뒤로가기
@@ -127,7 +129,7 @@ const StRequestDetail = styled.div`
   background-color: #eef6fa;
 `;
 const Container = styled.div`
-  padding-top: 70px;
+  padding-top: 120px;
 `;
 const Title = styled.p`
   width: 200px;
