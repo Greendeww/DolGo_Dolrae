@@ -479,5 +479,6 @@ const CompleteButton = styled.div`
 `;
 
 const Locations = styled.div`
-width: 85%;
+  width: 85%;
+  padding-left: 40px;
 `;
