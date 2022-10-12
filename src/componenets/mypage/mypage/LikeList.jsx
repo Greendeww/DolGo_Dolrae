@@ -7,7 +7,6 @@ import PaginationsLike from "../../pagination/PaginationsLike";
 import basicImg from "../../../assert/image/basic.png";
 import Maps from "../../maps/Maps";
 
-
 const LikeList = () => {
   const navigate = useNavigate();
 
@@ -36,55 +35,47 @@ const LikeList = () => {
   useEffect(() => {
     getList();
   }, []);
-  console.log(likeList)
+  console.log(likeList);
   return (
     <StLikeList>
-      <h2>찜한 장소</h2>
-      {modal === false
-      ?
-      <MapsDiv>
-        <p onClick={() => setModal(true)}>지도로 보기<Triangle>▶</Triangle></p>
-      </MapsDiv>
-      :
-      <MapsDiv>
-        <p onClick={() => setModal(false)}>지도로 보기<Triangle>▼</Triangle></p>
-      </MapsDiv>
-      }
-      {modal === true
-      ? <MapOpen><Maps/></MapOpen> 
-      : null
-      }
+      <div style={{ display: "flex", justifyContent: "space-between", width: "95%" }}>
+        <h2>찜한 장소</h2>
+        <p style={{ cursor: "pointer", marginTop: "23px" }} onClick={() => navigate("/maps")}>
+          지도로 보기
+        </p>
+      </div>
       <div>
         <div>
-        {currentLike.map((item) => (
-          <ImgDiv key={item.id}>
-            {item.image === null
-            ? <img
-                alt=""
-                src={basicImg}
-                onClick={() => navigate(`/detail/${item.id}`)}
-              />
-            :  <img
-                alt=""
-                src={item.image}
-                onClick={() => navigate(`/detail/${item.id}`)}
-              />
-            }
-            <Title>
-              <p>{item.title}</p>
-              <span>
-                <Like id={item.id} />
-              </span>
-            </Title>
-        </ImgDiv>
-      ))}
-      </div> 
-         <PaginationsLike
-            page={page}
-            count={list.length}
-            setPage={handlePageChange}
-            postPerpage={2}
-            />
+          {currentLike.map((item) => (
+            <div key={item.id}>
+              {item.image === null ? (
+                <img
+                  alt=""
+                  src={basicImg}
+                  onClick={() => navigate(`/detail/${item.id}`)}
+                />
+              ) : (
+                <img
+                  alt=""
+                  src={item.image}
+                  onClick={() => navigate(`/detail/${item.id}`)}
+                />
+              )}
+              <Title>
+                <p>{item.title}</p>
+                <span>
+                  <Like id={item.id} />
+                </span>
+              </Title>
+            </div>
+          ))}
+        </div>
+        <PaginationsLike
+          page={page}
+          count={list.length}
+          setPage={handlePageChange}
+          postPerpage={2}
+        />
       </div>
     </StLikeList>
   );
@@ -105,7 +96,7 @@ const StLikeList = styled.div`
     margin: 0 auto;
     width: 90%;
     border-radius: 15px;
-    max-height:262px;
+    max-height: 262px;
     &:hover {
       cursor: pointer;
     }
