@@ -24,6 +24,7 @@ const Detail = () => {
   const dispatch = useDispatch();
   const [posts, setPosts] = useState("");
   const [number, setNumber] = useState(1);
+  const login = localStorage.getItem("username");
 
   const { isLoading, error, comment } = useSelector((state) => state.comment);
 
@@ -36,7 +37,6 @@ const Detail = () => {
     // dispatch(_getDetail(id))
     fetch();
   }, []);
-
 
   if (isLoading) {
     return <div>로딩중....</div>;
@@ -51,6 +51,16 @@ const Detail = () => {
   const tmp2 = tmp?.replace(/&lt;/gi, ""); //부등호(<) 제거
   const tmp3 = tmp2?.replace(/&gt;/gi, ""); //부등호(>) 제거
 
+  const requestBtn = () => {
+    if (login === null) {
+      alert("로그인이 필요한 서비스입니다.");
+      navigate("/login");
+    } else {
+      localStorage.setItem("place_id", posts.id);
+      localStorage.setItem("place_title", posts.title);
+      navigate(`/request/edit/${posts.id}`);
+    }
+  };
   return (
     <>
       <BoxDiv>
@@ -69,7 +79,13 @@ const Detail = () => {
               {/* {posts.likes} */}
               <StarThemeDiv>
                 <div style={{ display: "flex" }}>
-                  <FaStar style={{ color: "#fcc419", marginRight: "0.3rem",marginTop:"-0.1rem" }} />
+                  <FaStar
+                    style={{
+                      color: "#fcc419",
+                      marginRight: "0.3rem",
+                      marginTop: "-0.1rem",
+                    }}
+                  />
                   <span style={{ fontWeight: "600", lineHeight: "1rem" }}>
                     {posts.star}
                   </span>
@@ -78,14 +94,7 @@ const Detail = () => {
                   </span>
                 </div>
                 <div>
-                  <Request
-                    style={{ marginRight: "5px" }}
-                    onClick={() => {
-                      localStorage.setItem("place_id", posts.id);
-                      localStorage.setItem("place_title", posts.title);
-                      navigate(`/request/edit/${posts.id}`);
-                    }}
-                  >
+                  <Request style={{ marginRight: "5px" }} onClick={requestBtn}>
                     🚨
                   </Request>
                 </div>
@@ -177,18 +186,17 @@ const Detail = () => {
           ?<DetailForm close={close}/>
           :null} */}
           <ReviewDiv>
-          <Review comment={comment} number={number}/>
-          {/* <h1 style={{color:"white"}}>공백</h1> */}
+            <Review comment={comment} number={number} />
+            {/* <h1 style={{color:"white"}}>공백</h1> */}
           </ReviewDiv>
-      </Box>
-    </BoxDiv>
+        </Box>
+      </BoxDiv>
     </>
-  )
-}
+  );
+};
 export default Detail;
 
-const BoxDiv =styled.div`
-
+const BoxDiv = styled.div`
   width: 100%;
   max-width: 428px;
   margin: 0 auto;
@@ -303,11 +311,10 @@ const ImgLink = styled.img`
 //  justify-content:flex-end;
 //  margin-top:60px;
 // `
-const ReviewDiv =styled.div`
-  width:95%;
-  margin:0 auto;
-`
+const ReviewDiv = styled.div`
+  width: 95%;
+  margin: 0 auto;
+`;
 const Request = styled.span`
   cursor: pointer;
 `;
-
