@@ -40,7 +40,6 @@ const Header = ({title}) => {
   const logout = async () => {
     const response = await instance.post("/api/auth/member/logout");
     alert(response.data);
-    navigate("/");
     localStorage.removeItem("username");
     localStorage.removeItem("nickname");
     localStorage.removeItem("ACCESS_TOKEN");
@@ -100,7 +99,7 @@ const Header = ({title}) => {
                 <h2
                   onClick={() => {
                     logout();
-                    navigate(-1);
+                    setModal(!modal);
                   }}
                 >
                   로그아웃 ＞
