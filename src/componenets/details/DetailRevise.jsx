@@ -274,7 +274,7 @@ const DetailRevise = () => {
           )}
         </Message>
         <ButtonDiv>
-         <ReviseBut onClick={{onUpdatePost}}>수정하기</ReviseBut>
+         <ReviseBut onClick={onUpdatePost}>수정하기</ReviseBut>
           <DelBut onClick={() => navigate("/detail/" + placeId)}>뒤로가기</DelBut>
         </ButtonDiv>
       </Box>

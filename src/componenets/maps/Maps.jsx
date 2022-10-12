@@ -22,7 +22,6 @@ return (
   <>
       <MapDiv>
         <MapBox>
-        {/* <h1 style={{textAligin:"center",alginItmes:"center"}}>지도</h1> */}
         <Map // 지도를 표시할 Container
           center={{
             // 지도의 중심좌표
@@ -64,5 +63,5 @@ const MapBox = styled.div`
   max-width:428px;
   width:100%;
   transition: transform 200ms ease-out 0s;
-  /* margin-top:7.5rem; */
+  padding-bottom:2.5rem;
 `
