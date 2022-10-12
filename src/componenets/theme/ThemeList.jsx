@@ -8,19 +8,19 @@ const ThemeList = ({ post }) => {
       <Wrap>
         {post.theme === "12" ? (
           <div>
-            <p>관광지</p>
+            <p>관광</p>
           </div>
         ) : post.theme === "14" ? (
           <div>
-            <p>문화시설</p>
+            <p>관람</p>
           </div>
         ) : post.theme === "28" ? (
           <div>
-            <p>레포츠</p>
+            <p>액티비티</p>
           </div>
         ) : (
           <div>
-            <p>음식점</p>
+            <p>식도락</p>
           </div>
         )}
       </Wrap>

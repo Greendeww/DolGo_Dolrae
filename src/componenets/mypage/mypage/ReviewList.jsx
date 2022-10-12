@@ -5,7 +5,6 @@ import Paginations from "../../pagination/Paginations";
 import MypgReview from "./MypgReview";
 
 const ReviewList = () => {
-
   const [list, setList] = useState([]);
   const [reviewList, setReviewList] = useState([...list].reverse());
   const [currentReview, setCurrnetReview] = useState([]);
@@ -51,8 +50,10 @@ const ReviewList = () => {
 export default ReviewList;
 
 const StReviewList = styled.div`
+  max-width: 428px;
+  width: 100%;
   margin: 50px auto;
-  
+
   & h2 {
     color: #bfb8b8;
     margin-left: 10px;
