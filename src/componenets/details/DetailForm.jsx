@@ -11,7 +11,6 @@ const DetailForm = () => {
   const { id } = useParams();
   const inputFocus = useRef(null);
 
-  const [isActive, setIsActive] =useState(false);
   const [content, setContent] = useState("");
   const [contentMessage, setContentMessage] = useState("");
   const [isContent, setIsContent] = useState(false);
@@ -111,15 +110,6 @@ const DetailForm = () => {
     // nickname:nickname
   };
 
-  //필수항목 입력시 버튼 색 변경
-  const isSubmmitComment = () => {
-    if(isContent !== true || isTitle !== true|| star === 0) {
-      setIsActive(false)
-    }else{
-      setIsActive(true)
-    }
-  };
-
   const onAddComment = async (e) => {
     e.preventDefault();
     if (title === "" || content === "" || star === 0) {
@@ -182,7 +172,6 @@ const DetailForm = () => {
             value={title}
             onChange={onChangeTitle}
             placeholder="제목을 입력해주세요"
-            onKeyUp={isSubmmitComment}
             ref={inputFocus}
           />
         </LiTilte>
@@ -238,7 +227,6 @@ const DetailForm = () => {
                     size="50"
                     onClick={() => handleStarClick(el)}
                     className={clicked[el] && "yellowStar"}
-                    onKeyUp={isSubmmitComment}
                   />
                 );
               })}
@@ -258,7 +246,6 @@ const DetailForm = () => {
             value={content}
             onChange={onChangeContent}
             placeholder="후기를 남겨주세요"
-            onKeyUp={isSubmmitComment}
           />
         </LiTilte>
         <Message>
@@ -267,16 +254,7 @@ const DetailForm = () => {
           )}
         </Message>
         <ButDiv>
-          {isActive 
-          ? <AddBut 
-              onClick={onAddComment}
-              disabled={isContent !== true || isTitle !== true|| star === 0 ? false : true}
-              >작성하기</AddBut>
-          : <NotBut 
-              onClick={onAddComment}
-              disabled={isContent !== true || isTitle !== true|| star === 0 ? false : true}
-              >작성하기</NotBut>
-          }
+          <AddBut onClick={onAddComment}>작성하기</AddBut>
           <CancelBut onClick={() => navigate("/detail/" + id)}>
             취소하기
           </CancelBut>
@@ -480,18 +458,6 @@ const AddBut = styled.button`
   height: 2.5rem;
   border-radius: 5px;
   line-height: 2.5rem;
-  margin-right: 1rem;
-  width: 100%;
-  font-weight: bold;
-`;
-const NotBut = styled.button`
-  cursor: pointer;
-  color: #abd4e2;
-  border: 3px solid #abd4e2;
-  background-color: white;
-  height: 2.5rem;
-  border-radius: 5px;
-  line-height: 2.1rem;
   margin-right: 1rem;
   width: 100%;
   font-weight: bold;

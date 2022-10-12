@@ -65,15 +65,6 @@ const DetailRevise = () => {
     setStar(score);
   };
 
-  //필수항목 입력시 버튼 색 변경
-  const isSubmmitComment = () => {
-    if(isContent !== true || isTitle !== true|| star === 0) {
-      setIsActive(false)
-    }else{
-      setIsActive(true)
-    }
-  };
-
   const onChangeImg = (e) => {
     const maxImageCnt = 3;
     const imageList = e.target.files;
@@ -137,7 +128,7 @@ const DetailRevise = () => {
       setIsTitle(true);
     }
   };
-  
+
   const data = {
     title: title,
     content: content,
@@ -145,8 +136,7 @@ const DetailRevise = () => {
     existUrlList: fileImage1,
     // nickname:nickname
   };
-  console.log(image);
-  console.log(fileImage1);
+
   const onChangeHandler = (event, setState) => setState(event.target.value);
 
   const onUpdatePost = async (e) => {
@@ -198,7 +188,6 @@ const DetailRevise = () => {
             name="title"
             value={title}
             onChange={onChangeTitle}
-            onKeyUp={isSubmmitComment}
             placeholder="제목을 입력해주세요."
           />
         </LiTilte>
@@ -262,7 +251,6 @@ const DetailRevise = () => {
                   size="50"
                   onClick={() => handleStarClick(el)}
                   className={clicked[el] && "yellowStar"}
-                  onKeyup={isSubmmitComment}
                 />
               );
             })}
@@ -277,7 +265,6 @@ const DetailRevise = () => {
             name="content"
             value={content}
             onChange={onChangeContent}
-            onKeyUp={isSubmmitComment}
             placeholder="후기를 남겨주세요"
           />
         </LiTilte>
@@ -287,16 +274,7 @@ const DetailRevise = () => {
           )}
         </Message>
         <ButtonDiv>
-        {isActive 
-          ? <ReviseBut 
-              onClick={{onUpdatePost}}
-              disabled={isContent !== true || isTitle !== true|| star === 0 ? false : true}
-              >수정하기</ReviseBut>
-          : <NotBut 
-              onClick={{onUpdatePost}}
-              disabled={isContent !== true || isTitle !== true|| star === 0 ? false : true}
-              >수정하기</NotBut>
-          }
+         <ReviseBut onClick={{onUpdatePost}}>수정하기</ReviseBut>
           <DelBut onClick={() => navigate("/detail/" + placeId)}>뒤로가기</DelBut>
         </ButtonDiv>
       </Box>

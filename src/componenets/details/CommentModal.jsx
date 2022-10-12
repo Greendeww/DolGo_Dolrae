@@ -51,7 +51,6 @@ const CommentModal = ({ comment }) => {
               :<div>
               {nickname === comment.nickname ? (
               <ButtonDiv>
-                <ReviseBut onClick={deleteModal}>삭제하기</ReviseBut>
                 <DelBut
                   onClick={() =>
                     navigate(
@@ -64,6 +63,7 @@ const CommentModal = ({ comment }) => {
                 >
                     수정하기
                   </DelBut>
+                  <ReviseBut onClick={deleteModal}>삭제하기</ReviseBut>
                 </ButtonDiv>
               ) : null}
               <ModalPortal>
@@ -96,7 +96,6 @@ const ReviseBut = styled.button`
   background-color: white;
   border: 3px solid #abd4e2;
   height: 2.5rem;
-  margin-right: 0.5rem;
   border-radius: 5px;
   line-height: 2.1rem;
   /* margin-left:1rem; */
@@ -113,6 +112,7 @@ const DelBut = styled.button`
   /* margin-right:1rem; */
   width: 100%;
   font-weight: bold;
+  margin-right: 0.5rem;
 `;
 const DetailImg = styled.img`
   width: 300px;
