@@ -8,25 +8,24 @@ import { instance } from '../../shared/Api';
 import { useEffect } from 'react';
 
 const Like = ({id}) => {
-    // console.log(id)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [like, setLike] = useState(false);
     const nickname = localStorage.getItem("nickname");
 
-        const fetch = async (e) => {
-            if(id === undefined){
-                return 
-            }else{
-                const response = await instance.get(`/api/place/like/${id}`); 
-                setLike(response?.data)
-                // console.log("작동")
-            }
-        }   
+    const fetch = async (e) => {
+        if(id === undefined){
+            return 
+        }else{
+            const response = await instance.get(`/api/place/like/${id}`); 
+            setLike(response?.data)
+            // console.log("작동")
+        }
+    };   
 
     useEffect(() => {
         fetch()
-    },[id])
+    },[id]);
 
     const likeClick = (e) => {
         e.preventDefault();
@@ -39,25 +38,26 @@ const Like = ({id}) => {
             dispatch(onLikeDetail(id))
             // window.location.reload()
         }
-    }
+    };
+
     const noLogin = (e) => {
         e.preventDefault();
         alert('로그인이 필요한 서비스 입니다')
         navigate('/login' )
       }
-  return (
-    <>  
-        {nickname === null
-        ?<UnLiked onClick={noLogin}>♡</UnLiked> 
-        :<div> 
-          {like === true
-          ? <Liked onClick={likeClick}>♥</Liked> 
-          : <UnLiked onClick={likeClick}>♡</UnLiked> 
-          }
-        </div>
-        }
-    </>
-  )
+    return (
+        <>  
+            {nickname === null
+            ?<UnLiked onClick={noLogin}>♡</UnLiked> 
+            :<div> 
+            {like === true
+            ? <Liked onClick={likeClick}>♥</Liked> 
+            : <UnLiked onClick={likeClick}>♡</UnLiked> 
+            }
+            </div>
+            }
+        </>
+    )
 }
 
 export default Like

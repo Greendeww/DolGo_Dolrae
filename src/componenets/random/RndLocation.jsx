@@ -322,12 +322,14 @@ const RndLocation = () => {
           <Title>
             <button onClick={initialization}>필터 초기화 ↺</button>
           </Title>
-          <StList style={{ marginTop: "-20px" }}>
+          <StList>
             <p>지역</p>
-            <div className="location-set">{Location()}</div>
+            <div>
+              <div className="location-set">{Location()}</div>
+            </div>
           </StList>
           <StList>
-            <p>세부지역</p>
+            <p style={{marginTop:"30px"}}>세부지역</p>
             <div className="location-set">{DetailLocation()}</div>
           </StList>
           <button
@@ -355,9 +357,8 @@ const StRnd = styled.div`
   width: 100%;
   margin: 0 auto;
 `;
-
 const RndDiv = styled.div`
-  padding-top: 60px;
+  padding-top:7rem;
 `;
 const St = styled.div`
   & button {
@@ -375,7 +376,6 @@ const St = styled.div`
     margin: 40px auto;
   }
 `;
-
 const Title = styled.div`
   display: flex;
   justify-content: space-between;
@@ -409,15 +409,18 @@ const BackBut = styled.button`
   margin-top: -20px;
 `;
 const StList = styled.div`
-  width: 428px;
-  margin-top: 40px;
+  width: 80%;
+  margin: 0 auto;
   & p {
     font-style: normal;
     font-weight: 700;
     font-size: 25px;
     line-height: 60px;
     color: #bfb8b8;
-    margin-left: 40px;
+    /* margin-left: 40px; */
     margin-bottom: 20px;
+  }
+  & div{
+    margin:0 auto;
   }
 `;

@@ -6,16 +6,15 @@ import Star from "../star/Star";
 import DetailRevise from "./DetailRevise";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-
 import styled from "styled-components";
 import ModalPortal from "../modal/ModalPortal";
 import Modal from "../modal/Modal";
+import { getCookie } from "../../shared/Cookie";
 
 const CommentModal = ({ comment }) => {
-  console.log(comment);
   const [modalOn, setModalOn] = useState(false);
   const nickname = localStorage.getItem("nickname");
-  console.log(modalOn);
+  const getToken = getCookie("ACCESS_TOKEN");
   const navigate = useNavigate();
 
   const handleModal = () => {
@@ -23,6 +22,11 @@ const CommentModal = ({ comment }) => {
   };
   const deleteModal = () => {
     setModalOn(true);
+  };
+  const noLogin = (e) => {
+    e.preventDefault();
+    alert("로그인이 필요한 서비스 입니다");
+    navigate("/login");
   };
 
   return (
@@ -40,9 +44,13 @@ const CommentModal = ({ comment }) => {
             <p style={{ marginTop: "20px", lineHeight: "28px" }}>
               {comment.content}
             </p>
-            {nickname === comment.nickname ? (
+            {getToken === undefined
+              ? <ModalPortal>
+              {modalOn && <Modal onClose={handleModal} comment={comment} />}
+              </ModalPortal>
+              :<div>
+              {nickname === comment.nickname ? (
               <ButtonDiv>
-                <ReviseBut onClick={deleteModal}>삭제하기</ReviseBut>
                 <DelBut
                   onClick={() =>
                     navigate(
@@ -53,13 +61,16 @@ const CommentModal = ({ comment }) => {
                     )
                   }
                 >
-                  수정하기
-                </DelBut>
-              </ButtonDiv>
-            ) : null}
-            <ModalPortal>
-              {modalOn && <Modal onClose={handleModal} comment={comment} />}
-            </ModalPortal>
+                    수정하기
+                  </DelBut>
+                  <ReviseBut onClick={deleteModal}>삭제하기</ReviseBut>
+                </ButtonDiv>
+              ) : null}
+              <ModalPortal>
+                {modalOn && <Modal onClose={handleModal} comment={comment} />}
+              </ModalPortal>
+              </div>
+              }
           </div>
         </BoxDiv>
       </ComDiv>
@@ -85,7 +96,6 @@ const ReviseBut = styled.button`
   background-color: white;
   border: 3px solid #abd4e2;
   height: 2.5rem;
-  margin-right: 0.5rem;
   border-radius: 5px;
   line-height: 2.1rem;
   /* margin-left:1rem; */
@@ -102,6 +112,7 @@ const DelBut = styled.button`
   /* margin-right:1rem; */
   width: 100%;
   font-weight: bold;
+  margin-right: 0.5rem;
 `;
 const DetailImg = styled.img`
   width: 300px;

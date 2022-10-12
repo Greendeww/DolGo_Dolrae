@@ -1,18 +1,16 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
-import Star from "../star/Star";
-import commentSlice from "../../redux/modules/comment";
 import { instance } from "../../shared/Api";
 import Header from "../header/Header";
+import { useRef } from "react";
 
 const DetailForm = () => {
   const navigate = useNavigate();
-
   const { id } = useParams();
-  console.log(id);
+  const inputFocus = useRef(null);
+
   const [content, setContent] = useState("");
   const [contentMessage, setContentMessage] = useState("");
   const [isContent, setIsContent] = useState(false);
@@ -23,7 +21,6 @@ const DetailForm = () => {
   const [image, setImage] = useState([]);
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
-  const [imagenull] = useState(null);
   console.log(image);
   const handleStarClick = (index) => {
     let clickStates = [...clicked];
@@ -35,7 +32,12 @@ const DetailForm = () => {
 
   useEffect(() => {
     sendReview();
-  }, [clicked]); //컨디마 컨디업
+  }, [clicked]);
+  
+  //제목부분에 커서
+  useEffect(() => {
+    inputFocus.current.focus();
+  }, []);
 
   const sendReview = () => {
     let score = clicked.filter(Boolean).length;
@@ -108,8 +110,6 @@ const DetailForm = () => {
     // nickname:nickname
   };
 
-  const onChangeHandler = (event, setState) => setState(event.target.value);
-
   const onAddComment = async (e) => {
     e.preventDefault();
     if (title === "" || content === "" || star === 0) {
@@ -148,7 +148,6 @@ const DetailForm = () => {
       window.location.replace(`/detail/${id}`);
       return res.data;
     } catch (error) {
-      // window.location.replace(`/detail/${id}`);
     }
   };
   return (
@@ -173,6 +172,7 @@ const DetailForm = () => {
             value={title}
             onChange={onChangeTitle}
             placeholder="제목을 입력해주세요"
+            ref={inputFocus}
           />
         </LiTilte>
         <Message>
@@ -274,7 +274,7 @@ const StDetailForm = styled.div`
 
 const Box = styled.div`
   margin: 0 20px;
-  margin-top: 90px;
+  margin-top: 130px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -366,7 +366,7 @@ const PTitle = styled.b`
   font-size: 20px;
 `;
 const InputTit = styled.input`
-  width: 373px;
+  width: 95%;
   height: 52px;
   background-color: rgba(172, 212, 228, 0.35);
   border-radius: 15px;
@@ -381,7 +381,7 @@ const Message = styled.div`
   text-align: end;
 `;
 const InputCom = styled.textarea`
-  width: 373px;
+  width: 95%;
   min-height: 163px;
   padding: 0px 1rem;
   font-size: 14px;
@@ -462,6 +462,7 @@ const AddBut = styled.button`
   width: 100%;
   font-weight: bold;
 `;
+
 const CancelBut = styled.button`
   cursor: pointer;
   font-weight: bold;

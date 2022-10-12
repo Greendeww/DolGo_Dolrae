@@ -9,7 +9,8 @@ import Search from "./Search";
 import burger from "../../assert/header/burger.png";
 import { deleteCookie, getCookie } from "../../shared/Cookie";
 
-const Header = () => {
+
+const Header = ({title}) => {
   const navigate = useNavigate();
 
   const [modal, setModal] = useState(false);
@@ -109,7 +110,7 @@ const Header = () => {
           </Menu>
         </MenuContainer>
       ) : null}
-      {/* <Search/> */}
+      <Search title={title}/>
     </StHeader>
   );
 };

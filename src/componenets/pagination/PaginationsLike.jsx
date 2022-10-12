@@ -3,8 +3,6 @@ import Pagination from "react-js-pagination";
 import '../../css/paging.css';
 
 const PaginationsLike = ({page, count, setPage,postPerPage}) => {
-  // const [page, setPage] = useState(1);
-
 
   return (
     <>

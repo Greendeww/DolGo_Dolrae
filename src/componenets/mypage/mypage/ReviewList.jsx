@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../../shared/Api";
 import Paginations from "../../pagination/Paginations";
 import MypgReview from "./MypgReview";
 
 const ReviewList = () => {
-  const navigate = useNavigate();
 
   const [list, setList] = useState([]);
   const [reviewList, setReviewList] = useState([...list].reverse());
   const [currentReview, setCurrnetReview] = useState([]);
-  const [modal, setModal] = useState(false);
   const [page, setPage] = useState(1);
   const [postPerPage] = useState(3);
   const indexOfLastPost = page * postPerPage;

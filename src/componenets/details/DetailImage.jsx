@@ -29,9 +29,7 @@ const DetailImage = ({post}) => {
     <>
       {post?.imageUrl?.length === 0
       ?
-      // <Slider {...settings}> 
       <NoneImg key={post.id+20} style={{border:"0px"}}alt='' src={basicImg}/>
-       // </Slider> 
       :  
       <Slider {...settings}> 
       {post && post?.imageUrl.map((image,index) => {
@@ -62,11 +60,4 @@ const NoneImg =styled.img`
   width: 100%;
   padding-top: 23px;
   padding-bottom: 23px;
-// const NoneImg = styled.div`
-//   flex-shrink: 0;
-//   width:90%;
-//   max-width: 428px;
-//   justify-content:center;
-//   align-items:center;
-//   margin: 0 auto;
-// `
+`

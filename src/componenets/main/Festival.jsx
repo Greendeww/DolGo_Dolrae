@@ -62,7 +62,7 @@ const StFestival = styled.div`
   font-size: 37px;
   color: #79b9d3;
   height: 500px;
-  padding-top: 80px;
+  padding-top: 100px;
 `;
 
 const Title = styled.div`

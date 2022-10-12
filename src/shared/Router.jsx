@@ -21,7 +21,6 @@ import SearchPage from "../pages/tourist/SearchPage";
 // mypage
 import MyPage from "../pages/mypage/MyPage";
 import MyPageChange from "../pages/mypage/MyPageChange";
-import Maps from "../componenets/maps/Maps";
 
 // request
 import EditRequest from "../pages/request/EditRequest";
@@ -60,7 +59,6 @@ function Router() {
         <Route path="/rndselect/:si/:area" element={<RandomSelect />} />
         <Route path="/rnd" element={<RandomList />} />
         <Route path="/search/:title" element={<SearchPage />} />
-        <Route path="/maps" element={<Maps />} />
       </Routes>
     </BrowserRouter>
   );
