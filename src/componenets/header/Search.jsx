@@ -1,13 +1,13 @@
 import React,{ useState } from 'react';
+import { useEffect } from 'react';
 import styled from "styled-components";
 
-const Search = () => {
-    const [searchWord, setSearchWord] = useState("");
+const Search = ({title}) => {
+    const [searchWord, setSearchWord] = useState(title);
     const onSubmitSearch = (e) => {
         if (e.key === "Enter") {
-           window.location.replace('/products/search/'+searchWord)}
+           window.location.replace('/search/'+searchWord)}
         };
-      
 
     return (
     <>
@@ -15,16 +15,16 @@ const Search = () => {
             <SearchDiv>
                 <input
                 type="text"
-                placeholder="상품명, 지역명, @상점명 입력"
+                placeholder="찾으시는 장소를 검색해주세요"
                 value={searchWord}
                 onChange={(e) => setSearchWord(e.target.value)}
                 onKeyPress={onSubmitSearch}
                 />
                 <SearchA>
                 <img onClick={() => window.location.replace('/search/'+searchWord)}
-
                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAeZJREFUOBGVVD1PAkEQ3VlOjY0xIdGOI0BMxMSGytJE+RsWWomx8mfYWNBpZWltg1b2NCZaGBppFAzR1njsOO9gzHEfIJdws/vmvcft7OySiT2DQqUakDtipjoZ4xsyzGy6RNzy2F7mu53nmGRiKprRw7XaQm/wdU6OG2xMTvFoFPKQLTXX86tn1G7/RHM6thjArP/xeWscn8rUWqJLee/klhdW8MM4xCQHDrjQqEkivhfLF++FEvf80luvsLGXIIwB5MABF5o0HoU1M+5RkvK1Xn29+3KfRlQMpmyCOyzfM3Y7XlMbboDUjIiuZpnBFBwsH3WGVv9Io8VuYuLEUMFZUbmqjfJt2BqC5JZyT9HEtLFyVRvlhrscBeYaS4/G+VaQV4DD7+FWPJk1Vy4aPs6R+nILoBTzMJ7MmitXtVGexXFCC8j5OpzWgyoCxzEfQQOt4hot+gjHSZZOhoLraabIEQU3EEMT70HgHl44m3KcNqUm+2SCVt8vX6E1dDdRMyzTcSCXBhRSImc6o9HkW7589Pz3cpAD8CBL3oXKkj1Ze+00xxZh+DNUMHF9SQKdEL2+en7lmNmFRmmm6jVXhGl4SchF0fcrjbnEWeQ008SSs8RZuC5fjIbWW6xm8ebCYdovlg8g+gXwsu0wmCVGbgAAAABJRU5ErkJggg=="
                     alt="search"
+                    style={{color:"#FF8585"}}
                 />
                 </SearchA>
             </SearchDiv>
@@ -57,6 +57,14 @@ const SearchDiv = styled.div`
     height:1.8rem;
     border-radius:10px;
     margin-right:1rem;
+    font-weight:700;
+    padding-left:1rem;
+    font-size:1rem;
+    ::placeholder{
+        color:rgb(179, 179, 179);
+        /* text-align:center; */
+        font-weight:500;
+    }
     &:hover,
     :focus {
       outline: none;

@@ -39,6 +39,7 @@ const StInfo = styled.div`
   top: 70px;
   height: 240px;
   background-color: #eef6fa;
+  margin-top:50px;
 
   & button {
     width: 150px;

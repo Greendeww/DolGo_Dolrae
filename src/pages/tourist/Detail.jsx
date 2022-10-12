@@ -23,8 +23,6 @@ const Detail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [posts, setPosts] = useState("");
-  const [page, setPage] = useState(1);
-  const [postPerPage] = useState(5);
   const [number, setNumber] = useState(1);
 
   const { isLoading, error, comment } = useSelector((state) => state.comment);
@@ -48,10 +46,6 @@ const Detail = () => {
     return <div>{error.message}</div>;
   }
 
-  // const onLike = async (event) => {
-  //   event.preventDefault();
-  //   dispatch(onLikeDetail(id));
-  // };
   const newText = posts?.content?.replace(/(<([^>]+)>)/gi, "\n"); //태그 제거
   const tmp = newText?.replace(/&nbsp;/gi, " "); //공백 제거
   const tmp2 = tmp?.replace(/&lt;/gi, ""); //부등호(<) 제거
@@ -200,7 +194,7 @@ const BoxDiv =styled.div`
   margin: 0 auto;
 `;
 const Box = styled.div`
-  padding-top: 4rem;
+  padding-top: 7.4rem;
   /* border:2px solid #79B9D3; */
 `;
 const Cover = styled.div`
@@ -223,7 +217,7 @@ const ImgCover = styled.div`
   margin: 0 auto;
 `;
 const ThemeDiv = styled.div`
-  padding-top: 0rem;
+  padding-top: 1.5rem;
 `;
 const Div = styled.div`
   padding: 0 15px;

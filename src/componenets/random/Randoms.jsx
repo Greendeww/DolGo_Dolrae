@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import basicImg from "../../assert/image/basic.png";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Header from "../header/Header";
@@ -92,13 +91,12 @@ const Box = styled.div`
     width: 100%;
     max-width:428px;
     margin: 0 auto;
-    padding-top:4.5rem;
+    padding-top:7rem;
     div{
       margin-top:3rem;
       margin-bottom:5rem;
     }
 `
-
 const Img = styled.img`
   min-height:317px;
   max-height:317px;

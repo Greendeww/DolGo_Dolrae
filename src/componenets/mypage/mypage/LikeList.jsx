@@ -5,10 +5,12 @@ import { instance } from "../../../shared/Api";
 import Like from "../../like/Like";
 import PaginationsLike from "../../pagination/PaginationsLike";
 import basicImg from "../../../assert/image/basic.png";
+import Maps from "../../maps/Maps";
 
 const LikeList = () => {
   const navigate = useNavigate();
 
+  const [modal, setModal] = useState(false);
   const [list, setList] = useState([]);
   const [likeList, setLikeList] = useState([...list].reverse());
   const [currentLike, setCurrnetLike] = useState([]);
@@ -101,10 +103,35 @@ const StLikeList = styled.div`
   }
 
   & div > div {
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
   }
 `;
+const MapsDiv =styled.div`
+  width:95.5%;
+  margin:0 auto;
+  padding-bottom:1rem;
+  display:flex;
 
+  p{cursor: pointer;
+    font-weight:700;
+    font-size:1.2rem;
+  }
+  &:hover{
+    color:#abd4e2;
+  }
+`
+const Triangle =styled.span`
+    display:inline-block;
+    transition: transform 200ms ease-out 0s;
+    transform: rotateZ(0deg);
+`
+const MapOpen = styled.div`
+  
+`
+const ImgDiv =styled.div`
+  margin-top:30px;
+
+`
 const Title = styled.div`
   margin: 0 15px;
   display: flex;
