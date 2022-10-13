@@ -274,7 +274,7 @@ const StDetailForm = styled.div`
 
 const Box = styled.div`
   margin: 0 20px;
-  margin-top: 130px;
+  margin-top: 145px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -293,9 +293,7 @@ const BoxSpan = styled.p`
 `;
 const LiImg = styled.li`
   width: 90%;
-  /* display: flex; */
   padding: 10px 0px;
-  /* border-bottom: 1px solid rgb(204, 204, 204); */
 `;
 const ImgTitle = styled.div`
   padding-left: 0.5rem;
@@ -336,9 +334,10 @@ const ImgLabel = styled.label`
   }
 `;
 const Img = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 102px;
+  height: 102px;
   font-synthesis: none;
+  border-radius: 10px;
   ::-webkit-font-smoothing {
     -webkit-appearance: none;
     -webkit-font-smoothing: antialiased;
@@ -348,10 +347,13 @@ const DeleteImg = styled.button`
   margin: -10.3px;
   position: relative;
   color: red;
-  right: 11.5px;
-  bottom: 88px;
+  right: 10.9px;
+  bottom: 88.9px;
   background-color: white;
+  font-weight: bold;
   border: none;
+  border-radius: 10px;
+  cursor: pointer;
 `;
 const LiTilte = styled.li`
   padding: 10px 0px;
