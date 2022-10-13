@@ -368,12 +368,12 @@ const DeleteImg = styled.button`
   margin: -10.3px;
   position: relative;
   color: red;
-  right: 11.5px;
-  bottom: 88px;
+  right: 11px;
+  bottom: 88.5px;
   background-color: white;
   font-weight: bold;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
 `;
 const LiTilte = styled.li`
