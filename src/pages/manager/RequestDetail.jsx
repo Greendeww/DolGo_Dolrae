@@ -60,7 +60,7 @@ const RequestDetail = () => {
         </div>
         <div style={{ marginTop: "10px" }}>
           <Title>내용</Title>
-          <Context defaultValue={data?.content} readOnly></Context>
+          <Context defaultValue={data?.content} style={{ lineHeight: "20px" }} readOnly></Context>
         </div>
         {/* <div>
           <Title>주소</Title>
