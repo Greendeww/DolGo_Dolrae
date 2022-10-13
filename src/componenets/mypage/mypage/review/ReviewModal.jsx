@@ -2,9 +2,9 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Star from "../../star/Star";
-import ModalPortal from "../../modal/ModalPortal";
-import Modal from "../../modal/Modal";
+import Star from "../../../star/Star";
+import ModalPortal from "../../../modal/ModalPortal";
+import Modal from "../../../modal/Modal";
 
 const ReviewModal = ({ item }) => {
   const [modalOn, setModalOn] = useState(false);

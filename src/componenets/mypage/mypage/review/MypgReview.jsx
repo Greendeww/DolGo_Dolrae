@@ -42,53 +42,42 @@ export default MypgReview;
 
 const Comment = styled.div`
   width: 90%;
-  height: 50px;
+  height: 55px;
   margin: 20px auto;
   background: #eef6fa;
   border-radius: 15px;
   gap: 15px;
   cursor: pointer;
   display: flex;
-
-  & div {
-    align-items: center;
-    position: relative;
-    left: 15px;
-    top: 17px;
-    font-size: 20px;
-    width: 45%;
-    p {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-      width: 100%;
-    }
-  }
-
-  &:hover {
-    cursor: pointer;
-  }
 `;
 
 const PlaceTitle = styled.div`
   display: block;
-  width: 60%;
+  width: 50%;
   height: 20px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 18px;
   padding-left: 10px;
+  align-items: center;
+  position: relative;
+  left: 15px;
+  top: 17px;
 `;
 
 const ContentTitle = styled.div`
   display: block;
-  width: 60%;
+  width: 40%;
   height: 20px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 18px;
+  align-items: center;
+  position: relative;
+  left: 15px;
+  top: 17px;
 `;
 
 const Open = styled.div`
