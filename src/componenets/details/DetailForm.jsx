@@ -374,6 +374,7 @@ const InputTit = styled.input`
   border-radius: 15px;
   border: none;
   padding-left: 10px;
+  font-family: tway;
 `;
 const Message = styled.div`
   margin-bottom: 25px;
@@ -384,6 +385,7 @@ const Message = styled.div`
 `;
 const InputCom = styled.textarea`
   width: 95%;
+  font-family: tway;
   min-height: 163px;
   padding: 0px 1rem;
   font-size: 14px;
