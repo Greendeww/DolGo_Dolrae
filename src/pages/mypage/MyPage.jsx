@@ -5,7 +5,8 @@ import styled from "styled-components";
 import Header from "../../componenets/header/Header";
 import Info from "../../componenets/mypage/mypage/Info";
 import LikeList from "../../componenets/mypage/mypage/LikeList";
-import ReviewList from "../../componenets/mypage/mypage/ReviewList";
+import MyRequestList from "../../componenets/mypage/mypage/MyRequestList";
+import ReviewList from "../../componenets/mypage/mypage/review/ReviewList";
 import { getCookie } from "../../shared/Cookie";
 
 const MyPage = () => {
@@ -25,6 +26,7 @@ const MyPage = () => {
       <Info />
       <LikeList />
       <ReviewList />
+      <MyRequestList/>
     </StMyPage>
   );
 };
