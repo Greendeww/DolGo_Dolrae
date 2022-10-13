@@ -9,8 +9,7 @@ import Search from "./Search";
 import burger from "../../assert/header/burger.png";
 import { deleteCookie, getCookie } from "../../shared/Cookie";
 
-
-const Header = ({title}) => {
+const Header = ({ title }) => {
   const navigate = useNavigate();
 
   const [modal, setModal] = useState(false);
@@ -53,6 +52,7 @@ const Header = ({title}) => {
 
     deleteCookie("ACCESS_TOKEN");
     deleteCookie("REFRESH_TOKEN");
+    navigate('/')
   };
 
   return (
@@ -86,7 +86,8 @@ const Header = ({title}) => {
                 </h2>
               </>
             ) : null}
-            {username === "kthdus96@nate.com" ? (
+            {username === "kthdus96@nate.com" ||
+            username === "g4dalcom@gmail.com" ? (
               <>
                 <h2 onClick={() => navigate("/request/list")}>요청 목록</h2>
                 <h2 onClick={() => navigate("/post")}>게시글 추가</h2>
@@ -109,7 +110,7 @@ const Header = ({title}) => {
           </Menu>
         </MenuContainer>
       ) : null}
-      <Search title={title}/>
+      <Search title={title} />
     </StHeader>
   );
 };
