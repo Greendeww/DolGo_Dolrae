@@ -78,18 +78,19 @@ const Post = () => {
     setImage(image.filter((_, index) => index !== id));
   };
 
-  // 작성하기 버튼 Click
+  // 수정하기 버튼 Click
   const onSubmitHandler = async (e) => {
     const request = {
       title: req.title,
       content: req.content,
       address: req.address,
+      existUrlList: req.imageUrl,
       theme: selectedTheme,
       areaCode: selectedDo,
       sigunguCode: selectedSi,
     };
     console.log(request);
-
+    console.log(place_id.id)
     if (
       request.content === "" ||
       request.address === "" ||
@@ -109,15 +110,15 @@ const Post = () => {
       }
       formData.append("data", blob);
 
-      const res = await instance.post(`/api/auth/place`, formData, {
+      const res = await instance.put(`/api/auth/place/${place_id.id}`, formData, {
         headers: {
           "content-type": "multipart/form-data",
         },
       });
       console.log(res);
       try {
-        alert("게시글이 추가되었습니다.");
-        navigate("/");
+        alert("게시글이 수정되었습니다.");
+        navigate(`/request/detail/${req.id}`);
         localStorage.removeItem("sameDo");
       } catch {
         alert("내용을 다시 확인해주세요.");
@@ -232,13 +233,13 @@ const Post = () => {
     { do: "충북", name: "옥천", value: 5 },
     { do: "충북", name: "음성", value: 6 },
     { do: "충북", name: "제천", value: 7 },
-    { do: "충북", name: "증평", value: 8 },
-    { do: "충북", name: "진천", value: 9 },
-    { do: "충북", name: "청원", value: 10 },
-    { do: "충북", name: "청주", value: 11 },
-    { do: "충북", name: "충주", value: 12 },
-    { do: "충남", name: "계룡", value: 16 },
+    { do: "충북", name: "증평", value: 12 },
+    { do: "충북", name: "진천", value: 8 },
+    { do: "충북", name: "청원", value: 9 },
+    { do: "충북", name: "청주", value: 10 },
+    { do: "충북", name: "충주", value: 11 },
     { do: "충남", name: "시/군", value: "" },
+    { do: "충남", name: "계룡", value: 16 },
     { do: "충남", name: "공주", value: 1 },
     { do: "충남", name: "금산", value: 2 },
     { do: "충남", name: "논산", value: 3 },
@@ -288,16 +289,16 @@ const Post = () => {
     { do: "경남", name: "사천", value: 8 },
     { do: "경남", name: "산청", value: 9 },
     { do: "경남", name: "양산", value: 10 },
-    { do: "경남", name: "의령", value: 11 },
-    { do: "경남", name: "진주", value: 12 },
-    { do: "경남", name: "진해", value: 13 },
-    { do: "경남", name: "창녕", value: 14 },
-    { do: "경남", name: "창원", value: 15 },
-    { do: "경남", name: "통영", value: 16 },
-    { do: "경남", name: "하동", value: 17 },
-    { do: "경남", name: "함안", value: 18 },
-    { do: "경남", name: "함양", value: 19 },
-    { do: "경남", name: "합천", value: 20 },
+    { do: "경남", name: "의령", value: 12 },
+    { do: "경남", name: "진주", value: 13 },
+    { do: "경남", name: "진해", value: 14 },
+    { do: "경남", name: "창녕", value: 15 },
+    { do: "경남", name: "창원", value: 16 },
+    { do: "경남", name: "통영", value: 17 },
+    { do: "경남", name: "하동", value: 18 },
+    { do: "경남", name: "함안", value: 19 },
+    { do: "경남", name: "함양", value: 20 },
+    { do: "경남", name: "합천", value: 21 },
     { do: "전북", name: "시/군", value: "" },
     { do: "전북", name: "고창", value: 1 },
     { do: "전북", name: "군산", value: 2 },
@@ -327,15 +328,15 @@ const Post = () => {
     { do: "전남", name: "순천", value: 11 },
     { do: "전남", name: "신안", value: 12 },
     { do: "전남", name: "여수", value: 13 },
-    { do: "전남", name: "영광", value: 14 },
-    { do: "전남", name: "영암", value: 15 },
-    { do: "전남", name: "완도", value: 16 },
-    { do: "전남", name: "장성", value: 17 },
-    { do: "전남", name: "장흥", value: 18 },
-    { do: "전남", name: "진도", value: 19 },
-    { do: "전남", name: "함평", value: 20 },
-    { do: "전남", name: "해남", value: 21 },
-    { do: "전남", name: "화순", value: 22 },
+    { do: "전남", name: "영광", value: 16 },
+    { do: "전남", name: "영암", value: 17 },
+    { do: "전남", name: "완도", value: 18 },
+    { do: "전남", name: "장성", value: 19 },
+    { do: "전남", name: "장흥", value: 20 },
+    { do: "전남", name: "진도", value: 21 },
+    { do: "전남", name: "함평", value: 22 },
+    { do: "전남", name: "해남", value: 23 },
+    { do: "전남", name: "화순", value: 24 },
     { do: "제주", name: "시/군", value: "" },
     { do: "제주", name: "서귀포", value: 3 },
     { do: "제주", name: "제주", value: 4 },
@@ -464,7 +465,7 @@ const Post = () => {
           </div>
         </div>
         <Buttons>
-          <PostBtn onClick={onSubmitHandler}>작성하기</PostBtn>
+          <PostBtn onClick={onSubmitHandler}>수정하기</PostBtn>
           <CancelBtn
             onClick={() => {
               navigate(-1);
