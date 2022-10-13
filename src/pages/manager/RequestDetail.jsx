@@ -91,7 +91,7 @@ const Body = styled.div `
 `
 const UserName = styled.div `
     width: 428px;
-    margin: 0px auto 0px auto;
+    margin: 70px auto 0px auto;
 `
 const Date = styled.div `
     width: 428px;

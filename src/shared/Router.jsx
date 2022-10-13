@@ -17,9 +17,9 @@ import MyPageChange from "../pages/mypage/MyPageChange";
 import AmendmentRequest from "../pages/request/AmendmentRequest";
 import RegistrationRequest from "../pages/request/RegistrationRequest";
 import Administrator from "../pages/manager/Administrator";
-import RequestEdit from "../pages/manager/RequestPost";
+import RequestEdit from "../pages/manager/RequestEdit";
 import RequestDetail from "../pages/manager/RequestDetail";
-import RequestPost from "../pages/manager/RequestEdit";
+import RequestPost from "../pages/manager/RequestPost";
 
 function Router() {
   return (

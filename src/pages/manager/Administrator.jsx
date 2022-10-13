@@ -60,7 +60,7 @@ const Body = styled.div `
     background-color: rgba(121, 185, 211, 0.3);
 `
 const Title = styled.div `
-    padding: 50px 0px 0px 0px;
+    padding: 100px 0px 0px 0px;
 
     font-family: 'Noto Sans KR';
     font-style: normal;
