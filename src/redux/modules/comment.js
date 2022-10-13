@@ -16,7 +16,6 @@ export const _getComments = createAsyncThunk(
       const data = await instance.get(
         `/api/comment/${payload}`
       );
-      console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -60,7 +59,7 @@ export const _updateComment = createAsyncThunk(
           },
         }
       );
-      window.location.replace(`/detail/${payload.placeId}`);
+      window.history.go(-1);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -105,7 +104,7 @@ extraReducers:(builder) => {
             })
             .addCase(_updateComment.fulfilled, (state,action) => {
                 state.isLoading = true;
-                state.data = action.payload;
+                state.comment = action.payload;
             })
             .addCase(_updateComment.rejected, (state,action) => {
                 state.isLoading = true;

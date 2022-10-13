@@ -15,13 +15,22 @@ const Nickname = () => {
       alert("변경할 닉네임을 입력해주세요.");
       e.preventDefault();
     } else {
-      const res = await instance.put(
-        "/api/auth/member/updatenickname",
-        changeNickname
-      );
-      // console.log(res)
-      localStorage.setItem("nickname", changeNickname.nickname);
-      navigate("/mypage");
+      if (
+        window.confirm(
+          `정말 「${changeNickname.nickname}」로 변경하시겠습니까?`
+        )
+      ) {
+        const res = await instance.put(
+          "/api/auth/member/updatenickname",
+          changeNickname
+        );
+        // console.log(res)
+        localStorage.setItem("nickname", changeNickname.nickname);
+        navigate("/mypage");
+        alert(`닉네임이 「${changeNickname.nickname}」로 변경되었습니다.`);
+      } else {
+        alert("닉네임 변경이 취소되었습니다.");
+      }
     }
   };
 
@@ -45,18 +54,24 @@ const Nickname = () => {
 export default Nickname;
 
 const StNickname = styled.div`
-  padding-top: 100px;
+  padding-top: 150px;
   margin: 0 auto;
-  width: 380px;
+  max-width: 428px;
+  width: 100%;
+
+  & h2 {
+    margin-left: 20px;
+  }
 
   & div {
     display: flex;
+    width: 95%;
   }
 
   & input {
     display: flex;
     margin: 0 auto;
-    width: 320px;
+    width: 80%;
     height: 52px;
     border: none;
     border-radius: 15px;
@@ -64,11 +79,9 @@ const StNickname = styled.div`
   }
 
   & p {
-    font-weight: 900;
+    font-weight: bold;
     font-size: 23px;
-    /* margin-left: 15px; */
-    margin-top: 10px;
-    padding-right: 5px;
+    margin-top: 15px;
   }
 
   & button {
@@ -85,9 +98,6 @@ const StNickname = styled.div`
     margin: 30px auto;
     justify-content: center;
     align-items: center;
-
-    &:hover {
-      cursor: pointer;
-    }
+    cursor: pointer;
   }
 `;

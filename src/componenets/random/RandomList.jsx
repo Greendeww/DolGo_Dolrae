@@ -4,14 +4,12 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useEffect } from "react";
 import { FaStar } from "react-icons/fa";
-import axios from "axios";
 import Like from "../like/Like";
 import Header from "../header/Header";
 import basicImg from "../../assert/image/basic.png";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useRef } from "react";
-import { useCallback } from "react";
 import ScrollToTop from "../scroll/ScrollToTop";
 
 const RandomList = () => {
@@ -31,55 +29,46 @@ const RandomList = () => {
     fetch();
   }, []);
 
-  // console.log(random?.placeList[0]?.id)
-  // console.log(random?.placeList[1]?.id)
-  // console.log(random?.placeList[2]?.id)
-  // console.log(random?.placeList[3]?.id)
-
-
-    const onRandom = (e) => {
-        window.scrollTo({ top: 0, behavior: "smooth" })
-        let timerInterval
-        Swal.fire({
-            title: '지역을 선정중입니다',
-            html: '잠시만 기다려주세요',
-            timer: 1500,
-            timerProgressBar: true,
-            didOpen: () => {
-              Swal.showLoading()
-              const b = Swal.getHtmlContainer().querySelector('b')
-              timerInterval = setInterval(() => {
-                b.textContent = Swal.getTimerLeft()
-              }, 100)
-            },
-            willClose: () => {
-              clearInterval(timerInterval)
-              fetch();
-              window.location.reload();
-            }
-          }).then((result) => {
-            /* Read more about handling dismissals below */
-            if (result.dismiss === Swal.DismissReason.timer) {
-              console.log('I was closed by the timer')
-            }
-          })
-         console.log("작동")
-    }
-    // useEffect(() => {
-    //     window.scrollTo(0,0)
-    // },[])
-    return (
-     <BoxDiv>
-     <Header/>
-     <Box ref={scrollRef}>
-     <ScrollToTop/>
-       <LocDiv>
-         <PTitle>이번엔 </PTitle>
-         <SpanRandom>{random?.area}</SpanRandom>
-         <PTitle2>어때요? </PTitle2> 
-       </LocDiv>
-       <TemaDiv>
-         <TemaBox>
+  const onRandom = (e) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    let timerInterval;
+    Swal.fire({
+      title: "지역을 선정중입니다",
+      html: "잠시만 기다려주세요",
+      timer: 1500,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const b = Swal.getHtmlContainer().querySelector("b");
+        timerInterval = setInterval(() => {
+          b.textContent = Swal.getTimerLeft();
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+        fetch();
+        window.location.reload();
+      },
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log("I was closed by the timer");
+      }
+    });
+    console.log("작동");
+  };
+  return (
+    <BoxDiv>
+      <Header />
+      <Box ref={scrollRef}>
+        <ScrollToTop />
+        <LocDiv>
+          <PTitle>이번엔 </PTitle>
+          <SpanRandom>{random?.area}</SpanRandom>
+          <PTitle2>어때요? </PTitle2>
+        </LocDiv>
+        <TemaDiv>
+          <TemaBox>
             <TemaP>
               <TemaName>관광</TemaName>
             </TemaP>
@@ -275,25 +264,23 @@ const RandomList = () => {
   );
 };
 
-
-export default RandomList
+export default RandomList;
 const BoxDiv = styled.div`
-    width: 100%;
-    max-width:428px;
-    margin: 0 auto;
-    /* border:2px solid #79B9D3; */
-    line-height:40px;
-    height:100%;
-`
+  width: 100%;
+  max-width: 428px;
+  margin: 0 auto;
+  /* border:2px solid #79B9D3; */
+  line-height: 40px;
+  height: 100%;
+`;
 const Box = styled.div`
-    padding-top:2.5rem;
-    width: 100%;
-    max-width:428px;
-    margin: 0 auto;
-    /* border:2px solid #79B9D3; */
-    line-height:40px;
-    height:100%;
-
+  padding-top: 8rem;
+  width: 100%;
+  max-width: 428px;
+  margin: 0 auto;
+  /* border:2px solid #79B9D3; */
+  line-height: 40px;
+  height: 100%;
 `;
 const LocDiv = styled.div`
   width: 90%;
@@ -376,7 +363,12 @@ const TemaDesc = styled.div`
 `;
 const TemaTilte = styled.span`
   font-size: 20px;
-  line-height: 1.1rem;
+  line-height: 1.2rem;
+  width: 180px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 const TemaStar = styled.span`
   margin-right: 1rem;
@@ -393,7 +385,7 @@ const ButDiv = styled.div`
 const RandomBut = styled.button`
   cursor: pointer;
   color: white;
-  background-color: #ABD4E2;
+  background-color: #abd4e2;
   height: 2.5rem;
   width: 100%;
   border: none;

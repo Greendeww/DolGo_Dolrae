@@ -1,8 +1,8 @@
-import React,{useState} from 'react'
+import React from 'react'
 import Pagination from "react-js-pagination";
 import '../../css/paging.css';
 
-const Paginations = ({page, count, setPage,postPerPage}) => {
+const Paginations = ({page, count, setPage, postPerPage}) => {
   // const [page, setPage] = useState(1);
   const handlePageChange = (page) => {
     setPage(page);

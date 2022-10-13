@@ -192,11 +192,11 @@ const List = () => {
     { do: "충북", name: "옥천", value: 5 },
     { do: "충북", name: "음성", value: 6 },
     { do: "충북", name: "제천", value: 7 },
-    { do: "충북", name: "증평", value: 8 },
-    { do: "충북", name: "진천", value: 9 },
-    { do: "충북", name: "청원", value: 10 },
-    { do: "충북", name: "청주", value: 11 },
-    { do: "충북", name: "충주", value: 12 },
+    { do: "충북", name: "증평", value: 12 },
+    { do: "충북", name: "진천", value: 8 },
+    { do: "충북", name: "청원", value: 9 },
+    { do: "충북", name: "청주", value: 10 },
+    { do: "충북", name: "충주", value: 11 },
     { do: "충남", name: "전체", value: 0 },
     { do: "충남", name: "계룡", value: 16 },
     { do: "충남", name: "공주", value: 1 },
@@ -248,16 +248,16 @@ const List = () => {
     { do: "경남", name: "사천", value: 8 },
     { do: "경남", name: "산청", value: 9 },
     { do: "경남", name: "양산", value: 10 },
-    { do: "경남", name: "의령", value: 11 },
-    { do: "경남", name: "진주", value: 12 },
-    { do: "경남", name: "진해", value: 13 },
-    { do: "경남", name: "창녕", value: 14 },
-    { do: "경남", name: "창원", value: 15 },
-    { do: "경남", name: "통영", value: 16 },
-    { do: "경남", name: "하동", value: 17 },
-    { do: "경남", name: "함안", value: 18 },
-    { do: "경남", name: "함양", value: 19 },
-    { do: "경남", name: "합천", value: 20 },
+    { do: "경남", name: "의령", value: 12 },
+    { do: "경남", name: "진주", value: 13 },
+    { do: "경남", name: "진해", value: 14 },
+    { do: "경남", name: "창녕", value: 15 },
+    { do: "경남", name: "창원", value: 16 },
+    { do: "경남", name: "통영", value: 17 },
+    { do: "경남", name: "하동", value: 18 },
+    { do: "경남", name: "함안", value: 19 },
+    { do: "경남", name: "함양", value: 20 },
+    { do: "경남", name: "합천", value: 21 },
     { do: "전북", name: "전체", value: 0 },
     { do: "전북", name: "고창", value: 1 },
     { do: "전북", name: "군산", value: 2 },
@@ -287,15 +287,15 @@ const List = () => {
     { do: "전남", name: "순천", value: 11 },
     { do: "전남", name: "신안", value: 12 },
     { do: "전남", name: "여수", value: 13 },
-    { do: "전남", name: "영광", value: 14 },
-    { do: "전남", name: "영암", value: 15 },
-    { do: "전남", name: "완도", value: 16 },
-    { do: "전남", name: "장성", value: 17 },
-    { do: "전남", name: "장흥", value: 18 },
-    { do: "전남", name: "진도", value: 19 },
-    { do: "전남", name: "함평", value: 20 },
-    { do: "전남", name: "해남", value: 21 },
-    { do: "전남", name: "화순", value: 22 },
+    { do: "전남", name: "영광", value: 16 },
+    { do: "전남", name: "영암", value: 17 },
+    { do: "전남", name: "완도", value: 18 },
+    { do: "전남", name: "장성", value: 19 },
+    { do: "전남", name: "장흥", value: 20 },
+    { do: "전남", name: "진도", value: 21 },
+    { do: "전남", name: "함평", value: 22 },
+    { do: "전남", name: "해남", value: 23 },
+    { do: "전남", name: "화순", value: 24 },
     { do: "제주", name: "전체", value: 0 },
     { do: "제주", name: "서귀포", value: 3 },
     { do: "제주", name: "제주", value: 4 },
@@ -404,7 +404,7 @@ export default List;
 const St = styled.div`
   max-width: 428px;
   width: 100%;
-  padding-top: 80px;
+  padding-top: 130px;
 `;
 
 const StCategory = styled.div`
@@ -462,12 +462,14 @@ const StLocation = styled.div`
 const StList = styled.div`
   width: 100%;
   margin-top: 50px;
+  margin: 0 auto;
   & p {
     font-style: normal;
     font-size: 25px;
     line-height: 40px;
     color: #bfb8b8;
     margin: 20px;
+    margin-top: 50px;
     margin-left: 30px;
   }
 `;
@@ -479,5 +481,7 @@ const CompleteButton = styled.div`
 `;
 
 const Locations = styled.div`
-width: 85%;
+  display: flex;
+  margin: 0 auto;
+  width: 323px;
 `;

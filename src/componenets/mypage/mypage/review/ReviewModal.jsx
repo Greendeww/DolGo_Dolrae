@@ -1,11 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Star from "../../star/Star";
-import ModalPortal from "../../modal/ModalPortal";
-import Modal from "../../modal/Modal";
+import Star from "../../../star/Star";
+import ModalPortal from "../../../modal/ModalPortal";
+import Modal from "../../../modal/Modal";
 
 const ReviewModal = ({ item }) => {
   const [modalOn, setModalOn] = useState(false);
@@ -16,12 +15,6 @@ const ReviewModal = ({ item }) => {
   const handleModal = () => {
     setModalOn(false);
   };
-
-  const deleteModal = () => {
-    setModalOn(true);
-  };
-
-
 
   return (
     <ComDiv key={item.comment_id}>
@@ -67,6 +60,8 @@ export default ReviewModal;
 const ComDiv = styled.div`
   padding-bottom: 2rem;
   margin: 0rem 1rem 0rem 1rem;
+  max-width: 428px;
+  width: 90%;
 `;
 const StarDiv = styled.div`
   display: flex;
@@ -77,28 +72,27 @@ const StarDiv = styled.div`
 
 const ReviseBut = styled.button`
   cursor: pointer;
-  font-weight: 600;
-  color: #79b9d3;
-  background-color: white;
-  border: 3px solid #abd4e2;
-  height: 2.5rem;
-  margin-right: 0.5rem;
-  border-radius: 5px;
-  line-height: 2.1rem;
-  /* margin-left:1rem; */
-  width: 100%;
-`;
-const DelBut = styled.button`
-  cursor: pointer;
   color: white;
   background-color: #abd4e2;
   border: 0px;
   height: 2.5rem;
   border-radius: 5px;
   line-height: 2.5rem;
-  /* margin-right:1rem; */
+  margin-right: 0.5rem;
   width: 100%;
   font-weight: bold;
+`;
+const DelBut = styled.button`
+  cursor: pointer;
+  font-weight: 600;
+  color: #79b9d3;
+  background-color: white;
+  border: 3px solid #abd4e2;
+  height: 2.5rem;
+  border-radius: 5px;
+  line-height: 2.1rem;
+  /* margin-left:1rem; */
+  width: 100%;
 `;
 const DetailImg = styled.img`
   width: 300px;

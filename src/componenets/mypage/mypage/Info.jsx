@@ -35,13 +35,12 @@ export default Info;
 const StInfo = styled.div`
   max-width: 428px;
   width: 100%;
-  position: relative;
-  top: 70px;
   height: 240px;
+  padding-top: 130px;
   background-color: #eef6fa;
 
   & button {
-    width: 150px;
+    width: 140px;
     height: 40px;
     background-color: #abd4e2;
     color: white;
