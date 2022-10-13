@@ -289,7 +289,7 @@ const St = styled.div`
 
 const Box = styled.div`
   height: 100%;
-  padding-top: 130px;
+  padding-top: 145px;
   background-color: #eef6fa;
   align-items: center;
   justify-content: center;
@@ -356,9 +356,10 @@ const ImgLabel = styled.label`
 `;
 
 const Img = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 102px;
+  height: 102px;
   font-synthesis: none;
+  border-radius: 10px;
   ::-webkit-font-smoothing {
     -webkit-appearance: none;
     -webkit-font-smoothing: antialiased;
