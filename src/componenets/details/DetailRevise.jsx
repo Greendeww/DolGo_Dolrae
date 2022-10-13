@@ -146,13 +146,10 @@ const DetailRevise = () => {
       return;
     }
     let json = JSON.stringify(data);
-    console.log(json);
     const blob = new Blob([json], { type: "application/json" });
     const formData = new FormData();
     for (let i = 0; i < image.length; i++) {
       formData.append("image", image[i]);
-      console.log(image);
-      console.log(image[i]);
     }
     formData.append("data", blob);
 

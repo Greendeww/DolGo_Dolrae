@@ -16,7 +16,6 @@ export const _getComments = createAsyncThunk(
       const data = await instance.get(
         `/api/comment/${payload}`
       );
-      console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -60,7 +59,7 @@ export const _updateComment = createAsyncThunk(
           },
         }
       );
-      window.location.replace(`/detail/${payload.placeId}`);
+      window.history.go(-1);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
