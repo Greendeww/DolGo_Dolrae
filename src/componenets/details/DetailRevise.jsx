@@ -146,17 +146,11 @@ const DetailRevise = () => {
       return;
     }
     let json = JSON.stringify(data);
-    // let imagejson = JSON.stringify(image[0].imageUrl)
-    console.log(json);
     const blob = new Blob([json], { type: "application/json" });
-    // const imageBlob = new Blob([imagejson],{ type: 'image/png' })
     const formData = new FormData();
     for (let i = 0; i < image.length; i++) {
       formData.append("image", image[i]);
-      console.log(image);
-      console.log(image[i]);
     }
-    // formData.append("image",imageBlob)
     formData.append("data", blob);
 
     const payload = {
@@ -274,7 +268,7 @@ const DetailRevise = () => {
           )}
         </Message>
         <ButtonDiv>
-         <ReviseBut onClick={{onUpdatePost}}>수정하기</ReviseBut>
+         <ReviseBut onClick={onUpdatePost}>수정하기</ReviseBut>
           <DelBut onClick={() => navigate("/detail/" + placeId)}>뒤로가기</DelBut>
         </ButtonDiv>
       </Box>
@@ -295,7 +289,7 @@ const St = styled.div`
 
 const Box = styled.div`
   height: 100%;
-  padding-top: 130px;
+  padding-top: 145px;
   background-color: #eef6fa;
   align-items: center;
   justify-content: center;
@@ -362,9 +356,10 @@ const ImgLabel = styled.label`
 `;
 
 const Img = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 102px;
+  height: 102px;
   font-synthesis: none;
+  border-radius: 10px;
   ::-webkit-font-smoothing {
     -webkit-appearance: none;
     -webkit-font-smoothing: antialiased;
@@ -374,12 +369,12 @@ const DeleteImg = styled.button`
   margin: -10.3px;
   position: relative;
   color: red;
-  right: 11.5px;
-  bottom: 88px;
+  right: 11px;
+  bottom: 88.5px;
   background-color: white;
   font-weight: bold;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
 `;
 const LiTilte = styled.li`
