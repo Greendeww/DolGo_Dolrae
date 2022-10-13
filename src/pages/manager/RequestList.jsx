@@ -12,7 +12,7 @@ const RequestList = () => {
   const [reviewList, setReviewList] = useState([...list].reverse());
   const [currentReview, setCurrnetReview] = useState([]);
   const [page, setPage] = useState(1);
-  const [postPerPage] = useState(5);
+  const [postPerPage] = useState(10);
   const indexOfLastPost = page * postPerPage;
   const indexOfFirstPage = indexOfLastPost - postPerPage;
 
@@ -20,7 +20,7 @@ const RequestList = () => {
     const response = await getApi("/api/auth/order");
     // console.log(response.data);
     setList(response.data);
-    setReviewList([...response?.data].reverse());
+    setReviewList([...response?.data]);
     console.log(response);
   };
   useEffect(() => {
