@@ -28,7 +28,6 @@ const Login = () => {
     } else {
       try {
         const response = await instance.post("/api/member/login", user);
-
         setCookie("ACCESS_TOKEN", response.headers.authorization, 0.5);
         setCookie("REFRESH_TOKEN", response.headers.refreshtoken, 0.5);
 
