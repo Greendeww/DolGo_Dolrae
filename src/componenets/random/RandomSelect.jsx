@@ -13,8 +13,6 @@ import Swal from "sweetalert2";
 const RandomSelect = () => {
   const { si } = useParams();
   const { area } = useParams();
-  console.log(si);
-  console.log(area);
   const navigate = useNavigate();
 
   const [random, setRandom] = useState();
