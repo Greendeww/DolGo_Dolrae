@@ -5,13 +5,18 @@ import styled from "styled-components";
 import Star from "../../star/Star";
 import ModalPortal from "../../modal/ModalPortal";
 import Modal from "../../modal/Modal";
+import ModalImage from "../../modal/ModalImage";
 
 const ReviewModal = ({ item }) => {
   const [modalOn, setModalOn] = useState(false);
-  const nickname = localStorage.getItem("nickname");
-  console.log(modalOn);
+  const [imageModal, setImageModal] = useState(false);
   const navigate = useNavigate();
-
+  const onClose = () => {
+    setImageModal(false)
+  };
+  const onOpen = () => {
+    setImageModal(true)
+  }
   const handleModal = () => {
     setModalOn(false);
   };
@@ -21,10 +26,10 @@ const ReviewModal = ({ item }) => {
       <div>
         <div>
           <div style={{ display: "flex", alignItems: "center" }}></div>
-          <div style={{ textAlign: "center" }}>
-            {item.imageList.map((image, index) => {
-              return <DetailImg key={index} alt="" src={image} />;
-            })}
+          <div style={{ textAlign: "left" }}>
+             {item.imageList.map((image, index) => {
+                return <DetailImg onClick={onOpen} key={index} alt="" src={image} />;
+              })}
           </div>
           <div style={{ paddingTop: "20px" }} >
           <StarDiv>
@@ -51,6 +56,9 @@ const ReviewModal = ({ item }) => {
             {modalOn && <Modal onClose={handleModal} comment={item} />}
           </ModalPortal>
         </div>
+        <ModalPortal>
+            {imageModal && <ModalImage onClose={onClose} comment={item}/>}
+        </ModalPortal> 
       </div>
     </ComDiv>
   );
@@ -95,11 +103,16 @@ const DelBut = styled.button`
   width: 100%;
 `;
 const DetailImg = styled.img`
-  width: 300px;
+  width: 95px;
   border-radius: 20px;
   margin-top: 1rem;
-  /* border: 1px solid rgb(195, 194, 204); */
+  margin-right:0.5rem;
+  cursor: pointer;
+  @media screen and (max-width: 398px){
+    width:82px;
+  }
 `;
+
 const ButtonDiv = styled.div`
   display: flex;
   justify-content: center;
