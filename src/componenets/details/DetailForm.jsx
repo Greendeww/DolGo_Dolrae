@@ -21,7 +21,7 @@ const DetailForm = () => {
   const [image, setImage] = useState([]);
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
-  console.log(image);
+ 
   const handleStarClick = (index) => {
     let clickStates = [...clicked];
     for (let i = 0; i < 5; i++) {
@@ -46,14 +46,8 @@ const DetailForm = () => {
 
   const onChangeImg = (e) => {
     const imageList = e.target.files;
-    // const maxImageCnt = 3;
-    const imageLists = [...image];
-    // if(image.length > maxImageCnt){
-    //   alert("첨부파일은 최대 3개까지 가능합니다")
-    // }
-
-    console.log(imageList);
-    const imgFiles = [...fileImage];
+    let imageLists = [...image];
+    let imgFiles = [...fileImage];
     for (let i = 0; i < imageList.length; i++) {
       const nowImageUrl = URL.createObjectURL(e.target.files[i]);
       imgFiles.push(nowImageUrl);
@@ -61,14 +55,19 @@ const DetailForm = () => {
     for (let i = 0; i < imageList.length; i++) {
       const nowImageUrl1 = e.target.files[i];
       imageLists.push(nowImageUrl1);
-      continue;
     }
-    // if (imageLists.length > 3) {
-    //   imageLists = imageLists.slice(0, 3);
-    // }
+       //이미지 개수 최대 3개까지 등록가능
+    if (imageLists.length > 3) {
+      window.alert("이미지는 최대 3개까지 등록 가능합니다")
+      imageLists = imageLists.slice(0, 3);
+    }
+    if(imgFiles.length > 3){
+      imgFiles = imgFiles.slice(0, 3);
+    }
     setFileImage(imgFiles);
     setImage(imageLists);
   };
+
   //이미지 삭제
   const handleDeleteImage = (id) => {
     setFileImage(fileImage.filter((_, index) => index !== id));
@@ -131,7 +130,6 @@ const DetailForm = () => {
       id: id,
       formData: formData,
     };
-
     try {
       const res = await instance.post(
         `/api/auth/comment/${payload.id}`,
