@@ -71,6 +71,7 @@ const SearchModal = ({ close, title}) => {
     { do: "서울", name: "전체", value: 0 },
     { do: "인천", name: "전체", value: 0 },
     { do: "대전", name: "전체", value: 0 },
+    { do: "대구", name: "전체", value: 0 },
     { do: "광주", name: "전체", value: 0 },
     { do: "부산", name: "전체", value: 0 },
     { do: "울산", name: "전체", value: 0 },
