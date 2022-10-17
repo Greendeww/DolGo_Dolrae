@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Header from "../../componenets/header/Header";
 import { useState, useEffect } from "react";
-import { getApi } from "../../shared/Api";
+import { instance } from "../../shared/Api";
 import { useNavigate } from "react-router-dom";
 import PaginationRequest from "../../componenets/pagination/PaginationRequest";
 
@@ -17,7 +17,7 @@ const RequestList = () => {
   const indexOfFirstPage = indexOfLastPost - postPerPage;
 
   const getList = async () => {
-    const response = await getApi("/api/auth/order");
+    const response = await instance.get("/api/auth/order");
     // console.log(response.data);
     setList(response.data);
     setReviewList([...response?.data]);
