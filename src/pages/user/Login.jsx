@@ -74,6 +74,7 @@ const Login = () => {
         const response = await instance.post("/api/member/login", user);
         // console.log(response)
         setCookie("ACCESS_TOKEN", response.headers.authorization, 0.5);
+        setCookie("REFRESH_TOKEN", response.headers.refreshtoken);
 
         localStorage.setItem("ACCESS_TOKEN", response.headers.authorization);
         localStorage.setItem("REFRESH_TOKEN", response.headers.refreshtoken);

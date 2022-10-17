@@ -33,47 +33,80 @@ import RequestDetail from "../pages/manager/RequestDetail";
 import Post from "../pages/manager/Post";
 import Edit from "../pages/manager/Edit";
 
-import { getCookie } from "./Cookie";
+import { getCookie, setCookie } from "./Cookie";
 import { useEffect } from "react";
 import { instance } from "./Api";
 import axios from "axios";
 
 function Router() {
+  const token = getCookie("ACCESS_TOKEN");
+  const refreshToken = getCookie("REFRESH_TOKEN");
 
   // 토큰 재발급
   const getToken = async () => {
-    // const res = await instance.post("/api/member/retoken")
-    // console.log(res)
+    console.log("토큰 만료");
+    alert("토큰 만료");
 
-    await axios
-      .post(process.env.REACT_APP_BASE_URL + "/api/member/retoken", {}, {
-        headers: {
-          "Authorization" : localStorage.getItem("ACCESS_TOKEN"),
-          "RefreshToken" : localStorage.getItem("REFRESH_TOKEN"),
-        },
-      })
-      .then((res) => {
-        if (res.data.success === true) {
-          localStorage.setItem("ACCESS_TOKEN", res.headers.authorization);
-          localStorage.setItem("REFRESH_TOKEN", res.headers.refreshtoken);
-          console.log("토큰 success");
-          alert("토큰이 재발급되었습니다. success");
-        } else if (res !== null ){
-          localStorage.setItem("ACCESS_TOKEN", res.headers.authorization);
-          localStorage.setItem("REFRESH_TOKEN", res.headers.refreshtoken);
-          console.log("토큰 null");
-          alert("토큰이 재발급되었습니다. null");
-        } else if (res !== undefined){
-          localStorage.setItem("ACCESS_TOKEN", res.headers.authorization);
-          localStorage.setItem("REFRESH_TOKEN", res.headers.refreshtoken);
-          console.log("토큰 undefined");
-          alert("토큰이 재발급되었습니다. undefined");
-        }
-      });
+    const res = await instance.post("/api/member/retoken");
+    console.log(res);
+    if (res.data.success === true) {
+      setCookie("ACCESS_TOKEN", res.headers.authorization, 0.5);
+      setCookie("REFRESH_TOKEN", res.headers.refreshtoken);
+      console.log("토큰 success");
+      alert("토큰이 재발급되었습니다. success");
+    } else if (res !== null) {
+      setCookie("ACCESS_TOKEN", res.headers.authorization, 0.5);
+      setCookie("REFRESH_TOKEN", res.headers.refreshtoken);
+      console.log("토큰 null");
+      alert("토큰이 재발급되었습니다. null");
+    } else if (res !== undefined) {
+      setCookie("ACCESS_TOKEN", res.headers.authorization, 0.5);
+      setCookie("REFRESH_TOKEN", res.headers.refreshtoken);
+      console.log("토큰 undefined");
+      alert("토큰이 재발급되었습니다. undefined");
+    }
+
+    // await axios
+    //   .post(
+    //     process.env.REACT_APP_BASE_URL + "/api/member/retoken",
+    //     {},
+    //     {
+    //       headers: {
+    //         Authorization: localStorage.getItem("ACCESS_TOKEN"),
+    //         RefreshToken: localStorage.getItem("REFRESH_TOKEN"),
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     if (res.data.success === true) {
+    //       localStorage.getItem("ACCESS_TOKEN");
+    //       localStorage.getItem("REFRESH_TOKEN");
+    //       setCookie("ACCESS_TOKEN", res.headers.authorization, 0.5);
+    //       setCookie("REFRESH_TOKEN", res.headers.refreshtoken);
+    //       console.log("토큰 success");
+    //       alert("토큰이 재발급되었습니다. success");
+    //     } else if (res !== null) {
+    //       localStorage.getItem("ACCESS_TOKEN");
+    //       localStorage.getItem("REFRESH_TOKEN");
+    //       setCookie("ACCESS_TOKEN", res.headers.authorization, 0.5);
+    //       setCookie("REFRESH_TOKEN", res.headers.refreshtoken);
+    //       console.log("토큰 null");
+    //       alert("토큰이 재발급되었습니다. null");
+    //     } else if (res !== undefined) {
+    //       localStorage.getItem("ACCESS_TOKEN");
+    //       localStorage.getItem("REFRESH_TOKEN");
+    //       setCookie("ACCESS_TOKEN", res.headers.authorization, 0.5);
+    //       setCookie("REFRESH_TOKEN", res.headers.refreshtoken);
+    //       console.log("토큰 undefined");
+    //       alert("토큰이 재발급되었습니다. undefined");
+    //     }
+    //   });
   };
 
   useEffect(() => {
-    getToken();
+    if (token === undefined && refreshToken !== undefined) {
+      getToken();
+    }
   }, []);
 
   return (
