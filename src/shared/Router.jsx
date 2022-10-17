@@ -21,6 +21,7 @@ import SearchPage from "../pages/tourist/SearchPage";
 // mypage
 import MyPage from "../pages/mypage/MyPage";
 import MyPageChange from "../pages/mypage/MyPageChange";
+import MyRequestDetail from "../componenets/mypage/mypage/request/MyRequestDetail";
 
 // request
 import EditRequest from "../pages/request/EditRequest";
@@ -32,8 +33,49 @@ import RequestDetail from "../pages/manager/RequestDetail";
 import Post from "../pages/manager/Post";
 import Edit from "../pages/manager/Edit";
 
+import { getCookie } from "./Cookie";
+import { useEffect } from "react";
+import { instance } from "./Api";
+import axios from "axios";
 
 function Router() {
+
+  // 토큰 재발급
+  const getToken = async () => {
+    // const res = await instance.post("/api/member/retoken")
+    // console.log(res)
+
+    await axios
+      .post(process.env.REACT_APP_BASE_URL + "/api/member/retoken", {}, {
+        headers: {
+          "Authorization" : localStorage.getItem("ACCESS_TOKEN"),
+          "RefreshToken" : localStorage.getItem("REFRESH_TOKEN"),
+        },
+      })
+      .then((res) => {
+        if (res.data.success === true) {
+          localStorage.setItem("ACCESS_TOKEN", res.headers.authorization);
+          localStorage.setItem("REFRESH_TOKEN", res.headers.refreshtoken);
+          console.log("토큰 success");
+          alert("토큰이 재발급되었습니다. success");
+        } else if (res !== null ){
+          localStorage.setItem("ACCESS_TOKEN", res.headers.authorization);
+          localStorage.setItem("REFRESH_TOKEN", res.headers.refreshtoken);
+          console.log("토큰 null");
+          alert("토큰이 재발급되었습니다. null");
+        } else if (res !== undefined){
+          localStorage.setItem("ACCESS_TOKEN", res.headers.authorization);
+          localStorage.setItem("REFRESH_TOKEN", res.headers.refreshtoken);
+          console.log("토큰 undefined");
+          alert("토큰이 재발급되었습니다. undefined");
+        }
+      });
+  };
+
+  useEffect(() => {
+    getToken();
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -47,6 +89,7 @@ function Router() {
         <Route path="/request/post" element={<PostRequest />} />
         <Route path="/request/list" element={<RequestList />} />
         <Route path="/request/detail/:id" element={<RequestDetail />} />
+        <Route path="/myrequest/detail/:id" element={<MyRequestDetail />} />
         <Route path="/edit/:id" element={<Edit />} />
         <Route path="/post" element={<Post />} />
         <Route path="/select" element={<Select />} />
@@ -62,7 +105,6 @@ function Router() {
       </Routes>
     </BrowserRouter>
   );
-
 }
 
 export default Router;
