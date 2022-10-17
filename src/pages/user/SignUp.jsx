@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Header from "../../componenets/header/Header";
 import { instance } from "../../shared/Api";
+import Terms from "./Terms";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -48,10 +49,10 @@ const SignUp = () => {
   };
 
   // 이메일 인증코드 입력값
-  const [code, setCode] = useState({code:"", email:""});
+  const [code, setCode] = useState({ code: "", email: "" });
 
   const codeChangeHandler = (e) => {
-    setCode({ ...code, code: e.target.value,  email: user.username });
+    setCode({ ...code, code: e.target.value, email: user.username });
   };
 
   // 이메일 인증코드 일치 여부
@@ -88,13 +89,20 @@ const SignUp = () => {
     setUser({ ...user, [name]: value });
   };
 
+  // 개인정보 수집 동의
+  const [consent, setConsent] = useState(false);
+  // console.log(consent)
+  const consentHandler = () => {
+    setConsent(!consent);
+  };
+
   // 회원가입
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    if (availableEmail === false) {
+    if ( availableEmail === false ) {
       alert("이메일 인증을 해주세요.");
       return false;
-    } else if (sameCode === false) {
+    } else if ( sameCode === false ) {
       alert("인증코드를 확인해주세요.");
       return false;
     } else if (
@@ -104,15 +112,23 @@ const SignUp = () => {
     ) {
       alert("모든 항목을 입력해주세요.");
       return false;
-    } else if (user.password !== user.passwordConfirm) {
+    } else if ( user.password !== user.passwordConfirm ) {
       alert("비밀번호가 일치하지 않습니다.");
       return false;
+    } else if ( consent === false ) {
+      alert("개인정보 수집에 동의해주세요.");
+    } else {
+      try {
+        const response = await instance.post("/api/member/signup", user);
+        alert(`${response.data.nickname}님 회원가입을 축하드립니다.`);
+        setUser(initialState);
+        navigate("/login");
+      } catch {
+        alert("회원탈퇴 후 7일간 재가입이 불가합니다.");
+      }
     }
 
-    const response = await instance.post("/api/member/signup", user);
-    alert(`${response.data.nickname}님 회원가입을 축하드립니다.`);
-    setUser(initialState);
-    navigate("/login");
+
   };
 
   // 이메일, 비밀번호 정규표현식
@@ -221,6 +237,11 @@ const SignUp = () => {
               )}
             </div>
           </PasswordConfirm>
+          <Check>
+            <input type="checkbox" onChange={consentHandler} />
+            개인정보 수집 동의
+          </Check>
+          <Terms />
           <Buttons>
             <Submit type="submit" value="가입하기" />
             <Cancel
@@ -260,6 +281,7 @@ const StSignUp = styled.div`
 const Email = styled.div`
   display: block;
   margin: 40px 20px;
+  width: 90%;
 
   & div {
     display: flex;
@@ -267,7 +289,7 @@ const Email = styled.div`
   }
 
   & input {
-    width: 373px;
+    width: 80%;
     height: 52px;
     background-color: rgba(172, 212, 228, 0.35);
     border-radius: 15px;
@@ -281,7 +303,7 @@ const Email = styled.div`
     color: white;
     border: none;
     border-radius: 12px;
-    width: 83px;
+    width: 20%;
     height: 50px;
     cursor: pointer;
     font-weight: 700;
@@ -296,6 +318,7 @@ const EmailConfirm = styled.div`
   display: block;
   margin: 0 20px;
   margin-top: -40px;
+  width: 90%;
 
   & div {
     display: flex;
@@ -303,7 +326,7 @@ const EmailConfirm = styled.div`
   }
 
   & input {
-    width: 373px;
+    width: 80%;
     height: 52px;
     background-color: rgba(172, 212, 228, 0.35);
     border-radius: 15px;
@@ -316,7 +339,7 @@ const EmailConfirm = styled.div`
     color: white;
     border: none;
     border-radius: 12px;
-    width: 83px;
+    width: 20%;
     height: 50px;
     cursor: pointer;
     font-weight: 700;
@@ -328,7 +351,8 @@ const EmailConfirm = styled.div`
 
 const Password = styled.div`
   display: block;
-  margin: 40px 20px;
+  margin: 50px auto;
+  width: 90%;
 
   & div {
     display: flex;
@@ -340,7 +364,7 @@ const Password = styled.div`
   }
 
   & input {
-    width: 373px;
+    width: 95%;
     height: 52px;
     background-color: rgba(172, 212, 228, 0.35);
     border-radius: 15px;
@@ -351,8 +375,11 @@ const Password = styled.div`
 `;
 
 const PasswordConfirm = styled.div`
+  width: 90%;
+  margin: 0 auto;
+
   & input {
-    width: 373px;
+    width: 95%;
     height: 52px;
     background-color: rgba(172, 212, 228, 0.35);
     border-radius: 15px;
@@ -364,12 +391,12 @@ const PasswordConfirm = styled.div`
   & p {
     margin-bottom: -20px;
     text-align: left;
-    margin-left: 40px;
+    margin-left: 20px;
   }
 `;
 
 const Buttons = styled.div`
-  margin-top: 80px;
+  margin-top: 40px;
 
   & input {
     margin: 20px auto;
@@ -404,4 +431,18 @@ const Cancel = styled.input`
   line-height: 24px;
   display: block;
   margin: 0 auto;
+`;
+
+const Check = styled.label`
+  display: flex;
+  margin: 0 auto;
+  margin-top: 70px;
+  width: 50%;
+  line-height: 25px;
+
+  & input {
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+  }
 `;

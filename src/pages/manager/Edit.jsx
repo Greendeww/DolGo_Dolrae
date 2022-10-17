@@ -10,10 +10,12 @@ const Post = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState([]);
   const [fileImage, setFileImage] = useState([]);
+  const [imageUrl, setImageUrl] = useState([]);
   const [selectedDo, setSelectedDo] = useState();
   const [selectedSi, setSelectedSi] = useState();
   const [selectedTheme, setSelectedTheme] = useState();
   const place_id = useParams();
+  console.log(imageUrl);
 
   // 기존 데이터 가져오기
   const getData = async () => {
@@ -23,8 +25,8 @@ const Post = () => {
       title: res.data.title,
       content: res.data.content,
       address: res.data.address,
-      imageUrl: res.data.imageUrl,
     });
+    setImageUrl(res.data.imageUrl);
   };
 
   useEffect(() => {
@@ -35,7 +37,6 @@ const Post = () => {
     title: "",
     content: "",
     address: "",
-    imageUrl: [],
   };
 
   const [req, setReq] = useState(initialState);
@@ -78,19 +79,23 @@ const Post = () => {
     setImage(image.filter((_, index) => index !== id));
   };
 
+  const handleDeleteImage1 = (id) => {
+    setImageUrl(imageUrl.filter((_, index) => index !== id));
+  };
+
   // 수정하기 버튼 Click
   const onSubmitHandler = async (e) => {
     const request = {
       title: req.title,
       content: req.content,
       address: req.address,
-      existUrlList: req.imageUrl,
+      existUrlList: imageUrl,
       theme: selectedTheme,
       areaCode: selectedDo,
       sigunguCode: selectedSi,
     };
     console.log(request);
-    console.log(place_id.id)
+    console.log(place_id.id);
     if (
       request.content === "" ||
       request.address === "" ||
@@ -109,14 +114,16 @@ const Post = () => {
         formData.append("image", image[i]);
       }
       formData.append("data", blob);
-
-      const res = await instance.put(`/api/auth/place/${place_id.id}`, formData, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      });
-      console.log(res);
       try {
+        const res = await instance.put(
+          `/api/auth/place/${place_id.id}`,
+          formData,
+          {
+            headers: {
+              "content-type": "multipart/form-data",
+            },
+          }
+        );
         alert("게시글이 수정되었습니다.");
         navigate(`/request/detail/${req.id}`);
         localStorage.removeItem("sameDo");
@@ -158,21 +165,88 @@ const Post = () => {
 
   // 세부 지역별 해당 do, name, value
   const siList = [
-    { do: "서울", name: "시/군", value: 0 },
-    { do: "서울", name: "서울", value: 0 },
-    { do: "인천", name: "시/군", value: 0 },
-    { do: "인천", name: "인천", value: 0 },
-    { do: "대전", name: "시/군", value: 0 },
-    { do: "대전", name: "대전", value: 0 },
-    { do: "대구", name: "시/군", value: 0 },
-    { do: "대구", name: "대구", value: 0 },
-    { do: "광주", name: "시/군", value: 0 },
-    { do: "광주", name: "광주", value: 0 },
-    { do: "부산", name: "시/군", value: 0 },
-    { do: "부산", name: "부산", value: 0 },
-    { do: "울산", name: "시/군", value: 0 },
-    { do: "울산", name: "울산", value: 0 },
-    { do: "세종", name: "시/군.", value: 0 },
+    { do: "서울", name: "시/군", value: "" },
+    { do: "서울", name: "강남", value: 1 },
+    { do: "서울", name: "강동", value: 2 },
+    { do: "서울", name: "강북", value: 3 },
+    { do: "서울", name: "강서", value: 4 },
+    { do: "서울", name: "관악", value: 5 },
+    { do: "서울", name: "광진", value: 6 },
+    { do: "서울", name: "구로", value: 7 },
+    { do: "서울", name: "금천", value: 8 },
+    { do: "서울", name: "노원", value: 9 },
+    { do: "서울", name: "도봉", value: 10 },
+    { do: "서울", name: "동대문", value: 11 },
+    { do: "서울", name: "동작", value: 12 },
+    { do: "서울", name: "마포", value: 13 },
+    { do: "서울", name: "서대문", value: 14 },
+    { do: "서울", name: "서초", value: 15 },
+    { do: "서울", name: "성동", value: 16 },
+    { do: "서울", name: "성북", value: 17 },
+    { do: "서울", name: "송파", value: 18 },
+    { do: "서울", name: "양천", value: 19 },
+    { do: "서울", name: "영등포", value: 20 },
+    { do: "서울", name: "용산", value: 21 },
+    { do: "서울", name: "은평", value: 22 },
+    { do: "서울", name: "종로", value: 23 },
+    { do: "서울", name: "중구", value: 24 },
+    { do: "서울", name: "중랑", value: 25 },
+    { do: "인천", name: "시/군", value: "" },
+    { do: "인천", name: "강화", value: 1 },
+    { do: "인천", name: "계양", value: 2 },
+    { do: "인천", name: "남동", value: 3 },
+    { do: "인천", name: "동구", value: 4 },
+    { do: "인천", name: "미추홀", value: 5 },
+    { do: "인천", name: "부평", value: 6 },
+    { do: "인천", name: "서구", value: 7 },
+    { do: "인천", name: "연수", value: 8 },
+    { do: "인천", name: "옹진", value: 9 },
+    { do: "인천", name: "중구", value: 10 },
+    { do: "대전", name: "시/군", value: "" },
+    { do: "대전", name: "대덕", value: 1 },
+    { do: "대전", name: "동구", value: 2 },
+    { do: "대전", name: "서구", value: 3 },
+    { do: "대전", name: "유성", value: 4 },
+    { do: "대전", name: "중구", value: 5 },
+    { do: "대구", name: "시/군", value: "" },
+    { do: "대구", name: "남구", value: 1 },
+    { do: "대구", name: "달서", value: 2 },
+    { do: "대구", name: "달성", value: 3 },
+    { do: "대구", name: "동구", value: 4 },
+    { do: "대구", name: "북구", value: 5 },
+    { do: "대구", name: "서구", value: 6 },
+    { do: "대구", name: "수성", value: 7 },
+    { do: "대구", name: "중구", value: 8 },
+    { do: "광주", name: "시/군", value: "" },
+    { do: "광주", name: "광산", value: 0 },
+    { do: "광주", name: "남구", value: 0 },
+    { do: "광주", name: "동구", value: 0 },
+    { do: "광주", name: "북구", value: 0 },
+    { do: "광주", name: "서구", value: 0 },
+    { do: "부산", name: "시/군", value: "" },
+    { do: "부산", name: "강서", value: 1 },
+    { do: "부산", name: "금정", value: 2 },
+    { do: "부산", name: "기장", value: 3 },
+    { do: "부산", name: "남구", value: 4 },
+    { do: "부산", name: "동구", value: 5 },
+    { do: "부산", name: "동래", value: 6 },
+    { do: "부산", name: "부산진", value: 7 },
+    { do: "부산", name: "북구", value: 8 },
+    { do: "부산", name: "사상", value: 9 },
+    { do: "부산", name: "사하", value: 10 },
+    { do: "부산", name: "서구", value: 11 },
+    { do: "부산", name: "수영", value: 12 },
+    { do: "부산", name: "연제", value: 13 },
+    { do: "부산", name: "영도", value: 14 },
+    { do: "부산", name: "중구", value: 15 },
+    { do: "부산", name: "해운대", value: 16 },
+    { do: "울산", name: "시/군", value: "" },
+    { do: "울산", name: "남구", value: 2 },
+    { do: "울산", name: "동구", value: 3 },
+    { do: "울산", name: "북구", value: 4 },
+    { do: "울산", name: "울주", value: 5 },
+    { do: "울산", name: "중구", value: 1 },
+    { do: "세종", name: "시/군.", value: "" },
     { do: "세종", name: "세종", value: 0 },
     { do: "경기", name: "시/군", value: "" },
     { do: "경기", name: "가평", value: 1 },
@@ -452,8 +526,21 @@ const Post = () => {
                   id="image"
                 />
               </ImgLabel>
-              {req.imageUrl.map((image, id) => (
-                <Img alt="" src={image} key={id} />
+              {imageUrl?.map((image, id) => (
+                <div key={id}>
+                  <img
+                    style={{
+                      width: "102px",
+                      height: "102px",
+                      borderRadius: "10px",
+                    }}
+                    alt={`${image}-${id}`}
+                    src={image}
+                  />
+                  <DeleteImg onClick={() => handleDeleteImage1(id)}>
+                    X
+                  </DeleteImg>
+                </div>
               ))}
               {fileImage.map((image, id) => (
                 <div key={id}>
@@ -549,6 +636,7 @@ const PostBtn = styled.div`
 `;
 const ImgBox = styled.div`
   display: flex;
+  width: 90%;
   margin: 20px 30px;
   flex-wrap: wrap;
   gap: 30px;

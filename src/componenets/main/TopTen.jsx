@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { getApi } from "../../shared/Api";
 import styled from "styled-components";
 import basicImg from "../../assert/image/basic.png";
 import Slider from "react-slick";
@@ -8,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useNavigate } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
+import { instance } from "../../shared/Api";
 
 const TopTen = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const TopTen = () => {
   const [museumList, setMuseumList] = useState();
 
   const fetchPost = async () => {
-    const response = await getApi("/api/place/rank");
+    const response = await instance.get("/api/place/rank");
 
     setFoodList(response.data.tourList);
     setTourList(response.data.museumList);
