@@ -32,6 +32,7 @@ import RequestList from "../pages/manager/RequestList";
 import RequestDetail from "../pages/manager/RequestDetail";
 import Post from "../pages/manager/Post";
 import Edit from "../pages/manager/Edit";
+import SearchSelList from "../componenets/searchList/SearchSelList";
 
 import { getCookie } from "./Cookie";
 import { useEffect } from "react";
@@ -102,6 +103,7 @@ function Router() {
         <Route path="/rndselect/:si/:area" element={<RandomSelect />} />
         <Route path="/rnd" element={<RandomList />} />
         <Route path="/search/:title" element={<SearchPage />} />
+        <Route path="/search/:title/:si/:area" element={<SearchSelList />} />
       </Routes>
     </BrowserRouter>
   );

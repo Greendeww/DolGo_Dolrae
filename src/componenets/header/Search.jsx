@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 const Search = ({ title }) => {
   const [searchWord, setSearchWord] = useState(title);
+
   const onSubmitSearch = (e) => {
     if (e.key === "Enter") {
       if (searchWord === undefined) {

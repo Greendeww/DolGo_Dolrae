@@ -54,6 +54,7 @@ const Randoms = () => {
       willClose: () => {
         clearInterval(timerInterval);
         navigate("/rnd");
+        localStorage.removeItem("place0");
       },
     }).then((result) => {
       /* Read more about handling dismissals below */

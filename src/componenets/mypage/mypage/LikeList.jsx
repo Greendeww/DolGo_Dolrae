@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { instance } from "../../../shared/Api";
 import Like from "../../like/Like";
 import PaginationsLike from "../../pagination/PaginationsLike";
@@ -11,6 +11,7 @@ const LikeList = () => {
   const navigate = useNavigate();
 
   const [modal, setModal] = useState(false);
+  const [aniState, setAniState] = useState(false);
   const [list, setList] = useState([]);
   const [likeList, setLikeList] = useState([...list].reverse());
   const [currentLike, setCurrnetLike] = useState([]);
@@ -21,7 +22,6 @@ const LikeList = () => {
 
   const getList = async () => {
     const res = await instance.get("/api/auth/place/mypage");
-    console.log(res.data);
     setList(res?.data);
     setLikeList([...res?.data].reverse());
   };
@@ -41,15 +41,15 @@ const LikeList = () => {
         {modal === false
         ?
         <MapsDiv>
-          <p onClick={() => setModal(true)}>지도로 보기<Triangle>▶</Triangle></p>
+          <p onClick={() => {setModal(true);setAniState(false)}}>지도로 보기<Triangle>▶</Triangle></p>
         </MapsDiv>
         :
         <MapsDiv>
-          <p onClick={() => setModal(false)}>지도로 보기<Triangle>▼</Triangle></p>
+          <p onClick={() => {setAniState(true);setModal(false)}}>지도로 보기<Triangle>▼</Triangle></p>
         </MapsDiv>
         }
         {modal === true
-        ? <MapOpen><Maps/></MapOpen> 
+        ? <MapOpen><Maps modal={modal} aniState={aniState}/></MapOpen> 
         : null
         }
       <div>
@@ -134,10 +134,9 @@ const Triangle = styled.span`
   transition: transform 200ms ease-out 0s;
   transform: rotateZ(0deg);
 `;
-const MapOpen = styled.div``;
-const ImgDiv = styled.div`
-  margin-top: 30px;
+const MapOpen = styled.div`
 `;
+
 const Title = styled.div`
   margin: 0 15px;
   display: flex;
@@ -161,3 +160,4 @@ const Title = styled.div`
     }
   }
 `;
+

@@ -15,20 +15,14 @@ import ScrollToTop from "../scroll/ScrollToTop";
 const RandomList = () => {
   const navigate = useNavigate();
   const scrollRef = useRef();
-
   const [random, setRandom] = useState();
+  
   const fetch = async () => {
     const response = await instance.get(
       `/api/place/random?sigunguCode=0&areaCode=0`
     );
-    console.log(response.data);
     setRandom(response.data);
   };
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    fetch();
-  }, []);
-
   const onRandom = (e) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     let timerInterval;
@@ -50,13 +44,21 @@ const RandomList = () => {
         window.location.reload();
       },
     }).then((result) => {
-      /* Read more about handling dismissals below */
       if (result.dismiss === Swal.DismissReason.timer) {
-        console.log("I was closed by the timer");
+        // console.log("I was closed by the timer");
       }
     });
-    console.log("작동");
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+      fetch();
+  },[]);
+
+  // useEffect(() =>{
+  //   window.scrollTo(0, 0)
+  // },[window.scroll(0, 0)])
+
   return (
     <BoxDiv>
       <Header />
