@@ -1,39 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import styled, { keyframes } from "styled-components";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { __getTheme } from "../../redux/modules/theme";
-import css from "../../css/select.css";
-import Header from "../header/Header";
-import Swal from "sweetalert2";
+import Header from "../header/Header"
 
-const RndLocation = () => {
-  const navigate = useNavigate();
+const SearchModal = ({ close, title}) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  document.body.style.overflow = "hidden"
 
   const AREA_CODE = "AREA_CODE";
   const AREA_NAME = "AREA_NAME";
   const SIGUNGU_CODE = "SIGUNGU_CODE";
   const SIGUNGU_NAME = "SIGUNGU_NAME";
 
-  const GET_THEME_CODE = window.localStorage.getItem("THEME_CODE");
-  const GET_THEME_NAME = window.localStorage.getItem("THEME_NAME");
-  const GET_AREA_CODE = window.localStorage.getItem("AREA_CODE");
-  const GET_AREA_NAME = window.localStorage.getItem("AREA_NAME");
-  const GET_SIGUNGU_CODE = window.localStorage.getItem("SIGUNGU_CODE");
-  const GET_SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
+  const [selectedDo, setSelectedDo] = useState("");
+  const [selectedSi, setSelectedSi] = useState("");
 
-  const search = {
-    themeCode: GET_THEME_CODE,
-    themeName: GET_THEME_NAME,
-    areaCode: GET_AREA_CODE,
-    areaName: GET_AREA_NAME,
-    sigunguCode: GET_SIGUNGU_CODE,
-    sigunguName: GET_SIGUNGU_NAME,
-  };
 
+  // 필터 초기화
   const initialization = (e) => {
-    // e.preventDefault();
     localStorage.removeItem("AREA_CODE");
     localStorage.removeItem("AREA_NAME");
     localStorage.removeItem("SIGUNGU_CODE");
@@ -43,10 +31,22 @@ const RndLocation = () => {
     setSelectedSi("");
   };
 
-  const [selectedDo, setSelectedDo] = useState("");
-  const [selectedSi, setSelectedSi] = useState("");
+  // 서버로 보내줄 값 ( 선택한 테마, 지역 )
+  const GET_AREA_CODE = window.localStorage.getItem("AREA_CODE");
+  const GET_AREA_NAME = window.localStorage.getItem("AREA_NAME");
+  const GET_SIGUNGU_CODE = window.localStorage.getItem("SIGUNGU_CODE");
+  const GET_SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
 
+  const search = {
+    areaCode: GET_AREA_CODE,
+    areaName: GET_AREA_NAME,
+    sigunguCode: GET_SIGUNGU_CODE,
+    sigunguName: GET_SIGUNGU_NAME,
+  };
+
+  // 지역별 name, value
   const doList = [
+    { name: "전체", value: 0 },
     { name: "서울", value: 1 },
     { name: "인천", value: 2 },
     { name: "대전", value: 3 },
@@ -66,83 +66,14 @@ const RndLocation = () => {
     { name: "제주", value: 39 },
   ];
 
+  // 세부 지역별 해당 do, name, value
   const siList = [
     { do: "서울", name: "전체", value: 0 },
-    { do: "서울", name: "강남", value: 1 },
-    { do: "서울", name: "강동", value: 2 },
-    { do: "서울", name: "강북", value: 3 },
-    { do: "서울", name: "강서", value: 4 },
-    { do: "서울", name: "관악", value: 5 },
-    { do: "서울", name: "광진", value: 6 },
-    { do: "서울", name: "구로", value: 7 },
-    { do: "서울", name: "금천", value: 8 },
-    { do: "서울", name: "노원", value: 9 },
-    { do: "서울", name: "도봉", value: 10 },
-    { do: "서울", name: "동대문", value: 11 },
-    { do: "서울", name: "동작", value: 12 },
-    { do: "서울", name: "마포", value: 13 },
-    { do: "서울", name: "서대문", value: 14 },
-    { do: "서울", name: "서초", value: 15 },
-    { do: "서울", name: "성동", value: 16 },
-    { do: "서울", name: "성북", value: 17 },
-    { do: "서울", name: "송파", value: 18 },
-    { do: "서울", name: "양천", value: 19 },
-    { do: "서울", name: "영등포", value: 20 },
-    { do: "서울", name: "용산", value: 21 },
-    { do: "서울", name: "은평", value: 22 },
-    { do: "서울", name: "종로", value: 23 },
-    { do: "서울", name: "중구", value: 24 },
-    { do: "서울", name: "중랑", value: 25 },
     { do: "인천", name: "전체", value: 0 },
-    { do: "인천", name: "강화", value: 1 },
-    { do: "인천", name: "계양", value: 2 },
-    { do: "인천", name: "남동", value: 3 },
-    { do: "인천", name: "동구", value: 4 },
-    { do: "인천", name: "미추홀", value: 5 },
-    { do: "인천", name: "부평", value: 6 },
-    { do: "인천", name: "서구", value: 7 },
-    { do: "인천", name: "연수", value: 8 },
-    { do: "인천", name: "중구", value: 10 },
     { do: "대전", name: "전체", value: 0 },
-    { do: "대전", name: "대덕", value: 1 },
-    { do: "대전", name: "동구", value: 2 },
-    { do: "대전", name: "서구", value: 3 },
-    { do: "대전", name: "유성", value: 4 },
-    { do: "대전", name: "중구", value: 5 },
-    { do: "대구", name: "전체", value: 0 },
-    { do: "대구", name: "남구", value: 1 },
-    { do: "대구", name: "달서", value: 2 },
-    { do: "대구", name: "달성", value: 3 },
-    { do: "대구", name: "동구", value: 4 },
-    { do: "대구", name: "북구", value: 5 },
-    { do: "대구", name: "수성", value: 7 },
     { do: "광주", name: "전체", value: 0 },
-    { do: "광주", name: "광산", value: 1 },
-    { do: "광주", name: "남구", value: 2 },
-    { do: "광주", name: "동구", value: 3 },
-    { do: "광주", name: "북구", value: 4 },
-    { do: "광주", name: "서구", value: 5 },
     { do: "부산", name: "전체", value: 0 },
-    { do: "부산", name: "강서", value: 1 },
-    { do: "부산", name: "금정", value: 2 },
-    { do: "부산", name: "기장", value: 3 },
-    { do: "부산", name: "남구", value: 4 },
-    { do: "부산", name: "동구", value: 5 },
-    { do: "부산", name: "부산진", value: 7 },
-    { do: "부산", name: "북구", value: 8 },
-    { do: "부산", name: "사상", value: 9 },
-    { do: "부산", name: "사하", value: 10 },
-    { do: "부산", name: "서구", value: 11 },
-    { do: "부산", name: "수영", value: 12 },
-    { do: "부산", name: "연제", value: 13 },
-    { do: "부산", name: "영도", value: 14 },
-    { do: "부산", name: "해운대", value: 16 },
     { do: "울산", name: "전체", value: 0 },
-    { do: "울산", name: "남구", value: 2 },
-    { do: "울산", name: "동구", value: 3 },
-    { do: "울산", name: "북구", value: 4 },
-    { do: "울산", name: "울주", value: 5 },
-    { do: "울산", name: "중구", value: 1 },
     { do: "세종", name: "전체", value: 0 },
     { do: "경기", name: "전체", value: 0 },
     { do: "경기", name: "가평", value: 1 },
@@ -312,6 +243,7 @@ const RndLocation = () => {
     { do: "제주", name: "제주", value: 4 },
   ];
 
+  // 지역 생성
   const Location = () => {
     return doList.map((item, idx) => (
       <div
@@ -323,8 +255,11 @@ const RndLocation = () => {
         }
         onClick={() => {
           setSelectedDo(item.value);
+          setSelectedSi("");
           localStorage.setItem(AREA_CODE, item.value);
           localStorage.setItem(AREA_NAME, item.name);
+          localStorage.removeItem(SIGUNGU_CODE);
+          localStorage.removeItem(SIGUNGU_NAME);
         }}
       >
         {item.name}
@@ -332,6 +267,7 @@ const RndLocation = () => {
     ));
   };
 
+  // 세부 지역 생성
   const DetailLocation = () => {
     return siList.map((item, idx) =>
       item.do === GET_AREA_NAME ? (
@@ -354,164 +290,174 @@ const RndLocation = () => {
     );
   };
 
-  const onRandom = (e) => {
-    let timerInterval;
-    Swal.fire({
-      title: "지역을 선정중입니다",
-      html: "잠시만 기다려주세요",
-      timer: 1500,
-      timerProgressBar: true,
-      didOpen: () => {
-        Swal.showLoading();
-        const b = Swal.getHtmlContainer().querySelector("b");
-        timerInterval = setInterval(() => {
-          b.textContent = Swal.getTimerLeft();
-        }, 100);
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-        dispatch(__getTheme(search));
-        navigate(
-          "/rndselect/" +
-            localStorage.getItem(SIGUNGU_CODE) +
-            "/" +
-            localStorage.getItem(AREA_CODE)
-        );
-      },
-    }).then((result) => {
-      /* Read more about handling dismissals below */
-      if (result.dismiss === Swal.DismissReason.timer) {
-        console.log("I was closed by the timer");
-      }
-    });
-    console.log("작동");
-  };
-
+  // select 페이지로 돌아올 시 자동으로 필터 초기화
   useEffect(() => {
     initialization();
   }, []);
 
   return (
-    <StRnd>
-      <Header />
-      <RndDiv>
-        <StList>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <p>지역</p>
-            <ResetBtn style={{ marginRight: "20px" }} onClick={initialization}>
-              필터 초기화 ↺
-            </ResetBtn>
-          </div>
-          <div>
-            <Locations className="location-set">{Location()}</Locations>
-          </div>
-        </StList>
-        <StList>
-          <p style={{ marginTop: "50px" }}>세부지역</p>
-          <Locations className="location-set">{DetailLocation()}</Locations>
-        </StList>
-        <BtnDiv>
-          <CompleteBtn
-            onClick={() => {
-              if (GET_AREA_NAME === null || GET_SIGUNGU_NAME === null) {
-                alert("모든 항목을 선택해주세요.");
-              } else {
-                onRandom();
-              }
-            }}
-          >
-            선택완료
-          </CompleteBtn>
-          <BackBtn onClick={() => navigate("/random")}>뒤로가기</BackBtn>
-        </BtnDiv>
-      </RndDiv>
-    </StRnd>
+    <Background>
+      <Content>
+        <St>
+          <Title>
+            <button onClick={initialization}>초기화↺</button>
+            <p onClick={()=> 
+                {close(false); 
+                 document.body.style.overflow = "unset";}}>X</p>
+          </Title>
+          <StLocation>
+            <StList>
+              <p>지역</p>
+              <Locations className="location-set">{Location()}</Locations>
+            </StList>
+            <StList>
+              <p>세부지역</p>
+              <Locations className="location-set">
+                {DetailLocation()}
+              </Locations>
+            </StList>
+            <CompleteButton>
+              <button
+                onClick={() => {
+                  if (
+                    GET_AREA_NAME === null ||
+                    GET_SIGUNGU_NAME === null
+                  ) {
+                    alert("모든 항목을 선택해주세요.");
+                    return;
+                  } else {
+                    navigate("/search/"+title+"/"+GET_SIGUNGU_CODE+"/"+GET_AREA_CODE);
+                    document.body.style.overflow = "unset";
+                  }
+                }}
+              >
+                선택완료
+              </button>
+            </CompleteButton>
+          </StLocation>
+        </St>
+      </Content>
+    </Background>
   );
 };
 
-export default RndLocation;
+export default SearchModal;
 
-const StRnd = styled.div`
+const slideIn = keyframes`
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+`;
+
+const slideOut = keyframes`
+  from {
+      transform: translate(0%);
+  }
+  to {
+      transform: translateX(-100%);
+  }
+`;
+
+const Background = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  text-align: center;
+  z-index: 1;
+`;
+
+const Content = styled.div`
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: scroll;
+  background: #fff;
+  animation: ${(props) => (props.aniState ? slideOut : slideIn)} 0.4s;
+`;
+
+const St = styled.div`
   max-width: 428px;
   width: 100%;
-  margin: 0 auto;
+  padding-top: 80px;
 `;
 
-const RndDiv = styled.div`
-  padding-top: 9rem;
+const Title = styled.div`
+  margin-top:30px;
+  display: flex;
+  width: 95%;
+  justify-content: space-between;
+  align-items: center;
+
+  button { 
+    margin-left:0px;
+    background: #ffc0c0;
+    border: none;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  p{
+    margin-top:35px;
+    font-size: 35px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    &:hover{
+      color:#abd4e2;
+    }
+  }
 `;
 
-const ResetBtn = styled.button`
-  width: 150px;
-  height: 40px;
-  background: #ffc0c0;
-  border: none;
-  border-radius: 12px;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-  color: #ffffff;
-  cursor: pointer;
-  margin-top: 21px;
-`;
+const StLocation = styled.div`
+    margin: 50px auto;
+  & button {
+    background-color: #ffc0c0;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    width: 92%;
+    height: 50px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 24px;
+    display: block;
 
-const BackBtn = styled.button`
-  background-color: white;
-  border: 3px solid #abd4e2;
-  color: #abd4e2;
-  border-radius: 12px;
-  width: 90%;
-  height: 50px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 24px;
-  display: block;
-  margin: 0 auto;
-  margin-top: -20px;
-`;
-
-const CompleteBtn = styled.button`
-  background-color: #abd4e2;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 12px;
-  width: 90%;
-  height: 50px;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  display: block;
-  margin: 0 auto;
-  margin-top: -20px;
+  }
 `;
 
 const StList = styled.div`
   width: 100%;
-  margin: 0 auto;
+  margin-top: 50px;
+  /* margin: 0 auto; */
   & p {
     font-style: normal;
     font-size: 25px;
     line-height: 40px;
     color: #bfb8b8;
     margin: 20px;
-    margin-left: 30px;
+    margin-top: 30px;
+    /* margin-left: 30px; */
   }
 `;
 
-const BtnDiv = styled.div`
-  margin: 40px auto;
-  gap: 15px;
-
-  & button {
-    margin-top: 20px;
-  }
+const CompleteButton = styled.div`
+  display: flex;
+  padding-bottom: 20px;
+  margin: 0 auto;
 `;
 
 const Locations = styled.div`
   display: flex;
-  margin: 20px auto;
+  margin: 0 auto;
   width: 323px;
 `;

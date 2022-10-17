@@ -10,17 +10,16 @@ import ReviewList from "../../componenets/mypage/mypage/review/ReviewList";
 import { getCookie } from "../../shared/Cookie";
 
 const MyPage = () => {
-  // const getToken = localStorage.getItem("ACCESS_TOKEN");
-  // const getToken = getCookie("ACCESS_TOKEN");
-  // console.log(getToken)
-  // const navigate =useNavigate()
+  const getToken = localStorage.getItem("ACCESS_TOKEN");
+  console.log(getToken)
+  const navigate =useNavigate()
   
-  // useEffect(() => {
-  //   if(getToken === undefined){
-  //     alert("로그인이 필요한 서비스입니다.")
-  //     navigate('/login')
-  //   }
-  // },[])
+  useEffect(() => {
+    if(getToken === null){
+      alert("로그인이 필요한 서비스입니다.")
+      navigate('/login')
+    }
+  },[getToken])
 
   return (
     <StMyPage>
