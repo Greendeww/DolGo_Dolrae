@@ -6,12 +6,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import PostModal from "../../componenets/modal/PostModal";
+import CompleteModal from "../../componenets/modal/CompleteModal";
 
 const RequestDetail = () => {
   const navigate = useNavigate();
   const param = useParams();
   const [data, setData] = useState();
   const [modal, setModal] = useState(false);
+  const [completeModal, setCompleteModal] = useState(false);
 
   const getData = async () => {
     const res = await instance.get(`/api/auth/order/${param.id}`);
@@ -23,13 +25,6 @@ const RequestDetail = () => {
     setModal(true);
     // const res = await instance.delete(`/api/auth/place/${param.id}`);
     // console.log(res)
-  };
-
-  const completeBtn = async () => {
-    const res = await instance.post(`/api/auth/order/state/${param.id}`);
-    console.log(res);
-    alert("상태가 변경되었습니다.");
-    navigate('/request/list');
   };
 
   useEffect(() => {
@@ -80,14 +75,22 @@ const RequestDetail = () => {
         </div> */}
         <div>
           <Title>이미지</Title>
-          <div style={{ width: "100%" }}>
-            <ImgBox>
-              {data?.imageList.map((img, idx) => {
-                return <Img key={idx} alt="" src={img} />;
-              })}
-            </ImgBox>
-          </div>
+          <ImgBox>
+            {data?.imageList.map((img, idx) => {
+              return <Img key={idx} alt="" src={img} />;
+            })}
+          </ImgBox>
         </div>
+        {data?.state === true ? (
+          <div style={{ marginTop: "10px" }}>
+            <Title>답변</Title>
+            <Context
+              defaultValue={data?.answer}
+              style={{ lineHeight: "20px" }}
+              readOnly
+            />
+          </div>
+        ) : null}
         <Buttons>
           <button
             onClick={() => {
@@ -123,7 +126,9 @@ const RequestDetail = () => {
             <button onClick={deleteBtn}>삭제</button>
           )}
           {data?.state === false ? (
-            <button onClick={completeBtn}>완료</button>
+            <button onClick={() => setCompleteModal(!completeModal)}>
+              완료
+            </button>
           ) : (
             <button style={{ background: "gray" }} disabled>
               완료
@@ -132,6 +137,10 @@ const RequestDetail = () => {
 
           {modal === true ? (
             <PostModal modal={modal} setModal={setModal} data={data} />
+          ) : null}
+
+          {completeModal === true ? (
+            <CompleteModal completeModal={completeModal} setCompleteModal={setCompleteModal} data={data} />
           ) : null}
         </Buttons>
       </Container>
@@ -210,12 +219,11 @@ const Context = styled.textarea`
   padding: 10px;
 `;
 
-const ImgBox = styled.div`
-  display: flex;
-`;
+const ImgBox = styled.div``;
 
 const Img = styled.img`
   width: 90%;
+  display: flex;
   margin: 0 auto;
   padding-top: 20px;
 `;
