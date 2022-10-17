@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { instance } from "../../../shared/Api";
-import Paginations from "../../pagination/Paginations";
+import { instance } from "../../../../shared/Api";
+import Paginations from "../../../pagination/Paginations";
 
 const MyRequestList = () => {
   const navigate = useNavigate();
@@ -14,11 +14,12 @@ const MyRequestList = () => {
   const indexOfLastPost = page * postPerPage;
   const indexOfFirstPage = indexOfLastPost - postPerPage;
 
+  console.log(currentRequest);
+
   const getList = async () => {
-    // const res = await instance.get("/api/auth/comment/mypage");
-    // console.log(res.data);
-    // setList(res.data);
-    // setRequet([...res?.data].reverse());
+    const res = await instance.get("/api/auth/order/mypage");
+    setList(res.data);
+    setRequet([...res?.data].reverse());
   };
   useEffect(() => {
     setCurrnetRequest(request.slice(indexOfFirstPage, indexOfLastPost));
@@ -39,10 +40,15 @@ const MyRequestList = () => {
         <Request
           key={idx}
           onClick={() => {
-            navigate(``);
+            navigate(`/myrequest/detail/${request.id}`);
           }}
         >
-          <p>{request.placeTitle}</p>
+          <Title>{request.title}</Title>
+          {request.state === false ? (
+            <State style={{ color: "red" }}>false</State>
+          ) : (
+            <State style={{ color: "green" }}>true</State>
+          )}
         </Request>
       ))}
       <Paginations
@@ -75,23 +81,37 @@ const Request = styled.div`
   margin: 20px auto;
   background: #eef6fa;
   border-radius: 15px;
-  gap: 15px;
   cursor: pointer;
   display: flex;
+  justify-content: space-between;
+`;
 
-  & p {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 90%;
-    font-size: 18px;
-    height: 18px;
-    font-weight: bold;
-    padding-left: 10px;
-    align-items: center;
-    position: relative;
-    left: 15px;
-    top: 17px;
-  }
+const Title = styled.p`
+  display: block;
+  width: 75%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 18px;
+  height: 18px;
+  font-weight: bold;
+  padding-left: 10px;
+  align-items: center;
+  position: relative;
+  left: 15px;
+  top: 17px;
+`;
+
+const State = styled.p`
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 18px;
+  height: 18px;
+  font-weight: bold;
+  align-items: center;
+  position: relative;
+  top: 17px;
+  right: 18px;
 `;
