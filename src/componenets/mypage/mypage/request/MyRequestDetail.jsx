@@ -73,6 +73,14 @@ const RequestDetail = () => {
             </ImgBox>
           </div>
         </div>
+        <div style={{ marginTop: "10px" }}>
+            <Title>답변</Title>
+            <Context
+              defaultValue={data?.answer}
+              style={{ lineHeight: "20px" }}
+              readOnly
+            />
+          </div>
         <Buttons>
           <button
             onClick={() => {
