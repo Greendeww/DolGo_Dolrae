@@ -4,7 +4,6 @@ import { instance } from "../../shared/Api";
 import Slider from "react-slick";
 
 const Festival = () => {
-
   const settings = {
     // dots: true,
     infinite: true,
@@ -37,11 +36,12 @@ const Festival = () => {
         <Slider {...settings}>
           {festival.map((festival) => {
             return (
-              <Card
-                key={festival.id}
-                onClick={() => (window.open(festival.linkUrl))}
-              >
-                <img alt="" src={festival.imageUrl} />
+              <Card key={festival.id}>
+                <img
+                  alt=""
+                  src={festival.imageUrl}
+                  onClick={() => window.open(festival.linkUrl)}
+                />
                 <p style={{ fontWeight: "bold" }}>{festival.title}</p>
                 <p>{festival.period}</p>
               </Card>
