@@ -2,16 +2,12 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-<<<<<<< HEAD:src/componenets/mypage/mypage/ReviewModal.jsx
-import Star from "../../star/Star";
-import ModalPortal from "../../modal/ModalPortal";
-import Modal from "../../modal/Modal";
-import ModalImage from "../../modal/ModalImage";
-=======
-import Star from "../../../star/Star";
-import ModalPortal from "../../../modal/ModalPortal";
-import Modal from "../../../modal/Modal";
->>>>>>> ed612441b4c4f01a1bd0e542641d357fd17ebcca:src/componenets/mypage/mypage/review/ReviewModal.jsx
+import Star from  "../../../../componenets/star/Star";
+import ModalPortal from "../../../../componenets/modal/ModalPortal";
+import Modal from "../../../../componenets/modal/Modal";
+import ModalImage from "../../../../componenets/modal/ModalImage";
+
+
 
 const ReviewModal = ({ item }) => {
   const [modalOn, setModalOn] = useState(false);

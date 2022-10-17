@@ -72,10 +72,6 @@ const Login = () => {
     } else {
       try {
         const response = await instance.post("/api/member/login", user);
-<<<<<<< HEAD
-=======
-        // console.log(response)
->>>>>>> ed612441b4c4f01a1bd0e542641d357fd17ebcca
         setCookie("ACCESS_TOKEN", response.headers.authorization, 0.5);
 
         localStorage.setItem("ACCESS_TOKEN", response.headers.authorization);
