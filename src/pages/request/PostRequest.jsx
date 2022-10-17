@@ -12,6 +12,7 @@ const PostRequest = () => {
     title: "",
     content: "",
     address: "",
+    type: "추가"
   };
 
   const [req, setReq] = useState(initialState);
@@ -57,6 +58,7 @@ const PostRequest = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    console.log(req)
     if (req.title === "" || req.content === "" || req.address === "") {
       alert("필수 항목을 모두 작성해주세요.");
       return;
@@ -179,7 +181,7 @@ const StRegistration = styled.div`
 `;
 
 const Container = styled.div`
-  padding-top: 70px;
+  padding-top: 120px;
 `;
 
 const Buttons = styled.div`

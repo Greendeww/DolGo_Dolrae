@@ -21,7 +21,7 @@ const Search = ({ title }) => {
         <SearchDiv>
           <input
             type="text"
-            placeholder="찾고 싶은 장소를 입력해주세요."
+            placeholder="찾으시는 장소를 입력해주세요."
             value={searchWord}
             onChange={(e) => setSearchWord(e.target.value)}
             onKeyPress={onSubmitSearch}

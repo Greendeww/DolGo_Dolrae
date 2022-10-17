@@ -25,12 +25,17 @@ const Password = () => {
       alert("모든 항목을 입력해주세요.");
       e.preventDefault();
     } else {
-      const res = await instance.put(
-        "/api/auth/member/updatepassword",
-        password
-      );
-      console.log(res);
-      navigate("/mypage");
+      if (window.confirm("정말 비밀번호를 변경하시겠습니까?")) {
+        const res = await instance.put(
+          "/api/auth/member/updatepassword",
+          password
+        );
+        console.log(res);
+        navigate("/mypage");
+        alert("비밀번호가 변경되었습니다.");
+      } else {
+        alert("비밀번호 변경이 취소되었습니다.");
+      }
     }
   };
 
@@ -81,11 +86,16 @@ export default Password;
 
 const StPassword = styled.div`
   margin: 0 auto;
-  width: 380px;
   padding-top: 30px;
 
+  & h2 {
+    margin-left: 20px;
+  }
+
   & input {
-    width: 350px;
+    display: flex;
+    margin: 0 auto;
+    width: 85%;
     height: 52px;
     border: none;
     border-radius: 15px;

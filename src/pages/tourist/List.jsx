@@ -7,7 +7,6 @@ import { instance } from "../../shared/Api";
 import { useLocation } from "react-router";
 import { FaStar } from "react-icons/fa";
 
-
 const List = () => {
   const [posts, setPosts] = useState([]);
   const [hasNextPage, setHasNextPage] = useState(true);
@@ -37,7 +36,7 @@ const List = () => {
       console.error(err);
     }
   }, []);
-  console.log(posts)
+  console.log(posts);
   useEffect(() => {
     if (!observerTargetEl.current || !hasNextPage) return;
 
@@ -60,7 +59,6 @@ const List = () => {
   return (
     <StList>
       <Header />
-      {/* <button onClick={returnHandler}>〈 다시 선택하기</button> */}
       <Title>
         <div>
           <p>{THEME_NAME}</p>
@@ -74,25 +72,35 @@ const List = () => {
           <p>{SIGUNGU_NAME}</p>
         </div>
       </Title>
+      {/* <Sort>
+        <p>조회순</p>
+        <p>리뷰 많은 순</p>
+        <p>별점순</p>
+        <p>방문자수 순</p>
+      </Sort> */}
       <Content>
         {posts &&
           posts.map((list) => (
             <Card key={list.id} onClick={() => navigate(`/detail/${list.id}`)}>
               {list.image == null ? (
-                <>
+                <BasicContainer>
                   <BasicImg src={basicImg} />
                   <Name>
                     <ListTitle style={{ color: "#414141" }}>
                       {list.title}
                     </ListTitle>
-                    <div style={{ display: "flex" }}>
+                    <div style={{ display: "flex", color: "#414141" }}>
                       <FaStar
-                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
+                        style={{
+                          color: "#fcc419",
+                          marginRight: "0.3rem",
+                          marginTop: "0.2rem",
+                        }}
                       />
                       {list.star}
                     </div>
                   </Name>
-                </>
+                </BasicContainer>
               ) : (
                 <>
                   <ImgShadow>
@@ -103,9 +111,14 @@ const List = () => {
                   <Name>
                     <ListTitle>{list.title}</ListTitle>
                     <div style={{ display: "flex" }}>
-                    <FaStar
-                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
-                      /> {list.star}
+                      <FaStar
+                        style={{
+                          color: "#fcc419",
+                          marginRight: "0.3rem",
+                          marginTop: "0.2rem",
+                        }}
+                      />{" "}
+                      {list.star}
                     </div>
                   </Name>
                 </>
@@ -192,10 +205,15 @@ const Card = styled.div`
 const Content = styled.div`
   position: relative;
   top: 280px;
+  margin: 0 auto;
+`;
+
+const BasicContainer = styled.div`
+  max-width: 428px;
+  width: 100%;
 `;
 
 const BasicImg = styled.img`
-  position: relative;
   width: 100%;
   height: 234px;
   border-radius: 20px;
@@ -207,7 +225,8 @@ const BasicImg = styled.img`
 
 const ImgShadow = styled.div`
   margin: 0 auto;
-  width: 420px;
+  max-width: 428px;
+  width: 100%;
   height: 235px;
   border-radius: 20px;
   /* z-index: 3; */
@@ -241,20 +260,20 @@ const Name = styled.div`
   position: relative;
   top: -55px;
   text-align: initial;
-  margin-left: 35px;
+  margin: 0 auto;
   color: #ffffff;
   font-size: 23px;
   line-height: 33px;
   margin-block-end: 0;
   margin-block-start: 0;
-  gap: 20px;
-  width: 70%;
+  width: 80%;
 `;
 
 const ListTitle = styled.div`
   display: block;
-  width: 280px;
+  width: 80%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-right: 5px;
 `;

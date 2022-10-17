@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { instance } from "../../../shared/Api";
-import Paginations from "../../pagination/Paginations";
+import { instance } from "../../../../shared/Api";
+import Paginations from "../../../pagination/Paginations";
 import MypgReview from "./MypgReview";
 
 const ReviewList = () => {
@@ -53,6 +53,7 @@ const StReviewList = styled.div`
   max-width: 428px;
   width: 100%;
   margin: 50px auto;
+  padding-top: 10px;
 
   & h2 {
     color: #bfb8b8;

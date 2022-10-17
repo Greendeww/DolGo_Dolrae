@@ -14,6 +14,50 @@ const Login = () => {
   const usernameRef = useRef();
   const passwordRef = useRef();
 
+  // SSE 알림 설정
+  const notice = async () => {
+    const res = await instance.get("/api/auth/notice/subscribe");
+
+    res.addEventListener("sse", function (event) {
+      console.log(event.data);
+
+      const data = JSON.parse(event.data);
+
+      (async () => {
+        // 브라우저 알림
+        const showNotification = () => {
+          const notification =  new Notification ("알림왔음", {
+            body: data.content,
+          });
+
+          setTimeout(() => {
+            notification.close();
+          }, 10 * 1000);
+
+          notification.addEventListener("click", () => {
+            window.open(data.url, "_blank");
+          });
+        };
+
+        // 브라우저 알림 허용 권한
+        let granted = false;
+
+        if (Notification.permission === "granted") {
+          granted = true;
+        } else if (Notification.permission !== "denied") {
+          let permission = await Notification.requestPermission();
+          granted = permission === "granted";
+        }
+
+        // 알림 보여주기
+        if (granted) {
+          showNotification();
+        }
+      })();
+    });
+  };
+
+  // 로그인
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     // console.log(usernameRef.current.value)
@@ -29,13 +73,14 @@ const Login = () => {
       try {
         const response = await instance.post("/api/member/login", user);
         setCookie("ACCESS_TOKEN", response.headers.authorization, 0.5);
-        setCookie("REFRESH_TOKEN", response.headers.refreshtoken, 0.5);
 
         localStorage.setItem("ACCESS_TOKEN", response.headers.authorization);
         localStorage.setItem("REFRESH_TOKEN", response.headers.refreshtoken);
         localStorage.setItem("username", response.data.username);
         localStorage.setItem("nickname", response.data.nickname);
+        localStorage.setItem("role", response.data.role);
 
+        notice();
         alert(`${response.data.nickname}님 환영합니다.`);
         navigate(-1);
       } catch (error) {

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Header from "../../componenets/header/Header";
 import { useState, useEffect } from "react";
-import { getApi } from "../../shared/Api";
+import { instance } from "../../shared/Api";
 import { useNavigate } from "react-router-dom";
 import PaginationRequest from "../../componenets/pagination/PaginationRequest";
 
@@ -12,15 +12,15 @@ const RequestList = () => {
   const [reviewList, setReviewList] = useState([...list].reverse());
   const [currentReview, setCurrnetReview] = useState([]);
   const [page, setPage] = useState(1);
-  const [postPerPage] = useState(5);
+  const [postPerPage] = useState(10);
   const indexOfLastPost = page * postPerPage;
   const indexOfFirstPage = indexOfLastPost - postPerPage;
 
   const getList = async () => {
-    const response = await getApi("/api/auth/order");
+    const response = await instance.get("/api/auth/order");
     // console.log(response.data);
     setList(response.data);
-    setReviewList([...response?.data].reverse());
+    setReviewList([...response?.data]);
     console.log(response);
   };
   useEffect(() => {

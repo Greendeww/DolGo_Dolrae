@@ -1,30 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../../componenets/header/Header";
-import { instance } from "../../shared/Api";
+import Header from "../../../header/Header";
+import { instance } from "../../../../shared/Api";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
-import PostModal from "../../componenets/modal/PostModal";
-import CompleteModal from "../../componenets/modal/CompleteModal";
 
 const RequestDetail = () => {
   const navigate = useNavigate();
   const param = useParams();
   const [data, setData] = useState();
-  const [modal, setModal] = useState(false);
-  const [completeModal, setCompleteModal] = useState(false);
 
   const getData = async () => {
     const res = await instance.get(`/api/auth/order/${param.id}`);
     console.log(res);
     setData(res.data);
-  };
-
-  const deleteBtn = async () => {
-    setModal(true);
-    // const res = await instance.delete(`/api/auth/place/${param.id}`);
-    // console.log(res)
   };
 
   useEffect(() => {
@@ -75,73 +65,22 @@ const RequestDetail = () => {
         </div> */}
         <div>
           <Title>이미지</Title>
-          <ImgBox>
-            {data?.imageList.map((img, idx) => {
-              return <Img key={idx} alt="" src={img} />;
-            })}
-          </ImgBox>
-        </div>
-        {data?.state === true ? (
-          <div style={{ marginTop: "10px" }}>
-            <Title>답변</Title>
-            <Context
-              defaultValue={data?.answer}
-              style={{ lineHeight: "20px" }}
-              readOnly
-            />
+          <div style={{ width: "100%" }}>
+            <ImgBox>
+              {data?.imageList.map((img, idx) => {
+                return <Img key={idx} alt="" src={img} />;
+              })}
+            </ImgBox>
           </div>
-        ) : null}
+        </div>
         <Buttons>
           <button
             onClick={() => {
               navigate(-1);
             }}
-            style={{
-              background: "white",
-              border: "3px solid #abd4e2",
-              color: "#abd4e2",
-              letterSpacing: "-3px",
-            }}
           >
             뒤로가기
           </button>
-          {data?.type === "추가" ? (
-            <button
-              onClick={() => {
-                navigate("/post");
-                localStorage.setItem("ID", param.id);
-              }}
-            >
-              추가
-            </button>
-          ) : data?.type === "수정" ? (
-            <button
-              onClick={() => {
-                navigate(`/edit/${data?.place_id}`);
-              }}
-            >
-              수정
-            </button>
-          ) : (
-            <button onClick={deleteBtn}>삭제</button>
-          )}
-          {data?.state === false ? (
-            <button onClick={() => setCompleteModal(!completeModal)}>
-              완료
-            </button>
-          ) : (
-            <button style={{ background: "gray" }} disabled>
-              완료
-            </button>
-          )}
-
-          {modal === true ? (
-            <PostModal modal={modal} setModal={setModal} data={data} />
-          ) : null}
-
-          {completeModal === true ? (
-            <CompleteModal completeModal={completeModal} setCompleteModal={setCompleteModal} data={data} />
-          ) : null}
         </Buttons>
       </Container>
     </StRequestDetail>
@@ -189,7 +128,7 @@ const Buttons = styled.div`
 
   & button {
     margin: 0 auto;
-    width: 20%;
+    width: 90%;
     font-weight: bold;
     font-size: 15px;
     line-height: 40px;
@@ -199,9 +138,14 @@ const Buttons = styled.div`
     border-radius: 15px;
     cursor: pointer;
     border: none;
+    background: white;
+    border: 3px solid #abd4e2;
+    color: #abd4e2;
+    letter-spacing: -3px;
 
     &:hover {
-      background-color: #ffaeae;
+      border: 3px solid #ffaeae;
+      color: #ffaeae;
     }
   }
 `;
@@ -219,11 +163,12 @@ const Context = styled.textarea`
   padding: 10px;
 `;
 
-const ImgBox = styled.div``;
+const ImgBox = styled.div`
+  display: flex;
+`;
 
 const Img = styled.img`
   width: 90%;
-  display: flex;
   margin: 0 auto;
   padding-top: 20px;
 `;

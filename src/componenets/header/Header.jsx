@@ -9,14 +9,14 @@ import Search from "./Search";
 import burger from "../../assert/header/burger.png";
 import { deleteCookie, getCookie } from "../../shared/Cookie";
 
-
-const Header = ({title}) => {
+const Header = ({ title }) => {
   const navigate = useNavigate();
 
   const [modal, setModal] = useState(false);
 
-  const username = localStorage.getItem("username");
-  const getToken = getCookie("ACCESS_TOKEN");
+  const role = localStorage.getItem("role");
+  // const getToken = getCookie("ACCESS_TOKEN");
+  const getToken = localStorage.getItem("ACCESS_TOKEN");
 
   const onModalHandler = (e) => {
     // e.preventDefault();
@@ -42,6 +42,7 @@ const Header = ({title}) => {
     alert(response.data);
     localStorage.removeItem("username");
     localStorage.removeItem("nickname");
+    localStorage.removeItem("role");
     localStorage.removeItem("ACCESS_TOKEN");
     localStorage.removeItem("REFRESH_TOKEN");
     localStorage.removeItem("THEME_CODE");
@@ -51,8 +52,9 @@ const Header = ({title}) => {
     localStorage.removeItem("SIGUNGU_CODE");
     localStorage.removeItem("SIGUNGU_NAME");
 
-    deleteCookie("ACCESS_TOKEN");
-    deleteCookie("REFRESH_TOKEN");
+    // deleteCookie("ACCESS_TOKEN");
+    // deleteCookie("REFRESH_TOKEN");
+    navigate('/')
   };
 
   return (
@@ -78,7 +80,7 @@ const Header = ({title}) => {
             <h2 onClick={() => navigate("/")}>홈</h2>
             <h2 onClick={() => navigate("/select")}>지역별 조회</h2>
             <h2 onClick={() => navigate("/random")}>랜덤 추천</h2>
-            {getToken !== undefined ? (
+            {getToken !== null ? (
               <>
                 <h2 onClick={() => navigate("/mypage")}>마이페이지</h2>
                 <h2 onClick={() => navigate("/request/post")}>
@@ -86,14 +88,15 @@ const Header = ({title}) => {
                 </h2>
               </>
             ) : null}
-            {username === "kthdus96@nate.com" ? (
+            <br />
+            { role === "ADMIN" ? (
               <>
-                <h2 onClick={() => navigate("/request/list")}>요청 목록</h2>
-                <h2 onClick={() => navigate("/post")}>게시글 추가</h2>
+                <h2 onClick={() => navigate("/request/list")}>* 요청 목록 *</h2>
+                <h2 onClick={() => navigate("/post")}>* 게시글 추가 *</h2>
               </>
             ) : null}
             <div>
-              {getToken === undefined ? (
+              {getToken === null ? (
                 <h2 onClick={() => navigate("/login")}>로그인 ＞</h2>
               ) : (
                 <h2
@@ -109,7 +112,7 @@ const Header = ({title}) => {
           </Menu>
         </MenuContainer>
       ) : null}
-      <Search title={title}/>
+      <Search title={title} />
     </StHeader>
   );
 };
@@ -197,7 +200,7 @@ const Menu = styled.div`
   z-index: 10;
 
   & h2 {
-    text-decoration: underline;
+    /* text-decoration: underline; */
     margin: 30px auto;
 
     &:hover {
