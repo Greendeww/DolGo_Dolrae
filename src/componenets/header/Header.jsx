@@ -5,9 +5,13 @@ import css from "../../css/header.css";
 import dolphin from "../../assert/header/logo_.png";
 import bell from "../../assert/header/bell.png";
 import { instance } from "../../shared/Api";
+
+import ToTheTop from "../scroll/ToTheTop";
+
 import Search from "./Search";
 import burger from "../../assert/header/burger.png";
 import { deleteCookie, getCookie } from "../../shared/Cookie";
+
 
 const Header = ({ title }) => {
   const navigate = useNavigate();
@@ -112,7 +116,11 @@ const Header = ({ title }) => {
           </Menu>
         </MenuContainer>
       ) : null}
+
+      <ToTheTop/>
+
       <Search title={title} />
+
     </StHeader>
   );
 };
@@ -216,3 +224,9 @@ const Menu = styled.div`
     }
   }
 `;
+
+
+const Log = styled.div`
+
+`;
+

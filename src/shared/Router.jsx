@@ -21,6 +21,14 @@ import SearchPage from "../pages/tourist/SearchPage";
 // mypage
 import MyPage from "../pages/mypage/MyPage";
 import MyPageChange from "../pages/mypage/MyPageChange";
+
+import AmendmentRequest from "../pages/request/AmendmentRequest";
+import RegistrationRequest from "../pages/request/RegistrationRequest";
+import Administrator from "../pages/manager/Administrator";
+import RequestEdit from "../pages/manager/RequestEdit";
+import RequestDetail from "../pages/manager/RequestDetail";
+import RequestPost from "../pages/manager/RequestPost";
+
 import MyRequestDetail from "../componenets/mypage/mypage/request/MyRequestDetail";
 
 // request
@@ -38,6 +46,7 @@ import { getCookie } from "./Cookie";
 import { useEffect } from "react";
 import { instance } from "./Api";
 import axios from "axios";
+
 
 function Router() {
 
