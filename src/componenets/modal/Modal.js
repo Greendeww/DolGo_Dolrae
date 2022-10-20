@@ -1,11 +1,9 @@
 import React from "react";
-import ModalPortal from "./ModalPortal";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { _deleteComment } from "../../redux/modules/comment";
 
 const Modal = ({ onClose, comment}) => {
-  console.log(comment)
   const dispatch = useDispatch();
 
   return (
@@ -23,9 +21,7 @@ const Modal = ({ onClose, comment}) => {
                   삭제
                 </Jimbut>
                 <Bunbut
-                  onClick={() => {
-                    onClose(false);
-                  }}
+                  onClick={() => onClose(false)}
                 >
                   취소
                 </Bunbut>
@@ -74,7 +70,7 @@ const PageDel = styled.div`
   font-family: "Noto Sans KR", sans-serif;
   width: 296px;
   height: 141px;
-  border: 3px solid #79B9D3;
+  border: 3px solid #ABD4E2;
   background-color: rgb(255, 255, 255);
   margin: auto;
   align-items: center;
@@ -98,21 +94,6 @@ const Button = styled.div`
   justify-content: center;
   margin-top: 20px;
 `;
-const Jimbut = styled.button`
-  font-weight: 600;
-  margin-right: 10px;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  font-size: 16px;
-  align-items: center;
-  background: white;
-  border: 3px solid #79B9D3;
-  color: #79B9D3;
-  cursor: pointer;
-  border-radius:5px;
-`;
 const Bunbut = styled.button`
   font-weight: 600;
   margin-right: 10px;
@@ -122,8 +103,23 @@ const Bunbut = styled.button`
   height: 100%;
   font-size: 16px;
   align-items: center;
-  background: #79B9D3;
-  border: 1px solid #79B9D3;
+  background: white;
+  border: 3px solid #ABD4E2;
+  color: #ABD4E2;
+  cursor: pointer;
+  border-radius:5px;
+`;
+const Jimbut = styled.button`
+  font-weight: 600;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  align-items: center;
+  background: #ABD4E2;
+  border: 1px solid #ABD4E2;
   color: rgb(255, 255, 255);
   cursor: pointer;
   border-radius:5px;

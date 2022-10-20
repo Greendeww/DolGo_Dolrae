@@ -1,22 +1,25 @@
 import React from "react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../../componenets/header/Header";
+import { useState } from "react";
 import { instance } from "../../shared/Api";
+import { useNavigate } from "react-router-dom";
 
-const ResistrationRequest = () => {
+const EditRequest = () => {
   const navigate = useNavigate();
+  const [image, setImage] = useState([]);
+  const [fileImage, setFileImage] = useState([]);
+  const id = localStorage.getItem("place_id");
+  const title = localStorage.getItem("place_title");
 
   const initialState = {
-    title: "",
+    title: title,
     content: "",
-    address: "",
+    type: "",
   };
 
   const [req, setReq] = useState(initialState);
-  const [image, setImage] = useState([]);
-  const [fileImage, setFileImage] = useState([]);
+  console.log(req);
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -56,74 +59,79 @@ const ResistrationRequest = () => {
   };
 
   const onSubmitHandler = async (e) => {
-    e.preventDefault();
+    if (req.content === "" || req.type === "") {
+      alert("필수 항목을 모두 작성해주세요.");
+      return;
+    } else {
+      const json = JSON.stringify(req);
+      const blob = new Blob([json], { type: "application/json" });
+      const formData = new FormData();
 
-    const json = JSON.stringify(req);
-    const blob = new Blob([json], { type: "application/json" });
-    const formData = new FormData();
+      for (let i = 0; i < image.length; i++) {
+        formData.append("image", image[i]);
+      }
+      formData.append("data", blob);
 
-    for (let i = 0; i < image.length; i++) {
-      formData.append("image", image[i]);
+      const res = await instance.post(`/api/auth/order/${id}`, formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
+      console.log(res);
+      alert("게시글 수정 또는 삭제 요청이 완료되었습니다.");
+      navigate(-1);
     }
-    formData.append("data", blob);
-
-    const res = await instance.post(`/api/auth/order`, formData, {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    });
-    alert("게시글 등록 요청 완료되었습니다.");
-    navigate("/");
-    console.log(res);
   };
 
   return (
-    <StRegistration>
+    <StEditRequest>
       <Header />
       <Container>
         <div>
           <Title>
-            장소 이름 <span style={{ color: "rgb(255, 80, 88)" }}>*</span>
+            여행지 <span style={{ color: "rgb(255, 80, 88)" }}>*</span>
           </Title>
-          <Text
-            type="text"
-            name="title"
-            value={req.title}
-            onChange={onChangeHandler}
-            placeholder="추가하고 싶은 장소 이름을 입력해주세요."
-          />
+          <Name>{title}</Name>
         </div>
         <div>
-          <Title>유형</Title>
+          <Title>
+            신고 유형 <span style={{ color: "rgb(255, 80, 88)" }}>*</span>
+          </Title>
           <div
             style={{ display: "flex", marginLeft: "35px", marginTop: "15px" }}
           >
-            <CheckBox type="checkbox" checked />
-            <p style={{ marginLeft: "15px", marginTop: "10px" }}>추가</p>
+            <label style={{ marginRight: "15px", fontSize: "18px" }}>
+              <input
+                type="radio"
+                name="type"
+                value="수정"
+                onChange={onChangeHandler}
+                style={{ width: "15px", height: "15px", marginRight: "10px" }}
+              />
+              수정
+            </label>
+            <label style={{ marginRight: "15px", fontSize: "18px" }}>
+              <input
+                type="radio"
+                name="type"
+                value="삭제"
+                onChange={onChangeHandler}
+                style={{ width: "15px", height: "15px", marginRight: "10px" }}
+              />
+              삭제
+            </label>
           </div>
         </div>
         <div style={{ marginTop: "10px" }}>
           <Title>
-            설명 <span style={{ color: "rgb(255, 80, 88)" }}>*</span>
+            신고 내용 <span style={{ color: "rgb(255, 80, 88)" }}>*</span>
           </Title>
           <Context
             type="text"
             name="content"
             value={req.content}
             onChange={onChangeHandler}
-            placeholder="장소에 대한 설명을 입력해주세요."
-          />
-        </div>
-        <div>
-          <Title>
-            주소 <span style={{ color: "rgb(255, 80, 88)" }}>*</span>
-          </Title>
-          <Text
-            type="text"
-            name="address"
-            value={req.address}
-            onChange={onChangeHandler}
-            placeholder="주소를 입력해주세요."
+            placeholder="요청할 부분과 사유에 대해 자세히 서술해주세요."
           />
         </div>
         <div>
@@ -158,33 +166,39 @@ const ResistrationRequest = () => {
           </div>
         </div>
         <Buttons>
-          <CancelBtn>취소</CancelBtn>
-          <PostBtn onClick={onSubmitHandler}>작성하기</PostBtn>
+          <PostBtn
+            onClick={() => {
+              onSubmitHandler();
+              localStorage.removeItem("place_id");
+            }}
+          >
+            작성하기
+          </PostBtn>
+          <CancelBtn
+            onClick={() => {
+              navigate(-1);
+              localStorage.removeItem("place_id");
+            }}
+          >
+            취소
+          </CancelBtn>
         </Buttons>
       </Container>
-    </StRegistration>
+    </StEditRequest>
   );
 };
 
-export default ResistrationRequest;
+export default EditRequest;
 
-const StRegistration = styled.div`
+const StEditRequest = styled.div`
   max-width: 428px;
   width: 100%;
   margin: 0 auto;
   background-color: #eef6fa;
 `;
-
 const Container = styled.div`
-  padding-top: 70px;
+  padding-top: 120px;
 `;
-
-const Buttons = styled.div`
-  display: flex;
-  padding-top: 40px;
-  padding-bottom: 50px;
-`;
-
 const Title = styled.p`
   width: 200px;
   height: 40px;
@@ -193,64 +207,51 @@ const Title = styled.p`
   font-size: 1.2rem;
   line-height: 40px;
 `;
-
-const Text = styled.input`
+const Name = styled.p`
+  font-size: 20px;
+  padding-top: 10px;
+  padding-left: 38px;
+  color: #727272;
+`;
+const Buttons = styled.div`
   display: flex;
-  margin: 10px auto;
-  width: 373px;
-  height: 52px;
-  background-color: white;
-  border-radius: 15px;
-  border: none;
-  padding-left: 10px;
-  font-size: 14px;
-  font-family: tway;
-  font-weight: lighter;
+  padding-top: 40px;
+  padding-bottom: 50px;
+  gap: 20px;
+  margin: 0 auto;
+  width: 90%;
 `;
-
-const CheckBox = styled.input`
-  width: 30px;
-  height: 30px;
-`;
-
 const Context = styled.textarea`
-  width: 350px;
+  width: 80%;
   height: 200px;
   display: flex;
   margin: 0 auto;
-  padding: 15px;
   border: none;
   border-radius: 15px;
   resize: none;
   font-size: 14px;
   font-family: tway;
   font-weight: lighter;
+  padding: 15px;
+  line-height: 30px;
 `;
-
 const CancelBtn = styled.div`
   width: 150px;
   height: 40px;
-  margin: 0px 0px 0px 40px;
   font-weight: 700;
   font-size: 15px;
   line-height: 40px;
   text-align: center;
-
   color: #abd4e2;
-
   background: white;
   border: 3px solid #abd4e2;
   border-radius: 15px;
-
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
+  margin: 0 auto;
 `;
-
 const PostBtn = styled.div`
   width: 150px;
   height: 40px;
-  margin: 0px 0px 0px 30px;
   font-weight: 700;
   font-size: 15px;
   line-height: 40px;
@@ -258,32 +259,18 @@ const PostBtn = styled.div`
   color: white;
   background: #abd4e2;
   border-radius: 15px;
-
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
+  margin: 0 auto;
 `;
-
-const ImgTitle = styled.div`
-  padding-left: 0.5rem;
-  height: 48px;
-  font-size: 20px;
-  align-items: center;
-  display: flex;
-  justify-content: flex-start;
-`;
-
 const ImgBox = styled.div`
   display: flex;
   margin: 20px 30px;
   flex-wrap: wrap;
   gap: 30px;
 `;
-
 const ImgInput = styled.input`
   display: none;
 `;
-
 const ImgLabel = styled.label`
   width: 100px;
   height: 100px;
@@ -298,12 +285,8 @@ const ImgLabel = styled.label`
   color: rgb(155, 153, 169);
   font-size: 1rem;
   border-radius: 15px;
-
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;
-
 const Img = styled.img`
   width: 100px;
   height: 100px;
@@ -321,4 +304,5 @@ const DeleteImg = styled.button`
   bottom: 88px;
   background-color: white;
   border: none;
+  cursor: pointer;
 `;

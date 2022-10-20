@@ -6,12 +6,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Comments from "./Comments";
 import { _getComments } from "../../redux/modules/comment";
+import { getCookie } from "../../shared/Cookie";
 
 const Review = ({ comment }) => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const dispatch = useDispatch();
-  const [formOpen, setFormOpen] = useState(false);
+  const getToken = getCookie("ACCESS_TOKEN");
   const [commentList, setCommentList] = useState([...comment].reverse());
   const [currentComments, setCurrnetComments] = useState([]);
   const [modal, setModal] = useState(false);
@@ -43,13 +43,27 @@ const Review = ({ comment }) => {
     newComment[idx] = true;
     setModal(newComment);
   };
-  // comment.number = number
-  // const numbers = [...arr].reverse()
-  // console.log(numbers)
+  
+  const noLogin = (e) => {
+    e.preventDefault();
+    alert("로그인이 필요한 서비스 입니다");
+    navigate("/login");
+  };
+
   return (
     <div>
+
       <CommentDiv>
-        <p style={{ color: "#bfb8b8", fontSize: "1.5rem", marginBottom: "20px", marginTop: "20px"}}>Review</p>
+        <p
+          style={{
+            color: "#BFB8B8",
+            fontSize: "1.5rem",
+            marginTop: "1.5rem",
+            marginBottom: "1.5rem",
+          }}
+        >
+          Review
+        </p>
         <div>
           {currentComments.map((comment, index) => {
             return (
@@ -65,11 +79,14 @@ const Review = ({ comment }) => {
           })}
         </div>
         <ButDiv>
-          <FormBut style={{ fontWeight: "bold"}} onClick={() => navigate("/detail/form/" + id)}>
-            후기 작성
-          </FormBut>
+          {getToken === undefined ? (
+            <FormBut onClick={noLogin}>후기작성</FormBut>
+          ) : (
+            <FormBut onClick={() => navigate("/detail/form/" + id)}>
+              후기작성
+            </FormBut>
+          )}
         </ButDiv>
-        <p style={{ color: "white" }}>공백</p>
         <Paginations
           page={page}
           count={comment.length}
@@ -85,16 +102,17 @@ export default Review;
 const CommentDiv = styled.div`
   margin: 0 auto;
   margin-top: 45px;
-  border-top: 3px solid #DEDDDD;
+  border-top: 3px solid #dedddd;
   text-align: start;
-  width: 90%;
+  width: 95%;
   justify-content: center;
   align-items: center;
 `;
 const ButDiv = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-top: 60px;
+  margin-top: 40px;
+  margin-bottom: 20px;
 `;
 const FormBut = styled.button`
   cursor: pointer;
@@ -105,4 +123,5 @@ const FormBut = styled.button`
   border-radius: 5px;
   width: 100%;
   font-size: 20px;
+  font-weight: bold;
 `;

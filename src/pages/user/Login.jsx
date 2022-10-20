@@ -1,38 +1,88 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
 import { KAKAO_AUTH_URL } from "../../shared/OAuth";
 import Header from "../../componenets/header/Header";
 import kakao from "../../assert/login/kakao_login_medium_wide.png";
 import Swal from "sweetalert2";
 import { instance } from "../../shared/Api";
 import { useRef } from "react";
+import { setCookie } from "../../shared/Cookie";
 
 const Login = () => {
   const navigate = useNavigate();
-  const UsernameRef = useRef();
-  const PasswordRef = useRef();
+  const usernameRef = useRef();
+  const passwordRef = useRef();
 
+  // SSE 알림 설정
+  const notice = async () => {
+    const res = await instance.get("/api/auth/notice/subscribe");
+
+    res.addEventListener("sse", function (event) {
+      console.log(event.data);
+
+      const data = JSON.parse(event.data);
+
+      (async () => {
+        // 브라우저 알림
+        const showNotification = () => {
+          const notification =  new Notification ("알림왔음", {
+            body: data.content,
+          });
+
+          setTimeout(() => {
+            notification.close();
+          }, 10 * 1000);
+
+          notification.addEventListener("click", () => {
+            window.open(data.url, "_blank");
+          });
+        };
+
+        // 브라우저 알림 허용 권한
+        let granted = false;
+
+        if (Notification.permission === "granted") {
+          granted = true;
+        } else if (Notification.permission !== "denied") {
+          let permission = await Notification.requestPermission();
+          granted = permission === "granted";
+        }
+
+        // 알림 보여주기
+        if (granted) {
+          showNotification();
+        }
+      })();
+    });
+  };
+
+  // 로그인
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    // console.log(usernameRef.current.value)
     const user = {
-      username: UsernameRef.current.value,
-      password: PasswordRef.current.value,
+      username: usernameRef.current.value,
+      password: passwordRef.current.value,
     };
-    console.log(user);
-    if (UsernameRef.current.value === "" || PasswordRef.current.value === "") {
+    // console.log(user);
+    if (usernameRef.current.value === "" || passwordRef.current.value === "") {
       alert("모든 항목을 입력해주세요.");
       return;
     } else {
       try {
         const response = await instance.post("/api/member/login", user);
+        setCookie("ACCESS_TOKEN", response.headers.authorization, 0.5);
+
         localStorage.setItem("ACCESS_TOKEN", response.headers.authorization);
         localStorage.setItem("REFRESH_TOKEN", response.headers.refreshtoken);
         localStorage.setItem("username", response.data.username);
         localStorage.setItem("nickname", response.data.nickname);
+        localStorage.setItem("role", response.data.role);
+
+        notice();
         alert(`${response.data.nickname}님 환영합니다.`);
-        navigate("/");
+        navigate(-1);
       } catch (error) {
         alert("이메일 또는 비밀번호를 확인해주세요.");
       }
@@ -53,7 +103,7 @@ const Login = () => {
                 <input
                   type="text"
                   placeholder="이메일을 입력해주세요."
-                  ref={UsernameRef}
+                  ref={usernameRef}
                 />
               </label>
             </Input>
@@ -65,7 +115,7 @@ const Login = () => {
                 <input
                   type="password"
                   placeholder="비밀번호를 입력해주세요."
-                  ref={PasswordRef}
+                  ref={passwordRef}
                 />
               </label>
             </Input>
@@ -74,7 +124,6 @@ const Login = () => {
             <div>
               <button>로그인</button>
             </div>
-
             <Social>
               <img
                 alt=""
@@ -86,7 +135,6 @@ const Login = () => {
             </Social>
           </Buttons>
         </form>
-
         <SignUp>
           <p>아직 돌고돌래 회원이 아니세요?</p>
           <p>
@@ -114,7 +162,7 @@ const StLogin = styled.div`
     margin-bottom: 10px;
   }
   & input {
-    width: 373px;
+    width: 98%;
     height: 52px;
     background-color: rgba(172, 212, 228, 0.35);
     border-radius: 15px;
@@ -127,7 +175,7 @@ const StLogin = styled.div`
     color: white;
     border: none;
     border-radius: 12px;
-    width: 370px;
+    width: 95%;
     height: 50px;
     cursor: pointer;
     font-weight: 700;
@@ -151,7 +199,7 @@ const Social = styled.div`
   & img {
     display: block;
     margin: 20px auto;
-    width: 370px;
+    width: 95%;
     height: 50px;
 
     &:hover {
@@ -173,8 +221,6 @@ const SignUp = styled.div`
   }
 
   & b {
-    &:hover {
-      cursor: pointer;
-    }
+    cursor: pointer;
   }
 `;

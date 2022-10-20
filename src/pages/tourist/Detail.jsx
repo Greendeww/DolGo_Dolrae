@@ -1,5 +1,5 @@
 /* global kakao */
-import React, { useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -7,15 +7,12 @@ import "swiper/css/scrollbar";
 import "swiper/css";
 import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import DetailForm from "../../componenets/details/DetailForm";
 import { useDispatch, useSelector } from "react-redux";
-import { onLikeDetail, _getDetail } from "../../redux/modules/post";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { _getComments } from "../../redux/modules/comment";
 import Review from "../../componenets/details/Review";
 import DetailImage from "../../componenets/details/DetailImage";
 import { instance } from "../../shared/Api";
-import StarDetail from "../../componenets/star/StarDetail";
 import Like from "../../componenets/like/Like";
 import Header from "../../componenets/header/Header";
 import { FaStar } from "react-icons/fa";
@@ -25,20 +22,10 @@ const Detail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [formOpen, setFormOpen] = useState(false);
   const [posts, setPosts] = useState("");
-  const [commentList, setCommentList] = useState([]);
-  const [currentComments, setCurrnetComments] = useState([]);
-  const [page, setPage] = useState(1);
-  const [postPerPage] = useState(5);
   const [number, setNumber] = useState(1);
-  const indexOfLastPost = page * postPerPage;
-  const indexOfFirstPage = indexOfLastPost - postPerPage;
-  // console.log(posts)
+  const login = localStorage.getItem("username");
 
-  const close = () => {
-    setFormOpen(false);
-  };
   const { isLoading, error, comment } = useSelector((state) => state.comment);
 
   const fetch = async () => {
@@ -51,11 +38,6 @@ const Detail = () => {
     fetch();
   }, []);
 
-  useEffect(() => {
-    setCommentList([...comment].reverse());
-    setCurrnetComments(commentList.slice(indexOfFirstPage, indexOfLastPost));
-  }, [indexOfFirstPage, indexOfLastPost, page, comment]);
-
   if (isLoading) {
     return <div>로딩중....</div>;
   }
@@ -64,27 +46,29 @@ const Detail = () => {
     return <div>{error.message}</div>;
   }
 
-  const handlePageChange = (page) => {
-    setPage(page);
-  };
-  // const onLike = async (event) => {
-  //   event.preventDefault();
-  //   dispatch(onLikeDetail(id));
-  // };
   const newText = posts?.content?.replace(/(<([^>]+)>)/gi, "\n"); //태그 제거
   const tmp = newText?.replace(/&nbsp;/gi, " "); //공백 제거
   const tmp2 = tmp?.replace(/&lt;/gi, ""); //부등호(<) 제거
   const tmp3 = tmp2?.replace(/&gt;/gi, ""); //부등호(>) 제거
 
+  const requestBtn = () => {
+    if (login === null) {
+      alert("로그인이 필요한 서비스입니다.");
+      navigate("/login");
+    } else {
+      localStorage.setItem("place_id", posts.id);
+      localStorage.setItem("place_title", posts.title);
+      navigate(`/request/edit/${posts.id}`);
+    }
+  };
   return (
-    <St>
-      <Header />
-      <div>
+    <>
+      <BoxDiv>
+        <Header />
         <Box>
           <Cover>
             <ImgCover>
               <DetailImage post={posts} key={posts.id} />
-              <Div>
               <ThemeDiv>
                 <ThemeList post={posts} />
               </ThemeDiv>
@@ -92,11 +76,16 @@ const Detail = () => {
                 <TitleSpan>{posts.title}</TitleSpan>
                 <Like id={id}></Like>
               </TitleLikeDiv>
-
               {/* {posts.likes} */}
               <StarThemeDiv>
                 <div style={{ display: "flex" }}>
-                  <FaStar style={{ color: "#fcc419", marginRight: "0.3rem" }} />
+                  <FaStar
+                    style={{
+                      color: "#fcc419",
+                      marginRight: "0.3rem",
+                      marginTop: "-0.1rem",
+                    }}
+                  />
                   <span style={{ fontWeight: "600", lineHeight: "1rem" }}>
                     {posts.star}
                   </span>
@@ -104,8 +93,12 @@ const Detail = () => {
                     /5
                   </span>
                 </div>
+                <div>
+                  <Request style={{ marginRight: "5px" }} onClick={requestBtn}>
+                    🚨
+                  </Request>
+                </div>
               </StarThemeDiv>
-              </Div>
             </ImgCover>
           </Cover>
           <Title></Title>
@@ -189,24 +182,27 @@ const Detail = () => {
               </ALink>
             </SearchDiv>
           </SearchDate>
-          {formOpen === true ? <DetailForm close={close} /> : null}
-          <Review comment={comment} number={number} />
-          <h1 style={{ color: "white" }}>공백</h1>
+          {/* {formOpen === true
+          ?<DetailForm close={close}/>
+          :null} */}
+          <ReviewDiv>
+            <Review comment={comment} number={number} />
+            {/* <h1 style={{color:"white"}}>공백</h1> */}
+          </ReviewDiv>
         </Box>
-      </div>
-    </St>
+      </BoxDiv>
+    </>
   );
 };
-
 export default Detail;
 
-const St = styled.div`
+const BoxDiv = styled.div`
   width: 100%;
   max-width: 428px;
   margin: 0 auto;
 `;
 const Box = styled.div`
-  padding-top: 70px;
+  padding-top: 7.4rem;
   /* border:2px solid #79B9D3; */
 `;
 const Cover = styled.div`
@@ -229,11 +225,9 @@ const ImgCover = styled.div`
   margin: 0 auto;
 `;
 const ThemeDiv = styled.div`
-  padding-top: 0.4rem;
+  padding-top: 2rem;
 `;
-const Div = styled.div`
-padding: 0 15px;
-`;
+
 const TitleLikeDiv = styled.div`
   display: flex;
   justify-content: space-between;
@@ -253,7 +247,7 @@ const Title = styled.div`
 const StarThemeDiv = styled.div`
   padding-top: 0.5rem;
   display: flex;
-  /* justify-content:space-between; */
+  justify-content: space-between;
   align-items: center;
 `;
 const Location = styled.div`
@@ -270,7 +264,6 @@ const MapDiv = styled.div`
   margin: 0 auto;
 `;
 const DescDiv = styled.div`
-
   width: 90%;
   justify-content: center;
   align-items: center;
@@ -278,7 +271,7 @@ const DescDiv = styled.div`
   padding-top: 50px;
 `;
 const DesP = styled.p`
-    font-family: Noto Sans KR;
+  font-family: Noto Sans KR;
   text-align: justify;
   white-space: pre-wrap;
   line-height: 30px;
@@ -318,3 +311,10 @@ const ImgLink = styled.img`
 //  justify-content:flex-end;
 //  margin-top:60px;
 // `
+const ReviewDiv = styled.div`
+  width: 95%;
+  margin: 0 auto;
+`;
+const Request = styled.span`
+  cursor: pointer;
+`;

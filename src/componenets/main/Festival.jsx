@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../shared/Api";
 import Slider from "react-slick";
 
 const Festival = () => {
-  const navigate = useNavigate();
-
   const settings = {
     // dots: true,
     infinite: true,
@@ -32,7 +29,6 @@ const Festival = () => {
   if (festival === undefined) {
     return;
   }
-
   return (
     <StFestival>
       <Title>이 달의 축제</Title>
@@ -40,11 +36,12 @@ const Festival = () => {
         <Slider {...settings}>
           {festival.map((festival) => {
             return (
-              <Card
-                key={festival.id}
-                onClick={() => (window.location.href = "{festival.linkUrl}")}
-              >
-                <img alt="" src={festival.imageUrl} />
+              <Card key={festival.id}>
+                <img
+                  alt=""
+                  src={festival.imageUrl}
+                  onClick={() => window.open(festival.linkUrl)}
+                />
                 <p style={{ fontWeight: "bold" }}>{festival.title}</p>
                 <p>{festival.period}</p>
               </Card>
@@ -65,7 +62,7 @@ const StFestival = styled.div`
   font-size: 37px;
   color: #79b9d3;
   height: 500px;
-  padding-top: 80px;
+  padding-top: 130px;
 `;
 
 const Title = styled.div`
@@ -86,6 +83,7 @@ const FestivalList = styled.div`
 
 const Card = styled.div`
   img {
+    max-width: 428px;
     width: 100%;
     border-radius: 30px;
     &:hover {

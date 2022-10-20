@@ -1,18 +1,16 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
-import Star from "../star/Star";
-import commentSlice from "../../redux/modules/comment";
 import { instance } from "../../shared/Api";
 import Header from "../header/Header";
+import { useRef } from "react";
 
 const DetailForm = () => {
   const navigate = useNavigate();
-
   const { id } = useParams();
-  console.log(id);
+  const inputFocus = useRef(null);
+
   const [content, setContent] = useState("");
   const [contentMessage, setContentMessage] = useState("");
   const [isContent, setIsContent] = useState(false);
@@ -23,8 +21,7 @@ const DetailForm = () => {
   const [image, setImage] = useState([]);
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
-  const [imagenull] = useState(null);
-  console.log(image);
+ 
   const handleStarClick = (index) => {
     let clickStates = [...clicked];
     for (let i = 0; i < 5; i++) {
@@ -35,7 +32,12 @@ const DetailForm = () => {
 
   useEffect(() => {
     sendReview();
-  }, [clicked]); //컨디마 컨디업
+  }, [clicked]);
+  
+  //제목부분에 커서
+  useEffect(() => {
+    inputFocus.current.focus();
+  }, []);
 
   const sendReview = () => {
     let score = clicked.filter(Boolean).length;
@@ -44,14 +46,8 @@ const DetailForm = () => {
 
   const onChangeImg = (e) => {
     const imageList = e.target.files;
-    // const maxImageCnt = 3;
-    const imageLists = [...image];
-    // if(image.length > maxImageCnt){
-    //   alert("첨부파일은 최대 3개까지 가능합니다")
-    // }
-
-    console.log(imageList);
-    const imgFiles = [...fileImage];
+    let imageLists = [...image];
+    let imgFiles = [...fileImage];
     for (let i = 0; i < imageList.length; i++) {
       const nowImageUrl = URL.createObjectURL(e.target.files[i]);
       imgFiles.push(nowImageUrl);
@@ -59,14 +55,19 @@ const DetailForm = () => {
     for (let i = 0; i < imageList.length; i++) {
       const nowImageUrl1 = e.target.files[i];
       imageLists.push(nowImageUrl1);
-      continue;
     }
-    // if (imageLists.length > 3) {
-    //   imageLists = imageLists.slice(0, 3);
-    // }
+       //이미지 개수 최대 3개까지 등록가능
+    if (imageLists.length > 3) {
+      window.alert("이미지는 최대 3개까지 등록 가능합니다")
+      imageLists = imageLists.slice(0, 3);
+    }
+    if(imgFiles.length > 3){
+      imgFiles = imgFiles.slice(0, 3);
+    }
     setFileImage(imgFiles);
     setImage(imageLists);
   };
+
   //이미지 삭제
   const handleDeleteImage = (id) => {
     setFileImage(fileImage.filter((_, index) => index !== id));
@@ -108,14 +109,12 @@ const DetailForm = () => {
     // nickname:nickname
   };
 
-  const onChangeHandler = (event, setState) => setState(event.target.value);
-
   const onAddComment = async (e) => {
     e.preventDefault();
-    if (title === "" || content === "" || star === "") {
-      alert("모든 항목을 입력해주세요.");
+    if (title === "" || content === "" || star === 0) {
+      return alert("필수항목을 입력해주세요.");
     }
-    if (isContent !== true) {
+    if (isContent !== true || isTitle !== true) {
       return alert("형식을 확인해주세요");
     }
     let json = JSON.stringify(data);
@@ -131,7 +130,6 @@ const DetailForm = () => {
       id: id,
       formData: formData,
     };
-
     try {
       const res = await instance.post(
         `/api/auth/comment/${payload.id}`,
@@ -148,16 +146,23 @@ const DetailForm = () => {
       window.location.replace(`/detail/${id}`);
       return res.data;
     } catch (error) {
-      // window.location.replace(`/detail/${id}`);
     }
   };
   return (
     <StDetailForm>
       <Header />
       <Box>
+        <BoxTitle>
+          <BoxSpan>
+            <span>*</span>은 필수항목입니다.
+          </BoxSpan>
+        </BoxTitle>
         <LiTilte>
           <PTitle>
-            제목<span style={{ color: "rgb(255, 80, 88)" }}>*</span>
+            제목
+            <span style={{ color: "rgb(255, 80, 88)", fontWeight: "600" }}>
+              *
+            </span>
           </PTitle>
           <InputTit
             type="text"
@@ -165,6 +170,7 @@ const DetailForm = () => {
             value={title}
             onChange={onChangeTitle}
             placeholder="제목을 입력해주세요"
+            ref={inputFocus}
           />
         </LiTilte>
         <Message>
@@ -205,7 +211,10 @@ const DetailForm = () => {
         </LiImg>
         <Wrap>
           <RatingText>
-            별점 <span style={{ color: "rgb(255, 80, 88)" }}>*</span>
+            별점{" "}
+            <span style={{ color: "rgb(255, 80, 88)", fontWeight: "600" }}>
+              *
+            </span>
           </RatingText>
           <StarDiv>
             <Stars>
@@ -224,7 +233,10 @@ const DetailForm = () => {
         </Wrap>
         <LiTilte>
           <PTitle>
-            후기<span style={{ color: "rgb(255, 80, 88)" }}>*</span>
+            후기
+            <span style={{ color: "rgb(255, 80, 88)", fontWeight: "600" }}>
+              *
+            </span>
           </PTitle>
           <InputCom
             type="text"
@@ -240,7 +252,7 @@ const DetailForm = () => {
           )}
         </Message>
         <ButDiv>
-          <AddBut onClick={onAddComment}>등록하기</AddBut>
+          <AddBut onClick={onAddComment}>작성하기</AddBut>
           <CancelBut onClick={() => navigate("/detail/" + id)}>
             취소하기
           </CancelBut>
@@ -253,24 +265,33 @@ const DetailForm = () => {
 export default DetailForm;
 
 const StDetailForm = styled.div`
-  width: 428px;
+  max-width: 428px;
+  width: 100%;
   margin: 0 auto;
 `;
 
 const Box = styled.div`
   margin: 0 20px;
-  margin-top: 80px;
+  margin-top: 145px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   text-align: center;
   border-radius: 10px;
 `;
+const BoxTitle = styled.div`
+  justify-content: center;
+`;
+
+const BoxSpan = styled.p`
+  color: rgb(255, 80, 88);
+  text-align: right;
+  line-height: 2rem;
+  padding-right: 10px;
+`;
 const LiImg = styled.li`
   width: 90%;
-  /* display: flex; */
   padding: 10px 0px;
-  /* border-bottom: 1px solid rgb(204, 204, 204); */
 `;
 const ImgTitle = styled.div`
   padding-left: 0.5rem;
@@ -311,9 +332,10 @@ const ImgLabel = styled.label`
   }
 `;
 const Img = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 102px;
+  height: 102px;
   font-synthesis: none;
+  border-radius: 10px;
   ::-webkit-font-smoothing {
     -webkit-appearance: none;
     -webkit-font-smoothing: antialiased;
@@ -323,10 +345,13 @@ const DeleteImg = styled.button`
   margin: -10.3px;
   position: relative;
   color: red;
-  right: 11.5px;
-  bottom: 88px;
+  right: 10.9px;
+  bottom: 88.9px;
   background-color: white;
+  font-weight: bold;
   border: none;
+  border-radius: 10px;
+  cursor: pointer;
 `;
 const LiTilte = styled.li`
   padding: 10px 0px;
@@ -341,12 +366,13 @@ const PTitle = styled.b`
   font-size: 20px;
 `;
 const InputTit = styled.input`
-  width: 373px;
+  width: 95%;
   height: 52px;
   background-color: rgba(172, 212, 228, 0.35);
   border-radius: 15px;
   border: none;
   padding-left: 10px;
+  font-family: tway;
 `;
 const Message = styled.div`
   margin-bottom: 25px;
@@ -356,8 +382,22 @@ const Message = styled.div`
   text-align: end;
 `;
 const InputCom = styled.textarea`
-  width: 373px;
+  width: 95%;
+  font-family: tway;
   min-height: 163px;
+  padding: 0px 1rem;
+  font-size: 14px;
+  resize: none;
+  border: 3px solid #79b9d3;
+  border-radius: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  ::-webkit-inner-spin-button,
+  ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
+
   height: 100%;
   background-color: rgba(172, 212, 228, 0.35);
   border-radius: 15px;
@@ -409,9 +449,8 @@ const Stars = styled.div`
 `;
 const ButDiv = styled.div`
   display: flex;
-  margin: 0 auto;
+  margin: 40px auto;
   width: 80%;
-  margin-bottom: 20px;
 `;
 const AddBut = styled.button`
   cursor: pointer;
@@ -425,6 +464,7 @@ const AddBut = styled.button`
   width: 100%;
   font-weight: bold;
 `;
+
 const CancelBut = styled.button`
   cursor: pointer;
   font-weight: bold;

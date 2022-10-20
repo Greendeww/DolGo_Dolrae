@@ -25,18 +25,25 @@ const Password = () => {
       alert("모든 항목을 입력해주세요.");
       e.preventDefault();
     } else {
-      const res = await instance.put(
-        "/api/auth/member/updatepassword",
-        password
-      );
-      console.log(res);
-      navigate("/mypage");
+      if (window.confirm("정말 비밀번호를 변경하시겠습니까?")) {
+        const res = await instance.put(
+          "/api/auth/member/updatepassword",
+          password
+        );
+        console.log(res);
+        navigate("/mypage");
+        alert("비밀번호가 변경되었습니다.");
+      } else {
+        alert("비밀번호 변경이 취소되었습니다.");
+      }
     }
   };
 
   return (
     <StPassword>
-      <h2>비밀번호 변경</h2>
+      <div>
+        <h2>비밀번호 변경</h2>
+      </div>
       <div>
         <input
           type="password"
@@ -68,7 +75,9 @@ const Password = () => {
           }
         />
       </div>
-      <button onClick={onSubmitHandler}>변경하기</button>
+      <div>
+        <button onClick={onSubmitHandler}>변경하기</button>
+      </div>
     </StPassword>
   );
 };
@@ -76,13 +85,17 @@ const Password = () => {
 export default Password;
 
 const StPassword = styled.div`
-  max-width: 428px;
-  width: 100%;
-  margin: 50px 30px;
-  padding-top: 10px;
+  margin: 0 auto;
+  padding-top: 30px;
+
+  & h2 {
+    margin-left: 20px;
+  }
 
   & input {
-    width: 343px;
+    display: flex;
+    margin: 0 auto;
+    width: 85%;
     height: 52px;
     border: none;
     border-radius: 15px;
