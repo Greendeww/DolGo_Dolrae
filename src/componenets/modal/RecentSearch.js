@@ -43,8 +43,6 @@ const clickModalOutside = event => {
 
 export default RecentSearch;
 
-//아래는 styled-components를 통한 스타일링
-
 const HistoryBox = styled.div`
   width:86%;
   margin-top:0.5rem;
