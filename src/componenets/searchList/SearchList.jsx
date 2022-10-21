@@ -62,7 +62,7 @@ const SearchList = () => {
       <HeadTitle>
         {modalOn
         ?<img alt='filter' src={filter} style={{display:"none"}}></img>
-        :<img style={{zIndex:"5"}} alt='filter' src={filter} onClick={() => setModalOn(true)}></img>
+        :<img alt='filter' src={filter} onClick={() => setModalOn(true)}></img>
         }
       </HeadTitle>
       {modalOn === true
