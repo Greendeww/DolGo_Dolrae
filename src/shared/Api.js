@@ -34,8 +34,8 @@ instance.interceptors.request.use((config) => {
   const token = localStorage.getItem("ACCESS_TOKEN");
   const refreshToken = localStorage.getItem("REFRESH_TOKEN");
 
-  config.headers.authorization = token;
-  config.headers.refreshtoken = refreshToken;
+  config.headers.Authorization = token;
+  config.headers.RefreshToken = refreshToken;
 
-return config;
+  return config;
 });

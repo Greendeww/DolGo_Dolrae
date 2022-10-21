@@ -17,11 +17,14 @@ import RndLocation from "../componenets/random/RndLocation";
 import RandomSelect from "../componenets/random/RandomSelect";
 import RandomList from "../componenets/random/RandomList";
 import SearchPage from "../pages/tourist/SearchPage";
+import SearchSelList from "../componenets/searchList/SearchSelList";
 
 // mypage
 import MyPage from "../pages/mypage/MyPage";
 import MyPageChange from "../pages/mypage/MyPageChange";
 import MyRequestDetail from "../componenets/mypage/mypage/request/MyRequestDetail";
+import MapLike from "../componenets/mypage/mypage/likeList/MapLike";
+import SelectLike from "../componenets/mypage/mypage/likeList/SelectLike";
 
 // request
 import EditRequest from "../pages/request/EditRequest";
@@ -32,100 +35,79 @@ import RequestList from "../pages/manager/RequestList";
 import RequestDetail from "../pages/manager/RequestDetail";
 import Post from "../pages/manager/Post";
 import Edit from "../pages/manager/Edit";
-import SearchSelList from "../componenets/searchList/SearchSelList";
 
-import { getCookie, setCookie } from "./Cookie";
 import { useEffect } from "react";
-import { instance } from "./Api";
 import axios from "axios";
 
 function Router() {
-  const token = getCookie("ACCESS_TOKEN");
-  const refreshToken = getCookie("REFRESH_TOKEN");
-
   // 토큰 재발급
   const getToken = async () => {
-    console.log("토큰 만료");
-    alert("토큰 만료");
+    try {
+      // alert("토큰 만료");
+      const res = await axios.post(
+        process.env.REACT_APP_BASE_URL + "/api/member/retoken",
+        {},
+        {
+          headers: {
+            RefreshToken: localStorage.getItem("REFRESH_TOKEN"),
+          },
+        }
+      );
 
-    const res = await instance.post("/api/member/retoken");
-    console.log(res);
-    if (res.data.success === true) {
-      setCookie("ACCESS_TOKEN", res.headers.authorization, 0.5);
-      setCookie("REFRESH_TOKEN", res.headers.refreshtoken);
-      console.log("토큰 success");
-      alert("토큰이 재발급되었습니다. success");
-    } else if (res !== null) {
-      setCookie("ACCESS_TOKEN", res.headers.authorization, 0.5);
-      setCookie("REFRESH_TOKEN", res.headers.refreshtoken);
-      console.log("토큰 null");
-      alert("토큰이 재발급되었습니다. null");
-    } else if (res !== undefined) {
-      setCookie("ACCESS_TOKEN", res.headers.authorization, 0.5);
-      setCookie("REFRESH_TOKEN", res.headers.refreshtoken);
-      console.log("토큰 undefined");
-      alert("토큰이 재발급되었습니다. undefined");
+      localStorage.removeItem("REFRESH_TOKEN");
+      localStorage.setItem("ACCESS_TOKEN", res.headers.authorization);
+      localStorage.setItem("REFRESH_TOKEN", res.headers.refreshtoken);
+
+      console.log("토큰이 갱신되었습니다.");
+    } catch {
+      console.log("토큰 갱신에 실패하였습니다.");
     }
-
-    // await axios
-    //   .post(
-    //     process.env.REACT_APP_BASE_URL + "/api/member/retoken",
-    //     {},
-    //     {
-    //       headers: {
-    //         Authorization: localStorage.getItem("ACCESS_TOKEN"),
-    //         RefreshToken: localStorage.getItem("REFRESH_TOKEN"),
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     if (res.data.success === true) {
-    //       localStorage.getItem("ACCESS_TOKEN");
-    //       localStorage.getItem("REFRESH_TOKEN");
-    //       setCookie("ACCESS_TOKEN", res.headers.authorization, 0.5);
-    //       setCookie("REFRESH_TOKEN", res.headers.refreshtoken);
-    //       console.log("토큰 success");
-    //       alert("토큰이 재발급되었습니다. success");
-    //     } else if (res !== null) {
-    //       localStorage.getItem("ACCESS_TOKEN");
-    //       localStorage.getItem("REFRESH_TOKEN");
-    //       setCookie("ACCESS_TOKEN", res.headers.authorization, 0.5);
-    //       setCookie("REFRESH_TOKEN", res.headers.refreshtoken);
-    //       console.log("토큰 null");
-    //       alert("토큰이 재발급되었습니다. null");
-    //     } else if (res !== undefined) {
-    //       localStorage.getItem("ACCESS_TOKEN");
-    //       localStorage.getItem("REFRESH_TOKEN");
-    //       setCookie("ACCESS_TOKEN", res.headers.authorization, 0.5);
-    //       setCookie("REFRESH_TOKEN", res.headers.refreshtoken);
-    //       console.log("토큰 undefined");
-    //       alert("토큰이 재발급되었습니다. undefined");
-    //     }
-    //   });
   };
 
   useEffect(() => {
-    if (token === undefined && refreshToken !== undefined) {
-      getToken();
-    }
+    setInterval(() => {
+      console.log("실행")
+      if (localStorage.getItem("REFRESH_TOKEN") !== null) {
+        getToken();
+      } else {
+        return;
+      }
+    }, 1200000);
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo(0,0);
   }, []);
 
   return (
     <BrowserRouter>
       <Routes>
+        {/* main */}
         <Route path="/" element={<Main />} />
+
+        {/* user */}
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/oauth/callback/kakao" element={<KakaoLogin />} />
+
+        {/* mypage */}
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/change" element={<MyPageChange />} />
+        <Route path="/mypage/like/map" element={<MapLike />} />
+        <Route path="/mypage/like/select" element={<SelectLike />} />
+        <Route path="/myrequest/detail/:id" element={<MyRequestDetail />} />
+
+        {/* request */}
         <Route path="/request/edit/:id" element={<EditRequest />} />
         <Route path="/request/post" element={<PostRequest />} />
-        <Route path="/request/list" element={<RequestList />} />
-        <Route path="/request/detail/:id" element={<RequestDetail />} />
-        <Route path="/myrequest/detail/:id" element={<MyRequestDetail />} />
+
+        {/* manager */}
         <Route path="/edit/:id" element={<Edit />} />
         <Route path="/post" element={<Post />} />
+        <Route path="/request/list" element={<RequestList />} />
+        <Route path="/request/detail/:id" element={<RequestDetail />} />
+
+        {/* list */}
         <Route path="/select" element={<Select />} />
         <Route path="/list" element={<List />} />
         <Route path="/detail/:id" element={<Detail />} />
