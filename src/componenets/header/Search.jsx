@@ -65,30 +65,6 @@ const Search = ({ title }) => {
   return (
     <>
       <SearchBox>
-<<<<<<< Updated upstream
-        <SearchDiv>
-          <input
-            type="text"
-            placeholder="찾으시는 장소를 입력해주세요."
-            value={searchWord}
-            onChange={(e) => setSearchWord(e.target.value)}
-            onKeyPress={onSubmitSearch}
-          />
-          <SearchA>
-            <img
-              onClick={() => {
-                if (searchWord === undefined) {
-                  alert("검색어를 입력해주세요.");
-                } else {
-                  window.location.replace("/search/" + searchWord);
-                }}}
-              src={search}
-              alt="search"
-              style={{ color: "#FF8585" }}
-            />
-          </SearchA>
-        </SearchDiv>
-=======
         <SearchContainer>
           <SearchDiv>
             <InputDiv >
@@ -128,7 +104,6 @@ const Search = ({ title }) => {
             </SearchA>
           </SearchDiv>
           </SearchContainer>
->>>>>>> Stashed changes
       </SearchBox>
     </>
   );
