@@ -155,6 +155,37 @@ const RequestDetail = () => {
 
 export default RequestDetail;
 
+
+const Div = styled.div `
+    width: 428px;
+    margin: 0px auto 0px auto;
+`
+const Body = styled.div `
+    width: 430px;
+    height: 1450px;
+    background-color: rgba(121, 185, 211, 0.3);
+`
+const UserName = styled.div `
+    width: 428px;
+    margin: 70px auto 0px auto;
+`
+const Date = styled.div `
+    width: 428px;
+    margin: 0px auto 0px auto;
+`
+const ReportType = styled.div `
+    width: 428px;
+    margin: 0px auto 0px auto;
+`
+const ReportContext = styled.div `
+    width: 428px;
+    margin: 0px auto 0px auto;
+`
+const Picture = styled.img `
+    width: 428px;
+    height: 300px;
+    margin: 30px auto 0px auto;
+`
 const StRequestDetail = styled.div`
   max-width: 428px;
   width: 100%;
@@ -191,6 +222,7 @@ const Buttons = styled.div`
   padding-bottom: 50px;
   width: 95%;
   margin: 0 auto;
+>>>>>>> 7c66360f4b1e9147c82271399a3df290aaab0c11
 
   & button {
     margin: 0 auto;

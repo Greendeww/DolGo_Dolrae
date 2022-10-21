@@ -22,6 +22,14 @@ import SearchSelList from "../componenets/searchList/SearchSelList";
 // mypage
 import MyPage from "../pages/mypage/MyPage";
 import MyPageChange from "../pages/mypage/MyPageChange";
+
+import AmendmentRequest from "../pages/request/AmendmentRequest";
+import RegistrationRequest from "../pages/request/RegistrationRequest";
+import Administrator from "../pages/manager/Administrator";
+import RequestEdit from "../pages/manager/RequestEdit";
+import RequestDetail from "../pages/manager/RequestDetail";
+import RequestPost from "../pages/manager/RequestPost";
+
 import MyRequestDetail from "../componenets/mypage/mypage/request/MyRequestDetail";
 import MapLike from "../componenets/mypage/mypage/likeList/MapLike";
 import SelectLike from "../componenets/mypage/mypage/likeList/SelectLike";
@@ -38,6 +46,7 @@ import Edit from "../pages/manager/Edit";
 
 import { useEffect } from "react";
 import axios from "axios";
+
 
 function Router() {
   // 토큰 재발급
