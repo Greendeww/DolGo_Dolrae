@@ -12,17 +12,18 @@ import { instance } from "../../shared/Api";
 const TopTen = () => {
   const navigate = useNavigate();
 
+  // slick 구현
   const settings = {
-    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     pauseOnHover: true,
-    arrow: false
+    arrows: false
   };
 
+  // 서버에서 받아온 테마별 데이터를 각 테마 state에 저장
   const [foodList, setFoodList] = useState();
   const [tourList, setTourList] = useState();
   const [activityList, setActivityList] = useState();
@@ -37,6 +38,7 @@ const TopTen = () => {
     setMuseumList(response.data.foodList);
   };
 
+  // 화면이 렌더링되면 fetchPost 함수 실행
   useEffect(() => {
     fetchPost();
   }, []);

@@ -8,15 +8,19 @@ import { useState } from "react";
 
 const RequestDetail = () => {
   const navigate = useNavigate();
+
+  // 요청 글의 id값을 param에서 조회
   const param = useParams();
+
+  // 서버로부터 받아온 값을 state에 저장
   const [data, setData] = useState();
 
   const getData = async () => {
     const res = await instance.get(`/api/auth/order/${param.id}`);
-    console.log(res);
     setData(res.data);
   };
 
+  // 렌더링될 때마다 getData 함수 실행
   useEffect(() => {
     getData();
   }, []);
@@ -74,13 +78,13 @@ const RequestDetail = () => {
           </div>
         </div>
         <div style={{ marginTop: "10px" }}>
-            <Title>답변</Title>
-            <Context
-              defaultValue={data?.answer}
-              style={{ lineHeight: "20px" }}
-              readOnly
-            />
-          </div>
+          <Title>답변</Title>
+          <Context
+            defaultValue={data?.answer}
+            style={{ lineHeight: "20px" }}
+            readOnly
+          />
+        </div>
         <Buttons>
           <button
             onClick={() => {
