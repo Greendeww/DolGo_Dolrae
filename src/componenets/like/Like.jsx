@@ -11,7 +11,7 @@ const Like = ({id}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [like, setLike] = useState(false);
-    const nickname = localStorage.getItem("nickname");
+    const nickname = sessionStorage.getItem("nickname");
 
     const fetch = async (e) => {
         if(id === undefined){

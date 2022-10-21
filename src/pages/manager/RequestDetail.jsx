@@ -108,7 +108,7 @@ const RequestDetail = () => {
             <button
               onClick={() => {
                 navigate("/post");
-                localStorage.setItem("ID", param.id);
+                sessionStorage.setItem("ID", param.id);
               }}
             >
               추가

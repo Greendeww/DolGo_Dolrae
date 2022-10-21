@@ -49,14 +49,14 @@ function Router() {
         {},
         {
           headers: {
-            RefreshToken: localStorage.getItem("REFRESH_TOKEN"),
+            RefreshToken: sessionStorage.getItem("REFRESH_TOKEN"),
           },
         }
       );
 
-      localStorage.removeItem("REFRESH_TOKEN");
-      localStorage.setItem("ACCESS_TOKEN", res.headers.authorization);
-      localStorage.setItem("REFRESH_TOKEN", res.headers.refreshtoken);
+      sessionStorage.removeItem("REFRESH_TOKEN");
+      sessionStorage.setItem("ACCESS_TOKEN", res.headers.authorization);
+      sessionStorage.setItem("REFRESH_TOKEN", res.headers.refreshtoken);
 
       console.log("토큰이 갱신되었습니다.");
     } catch {
@@ -67,7 +67,8 @@ function Router() {
   useEffect(() => {
     setInterval(() => {
       console.log("실행")
-      if (localStorage.getItem("REFRESH_TOKEN") !== null) {
+      if (sessionStorage.getItem("REFRESH_TOKEN") !== null) {
+        alert("토큰 재발급");
         getToken();
       } else {
         return;

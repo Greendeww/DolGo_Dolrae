@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { KAKAO_AUTH_URL } from "../../shared/OAuth";
@@ -7,7 +7,6 @@ import kakao from "../../assert/login/kakao_login_medium_wide.png";
 import Swal from "sweetalert2";
 import { instance } from "../../shared/Api";
 import { useRef } from "react";
-import { setCookie } from "../../shared/Cookie";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -36,14 +35,12 @@ const Login = () => {
     else {
       try {
         const response = await instance.post("/api/member/login", user);
-        // setCookie("ACCESS_TOKEN", response.headers.authorization, 0.5);
-        // setCookie("REFRESH_TOKEN", response.headers.refreshtoken);
 
-        localStorage.setItem("ACCESS_TOKEN", response.headers.authorization);
-        localStorage.setItem("REFRESH_TOKEN", response.headers.refreshtoken);
-        localStorage.setItem("username", response.data.username);
-        localStorage.setItem("nickname", response.data.nickname);
-        localStorage.setItem("role", response.data.role);
+        sessionStorage.setItem("ACCESS_TOKEN", response.headers.authorization);
+        sessionStorage.setItem("REFRESH_TOKEN", response.headers.refreshtoken);
+        sessionStorage.setItem("username", response.data.username);
+        sessionStorage.setItem("nickname", response.data.nickname);
+        sessionStorage.setItem("role", response.data.role);
 
         alert(`${response.data.nickname}님 환영합니다.`);
         navigate('/');

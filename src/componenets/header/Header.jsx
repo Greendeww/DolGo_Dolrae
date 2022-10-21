@@ -14,8 +14,8 @@ const Header = ({ title }) => {
 
   const [modal, setModal] = useState(false);
 
-  const role = localStorage.getItem("role");
-  const token = localStorage.getItem("ACCESS_TOKEN");
+  const role = sessionStorage.getItem("role");
+  const token = sessionStorage.getItem("ACCESS_TOKEN");
 
   const onModalHandler = (e) => {
     setModal(!modal);
@@ -24,18 +24,18 @@ const Header = ({ title }) => {
   const logout = async () => {
     const response = await instance.post("/api/auth/member/logout");
     alert(response.data);
-    localStorage.removeItem("username");
-    localStorage.removeItem("nickname");
-    localStorage.removeItem("role");
-    localStorage.removeItem("ACCESS_TOKEN");
-    localStorage.removeItem("REFRESH_TOKEN");
-    localStorage.removeItem("THEME_CODE");
-    localStorage.removeItem("THEME_NAME");
-    localStorage.removeItem("AREA_CODE");
-    localStorage.removeItem("AREA_NAME");
-    localStorage.removeItem("SIGUNGU_CODE");
-    localStorage.removeItem("SIGUNGU_NAME");
-    localStorage.removeItem("never");
+    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("nickname");
+    sessionStorage.removeItem("role");
+    sessionStorage.removeItem("ACCESS_TOKEN");
+    sessionStorage.removeItem("REFRESH_TOKEN");
+    sessionStorage.removeItem("THEME_CODE");
+    sessionStorage.removeItem("THEME_NAME");
+    sessionStorage.removeItem("AREA_CODE");
+    sessionStorage.removeItem("AREA_NAME");
+    sessionStorage.removeItem("SIGUNGU_CODE");
+    sessionStorage.removeItem("SIGUNGU_NAME");
+    sessionStorage.removeItem("never");
     navigate("/");
   };
 

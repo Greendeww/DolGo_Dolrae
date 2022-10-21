@@ -6,8 +6,8 @@ import { instance } from "../../../shared/Api";
 const Nickname = () => {
   const navigate = useNavigate();
 
-  // localStorage로부터 가져온 "nickname"
-  const nickname = localStorage.getItem("nickname");
+  // sessionStorage로부터 가져온 "nickname"
+  const nickname = sessionStorage.getItem("nickname");
 
   // input에 입력한 값을 onChange를 통해 state에 저장
   const [changeNickname, setChangeNickname] = useState({ nickname: "" });
@@ -32,7 +32,7 @@ const Nickname = () => {
           "/api/auth/member/updatenickname",
           changeNickname
         );
-        localStorage.setItem("nickname", changeNickname.nickname);
+        sessionStorage.setItem("nickname", changeNickname.nickname);
         navigate("/mypage");
         alert(`닉네임이 「${changeNickname.nickname}」로 변경되었습니다.`);
       }

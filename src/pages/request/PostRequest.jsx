@@ -86,7 +86,7 @@ const PostRequest = () => {
 
   const refresh_token = getCookie("REFRESH_TOKEN");
 
-  // const getToken = localStorage.getItem("ACCESS_TOKEN");
+  // const getToken = sessionStorage.getItem("ACCESS_TOKEN");
   // const getToken = getCookie("ACCESS_TOKEN")
   // console.log(getToken)
   // const navigate =useNavigate()
@@ -98,7 +98,7 @@ const PostRequest = () => {
   //   }
   // },[getToken])
 
-  // const getToken = localStorage.getItem("ACCESS_TOKEN");
+  // const getToken = sessionStorage.getItem("ACCESS_TOKEN");
   // const getToken = getCookie("ACCESS_TOKEN")
   // console.log(getToken)
   // const navigate =useNavigate()

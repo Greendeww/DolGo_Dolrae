@@ -32,8 +32,8 @@ export const _deleteComment = createAsyncThunk(
         `api/auth/comment/${payload}`,
         // {
         //   headers: {
-        //     Authorization: localStorage.getItem("Authorization"),
-        //     RefreshToken: localStorage.getItem("RefreshToken"),
+        //     Authorization: sessionStorage.getItem("Authorization"),
+        //     RefreshToken: sessionStorage.getItem("RefreshToken"),
         //   },
         // }
       );
@@ -54,8 +54,8 @@ export const _updateComment = createAsyncThunk(
         {
           headers: {
             "Content-Type": "multipart/form",
-            // Authorization: localStorage.getItem("Authorization"),
-            // RefreshToken: localStorage.getItem("RefreshToken"),
+            // Authorization: sessionStorage.getItem("Authorization"),
+            // RefreshToken: sessionStorage.getItem("RefreshToken"),
           },
         }
       );

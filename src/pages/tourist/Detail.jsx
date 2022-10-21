@@ -24,7 +24,7 @@ const Detail = () => {
   const dispatch = useDispatch();
   const [posts, setPosts] = useState("");
   const [number, setNumber] = useState(1);
-  const login = localStorage.getItem("username");
+  const login = sessionStorage.getItem("username");
 
   const { isLoading, error, comment } = useSelector((state) => state.comment);
 
@@ -56,8 +56,8 @@ const Detail = () => {
       alert("로그인이 필요한 서비스입니다.");
       navigate("/login");
     } else {
-      localStorage.setItem("place_id", posts.id);
-      localStorage.setItem("place_title", posts.title);
+      sessionStorage.setItem("place_id", posts.id);
+      sessionStorage.setItem("place_title", posts.title);
       navigate(`/request/edit/${posts.id}`);
     }
   };
