@@ -34,7 +34,7 @@ const Nickname = () => {
         );
         sessionStorage.setItem("nickname", changeNickname.nickname);
         navigate("/mypage");
-        alert(`닉네임이 「${changeNickname.nickname}」로 변경되었습니다.`);
+        alert(`닉네임이 「${changeNickname.nickname}」(으)로 변경되었습니다.`);
       }
       // 동의하지 않을 시, alert
       else {
