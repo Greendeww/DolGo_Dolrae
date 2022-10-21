@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { KAKAO_AUTH_URL } from "../../shared/OAuth";
@@ -11,69 +11,33 @@ import { setCookie } from "../../shared/Cookie";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  // input에 입력한 값을 저장
   const usernameRef = useRef();
   const passwordRef = useRef();
 
-  // SSE 알림 설정
-  const notice = async () => {
-    const res = await instance.get("/api/auth/notice/subscribe");
-
-    res.addEventListener("sse", function (event) {
-      console.log(event.data);
-
-      const data = JSON.parse(event.data);
-
-      (async () => {
-        // 브라우저 알림
-        const showNotification = () => {
-          const notification =  new Notification ("알림왔음", {
-            body: data.content,
-          });
-
-          setTimeout(() => {
-            notification.close();
-          }, 10 * 1000);
-
-          notification.addEventListener("click", () => {
-            window.open(data.url, "_blank");
-          });
-        };
-
-        // 브라우저 알림 허용 권한
-        let granted = false;
-
-        if (Notification.permission === "granted") {
-          granted = true;
-        } else if (Notification.permission !== "denied") {
-          let permission = await Notification.requestPermission();
-          granted = permission === "granted";
-        }
-
-        // 알림 보여주기
-        if (granted) {
-          showNotification();
-        }
-      })();
-    });
-  };
-
-  // 로그인
+  // 로그인 버튼 click시 서버로 데이터 전송
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    // console.log(usernameRef.current.value)
+
+    // 서버로 보낼 데이터
     const user = {
       username: usernameRef.current.value,
       password: passwordRef.current.value,
     };
-    // console.log(user);
+
+    // input이 비었을 때 alert
     if (usernameRef.current.value === "" || passwordRef.current.value === "") {
       alert("모든 항목을 입력해주세요.");
       return;
-    } else {
+    }
+    
+    // 서버로 전송 후, 받아온 토큰을 로컬에 저장
+    else {
       try {
         const response = await instance.post("/api/member/login", user);
-        setCookie("ACCESS_TOKEN", response.headers.authorization, 0.5);
-        setCookie("REFRESH_TOKEN", response.headers.refreshtoken);
+        // setCookie("ACCESS_TOKEN", response.headers.authorization, 0.5);
+        // setCookie("REFRESH_TOKEN", response.headers.refreshtoken);
 
         localStorage.setItem("ACCESS_TOKEN", response.headers.authorization);
         localStorage.setItem("REFRESH_TOKEN", response.headers.refreshtoken);
@@ -81,9 +45,8 @@ const Login = () => {
         localStorage.setItem("nickname", response.data.nickname);
         localStorage.setItem("role", response.data.role);
 
-        notice();
         alert(`${response.data.nickname}님 환영합니다.`);
-        navigate(-1);
+        navigate('/');
       } catch (error) {
         alert("이메일 또는 비밀번호를 확인해주세요.");
       }
