@@ -105,7 +105,7 @@ function Router() {
         <Route path="/rnd" element={<RandomList />} />
         <Route path="/search/:title" element={<SearchPage />} />
         <Route path="/search/:title/:si/:area" element={<SearchSelList />} />
-        <Route path="/maps" element={<MapLine />} />
+        {/* <Route path="/maps" element={<MapLine />} /> */}
       </Routes>
     </BrowserRouter>
   );
