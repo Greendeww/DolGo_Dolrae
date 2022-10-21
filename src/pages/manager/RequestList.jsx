@@ -8,21 +8,29 @@ import PaginationRequest from "../../componenets/pagination/PaginationRequest";
 
 const RequestList = () => {
   const navigate = useNavigate();
+
+  // 서버로부터 받아온 값을 state에 저장
   const [list, setList] = useState([]);
   const [reviewList, setReviewList] = useState([...list].reverse());
+
+  const getList = async () => {
+    const response = await instance.get("/api/auth/order");
+    setList(response.data);
+    setReviewList([...response?.data]);
+  };
+
+  // 렌더링될 때마다 getList 함수 실행
+  useEffect(() => {
+    getList();
+  }, []);
+
+  // 페이지네이션 구현
   const [currentReview, setCurrnetReview] = useState([]);
   const [page, setPage] = useState(1);
   const [postPerPage] = useState(10);
   const indexOfLastPost = page * postPerPage;
   const indexOfFirstPage = indexOfLastPost - postPerPage;
 
-  const getList = async () => {
-    const response = await instance.get("/api/auth/order");
-    // console.log(response.data);
-    setList(response.data);
-    setReviewList([...response?.data]);
-    console.log(response);
-  };
   useEffect(() => {
     setCurrnetReview(reviewList.slice(indexOfFirstPage, indexOfLastPost));
   }, [indexOfFirstPage, indexOfLastPost, page, list]);
@@ -30,10 +38,6 @@ const RequestList = () => {
   const handlePageChange = (page) => {
     setPage(page);
   };
-
-  useEffect(() => {
-    getList();
-  }, []);
 
   return (
     <StAdministrator>

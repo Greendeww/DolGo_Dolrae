@@ -20,17 +20,12 @@ const KaKaoLogin = () => {
       const res = await instance.get(`/api/kakao/login?code=${code}`);
       console.log(res);
 
-      setCookie("token", res.headers.authorization);
       localStorage.setItem("ACCESS_TOKEN", res.headers.authorization);
       localStorage.setItem("REFRESH_TOKEN", res.headers.refreshtoken);
       localStorage.setItem("username", res.data.username);
       localStorage.setItem("nickname", res.data.nickname);
       localStorage.setItem("role", res.data.role);
 
-      // setCookie("isLogin", res.headers.authorization);
-      // setCookie("REFRESH_TOKEN", res.headers.refreshtoken);
-
-      // notice();
       alert(`${res.data.nickname}님 환영합니다.`);
       navigate("/");
 

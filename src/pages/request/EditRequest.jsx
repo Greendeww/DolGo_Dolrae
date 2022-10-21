@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 const EditRequest = () => {
   const navigate = useNavigate();
-  const [image, setImage] = useState([]);
-  const [fileImage, setFileImage] = useState([]);
+
+  // storage에서 가져온 id와 title
   const id = localStorage.getItem("place_id");
   const title = localStorage.getItem("place_title");
 
@@ -26,28 +26,25 @@ const EditRequest = () => {
     setReq({ ...req, [name]: value });
   };
 
+  const [image, setImage] = useState([]);
+  const [fileImage, setFileImage] = useState([]);
+
   const onChangeImg = (e) => {
     const imageList = e.target.files;
-    // const maxImageCnt = 3;
     const imageLists = [...image];
-    // if(image.length > maxImageCnt){
-    //   alert("첨부파일은 최대 3개까지 가능합니다")
-    // }
 
-    console.log(imageList);
     const imgFiles = [...fileImage];
     for (let i = 0; i < imageList.length; i++) {
       const nowImageUrl = URL.createObjectURL(e.target.files[i]);
       imgFiles.push(nowImageUrl);
     }
+
     for (let i = 0; i < imageList.length; i++) {
       const nowImageUrl1 = e.target.files[i];
       imageLists.push(nowImageUrl1);
       continue;
     }
-    // if (imageLists.length > 3) {
-    //   imageLists = imageLists.slice(0, 3);
-    // }
+
     setFileImage(imgFiles);
     setImage(imageLists);
   };

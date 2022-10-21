@@ -6,21 +6,29 @@ import Paginations from "../../../pagination/Paginations";
 
 const MyRequestList = () => {
   const navigate = useNavigate();
+
+  // 서버로부터 받아온 값을 state에 저장
   const [list, setList] = useState([]);
   const [request, setRequet] = useState([...list].reverse());
-  const [currentRequest, setCurrnetRequest] = useState([]);
-  const [page, setPage] = useState(1);
-  const [postPerPage] = useState(3);
-  const indexOfLastPost = page * postPerPage;
-  const indexOfFirstPage = indexOfLastPost - postPerPage;
-
-  console.log(currentRequest);
 
   const getList = async () => {
     const res = await instance.get("/api/auth/order/mypage");
     setList(res.data);
     setRequet([...res?.data].reverse());
   };
+
+  // 렌더링될 때마다 getList 함수 실행
+  useEffect(() => {
+    getList();
+  }, []);
+
+  // 페이지네이션 구현
+  const [currentRequest, setCurrnetRequest] = useState([]);
+  const [page, setPage] = useState(1);
+  const [postPerPage] = useState(3);
+  const indexOfLastPost = page * postPerPage;
+  const indexOfFirstPage = indexOfLastPost - postPerPage;
+
   useEffect(() => {
     setCurrnetRequest(request.slice(indexOfFirstPage, indexOfLastPost));
   }, [indexOfFirstPage, indexOfLastPost, page, list]);
@@ -28,10 +36,6 @@ const MyRequestList = () => {
   const handlePageChange = (page) => {
     setPage(page);
   };
-
-  useEffect(() => {
-    getList();
-  }, []);
 
   return (
     <StRequestList>
@@ -51,6 +55,8 @@ const MyRequestList = () => {
           )}
         </Request>
       ))}
+
+      {/* 페이지네이션 구현 */}
       <Paginations
         page={page}
         count={list.length}
@@ -77,7 +83,7 @@ const StRequestList = styled.div`
 
 const Request = styled.div`
   width: 90%;
-  height: 55px;
+  height: 40px;
   margin: 20px auto;
   background: #eef6fa;
   border-radius: 15px;
@@ -92,14 +98,13 @@ const Title = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 18px;
-  height: 18px;
+  font-size: 15px;
   font-weight: bold;
   padding-left: 10px;
   align-items: center;
   position: relative;
-  left: 15px;
-  top: 17px;
+  left: 10px;
+  top: 13px;
 `;
 
 const State = styled.p`
@@ -107,11 +112,10 @@ const State = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 18px;
-  height: 18px;
+  font-size: 15px;
   font-weight: bold;
   align-items: center;
   position: relative;
-  top: 17px;
+  top: 13px;
   right: 18px;
 `;

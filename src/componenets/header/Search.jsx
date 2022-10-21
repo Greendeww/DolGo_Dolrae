@@ -33,7 +33,8 @@ const Search = ({ title }) => {
                   alert("검색어를 입력해주세요.");
                 } else {
                   window.location.replace("/search/" + searchWord);
-                }}}
+                }
+              }}
               src={search}
               alt="search"
               style={{ color: "#FF8585" }}
@@ -54,6 +55,7 @@ const SearchBox = styled.div`
   position: relative;
   background-color: #abd4e2;
   top: -1px;
+  z-index: -1;
 `;
 const SearchDiv = styled.div`
   width: 100%;

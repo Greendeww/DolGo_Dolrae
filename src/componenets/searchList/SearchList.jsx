@@ -17,14 +17,14 @@ const SearchList = () => {
   const page = useRef(0);
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const {title} = useParams();
+  const { title } = useParams();
   const fetch = useCallback(async () => {
     try {
-      const {data} = await instance.get(
+      const { data } = await instance.get(
         `/api/place/search?keyword=${title}&pageNum=${page.current}&areaCode=0&sigunguCode=0`
       );
 
-      console.log(data.content)
+      console.log(data.content);
       setPosts((prevPosts) => [...prevPosts, ...data.content]);
       setHasNextPage(data.content.length === 10);
       if (data.content.length) {
@@ -55,24 +55,25 @@ const SearchList = () => {
 
   const close = () => {
     setModalOn(false);
-  }
+  };
   return (
     <StList>
-      <Header title={title}/>
+      <Header title={title} />
       <HeadTitle>
-        {modalOn
-        ?<img alt='filter' src={filter} style={{display:"none"}}></img>
-        :<img alt='filter' src={filter} onClick={() => setModalOn(true)}></img>
-        }
+        {modalOn ? (
+          <img alt="filter" src={filter} style={{ display: "none" }}></img>
+        ) : (
+          <img alt="filter" src={filter} onClick={() => setModalOn(true)}></img>
+        )}
       </HeadTitle>
-      {modalOn === true
-      ?<SearchModal close={close} title={title}/>
-      :null
-      }
+      {modalOn === true ? <SearchModal close={close} title={title} /> : null}
       <Content>
         {posts &&
           posts.map((list) => (
-            <Card key={list.placeId} onClick={() => navigate(`/detail/${list.placeId}`)}>
+            <Card
+              key={list.placeId}
+              onClick={() => navigate(`/detail/${list.placeId}`)}
+            >
               {list.image == null ? (
                 <>
                   <BasicImg src={basicImg} />
@@ -82,7 +83,11 @@ const SearchList = () => {
                     </ListTitle>
                     <div style={{ display: "flex" }}>
                       <FaStar
-                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
+                        style={{
+                          color: "#fcc419",
+                          marginRight: "0.3rem",
+                          marginTop: "0.2rem",
+                        }}
                       />
                       {list.star}
                     </div>
@@ -98,9 +103,14 @@ const SearchList = () => {
                   <Name>
                     <ListTitle>{list.title}</ListTitle>
                     <div style={{ display: "flex" }}>
-                    <FaStar
-                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
-                      /> {list.star}
+                      <FaStar
+                        style={{
+                          color: "#fcc419",
+                          marginRight: "0.3rem",
+                          marginTop: "0.2rem",
+                        }}
+                      />{" "}
+                      {list.star}
                     </div>
                   </Name>
                 </>
@@ -153,14 +163,15 @@ const HeadTitle = styled.div`
 
   & img {
     color: #ffc0c0;
-    height:60px;
-    cursor:pointer;
+    height: 60px;
+    cursor: pointer;
   }
-
 `;
 
 const Card = styled.div`
   text-align: center;
+  max-width: 428px;
+  width: 100%;
 `;
 
 const Content = styled.div`
@@ -181,7 +192,8 @@ const BasicImg = styled.img`
 
 const ImgShadow = styled.div`
   margin: 0 auto;
-  width: 420px;
+  width: 100%;
+  max-width: 420px;
   height: 235px;
   border-radius: 20px;
   /* z-index: 3; */
@@ -193,6 +205,7 @@ const ImgShadow = styled.div`
 
 const ImgBox = styled.div`
   margin: 0 auto;
+  max-width: 428px;
   width: 100%;
   height: 235px;
   border-radius: 20px;
@@ -204,6 +217,7 @@ const ImgBox = styled.div`
 
 const Img = styled.img`
   position: relative;
+  max-width: 428px;
   width: 100%;
   height: 234px;
   z-index: -2;

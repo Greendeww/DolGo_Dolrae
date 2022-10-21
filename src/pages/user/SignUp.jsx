@@ -14,30 +14,38 @@ const SignUp = () => {
     passwordConfirm: "",
   };
 
-  // 회원가입할 때 받을 정보
+  // 회원가입할 때 받을 정보를 저장할 state
   const [user, setUser] = useState(initialState);
 
-  // 이메일 인증을 위한 정보
+  // 이메일 인증을 위해 입력받은 email을 저장할 state
   const [emailCheck, setEmailCheck] = useState({ username: "" });
 
   const emailChangeHandler = (e) => {
     setEmailCheck({ username: e.target.value });
   };
 
+  // 사용 가능한 이메일인지 여부
   const [availableEmail, setAvailableEmail] = useState(false);
 
   // email 중복확인
   const emailCheckHandler = async (e) => {
     e.preventDefault();
+
+    // input이 비었거나, 이메일 유효성검사에 안 맞다면 alert
     if (user.username === "" || emailRegex.test(user.username) === false) {
       alert("올바른 이메일을 입력해주세요.");
-    } else {
+    }
+
+    // 조건을 충족했다면, 사용 가능한 이메일인지 체크하기 위해 서버로 이메일 전송
+    else {
       const response = await instance.post("/api/member/email", emailCheck, {
         headers: {
           "content-type": "application/json",
         },
       });
 
+      // 중복된 이메일이 아니라면 availableEmail === true
+      // 중복된 이메일이라면 availableEmail === false
       if (response.data !== "중복 이메일입니다.") {
         setAvailableEmail(true);
         alert(response.data);
@@ -48,7 +56,7 @@ const SignUp = () => {
     }
   };
 
-  // 이메일 인증코드 입력값
+  // 입력받은 인증코드를 저장할 state
   const [code, setCode] = useState({ code: "", email: "" });
 
   const codeChangeHandler = (e) => {
@@ -57,7 +65,6 @@ const SignUp = () => {
 
   // 이메일 인증코드 일치 여부
   const [sameCode, setSameCode] = useState(false);
-  // console.log(sameCode);
 
   // 이메일 인증코드 제출 여부
   const [codeSubmit, setCodeSubmit] = useState(false);
@@ -72,13 +79,17 @@ const SignUp = () => {
       },
     });
 
+    // 응답이 true이면 인증 완료 alert, sameCode === true
     if (response.data === true) {
       setSameCode(true);
       // alert("인증이 완료되었습니다.");
       return false;
-    } else {
+    }
+
+    // 응답이 false라면 코드 확인 alert, sameCode === false
+    else {
       setSameCode(false);
-      // alert("인증 코드를 다시 확인해주세요.");
+      alert("인증 코드를 다시 확인해주세요.");
       return false;
     }
   };
@@ -89,9 +100,9 @@ const SignUp = () => {
     setUser({ ...user, [name]: value });
   };
 
-  // 개인정보 수집 동의
+  // 개인정보 수집에 동의했는지 여부
   const [consent, setConsent] = useState(false);
-  // console.log(consent)
+
   const consentHandler = () => {
     setConsent(!consent);
   };
@@ -99,36 +110,50 @@ const SignUp = () => {
   // 회원가입
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    if ( availableEmail === false ) {
+
+    // 이메일 중복확인을 안 했을 경우
+    if (availableEmail === false) {
       alert("이메일 인증을 해주세요.");
       return false;
-    } else if ( sameCode === false ) {
+    }
+
+    // 이메일 인증코드가 정확하지 않을 경우
+    else if (sameCode === false) {
       alert("인증코드를 확인해주세요.");
       return false;
-    } else if (
+    }
+
+    // 모든 항목을 입력하지 않고 회원가입 버튼을 click했을 경우
+    else if (
       user.username === "" ||
       user.password === "" ||
       user.passwordConfirm === ""
     ) {
       alert("모든 항목을 입력해주세요.");
       return false;
-    } else if ( user.password !== user.passwordConfirm ) {
+    }
+
+    // 비밀번호와 비밀번호 확인이 일치하지 않을 경우
+    else if (user.password !== user.passwordConfirm) {
       alert("비밀번호가 일치하지 않습니다.");
       return false;
-    } else if ( consent === false ) {
+    }
+
+    // 개인정보 수집에 동의하지 않았을 경우
+    else if (consent === false) {
       alert("개인정보 수집에 동의해주세요.");
     } else {
+      // 모든 조건을 충족했을 시, 서버로 데이터 전송
       try {
         const response = await instance.post("/api/member/signup", user);
         alert(`${response.data.nickname}님 회원가입을 축하드립니다.`);
         setUser(initialState);
         navigate("/login");
       } catch {
+        // 회원탈퇴 후 일정 기간이 지나지 않아 회원가입이 불가능한 경우 alert
         alert("회원탈퇴 후 7일간 재가입이 불가합니다.");
       }
     }
-
-
   };
 
   // 이메일, 비밀번호 정규표현식
@@ -140,6 +165,7 @@ const SignUp = () => {
       <Header />
       <StSignUp>
         <form onSubmit={onSubmitHandler}>
+          {/* 이메일 검증 */}
           <Email>
             <label>
               <div>
@@ -158,17 +184,24 @@ const SignUp = () => {
                 />
                 <button onClick={emailCheckHandler}>인증하기</button>
               </div>
+
+              {/* 올바른 이메일 형식인지 설명해주는 문구 */}
               <div>
                 {user.username === "" ? null : emailRegex.test(
                     user.username
                   ) ? (
-                  <p style={{ color: "green" }}>올바른 이메일 형식입니다.</p>
+                  <p style={{ color: "green", textAlign: "left", lineHeight: "20px" }}>
+                    올바른 이메일 형식입니다.
+                    <br /> 「인증하기」를 누른 후 잠시 기다려주세요.
+                  </p>
                 ) : (
                   <p style={{ color: "red" }}>이메일 형식이 맞지 않습니다.</p>
                 )}
               </div>
             </label>
           </Email>
+
+          {/* 이메일 중복확인을 통과했을 경우, 인증번호 입력 input 생성 */}
           {availableEmail === false ? null : (
             <EmailConfirm>
               <div>
@@ -182,6 +215,8 @@ const SignUp = () => {
                 />
                 <button onClick={codeSubmitHandler}>확인</button>
               </div>
+
+              {/* 올바른 인증코드인지 설명해주는 문구 */}
               <div>
                 {codeSubmit === true && sameCode === false ? (
                   <p style={{ color: "red" }}>인증코드를 다시 확인해주세요.</p>
@@ -191,6 +226,8 @@ const SignUp = () => {
               </div>
             </EmailConfirm>
           )}
+
+          {/* 비밀번호 검증 */}
           <Password>
             <label>
               <div>
@@ -207,6 +244,7 @@ const SignUp = () => {
                   placeholder="숫자, 영문자를 혼용하여 8자리 이상 입력해주세요."
                 />
               </div>
+              {/* 올바른 비밀번호인지 설명해주는 문구 */}
               <div>
                 {user.password === "" ? null : passwordRegex.test(
                     user.password
@@ -220,6 +258,8 @@ const SignUp = () => {
               </div>
             </label>
           </Password>
+
+          {/* 비밀번호 확인 */}
           <PasswordConfirm>
             <input
               type="password"
@@ -228,6 +268,8 @@ const SignUp = () => {
               onChange={onChangeHandler}
               placeholder="비밀번호를 다시 입력해주세요."
             />
+
+            {/* 두 개의 비밀번호가 일치하는지 설명해주는 문구 */}
             <div>
               {user.passwordConfirm === "" ? null : user.password ===
                 user.passwordConfirm ? (
@@ -237,10 +279,14 @@ const SignUp = () => {
               )}
             </div>
           </PasswordConfirm>
+
+          {/* 개인정보 수집에 동의하는지 check */}
           <Check>
             <input type="checkbox" onChange={consentHandler} />
             개인정보 수집 동의
           </Check>
+
+          {/* 약관 */}
           <Terms />
           <Buttons>
             <Submit type="submit" value="가입하기" />
