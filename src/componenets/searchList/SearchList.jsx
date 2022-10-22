@@ -18,13 +18,12 @@ const SearchList = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const {title} = useParams();
+
   const fetch = useCallback(async () => {
     try {
       const {data} = await instance.get(
         `/api/place/search?keyword=${title}&pageNum=${page.current}&areaCode=0&sigunguCode=0`
       );
-
-      console.log(data.content)
       setPosts((prevPosts) => [...prevPosts, ...data.content]);
       setHasNextPage(data.content.length === 10);
       if (data.content.length) {
@@ -34,6 +33,7 @@ const SearchList = () => {
       console.error(err);
     }
   }, []);
+
   useEffect(() => {
     if (!observerTargetEl.current || !hasNextPage) return;
 
@@ -55,7 +55,8 @@ const SearchList = () => {
 
   const close = () => {
     setModalOn(false);
-  }
+  };
+
   return (
     <StList>
       <Header title={title}/>

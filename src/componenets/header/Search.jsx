@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import search from "../../assert/header/search.png";
 import styled from "styled-components";
 import { useEffect } from "react";
-import ModalPortal from "../modal/ModalPortal";
 import RecentSearch from "../modal/RecentSearch";
 
 const Search = ({ title }) => {
@@ -22,22 +21,29 @@ const Search = ({ title }) => {
   const onClose = () => {
     setModal(false)
   };
+  
   //검색어 추가
   const handleAddKeyword = (text) => {
     const newKeyword = {
-      id: Date.now(),
       text : text,
     }
-    if (keywords.length > 2) {
-      keywords = keywords.slice(0, 2);
+    if(!keywords.includes(newKeyword.text)){
+      if (keywords.length > 2) {
+        keywords = keywords.slice(0, 2);
+      }
+      setKeywords([newKeyword.text, ...keywords])
+    }else{
+      const keyword = keywords.filter((keyword) => {
+        return keyword !== newKeyword.text
+      })
+      setKeywords([newKeyword.text, ...keyword])
     }
-    setKeywords([newKeyword, ...keywords])
   }
 
   //검색어 삭제
-  const handleRemoveKeyword = (id) => {
+  const handleRemoveKeyword = (text) => {
     const nextKeyword = keywords.filter((thisKeyword) => {
-      return thisKeyword.id !== id
+      return thisKeyword !== text
     })
     setKeywords(nextKeyword)
   }
@@ -47,10 +53,12 @@ const Search = ({ title }) => {
     setKeywords([])
   }
 
+  //최근 검색어 눌렀을 때 검색어 이동
   const ReSearch = (text) => {
     window.location.replace("/search/" + text);
   }
 
+  //검색어 입력시 이동
   const onSubmitSearch = (e) => {
     if (e.key === "Enter") {
       if (searchWord === undefined) {

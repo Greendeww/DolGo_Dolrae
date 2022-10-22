@@ -6,19 +6,19 @@ import { useEffect } from "react";
 const RecentSearch = ({ onClose, allClear, keywords, ReSearch, oneClear,handleAddKeyword}) => {
   const modalRef = useRef();
 
-  useEffect(() => {
-    document.addEventListener('mousedown', clickModalOutside)
+//   useEffect(() => {
+//     document.addEventListener('mousedown', clickModalOutside)
 
-    return () => {
-        document.removeEventListener('mousedown', clickModalOutside);
-    }
-})
+//     return () => {
+//         document.removeEventListener('mousedown', clickModalOutside);
+//     }
+// })
 
-const clickModalOutside = event => {
-  if( !modalRef.current.contains(event.target)){
-      onClose();
-  }
-};
+// const clickModalOutside = event => {
+//   if( !modalRef.current.contains(event.target)){
+//       onClose();
+//   }
+// };
 
   return (
     <HistoryBox>
@@ -27,11 +27,11 @@ const clickModalOutside = event => {
             <AllDelete onClick={allClear}>전체삭제</AllDelete>
         </HeaderContainer>
         <div>
-            {keywords.map(({id, text}) =>{
+            {keywords.map((text,index) =>{
             return(
-                <KeywordDiv key={id}>
+                <KeywordDiv key={index}>
                 <p onClick={() => {ReSearch(text);handleAddKeyword(text)}}>{text}</p>
-                <p onClick={() => oneClear(id)}>X</p>
+                <p onClick={() => oneClear(text)}>X</p>
                 </KeywordDiv>
             )
             })}
