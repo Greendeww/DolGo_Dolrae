@@ -16,7 +16,7 @@ const CommentModal = ({ comment }) => {
   const [modalOn, setModalOn] = useState(false);
   const [imageModal, setImageModal] = useState(false);
   const nickname = localStorage.getItem("nickname");
-  const getToken = getCookie("ACCESS_TOKEN");
+  const getToken = localStorage.getItem("ACCESS_TOKEN");
   const navigate = useNavigate();
 
   const handleModal = () => {
