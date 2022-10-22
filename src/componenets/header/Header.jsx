@@ -101,7 +101,7 @@ const Header = ({ title }) => {
             <h2 onClick={() => navigate("/")}>홈</h2>
             <h2 onClick={() => navigate("/select")}>지역별 조회</h2>
             <h2 onClick={() => navigate("/random")}>랜덤 추천</h2>
-            <h2 onClick={() => navigate("/ideal")}>이상형 월드컵</h2>
+            {/* <h2 onClick={() => navigate("/ideal")}>이상형 월드컵</h2> */}
             <br />
             {token !== null ? (
               <>
