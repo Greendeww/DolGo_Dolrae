@@ -17,22 +17,14 @@ const SearchList = () => {
   const page = useRef(0);
   const navigate = useNavigate();
   const { pathname } = useLocation();
-<<<<<<< HEAD
   const {title} = useParams();
 
-=======
-  const { title } = useParams();
->>>>>>> 12804f18befadcaf1f8fc663dc8805e65b1d138b
+
   const fetch = useCallback(async () => {
     try {
       const { data } = await instance.get(
         `/api/place/search?keyword=${title}&pageNum=${page.current}&areaCode=0&sigunguCode=0`
       );
-<<<<<<< HEAD
-=======
-
-      console.log(data.content);
->>>>>>> 12804f18befadcaf1f8fc663dc8805e65b1d138b
       setPosts((prevPosts) => [...prevPosts, ...data.content]);
       setHasNextPage(data.content.length === 10);
       if (data.content.length) {
@@ -65,26 +57,15 @@ const SearchList = () => {
   const close = () => {
     setModalOn(false);
   };
-<<<<<<< HEAD
-
-=======
->>>>>>> 12804f18befadcaf1f8fc663dc8805e65b1d138b
   return (
     <StList>
       <Header title={title} />
       <HeadTitle>
-<<<<<<< HEAD
-        {modalOn
-        ?<img alt='filter' src={filter} style={{display:"none"}}></img>
-        :<img style={{zIndex:"5"}} alt='filter' src={filter} onClick={() => setModalOn(true)}></img>
-        }
-=======
         {modalOn ? (
           <img alt="filter" src={filter} style={{ display: "none" }}></img>
         ) : (
           <img alt="filter" src={filter} onClick={() => setModalOn(true)}></img>
         )}
->>>>>>> 12804f18befadcaf1f8fc663dc8805e65b1d138b
       </HeadTitle>
       {modalOn === true ? <SearchModal close={close} title={title} /> : null}
       <Content>
