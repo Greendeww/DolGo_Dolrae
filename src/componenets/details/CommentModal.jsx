@@ -82,7 +82,7 @@ const CommentModal = ({ comment }) => {
               }
           </div>
             <ModalPortal>
-            {imageModal && <ModalImage onClose={onClose} comment={comment}/>}
+              {imageModal && <ModalImage onClose={onClose} comment={comment}/>}
             </ModalPortal> 
         </BoxDiv>
       </ComDiv>
