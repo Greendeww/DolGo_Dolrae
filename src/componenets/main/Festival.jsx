@@ -5,8 +5,8 @@ import Slider from "react-slick";
 
 const Festival = () => {
 
+  // Slick 구현
   const settings = {
-    // dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -14,8 +14,10 @@ const Festival = () => {
     autoplay: true,
     autoplaySpeed: 3000,
     pauseOnHover: true,
+    arrows: false
   };
 
+  // 서버에서 받아온 축제 데이터를 state에 저장
   const [festival, setFestival] = useState();
 
   const getEvents = async () => {
@@ -23,6 +25,7 @@ const Festival = () => {
     setFestival(res.data);
   };
 
+  // 화면이 렌더링되면 getEvents 함수 실행
   useEffect(() => {
     getEvents();
   }, []);
@@ -30,6 +33,7 @@ const Festival = () => {
   if (festival === undefined) {
     return;
   }
+
   return (
     <StFestival>
       <Title>이 달의 축제</Title>
@@ -37,11 +41,13 @@ const Festival = () => {
         <Slider {...settings}>
           {festival.map((festival) => {
             return (
-              <Card
-                key={festival.id}
-                onClick={() => (window.open(festival.linkUrl))}
-              >
-                <img alt="" src={festival.imageUrl} />
+              <Card key={festival.id}>
+                <img
+                  alt=""
+                  src={festival.imageUrl}
+                  // 이미지를 클릭했을 때 축제 페이지로 이동
+                  onClick={() => window.open(festival.linkUrl)}
+                />
                 <p style={{ fontWeight: "bold" }}>{festival.title}</p>
                 <p>{festival.period}</p>
               </Card>

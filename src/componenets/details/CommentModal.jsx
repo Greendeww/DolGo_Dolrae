@@ -10,11 +10,13 @@ import styled from "styled-components";
 import ModalPortal from "../modal/ModalPortal";
 import Modal from "../modal/Modal";
 import { getCookie } from "../../shared/Cookie";
+import ModalImage from "../modal/ModalImage";
 
 const CommentModal = ({ comment }) => {
   const [modalOn, setModalOn] = useState(false);
-  const nickname = localStorage.getItem("nickname");
-  const getToken = getCookie("ACCESS_TOKEN");
+  const [imageModal, setImageModal] = useState(false);
+  const nickname = sessionStorage.getItem("nickname");
+  const getToken = sessionStorage.getItem("ACCESS_TOKEN");
   const navigate = useNavigate();
 
   const handleModal = () => {
@@ -23,6 +25,13 @@ const CommentModal = ({ comment }) => {
   const deleteModal = () => {
     setModalOn(true);
   };
+
+  const onClose = () => {
+    setImageModal(false)
+  };
+  const onOpen = () => {
+    setImageModal(true)
+  }
   const noLogin = (e) => {
     e.preventDefault();
     alert("로그인이 필요한 서비스 입니다");
@@ -35,9 +44,9 @@ const CommentModal = ({ comment }) => {
         <BoxDiv>
           <div>
             <div style={{ display: "flex", alignItems: "center" }}></div>
-            <div style={{ textAlign: "center" }}>
+            <div style={{ textAlign: "left" }} >
               {comment.imageList.map((image, index) => {
-                return <DetailImg key={index} alt="" src={image} />;
+                return <DetailImg onClick={onOpen} key={index} alt="" src={image} />;
               })}
             </div>
             <Star key={comment.comment_id} comment={comment} />
@@ -72,6 +81,9 @@ const CommentModal = ({ comment }) => {
               </div>
               }
           </div>
+            <ModalPortal>
+              {imageModal && <ModalImage onClose={onClose} comment={comment}/>}
+            </ModalPortal> 
         </BoxDiv>
       </ComDiv>
     </>
@@ -115,11 +127,17 @@ const DelBut = styled.button`
   margin-right: 0.5rem;
 `;
 const DetailImg = styled.img`
-  width: 300px;
+  width: 95px;
   border-radius: 20px;
   margin-top: 1rem;
-  /* border: 1px solid rgb(195, 194, 204); */
+  margin-right:0.5rem;
+  cursor: pointer;
+  @media screen and (max-width: 398px){
+    width:82px;
+  }
 `;
+
+
 const ButtonDiv = styled.div`
   display: flex;
   justify-content: center;

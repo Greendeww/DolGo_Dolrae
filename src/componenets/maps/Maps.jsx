@@ -4,14 +4,17 @@ import { useState } from 'react';
 import { Map,MarkerClusterer } from "react-kakao-maps-sdk";
 import { instance } from '../../shared/Api';
 import MapInfo from './MapInfo';
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 
-const Maps = () => {
+const Maps = ({aniState}) => {
+console.log(aniState)
 const [positions, setPositions] = useState([]);
 
+
+
 const fetch = async () => {
-  const response = await instance.get(`/api/auth/place/mypage`); 
+  const response = await instance.get(`/api/auth/place/mypage?areaCode=0&sigunguCode=0`); 
   setPositions(response.data)
 }
 useEffect(() => {
@@ -20,7 +23,7 @@ useEffect(() => {
   
 return (
   <>
-      <MapDiv>
+      <MapDiv aniState={aniState}>
         <MapBox>
         <Map // 지도를 표시할 Container
           center={{
@@ -54,14 +57,32 @@ return (
 
 export default Maps
 
+const slideIn = keyframes`
+  from {
+    transform: translateY(-5%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+`;
+
+const slideOut = keyframes`
+  from {
+      transform: translateY(0%);
+  }
+  to {
+      transform: translateY(5%);
+  }
+`;
+
 const MapDiv = styled.div`
   max-width:428px;
   width:95.5%;
   margin:0 auto;
+  animation: ${(props) => (props.aniState ? slideOut : slideIn)} 0.4s;
 `
 const MapBox = styled.div`
   max-width:428px;
   width:100%;
-  transition: transform 200ms ease-out 0s;
   padding-bottom:2.5rem;
 `

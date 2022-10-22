@@ -21,9 +21,7 @@ const Modal = ({ onClose, comment}) => {
                   삭제
                 </Jimbut>
                 <Bunbut
-                  onClick={() => {
-                    onClose(false);
-                  }}
+                  onClick={() => onClose(false)}
                 >
                   취소
                 </Bunbut>

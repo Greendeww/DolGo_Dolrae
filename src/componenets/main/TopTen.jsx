@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { getApi } from "../../shared/Api";
 import styled from "styled-components";
 import basicImg from "../../assert/image/basic.png";
 import Slider from "react-slick";
@@ -8,28 +7,30 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useNavigate } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
+import { instance } from "../../shared/Api";
 
 const TopTen = () => {
   const navigate = useNavigate();
 
+  // slick 구현
   const settings = {
-    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     pauseOnHover: true,
-    arrow: false
+    arrows: false
   };
 
+  // 서버에서 받아온 테마별 데이터를 각 테마 state에 저장
   const [foodList, setFoodList] = useState();
   const [tourList, setTourList] = useState();
   const [activityList, setActivityList] = useState();
   const [museumList, setMuseumList] = useState();
 
   const fetchPost = async () => {
-    const response = await getApi("/api/place/rank");
+    const response = await instance.get("/api/place/rank");
 
     setFoodList(response.data.tourList);
     setTourList(response.data.museumList);
@@ -37,6 +38,7 @@ const TopTen = () => {
     setMuseumList(response.data.foodList);
   };
 
+  // 화면이 렌더링되면 fetchPost 함수 실행
   useEffect(() => {
     fetchPost();
   }, []);

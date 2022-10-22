@@ -6,12 +6,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Comments from "./Comments";
 import { _getComments } from "../../redux/modules/comment";
-import { getCookie } from "../../shared/Cookie";
 
 const Review = ({ comment }) => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const getToken = getCookie("ACCESS_TOKEN");
+  const getToken = sessionStorage.getItem("ACCESS_TOKEN");
   const [commentList, setCommentList] = useState([...comment].reverse());
   const [currentComments, setCurrnetComments] = useState([]);
   const [modal, setModal] = useState(false);
@@ -79,7 +78,7 @@ const Review = ({ comment }) => {
           })}
         </div>
         <ButDiv>
-          {getToken === undefined ? (
+          {getToken === null ? (
             <FormBut onClick={noLogin}>후기작성</FormBut>
           ) : (
             <FormBut onClick={() => navigate("/detail/form/" + id)}>

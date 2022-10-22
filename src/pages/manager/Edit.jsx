@@ -5,17 +5,36 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { instance } from "../../shared/Api";
 import { useEffect } from "react";
+import img from "../../assert/image/image.svg";
 
 const Post = () => {
   const navigate = useNavigate();
+
+  // input에 입력한 img를 저장할 state
   const [image, setImage] = useState([]);
+
+  // image 미리보기를 위한 state
   const [fileImage, setFileImage] = useState([]);
+
+  // place_id를 param에서 가져옴
+  const place_id = useParams();
+
+  // 선택한 Do, Si, Theme를 저장할 state
   const [selectedDo, setSelectedDo] = useState();
   const [selectedSi, setSelectedSi] = useState();
   const [selectedTheme, setSelectedTheme] = useState();
-  const place_id = useParams();
 
-  // 기존 데이터 가져오기
+  // 기존 데이터를 저장할 state
+  const initialState = {
+    title: "",
+    content: "",
+    address: "",
+  };
+
+  const [req, setReq] = useState(initialState);
+  const [imageUrl, setImageUrl] = useState([]);
+
+  // 서버로부터 기존 데이터 받아와서 state에 저장
   const getData = async () => {
     const res = await instance.get(`/api/place/${place_id.id}`);
     setReq({
@@ -23,74 +42,70 @@ const Post = () => {
       title: res.data.title,
       content: res.data.content,
       address: res.data.address,
-      imageUrl: res.data.imageUrl,
     });
+    setImageUrl(res.data.imageUrl);
   };
 
+  // 렌더링될 때마다 getData 함수 실행
   useEffect(() => {
     getData();
   }, []);
 
-  const initialState = {
-    title: "",
-    content: "",
-    address: "",
-    imageUrl: [],
-  };
-
-  const [req, setReq] = useState(initialState);
-  console.log(req);
-
+  // input에 입력한 값을 state에 저장해줄 onChange 함수
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setReq({ ...req, [name]: value });
   };
 
   const onChangeImg = (e) => {
+    // input에 입력한 값을 imageList에 저장
     const imageList = e.target.files;
-    // const maxImageCnt = 3;
-    const imageLists = [...image];
-    // if(image.length > maxImageCnt){
-    //   alert("첨부파일은 최대 3개까지 가능합니다")
-    // }
 
-    console.log(imageList);
+    // image list 복사
+    const imageLists = [...image];
     const imgFiles = [...fileImage];
+
+    // image를 url로 변환하여 imgFiles에 저장
     for (let i = 0; i < imageList.length; i++) {
       const nowImageUrl = URL.createObjectURL(e.target.files[i]);
       imgFiles.push(nowImageUrl);
     }
+
+    // image를 imageLists에 저장
     for (let i = 0; i < imageList.length; i++) {
       const nowImageUrl1 = e.target.files[i];
       imageLists.push(nowImageUrl1);
       continue;
     }
-    // if (imageLists.length > 3) {
-    //   imageLists = imageLists.slice(0, 3);
-    // }
+
     setFileImage(imgFiles);
     setImage(imageLists);
   };
 
-  //이미지 삭제
+  // 이미지 삭제
   const handleDeleteImage = (id) => {
     setFileImage(fileImage.filter((_, index) => index !== id));
     setImage(image.filter((_, index) => index !== id));
   };
 
-  // 수정하기 버튼 Click
+  // 기존 이미지 삭제
+  const handleDeleteImage1 = (id) => {
+    setImageUrl(imageUrl.filter((_, index) => index !== id));
+  };
+
+  // 수정하기 버튼 Click시 서버로 데이터 전송
   const onSubmitHandler = async (e) => {
     const request = {
       title: req.title,
       content: req.content,
       address: req.address,
-      existUrlList: req.imageUrl,
+      existUrlList: imageUrl,
       theme: selectedTheme,
       areaCode: selectedDo,
       sigunguCode: selectedSi,
     };
-    console.log(request);
-    console.log(place_id.id)
+
+    // 빈값일 때 alert
     if (
       request.content === "" ||
       request.address === "" ||
@@ -100,26 +115,34 @@ const Post = () => {
     ) {
       alert("필수 항목을 모두 작성해주세요.");
       return;
-    } else {
+    }
+    // formData 형식으로 변환
+    else {
       const json = JSON.stringify(request);
       const blob = new Blob([json], { type: "application/json" });
       const formData = new FormData();
 
+      // image를 formData에 image라는 이름으로 저장
       for (let i = 0; i < image.length; i++) {
         formData.append("image", image[i]);
       }
+      // blob을 formData에 data라는 이름으로 저장
       formData.append("data", blob);
 
-      const res = await instance.put(`/api/auth/place/${place_id.id}`, formData, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      });
-      console.log(res);
+      // 서버로 formData 전송
       try {
+        const res = await instance.put(
+          `/api/auth/place/${place_id.id}`,
+          formData,
+          {
+            headers: {
+              "content-type": "multipart/form-data",
+            },
+          }
+        );
         alert("게시글이 수정되었습니다.");
         navigate(`/request/detail/${req.id}`);
-        localStorage.removeItem("sameDo");
+        sessionStorage.removeItem("sameDo");
       } catch {
         alert("내용을 다시 확인해주세요.");
       }
@@ -148,31 +171,99 @@ const Post = () => {
     { name: "제주", value: 39 },
   ];
 
+  // do 선택 값을 selectedDo와 storage에 저장
   const doSelectHandler = (e) => {
     setSelectedDo(e.target.value);
     const sameDo = doList.find((list) => list.value == e.target.value);
-    localStorage.setItem("sameDo", sameDo.name);
+    sessionStorage.setItem("sameDo", sameDo.name);
   };
 
-  const sameDo = localStorage.getItem("sameDo");
+  const sameDo = sessionStorage.getItem("sameDo");
 
   // 세부 지역별 해당 do, name, value
   const siList = [
-    { do: "서울", name: "시/군", value: 0 },
-    { do: "서울", name: "서울", value: 0 },
-    { do: "인천", name: "시/군", value: 0 },
-    { do: "인천", name: "인천", value: 0 },
-    { do: "대전", name: "시/군", value: 0 },
-    { do: "대전", name: "대전", value: 0 },
-    { do: "대구", name: "시/군", value: 0 },
-    { do: "대구", name: "대구", value: 0 },
-    { do: "광주", name: "시/군", value: 0 },
-    { do: "광주", name: "광주", value: 0 },
-    { do: "부산", name: "시/군", value: 0 },
-    { do: "부산", name: "부산", value: 0 },
-    { do: "울산", name: "시/군", value: 0 },
-    { do: "울산", name: "울산", value: 0 },
-    { do: "세종", name: "시/군.", value: 0 },
+    { do: "서울", name: "시/군", value: "" },
+    { do: "서울", name: "강남", value: 1 },
+    { do: "서울", name: "강동", value: 2 },
+    { do: "서울", name: "강북", value: 3 },
+    { do: "서울", name: "강서", value: 4 },
+    { do: "서울", name: "관악", value: 5 },
+    { do: "서울", name: "광진", value: 6 },
+    { do: "서울", name: "구로", value: 7 },
+    { do: "서울", name: "금천", value: 8 },
+    { do: "서울", name: "노원", value: 9 },
+    { do: "서울", name: "도봉", value: 10 },
+    { do: "서울", name: "동대문", value: 11 },
+    { do: "서울", name: "동작", value: 12 },
+    { do: "서울", name: "마포", value: 13 },
+    { do: "서울", name: "서대문", value: 14 },
+    { do: "서울", name: "서초", value: 15 },
+    { do: "서울", name: "성동", value: 16 },
+    { do: "서울", name: "성북", value: 17 },
+    { do: "서울", name: "송파", value: 18 },
+    { do: "서울", name: "양천", value: 19 },
+    { do: "서울", name: "영등포", value: 20 },
+    { do: "서울", name: "용산", value: 21 },
+    { do: "서울", name: "은평", value: 22 },
+    { do: "서울", name: "종로", value: 23 },
+    { do: "서울", name: "중구", value: 24 },
+    { do: "서울", name: "중랑", value: 25 },
+    { do: "인천", name: "시/군", value: "" },
+    { do: "인천", name: "강화", value: 1 },
+    { do: "인천", name: "계양", value: 2 },
+    { do: "인천", name: "남동", value: 3 },
+    { do: "인천", name: "동구", value: 4 },
+    { do: "인천", name: "미추홀", value: 5 },
+    { do: "인천", name: "부평", value: 6 },
+    { do: "인천", name: "서구", value: 7 },
+    { do: "인천", name: "연수", value: 8 },
+    { do: "인천", name: "옹진", value: 9 },
+    { do: "인천", name: "중구", value: 10 },
+    { do: "대전", name: "시/군", value: "" },
+    { do: "대전", name: "대덕", value: 1 },
+    { do: "대전", name: "동구", value: 2 },
+    { do: "대전", name: "서구", value: 3 },
+    { do: "대전", name: "유성", value: 4 },
+    { do: "대전", name: "중구", value: 5 },
+    { do: "대구", name: "시/군", value: "" },
+    { do: "대구", name: "남구", value: 1 },
+    { do: "대구", name: "달서", value: 2 },
+    { do: "대구", name: "달성", value: 3 },
+    { do: "대구", name: "동구", value: 4 },
+    { do: "대구", name: "북구", value: 5 },
+    { do: "대구", name: "서구", value: 6 },
+    { do: "대구", name: "수성", value: 7 },
+    { do: "대구", name: "중구", value: 8 },
+    { do: "광주", name: "시/군", value: "" },
+    { do: "광주", name: "광산", value: 0 },
+    { do: "광주", name: "남구", value: 0 },
+    { do: "광주", name: "동구", value: 0 },
+    { do: "광주", name: "북구", value: 0 },
+    { do: "광주", name: "서구", value: 0 },
+    { do: "부산", name: "시/군", value: "" },
+    { do: "부산", name: "강서", value: 1 },
+    { do: "부산", name: "금정", value: 2 },
+    { do: "부산", name: "기장", value: 3 },
+    { do: "부산", name: "남구", value: 4 },
+    { do: "부산", name: "동구", value: 5 },
+    { do: "부산", name: "동래", value: 6 },
+    { do: "부산", name: "부산진", value: 7 },
+    { do: "부산", name: "북구", value: 8 },
+    { do: "부산", name: "사상", value: 9 },
+    { do: "부산", name: "사하", value: 10 },
+    { do: "부산", name: "서구", value: 11 },
+    { do: "부산", name: "수영", value: 12 },
+    { do: "부산", name: "연제", value: 13 },
+    { do: "부산", name: "영도", value: 14 },
+    { do: "부산", name: "중구", value: 15 },
+    { do: "부산", name: "해운대", value: 16 },
+    { do: "울산", name: "시/군", value: "" },
+    { do: "울산", name: "남구", value: 2 },
+    { do: "울산", name: "동구", value: 3 },
+    { do: "울산", name: "북구", value: 4 },
+    { do: "울산", name: "울주", value: 5 },
+    { do: "울산", name: "중구", value: 1 },
+    { do: "세종", name: "시/군.", value: "" },
     { do: "세종", name: "세종", value: 0 },
     { do: "경기", name: "시/군", value: "" },
     { do: "경기", name: "가평", value: 1 },
@@ -342,6 +433,7 @@ const Post = () => {
     { do: "제주", name: "제주", value: 4 },
   ];
 
+  // si 선택 값을 selectedSi에 저장
   const SiSelectHandler = (e) => {
     setSelectedSi(e.target.value);
   };
@@ -355,6 +447,7 @@ const Post = () => {
     { name: "식도락", value: "39" },
   ];
 
+  // 테마 선택 값을 selectedTheme에 저장
   const themeSelectHandler = (e) => {
     setSelectedTheme(e.target.value);
   };
@@ -438,7 +531,7 @@ const Post = () => {
                 <img
                   alt=""
                   style={{ height: "1.5rem" }}
-                  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj4KICAgIDxwYXRoIGZpbGw9IiNEQ0RCRTQiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTI4LjQ3MSAzMkgzLjUzYy0uOTcxIDAtMS44OTQtLjQyMi0yLjUyOS0xLjE1N2wtLjAyNi0uMDNBNCA0IDAgMCAxIDAgMjguMTk4VjguNjA3QTQgNCAwIDAgMSAuOTc0IDUuOTlMMSA1Ljk2YTMuMzQzIDMuMzQzIDAgMCAxIDIuNTI5LTEuMTU2aDIuNTM0YTIgMiAwIDAgMCAxLjUzNy0uNzJMMTAuNC43MkEyIDIgMCAwIDEgMTEuOTM3IDBoOC4xMjZBMiAyIDAgMCAxIDIxLjYuNzJsMi44IDMuMzYzYTIgMiAwIDAgMCAxLjUzNy43MmgyLjUzNGMuOTcxIDAgMS44OTQuNDIzIDIuNTI5IDEuMTU3bC4wMjYuMDNBNCA0IDAgMCAxIDMyIDguNjA2djE5LjU5MWE0IDQgMCAwIDEtLjk3NCAyLjYxN2wtLjAyNi4wM0EzLjM0MyAzLjM0MyAwIDAgMSAyOC40NzEgMzJ6TTE2IDkuNmE4IDggMCAxIDEgMCAxNiA4IDggMCAwIDEgMC0xNnptMCAxMi44YzIuNjQ3IDAgNC44LTIuMTUzIDQuOC00LjhzLTIuMTUzLTQuOC00LjgtNC44YTQuODA1IDQuODA1IDAgMCAwLTQuOCA0LjhjMCAyLjY0NyAyLjE1MyA0LjggNC44IDQuOHoiLz4KPC9zdmc+Cg=="
+                  src={img}
                 />
                 <p style={{ marginTop: "15px", fontSize: "0.9rem" }}>
                   이미지 등록
@@ -452,8 +545,21 @@ const Post = () => {
                   id="image"
                 />
               </ImgLabel>
-              {req.imageUrl.map((image, id) => (
-                <Img alt="" src={image} key={id} />
+              {imageUrl?.map((image, id) => (
+                <div key={id}>
+                  <img
+                    style={{
+                      width: "102px",
+                      height: "102px",
+                      borderRadius: "10px",
+                    }}
+                    alt={`${image}-${id}`}
+                    src={image}
+                  />
+                  <DeleteImg onClick={() => handleDeleteImage1(id)}>
+                    X
+                  </DeleteImg>
+                </div>
               ))}
               {fileImage.map((image, id) => (
                 <div key={id}>
@@ -469,7 +575,7 @@ const Post = () => {
           <CancelBtn
             onClick={() => {
               navigate(-1);
-              localStorage.removeItem("sameDo");
+              sessionStorage.removeItem("sameDo");
             }}
           >
             취소
@@ -549,6 +655,7 @@ const PostBtn = styled.div`
 `;
 const ImgBox = styled.div`
   display: flex;
+  width: 90%;
   margin: 20px 30px;
   flex-wrap: wrap;
   gap: 30px;

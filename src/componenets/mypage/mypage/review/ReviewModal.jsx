@@ -2,16 +2,23 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Star from "../../../star/Star";
-import ModalPortal from "../../../modal/ModalPortal";
-import Modal from "../../../modal/Modal";
+import Star from  "../../../../componenets/star/Star";
+import ModalPortal from "../../../../componenets/modal/ModalPortal";
+import Modal from "../../../../componenets/modal/Modal";
+import ModalImage from "../../../../componenets/modal/ModalImage";
+
+
 
 const ReviewModal = ({ item }) => {
   const [modalOn, setModalOn] = useState(false);
-  const nickname = localStorage.getItem("nickname");
-  console.log(modalOn);
+  const [imageModal, setImageModal] = useState(false);
   const navigate = useNavigate();
-
+  const onClose = () => {
+    setImageModal(false)
+  };
+  const onOpen = () => {
+    setImageModal(true)
+  }
   const handleModal = () => {
     setModalOn(false);
   };
@@ -21,10 +28,10 @@ const ReviewModal = ({ item }) => {
       <div>
         <div>
           <div style={{ display: "flex", alignItems: "center" }}></div>
-          <div style={{ textAlign: "center" }}>
-            {item.imageList.map((image, index) => {
-              return <DetailImg key={index} alt="" src={image} />;
-            })}
+          <div style={{ textAlign: "left" }}>
+             {item.imageList.map((image, index) => {
+                return <DetailImg onClick={onOpen} key={index} alt="" src={image} />;
+              })}
           </div>
           <div style={{ paddingTop: "20px" }} >
           <StarDiv>
@@ -33,7 +40,7 @@ const ReviewModal = ({ item }) => {
               상세페이지로
             </Button>
           </StarDiv>
-          <p style={{ paddingLeft: "10px", width: "360px", wordWrap: "break-word", lineHeight: "28px"}}>{item.content}</p>
+          <p style={{ paddingLeft: "10px", width: "90%", wordWrap: "break-word", lineHeight: "28px"}}>{item.content}</p>
           <ButtonDiv>
             <ReviseBut
               onClick={() =>
@@ -51,6 +58,9 @@ const ReviewModal = ({ item }) => {
             {modalOn && <Modal onClose={handleModal} comment={item} />}
           </ModalPortal>
         </div>
+        <ModalPortal>
+            {imageModal && <ModalImage onClose={onClose} comment={item}/>}
+        </ModalPortal> 
       </div>
     </ComDiv>
   );
@@ -95,11 +105,16 @@ const DelBut = styled.button`
   width: 100%;
 `;
 const DetailImg = styled.img`
-  width: 300px;
+  width: 95px;
   border-radius: 20px;
   margin-top: 1rem;
-  /* border: 1px solid rgb(195, 194, 204); */
+  margin-right:0.5rem;
+  cursor: pointer;
+  @media screen and (max-width: 398px){
+    width:82px;
+  }
 `;
+
 const ButtonDiv = styled.div`
   display: flex;
   justify-content: center;

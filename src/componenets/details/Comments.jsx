@@ -48,7 +48,7 @@ const Comments = ({ comment, arr, isSelected, handleClick, elementIndex }) => {
             <PCom>{comment.title}</PCom>
             {/* <p>닉네임</p> */}
           </ContentDiv>
-          <div style={{ cursor: "pointer" }} id="state">
+          <div id="state">
             {modal === true ? (
               <CommentModal key={comment.comment_id} comment={comment} />
             ) : null}
@@ -66,7 +66,6 @@ const Comments = ({ comment, arr, isSelected, handleClick, elementIndex }) => {
             {comment.imageList.length === 0 ? (
               <span
                 style={{
-                  cursor: "pointer",
                   color: "#EBF8FF",
                   fontSize: "1.5rem",
                   lineHeight: "3.4rem",
@@ -77,7 +76,6 @@ const Comments = ({ comment, arr, isSelected, handleClick, elementIndex }) => {
             ) : (
               <span
                 style={{
-                  cursor: "pointer",
                   color: "black",
                   fontSize: "1.5rem",
                   lineHeight: "3.4rem",
@@ -88,7 +86,7 @@ const Comments = ({ comment, arr, isSelected, handleClick, elementIndex }) => {
             )}
             <PCom>{comment.title}</PCom>
           </ContentDiv>
-          <div style={{ cursor: "pointer" }} id="state">
+          <div  id="state">
             {modal === true ? (
               <CommentModal key={comment.comment_id} comment={comment} />
             ) : null}

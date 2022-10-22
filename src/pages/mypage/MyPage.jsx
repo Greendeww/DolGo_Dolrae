@@ -4,21 +4,26 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../../componenets/header/Header";
 import Info from "../../componenets/mypage/mypage/Info";
-import LikeList from "../../componenets/mypage/mypage/LikeList";
-import MyRequestList from "../../componenets/mypage/mypage/MyRequestList";
+import LikeList from "../../componenets/mypage/mypage/likeList/LikeList";
+import MyRequestList from "../../componenets/mypage/mypage/request/MyRequestList";
 import ReviewList from "../../componenets/mypage/mypage/review/ReviewList";
-import { getCookie } from "../../shared/Cookie";
 
 const MyPage = () => {
-  const getToken = getCookie("ACCESS_TOKEN");
-  const navigate =useNavigate()
-  
+  const navigate = useNavigate();
+
+  // ACCESS_TOKEN이 없으면 마이페이지 접근 불가
+  const getToken = sessionStorage.getItem("ACCESS_TOKEN");
+
   useEffect(() => {
-    if(getToken === undefined){
+    if(getToken === null){
       alert("로그인이 필요한 서비스입니다.")
       navigate('/login')
     }
-  },[])
+  },[getToken])
+
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
 
   return (
     <StMyPage>
@@ -26,7 +31,7 @@ const MyPage = () => {
       <Info />
       <LikeList />
       <ReviewList />
-      <MyRequestList/>
+      <MyRequestList />
     </StMyPage>
   );
 };

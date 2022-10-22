@@ -5,6 +5,7 @@ import { FaStar } from "react-icons/fa";
 import { instance } from "../../shared/Api";
 import Header from "../header/Header";
 import { useRef } from "react";
+import img from "../../assert/image/image.svg";
 
 const DetailForm = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const DetailForm = () => {
   const [image, setImage] = useState([]);
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
-  console.log(image);
+ 
   const handleStarClick = (index) => {
     let clickStates = [...clicked];
     for (let i = 0; i < 5; i++) {
@@ -46,14 +47,8 @@ const DetailForm = () => {
 
   const onChangeImg = (e) => {
     const imageList = e.target.files;
-    // const maxImageCnt = 3;
-    const imageLists = [...image];
-    // if(image.length > maxImageCnt){
-    //   alert("첨부파일은 최대 3개까지 가능합니다")
-    // }
-
-    console.log(imageList);
-    const imgFiles = [...fileImage];
+    let imageLists = [...image];
+    let imgFiles = [...fileImage];
     for (let i = 0; i < imageList.length; i++) {
       const nowImageUrl = URL.createObjectURL(e.target.files[i]);
       imgFiles.push(nowImageUrl);
@@ -61,14 +56,19 @@ const DetailForm = () => {
     for (let i = 0; i < imageList.length; i++) {
       const nowImageUrl1 = e.target.files[i];
       imageLists.push(nowImageUrl1);
-      continue;
     }
-    // if (imageLists.length > 3) {
-    //   imageLists = imageLists.slice(0, 3);
-    // }
+       //이미지 개수 최대 3개까지 등록가능
+    if (imageLists.length > 3) {
+      window.alert("이미지는 최대 3개까지 등록 가능합니다")
+      imageLists = imageLists.slice(0, 3);
+    }
+    if(imgFiles.length > 3){
+      imgFiles = imgFiles.slice(0, 3);
+    }
     setFileImage(imgFiles);
     setImage(imageLists);
   };
+
   //이미지 삭제
   const handleDeleteImage = (id) => {
     setFileImage(fileImage.filter((_, index) => index !== id));
@@ -131,7 +131,6 @@ const DetailForm = () => {
       id: id,
       formData: formData,
     };
-
     try {
       const res = await instance.post(
         `/api/auth/comment/${payload.id}`,
@@ -188,7 +187,7 @@ const DetailForm = () => {
                 <img
                   alt=""
                   style={{ height: "1.5rem" }}
-                  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj4KICAgIDxwYXRoIGZpbGw9IiNEQ0RCRTQiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTI4LjQ3MSAzMkgzLjUzYy0uOTcxIDAtMS44OTQtLjQyMi0yLjUyOS0xLjE1N2wtLjAyNi0uMDNBNCA0IDAgMCAxIDAgMjguMTk4VjguNjA3QTQgNCAwIDAgMSAuOTc0IDUuOTlMMSA1Ljk2YTMuMzQzIDMuMzQzIDAgMCAxIDIuNTI5LTEuMTU2aDIuNTM0YTIgMiAwIDAgMCAxLjUzNy0uNzJMMTAuNC43MkEyIDIgMCAwIDEgMTEuOTM3IDBoOC4xMjZBMiAyIDAgMCAxIDIxLjYuNzJsMi44IDMuMzYzYTIgMiAwIDAgMCAxLjUzNy43MmgyLjUzNGMuOTcxIDAgMS44OTQuNDIzIDIuNTI5IDEuMTU3bC4wMjYuMDNBNCA0IDAgMCAxIDMyIDguNjA2djE5LjU5MWE0IDQgMCAwIDEtLjk3NCAyLjYxN2wtLjAyNi4wM0EzLjM0MyAzLjM0MyAwIDAgMSAyOC40NzEgMzJ6TTE2IDkuNmE4IDggMCAxIDEgMCAxNiA4IDggMCAwIDEgMC0xNnptMCAxMi44YzIuNjQ3IDAgNC44LTIuMTUzIDQuOC00LjhzLTIuMTUzLTQuOC00LjgtNC44YTQuODA1IDQuODA1IDAgMCAwLTQuOCA0LjhjMCAyLjY0NyAyLjE1MyA0LjggNC44IDQuOHoiLz4KPC9zdmc+Cg=="
+                  src={img}
                 />
                 <p style={{ marginTop: "15px", fontSize: "0.9rem" }}>
                   이미지 등록

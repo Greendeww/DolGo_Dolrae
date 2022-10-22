@@ -16,12 +16,12 @@ const RndLocation = () => {
   const SIGUNGU_CODE = "SIGUNGU_CODE";
   const SIGUNGU_NAME = "SIGUNGU_NAME";
 
-  const GET_THEME_CODE = window.localStorage.getItem("THEME_CODE");
-  const GET_THEME_NAME = window.localStorage.getItem("THEME_NAME");
-  const GET_AREA_CODE = window.localStorage.getItem("AREA_CODE");
-  const GET_AREA_NAME = window.localStorage.getItem("AREA_NAME");
-  const GET_SIGUNGU_CODE = window.localStorage.getItem("SIGUNGU_CODE");
-  const GET_SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
+  const GET_THEME_CODE = window.sessionStorage.getItem("THEME_CODE");
+  const GET_THEME_NAME = window.sessionStorage.getItem("THEME_NAME");
+  const GET_AREA_CODE = window.sessionStorage.getItem("AREA_CODE");
+  const GET_AREA_NAME = window.sessionStorage.getItem("AREA_NAME");
+  const GET_SIGUNGU_CODE = window.sessionStorage.getItem("SIGUNGU_CODE");
+  const GET_SIGUNGU_NAME = window.sessionStorage.getItem("SIGUNGU_NAME");
 
   const search = {
     themeCode: GET_THEME_CODE,
@@ -34,10 +34,10 @@ const RndLocation = () => {
 
   const initialization = (e) => {
     // e.preventDefault();
-    localStorage.removeItem("AREA_CODE");
-    localStorage.removeItem("AREA_NAME");
-    localStorage.removeItem("SIGUNGU_CODE");
-    localStorage.removeItem("SIGUNGU_NAME");
+    sessionStorage.removeItem("AREA_CODE");
+    sessionStorage.removeItem("AREA_NAME");
+    sessionStorage.removeItem("SIGUNGU_CODE");
+    sessionStorage.removeItem("SIGUNGU_NAME");
 
     setSelectedDo("");
     setSelectedSi("");
@@ -68,12 +68,81 @@ const RndLocation = () => {
 
   const siList = [
     { do: "서울", name: "전체", value: 0 },
+    { do: "서울", name: "강남", value: 1 },
+    { do: "서울", name: "강동", value: 2 },
+    { do: "서울", name: "강북", value: 3 },
+    { do: "서울", name: "강서", value: 4 },
+    { do: "서울", name: "관악", value: 5 },
+    { do: "서울", name: "광진", value: 6 },
+    { do: "서울", name: "구로", value: 7 },
+    { do: "서울", name: "금천", value: 8 },
+    { do: "서울", name: "노원", value: 9 },
+    { do: "서울", name: "도봉", value: 10 },
+    { do: "서울", name: "동대문", value: 11 },
+    { do: "서울", name: "동작", value: 12 },
+    { do: "서울", name: "마포", value: 13 },
+    { do: "서울", name: "서대문", value: 14 },
+    { do: "서울", name: "서초", value: 15 },
+    { do: "서울", name: "성동", value: 16 },
+    { do: "서울", name: "성북", value: 17 },
+    { do: "서울", name: "송파", value: 18 },
+    { do: "서울", name: "양천", value: 19 },
+    { do: "서울", name: "영등포", value: 20 },
+    { do: "서울", name: "용산", value: 21 },
+    { do: "서울", name: "은평", value: 22 },
+    { do: "서울", name: "종로", value: 23 },
+    { do: "서울", name: "중구", value: 24 },
+    { do: "서울", name: "중랑", value: 25 },
     { do: "인천", name: "전체", value: 0 },
+    { do: "인천", name: "강화", value: 1 },
+    { do: "인천", name: "계양", value: 2 },
+    { do: "인천", name: "남동", value: 3 },
+    { do: "인천", name: "동구", value: 4 },
+    { do: "인천", name: "미추홀", value: 5 },
+    { do: "인천", name: "부평", value: 6 },
+    { do: "인천", name: "서구", value: 7 },
+    { do: "인천", name: "연수", value: 8 },
+    { do: "인천", name: "중구", value: 10 },
     { do: "대전", name: "전체", value: 0 },
+    { do: "대전", name: "대덕", value: 1 },
+    { do: "대전", name: "동구", value: 2 },
+    { do: "대전", name: "서구", value: 3 },
+    { do: "대전", name: "유성", value: 4 },
+    { do: "대전", name: "중구", value: 5 },
     { do: "대구", name: "전체", value: 0 },
+    { do: "대구", name: "남구", value: 1 },
+    { do: "대구", name: "달서", value: 2 },
+    { do: "대구", name: "달성", value: 3 },
+    { do: "대구", name: "동구", value: 4 },
+    { do: "대구", name: "북구", value: 5 },
+    { do: "대구", name: "수성", value: 7 },
     { do: "광주", name: "전체", value: 0 },
+    { do: "광주", name: "광산", value: 1 },
+    { do: "광주", name: "남구", value: 2 },
+    { do: "광주", name: "동구", value: 3 },
+    { do: "광주", name: "북구", value: 4 },
+    { do: "광주", name: "서구", value: 5 },
     { do: "부산", name: "전체", value: 0 },
+    { do: "부산", name: "강서", value: 1 },
+    { do: "부산", name: "금정", value: 2 },
+    { do: "부산", name: "기장", value: 3 },
+    { do: "부산", name: "남구", value: 4 },
+    { do: "부산", name: "동구", value: 5 },
+    { do: "부산", name: "부산진", value: 7 },
+    { do: "부산", name: "북구", value: 8 },
+    { do: "부산", name: "사상", value: 9 },
+    { do: "부산", name: "사하", value: 10 },
+    { do: "부산", name: "서구", value: 11 },
+    { do: "부산", name: "수영", value: 12 },
+    { do: "부산", name: "연제", value: 13 },
+    { do: "부산", name: "영도", value: 14 },
+    { do: "부산", name: "해운대", value: 16 },
     { do: "울산", name: "전체", value: 0 },
+    { do: "울산", name: "남구", value: 2 },
+    { do: "울산", name: "동구", value: 3 },
+    { do: "울산", name: "북구", value: 4 },
+    { do: "울산", name: "울주", value: 5 },
+    { do: "울산", name: "중구", value: 1 },
     { do: "세종", name: "전체", value: 0 },
     { do: "경기", name: "전체", value: 0 },
     { do: "경기", name: "가평", value: 1 },
@@ -254,8 +323,8 @@ const RndLocation = () => {
         }
         onClick={() => {
           setSelectedDo(item.value);
-          localStorage.setItem(AREA_CODE, item.value);
-          localStorage.setItem(AREA_NAME, item.name);
+          sessionStorage.setItem(AREA_CODE, item.value);
+          sessionStorage.setItem(AREA_NAME, item.name);
         }}
       >
         {item.name}
@@ -275,8 +344,8 @@ const RndLocation = () => {
           }
           onClick={() => {
             setSelectedSi(item.value);
-            localStorage.setItem(SIGUNGU_CODE, item.value);
-            localStorage.setItem(SIGUNGU_NAME, item.name);
+            sessionStorage.setItem(SIGUNGU_CODE, item.value);
+            sessionStorage.setItem(SIGUNGU_NAME, item.name);
           }}
         >
           {item.name}
@@ -304,9 +373,9 @@ const RndLocation = () => {
         dispatch(__getTheme(search));
         navigate(
           "/rndselect/" +
-            localStorage.getItem(SIGUNGU_CODE) +
+            sessionStorage.getItem(SIGUNGU_CODE) +
             "/" +
-            localStorage.getItem(AREA_CODE)
+            sessionStorage.getItem(AREA_CODE)
         );
       },
     }).then((result) => {

@@ -48,9 +48,7 @@ function Star({comment,posts}) {
 export default Star;
 
 const Wrap = styled.div`
-  /* display: flex;
-  flex-direction: column; */
-  padding-top: 0.8rem;
+  padding-top: 1rem;
 `;
 
 const RatingText = styled.div`
