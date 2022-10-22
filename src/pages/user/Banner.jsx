@@ -7,12 +7,12 @@ const Banner = () => {
 
   const [modal, setModal] = useState(true);
 
-  const banner = localStorage.getItem("never");
+  const banner = sessionStorage.getItem("never");
 
   const closeHandler = () => {
     setModal(!modal);
     if (click === true) {
-      localStorage.setItem("never", click);
+      sessionStorage.setItem("never", click);
     } else {
       return;
     }

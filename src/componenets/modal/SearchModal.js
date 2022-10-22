@@ -22,20 +22,20 @@ const SearchModal = ({ close, title}) => {
 
   // 필터 초기화
   const initialization = (e) => {
-    localStorage.removeItem("AREA_CODE");
-    localStorage.removeItem("AREA_NAME");
-    localStorage.removeItem("SIGUNGU_CODE");
-    localStorage.removeItem("SIGUNGU_NAME");
+    sessionStorage.removeItem("AREA_CODE");
+    sessionStorage.removeItem("AREA_NAME");
+    sessionStorage.removeItem("SIGUNGU_CODE");
+    sessionStorage.removeItem("SIGUNGU_NAME");
 
     setSelectedDo("");
     setSelectedSi("");
   };
 
   // 서버로 보내줄 값 ( 선택한 테마, 지역 )
-  const GET_AREA_CODE = window.localStorage.getItem("AREA_CODE");
-  const GET_AREA_NAME = window.localStorage.getItem("AREA_NAME");
-  const GET_SIGUNGU_CODE = window.localStorage.getItem("SIGUNGU_CODE");
-  const GET_SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
+  const GET_AREA_CODE = window.sessionStorage.getItem("AREA_CODE");
+  const GET_AREA_NAME = window.sessionStorage.getItem("AREA_NAME");
+  const GET_SIGUNGU_CODE = window.sessionStorage.getItem("SIGUNGU_CODE");
+  const GET_SIGUNGU_NAME = window.sessionStorage.getItem("SIGUNGU_NAME");
 
   const search = {
     areaCode: GET_AREA_CODE,
@@ -257,10 +257,10 @@ const SearchModal = ({ close, title}) => {
         onClick={() => {
           setSelectedDo(item.value);
           setSelectedSi("");
-          localStorage.setItem(AREA_CODE, item.value);
-          localStorage.setItem(AREA_NAME, item.name);
-          localStorage.removeItem(SIGUNGU_CODE);
-          localStorage.removeItem(SIGUNGU_NAME);
+          sessionStorage.setItem(AREA_CODE, item.value);
+          sessionStorage.setItem(AREA_NAME, item.name);
+          sessionStorage.removeItem(SIGUNGU_CODE);
+          sessionStorage.removeItem(SIGUNGU_NAME);
         }}
       >
         {item.name}
@@ -281,8 +281,8 @@ const SearchModal = ({ close, title}) => {
           }
           onClick={() => {
             setSelectedSi(item.value);
-            localStorage.setItem(SIGUNGU_CODE, item.value);
-            localStorage.setItem(SIGUNGU_NAME, item.name);
+            sessionStorage.setItem(SIGUNGU_CODE, item.value);
+            sessionStorage.setItem(SIGUNGU_NAME, item.name);
           }}
         >
           {item.name}

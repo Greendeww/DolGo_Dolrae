@@ -8,8 +8,8 @@ import { deleteCookie } from "../../../shared/Cookie";
 const Withdrawal = () => {
   const navigate = useNavigate();
 
-  // localStorage에서 가져온 username
-  const username = localStorage.getItem("username");
+  // sessionStorage에서 가져온 username
+  const username = sessionStorage.getItem("username");
 
   // input에 입력한 값을 저장
   const memberOutRef = useRef();

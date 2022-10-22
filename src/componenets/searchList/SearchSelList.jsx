@@ -18,8 +18,8 @@ const SearchSelList = () => {
   const { si } = useParams();
   const { area } = useParams();
 
-  const AREA_NAME = window.localStorage.getItem("AREA_NAME");
-  const SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
+  const AREA_NAME = window.sessionStorage.getItem("AREA_NAME");
+  const SIGUNGU_NAME = window.sessionStorage.getItem("SIGUNGU_NAME");
 
   const fetch = useCallback(async () => {
     try {

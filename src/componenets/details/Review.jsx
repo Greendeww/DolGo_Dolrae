@@ -10,7 +10,7 @@ import { _getComments } from "../../redux/modules/comment";
 const Review = ({ comment }) => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const getToken = localStorage.getItem("ACCESS_TOKEN");
+  const getToken = sessionStorage.getItem("ACCESS_TOKEN");
   const [commentList, setCommentList] = useState([...comment].reverse());
   const [currentComments, setCurrnetComments] = useState([]);
   const [modal, setModal] = useState(false);

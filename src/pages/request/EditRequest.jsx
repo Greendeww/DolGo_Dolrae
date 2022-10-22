@@ -9,8 +9,8 @@ const EditRequest = () => {
   const navigate = useNavigate();
 
   // storage에서 가져온 id와 title
-  const id = localStorage.getItem("place_id");
-  const title = localStorage.getItem("place_title");
+  const id = sessionStorage.getItem("place_id");
+  const title = sessionStorage.getItem("place_title");
 
   const initialState = {
     title: title,
@@ -166,7 +166,7 @@ const EditRequest = () => {
           <PostBtn
             onClick={() => {
               onSubmitHandler();
-              localStorage.removeItem("place_id");
+              sessionStorage.removeItem("place_id");
             }}
           >
             작성하기
@@ -174,7 +174,7 @@ const EditRequest = () => {
           <CancelBtn
             onClick={() => {
               navigate(-1);
-              localStorage.removeItem("place_id");
+              sessionStorage.removeItem("place_id");
             }}
           >
             취소

@@ -16,12 +16,12 @@ const RndLocation = () => {
   const SIGUNGU_CODE = "SIGUNGU_CODE";
   const SIGUNGU_NAME = "SIGUNGU_NAME";
 
-  const GET_THEME_CODE = window.localStorage.getItem("THEME_CODE");
-  const GET_THEME_NAME = window.localStorage.getItem("THEME_NAME");
-  const GET_AREA_CODE = window.localStorage.getItem("AREA_CODE");
-  const GET_AREA_NAME = window.localStorage.getItem("AREA_NAME");
-  const GET_SIGUNGU_CODE = window.localStorage.getItem("SIGUNGU_CODE");
-  const GET_SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
+  const GET_THEME_CODE = window.sessionStorage.getItem("THEME_CODE");
+  const GET_THEME_NAME = window.sessionStorage.getItem("THEME_NAME");
+  const GET_AREA_CODE = window.sessionStorage.getItem("AREA_CODE");
+  const GET_AREA_NAME = window.sessionStorage.getItem("AREA_NAME");
+  const GET_SIGUNGU_CODE = window.sessionStorage.getItem("SIGUNGU_CODE");
+  const GET_SIGUNGU_NAME = window.sessionStorage.getItem("SIGUNGU_NAME");
 
   const search = {
     themeCode: GET_THEME_CODE,
@@ -34,10 +34,10 @@ const RndLocation = () => {
 
   const initialization = (e) => {
     // e.preventDefault();
-    localStorage.removeItem("AREA_CODE");
-    localStorage.removeItem("AREA_NAME");
-    localStorage.removeItem("SIGUNGU_CODE");
-    localStorage.removeItem("SIGUNGU_NAME");
+    sessionStorage.removeItem("AREA_CODE");
+    sessionStorage.removeItem("AREA_NAME");
+    sessionStorage.removeItem("SIGUNGU_CODE");
+    sessionStorage.removeItem("SIGUNGU_NAME");
 
     setSelectedDo("");
     setSelectedSi("");
@@ -323,8 +323,8 @@ const RndLocation = () => {
         }
         onClick={() => {
           setSelectedDo(item.value);
-          localStorage.setItem(AREA_CODE, item.value);
-          localStorage.setItem(AREA_NAME, item.name);
+          sessionStorage.setItem(AREA_CODE, item.value);
+          sessionStorage.setItem(AREA_NAME, item.name);
         }}
       >
         {item.name}
@@ -344,8 +344,8 @@ const RndLocation = () => {
           }
           onClick={() => {
             setSelectedSi(item.value);
-            localStorage.setItem(SIGUNGU_CODE, item.value);
-            localStorage.setItem(SIGUNGU_NAME, item.name);
+            sessionStorage.setItem(SIGUNGU_CODE, item.value);
+            sessionStorage.setItem(SIGUNGU_NAME, item.name);
           }}
         >
           {item.name}
@@ -373,9 +373,9 @@ const RndLocation = () => {
         dispatch(__getTheme(search));
         navigate(
           "/rndselect/" +
-            localStorage.getItem(SIGUNGU_CODE) +
+            sessionStorage.getItem(SIGUNGU_CODE) +
             "/" +
-            localStorage.getItem(AREA_CODE)
+            sessionStorage.getItem(AREA_CODE)
         );
       },
     }).then((result) => {

@@ -64,14 +64,14 @@ const SelectLike = () => {
     { name: "제주", value: 39 },
   ];
 
-  // areaCode를 선택했을 때 selectedDo와 localStorage에 값 저장
+  // areaCode를 선택했을 때 selectedDo와 sessionStorage에 값 저장
   const doSelectHandler = (e) => {
     setSelectedDo(e.target.value);
     const sameDo = doList.find((list) => list.value == e.target.value);
-    localStorage.setItem("sameDo", sameDo.name);
+    sessionStorage.setItem("sameDo", sameDo.name);
   };
 
-  const sameDo = localStorage.getItem("sameDo");
+  const sameDo = sessionStorage.getItem("sameDo");
 
   // 세부 지역별 해당 do, name, value (sigunguCode)
   const siList = [

@@ -47,8 +47,8 @@ const List = () => {
         }
         onClick={() => {
           setSelectedTheme(item.value);
-          localStorage.setItem(THEME_CODE, item.value);
-          localStorage.setItem(THEME_NAME, item.name);
+          sessionStorage.setItem(THEME_CODE, item.value);
+          sessionStorage.setItem(THEME_NAME, item.name);
         }}
       >
         {item.name}
@@ -57,7 +57,7 @@ const List = () => {
   };
 
   // const init = () => {
-  //   let data = localStorage.getItem(THEME_CODE);
+  //   let data = sessionStorage.getItem(THEME_CODE);
   //   if (data !== null) setSelectedTheme(data);
   // };
 
@@ -66,12 +66,12 @@ const List = () => {
   // select 페이지로 돌아올 시 자동으로 필터 초기화
   const initialization = (e) => {
     // e.preventDefault();
-    localStorage.removeItem("THEME_CODE");
-    localStorage.removeItem("THEME_NAME");
-    localStorage.removeItem("AREA_CODE");
-    localStorage.removeItem("AREA_NAME");
-    localStorage.removeItem("SIGUNGU_CODE");
-    localStorage.removeItem("SIGUNGU_NAME");
+    sessionStorage.removeItem("THEME_CODE");
+    sessionStorage.removeItem("THEME_NAME");
+    sessionStorage.removeItem("AREA_CODE");
+    sessionStorage.removeItem("AREA_NAME");
+    sessionStorage.removeItem("SIGUNGU_CODE");
+    sessionStorage.removeItem("SIGUNGU_NAME");
 
     setSelectedTheme("");
     setSelectedDo("");
@@ -90,12 +90,12 @@ const List = () => {
   const SIGUNGU_CODE = "SIGUNGU_CODE";
   const SIGUNGU_NAME = "SIGUNGU_NAME";
 
-  const GET_THEME_CODE = window.localStorage.getItem("THEME_CODE");
-  const GET_THEME_NAME = window.localStorage.getItem("THEME_NAME");
-  const GET_AREA_CODE = window.localStorage.getItem("AREA_CODE");
-  const GET_AREA_NAME = window.localStorage.getItem("AREA_NAME");
-  const GET_SIGUNGU_CODE = window.localStorage.getItem("SIGUNGU_CODE");
-  const GET_SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
+  const GET_THEME_CODE = window.sessionStorage.getItem("THEME_CODE");
+  const GET_THEME_NAME = window.sessionStorage.getItem("THEME_NAME");
+  const GET_AREA_CODE = window.sessionStorage.getItem("AREA_CODE");
+  const GET_AREA_NAME = window.sessionStorage.getItem("AREA_NAME");
+  const GET_SIGUNGU_CODE = window.sessionStorage.getItem("SIGUNGU_CODE");
+  const GET_SIGUNGU_NAME = window.sessionStorage.getItem("SIGUNGU_NAME");
 
   const search = {
     themeCode: GET_THEME_CODE,
@@ -395,10 +395,10 @@ const List = () => {
         onClick={() => {
           setSelectedDo(item.value);
           setSelectedSi("");
-          localStorage.setItem(AREA_CODE, item.value);
-          localStorage.setItem(AREA_NAME, item.name);
-          localStorage.removeItem(SIGUNGU_CODE);
-          localStorage.removeItem(SIGUNGU_NAME);
+          sessionStorage.setItem(AREA_CODE, item.value);
+          sessionStorage.setItem(AREA_NAME, item.name);
+          sessionStorage.removeItem(SIGUNGU_CODE);
+          sessionStorage.removeItem(SIGUNGU_NAME);
         }}
       >
         {item.name}
@@ -421,8 +421,8 @@ const List = () => {
           }
           onClick={() => {
             setSelectedSi(item.value);
-            localStorage.setItem(SIGUNGU_CODE, item.value);
-            localStorage.setItem(SIGUNGU_NAME, item.name);
+            sessionStorage.setItem(SIGUNGU_CODE, item.value);
+            sessionStorage.setItem(SIGUNGU_NAME, item.name);
           }}
         >
           {item.name}

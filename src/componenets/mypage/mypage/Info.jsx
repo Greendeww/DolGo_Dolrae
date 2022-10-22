@@ -5,9 +5,9 @@ import styled from "styled-components";
 const Info = () => {
   const navigate = useNavigate();
 
-  // localStorage로부터 가져온 username과 nickname
-  const username = localStorage.getItem("username");
-  const nickname = localStorage.getItem("nickname");
+  // sessionStorage로부터 가져온 username과 nickname
+  const username = sessionStorage.getItem("username");
+  const nickname = sessionStorage.getItem("nickname");
 
   return (
     <StInfo>
