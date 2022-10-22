@@ -21,7 +21,7 @@ const DetailImage = ({post}) => {
     autoplayspeed: 10000,
     autoplay:true,
     pauseOnHover : true,
-    arrow:false,
+    arrows :false,
     draggable:true,
   };
 

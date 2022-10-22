@@ -12,6 +12,7 @@ const PostModal = ({ modal, setModal, data }) => {
           <p>정말 삭제하시겠습니까?</p>
           <Buttons>
             <button
+            // 삭제 버튼을 눌렀을 때 서버로 해당 place_id 전송
               onClick={async () => {
                 try {
                   const res = await instance.delete(
@@ -96,10 +97,10 @@ const Buttons = styled.div`
   justify-content: center;
   margin-top: 25px;
   gap: 20px;
-  width: 60%;
+  width: 80%;
   height: 45px;
 
   & button {
-    width: 60px;
+    width: 40%;
   }
 `;

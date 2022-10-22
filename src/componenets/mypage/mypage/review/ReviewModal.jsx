@@ -40,7 +40,7 @@ const ReviewModal = ({ item }) => {
               상세페이지로
             </Button>
           </StarDiv>
-          <p style={{ paddingLeft: "10px", width: "360px", wordWrap: "break-word", lineHeight: "28px"}}>{item.content}</p>
+          <p style={{ paddingLeft: "10px", width: "90%", wordWrap: "break-word", lineHeight: "28px"}}>{item.content}</p>
           <ButtonDiv>
             <ReviseBut
               onClick={() =>

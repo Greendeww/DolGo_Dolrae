@@ -11,9 +11,13 @@ import CompleteModal from "../../componenets/modal/CompleteModal";
 const RequestDetail = () => {
   const navigate = useNavigate();
   const param = useParams();
-  const [data, setData] = useState();
+
+  // modal on/off를 설정할 state
   const [modal, setModal] = useState(false);
   const [completeModal, setCompleteModal] = useState(false);
+
+  // 서버로부터 받아온 데이터를 state에 저장
+  const [data, setData] = useState();
 
   const getData = async () => {
     const res = await instance.get(`/api/auth/order/${param.id}`);
@@ -21,12 +25,7 @@ const RequestDetail = () => {
     setData(res.data);
   };
 
-  const deleteBtn = async () => {
-    setModal(true);
-    // const res = await instance.delete(`/api/auth/place/${param.id}`);
-    // console.log(res)
-  };
-
+  // 렌더링될 때마다 getData 함수 실행
   useEffect(() => {
     getData();
   }, []);
@@ -123,7 +122,7 @@ const RequestDetail = () => {
               수정
             </button>
           ) : (
-            <button onClick={deleteBtn}>삭제</button>
+            <button onClick={() => setModal(true)}>삭제</button>
           )}
           {data?.state === false ? (
             <button onClick={() => setCompleteModal(!completeModal)}>
@@ -135,12 +134,18 @@ const RequestDetail = () => {
             </button>
           )}
 
+          {/* 삭제버튼 클릭시 modal */}
           {modal === true ? (
             <PostModal modal={modal} setModal={setModal} data={data} />
           ) : null}
 
+          {/* 완료버튼 클릭시 modal */}
           {completeModal === true ? (
-            <CompleteModal completeModal={completeModal} setCompleteModal={setCompleteModal} data={data} />
+            <CompleteModal
+              completeModal={completeModal}
+              setCompleteModal={setCompleteModal}
+              data={data}
+            />
           ) : null}
         </Buttons>
       </Container>
@@ -150,6 +155,37 @@ const RequestDetail = () => {
 
 export default RequestDetail;
 
+
+const Div = styled.div `
+    width: 428px;
+    margin: 0px auto 0px auto;
+`
+const Body = styled.div `
+    width: 430px;
+    height: 1450px;
+    background-color: rgba(121, 185, 211, 0.3);
+`
+const UserName = styled.div `
+    width: 428px;
+    margin: 70px auto 0px auto;
+`
+const Date = styled.div `
+    width: 428px;
+    margin: 0px auto 0px auto;
+`
+const ReportType = styled.div `
+    width: 428px;
+    margin: 0px auto 0px auto;
+`
+const ReportContext = styled.div `
+    width: 428px;
+    margin: 0px auto 0px auto;
+`
+const Picture = styled.img `
+    width: 428px;
+    height: 300px;
+    margin: 30px auto 0px auto;
+`
 const StRequestDetail = styled.div`
   max-width: 428px;
   width: 100%;
@@ -186,6 +222,7 @@ const Buttons = styled.div`
   padding-bottom: 50px;
   width: 95%;
   margin: 0 auto;
+>>>>>>> 7c66360f4b1e9147c82271399a3df290aaab0c11
 
   & button {
     margin: 0 auto;

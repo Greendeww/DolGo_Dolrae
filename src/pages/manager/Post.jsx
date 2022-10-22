@@ -7,13 +7,22 @@ import { instance } from "../../shared/Api";
 
 const Post = () => {
   const navigate = useNavigate();
+
+  // input에 입력한 img를 저장할 state
   const [image, setImage] = useState([]);
+
+  // image 미리보기를 위한 state
   const [fileImage, setFileImage] = useState([]);
+
+  // id를 storage에서 가져옴
+  const id = localStorage.getItem("ID");
+
+  // 선택한 Do, Si, Theme를 저장할 state
   const [selectedDo, setSelectedDo] = useState();
   const [selectedSi, setSelectedSi] = useState();
   const [selectedTheme, setSelectedTheme] = useState();
-  const id = localStorage.getItem("ID")
 
+  // 기존 데이터를 저장할 state
   const initialState = {
     title: "",
     content: "",
@@ -22,33 +31,33 @@ const Post = () => {
 
   const [req, setReq] = useState(initialState);
 
+  // input에 입력한 값을 state에 저장해줄 onChange 함수
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setReq({ ...req, [name]: value });
   };
 
   const onChangeImg = (e) => {
+    // input에 입력한 값을 imageList에 저장
     const imageList = e.target.files;
-    // const maxImageCnt = 3;
-    const imageLists = [...image];
-    // if(image.length > maxImageCnt){
-    //   alert("첨부파일은 최대 3개까지 가능합니다")
-    // }
 
-    console.log(imageList);
+    // image list 복사
+    const imageLists = [...image];
     const imgFiles = [...fileImage];
+
+    // image를 url로 변환하여 imgFiles에 저장
     for (let i = 0; i < imageList.length; i++) {
       const nowImageUrl = URL.createObjectURL(e.target.files[i]);
       imgFiles.push(nowImageUrl);
     }
+
+    // image를 imageLists에 저장
     for (let i = 0; i < imageList.length; i++) {
       const nowImageUrl1 = e.target.files[i];
       imageLists.push(nowImageUrl1);
       continue;
     }
-    // if (imageLists.length > 3) {
-    //   imageLists = imageLists.slice(0, 3);
-    // }
+
     setFileImage(imgFiles);
     setImage(imageLists);
   };
@@ -59,6 +68,7 @@ const Post = () => {
     setImage(image.filter((_, index) => index !== id));
   };
 
+  // 전송하기 버튼 Click시 서버로 데이터 전송
   const onSubmitHandler = async (e) => {
     const request = {
       title: req.title,
@@ -68,8 +78,8 @@ const Post = () => {
       areaCode: selectedDo,
       sigunguCode: selectedSi,
     };
-    console.log(request);
 
+    // 빈값일 때 alert
     if (
       request.content === "" ||
       request.address === "" ||
@@ -79,22 +89,29 @@ const Post = () => {
     ) {
       alert("필수 항목을 모두 작성해주세요.");
       return;
-    } else {
+    }
+
+    // formData 형식으로 변환
+    else {
       const json = JSON.stringify(request);
       const blob = new Blob([json], { type: "application/json" });
       const formData = new FormData();
 
+      // image를 formData에 image라는 이름으로 저장
       for (let i = 0; i < image.length; i++) {
         formData.append("image", image[i]);
       }
+
+      // blob을 formData에 data라는 이름으로 저장
       formData.append("data", blob);
 
+      // 서버로 formData 전송
       const res = await instance.post(`/api/auth/place`, formData, {
         headers: {
           "content-type": "multipart/form-data",
         },
       });
-      console.log(res);
+
       try {
         alert("게시글이 추가되었습니다.");
         navigate(`/request/detail/${id}`);
@@ -128,6 +145,7 @@ const Post = () => {
     { name: "제주", value: 39 },
   ];
 
+  // do 선택 값을 selectedDo와 storage에 저장
   const doSelectHandler = (e) => {
     setSelectedDo(e.target.value);
     const sameDo = doList.find((list) => list.value == e.target.value);
@@ -389,6 +407,7 @@ const Post = () => {
     { do: "제주", name: "제주", value: 4 },
   ];
 
+  // si 선택 값을 selectedSi에 저장
   const SiSelectHandler = (e) => {
     setSelectedSi(e.target.value);
   };
@@ -402,6 +421,7 @@ const Post = () => {
     { name: "식도락", value: "39" },
   ];
 
+  // 테마 선택 값을 selectedTheme에 저장
   const themeSelectHandler = (e) => {
     setSelectedTheme(e.target.value);
   };

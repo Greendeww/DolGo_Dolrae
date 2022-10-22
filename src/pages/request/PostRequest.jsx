@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../../componenets/header/Header";
 import { instance } from "../../shared/Api";
+import { getCookie, setCookie } from "../../shared/Cookie";
+import axios from "axios";
 
 const PostRequest = () => {
   const navigate = useNavigate();
@@ -81,6 +83,63 @@ const PostRequest = () => {
       navigate("/");
     }
   };
+
+  const refresh_token = getCookie("REFRESH_TOKEN");
+
+  // const getToken = localStorage.getItem("ACCESS_TOKEN");
+  // const getToken = getCookie("ACCESS_TOKEN")
+  // console.log(getToken)
+  // const navigate =useNavigate()
+
+  // useEffect(() => {
+  //   if(getToken === undefined){
+  //     alert("로그인이 필요한 서비스입니다.")
+  //     navigate('/login')
+  //   }
+  // },[getToken])
+
+  // const getToken = localStorage.getItem("ACCESS_TOKEN");
+  // const getToken = getCookie("ACCESS_TOKEN")
+  // console.log(getToken)
+  // const navigate =useNavigate()
+
+  // useEffect(() => {
+  //   if(getToken === undefined){
+  //     alert("로그인이 필요한 서비스입니다.")
+  //     navigate('/login')
+  //   }
+  // },[getToken])
+
+  // 토큰 재발급
+  const getToken = async () => {
+    try {
+      console.log("토큰 만료");
+      alert("토큰 만료");
+      const res = await axios.post(
+        process.env.REACT_APP_BASE_URL + "/api/member/retoken",
+        {},
+        {
+          headers: {
+            RefreshToken: refresh_token,
+          },
+        }
+      );
+      setCookie("ACCESS_TOKEN", res.headers.authorization);
+      setCookie("REFRESH_TOKEN", res.headers.refreshtoken);
+      console.log("토큰이 갱신되었습니다.");
+    } catch {
+      alert("토큰 갱신에 실패하였습니다.");
+    }
+  };
+
+  useEffect(() => {
+    if (
+      getCookie("ACCESS_TOKEN") === undefined &&
+      getCookie("REFRESH_TOKEN") !== undefined
+    ) {
+      getToken();
+    }
+  }, []);
 
   return (
     <StRegistration>
@@ -163,8 +222,8 @@ const PostRequest = () => {
           </div>
         </div>
         <Buttons>
-          <CancelBtn onClick={() => navigate(-1)}>취소</CancelBtn>
           <PostBtn onClick={onSubmitHandler}>작성하기</PostBtn>
+          <CancelBtn onClick={() => navigate(-1)}>취소</CancelBtn>
         </Buttons>
       </Container>
     </StRegistration>
@@ -188,10 +247,11 @@ const Buttons = styled.div`
   display: flex;
   padding-top: 40px;
   padding-bottom: 50px;
+  width: 90%;
 `;
 
 const Title = styled.p`
-  width: 200px;
+  width: 100px;
   height: 40px;
   padding: 40px 0px 0px 35px;
   font-weight: 700;
@@ -202,7 +262,7 @@ const Title = styled.p`
 const Text = styled.input`
   display: flex;
   margin: 10px auto;
-  width: 373px;
+  width: 90%;
   height: 52px;
   background-color: white;
   border-radius: 15px;
@@ -219,7 +279,7 @@ const CheckBox = styled.input`
 `;
 
 const Context = styled.textarea`
-  width: 350px;
+  width: 85%;
   height: 200px;
   display: flex;
   margin: 0 auto;

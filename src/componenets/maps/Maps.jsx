@@ -7,9 +7,10 @@ import MapInfo from './MapInfo';
 import styled, { keyframes } from "styled-components";
 
 
-const Maps = ({aniState, modal}) => {
+const Maps = ({aniState}) => {
 console.log(aniState)
 const [positions, setPositions] = useState([]);
+
 
 
 const fetch = async () => {

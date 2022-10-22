@@ -161,6 +161,10 @@ const DetailRevise = () => {
     dispatch(_updateComment(payload));
   };
 
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
+
   return (
     <St>
       <Header />

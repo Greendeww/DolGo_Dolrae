@@ -4,27 +4,25 @@ import styled from "styled-components";
 import { instance } from "../../shared/Api";
 
 const CompleteModal = ({ completeModal, setCompleteModal, data }) => {
+
+  // input에 입력하는 값을 onChange를 통해 state에 저장
   const [content, setContent] = useState();
-  console.log(content);
 
-  console.log(data)
-
+  // 작성 버튼을 눌렀을 때 서버로 전송
   const completeHandler = async () => {
-
-    const a = {
-      content: content,
+    const req = {
+      answer: content,
       id: data.id,
       username: data.username
     };
 
     try {
-      const res = await instance.post(`/api/auth/order/state`, a);
+      const res = await instance.post(`/api/auth/order/state`, req);
       console.log(res);
       alert("답변이 등록되었습니다.");
       setCompleteModal(false);
     } catch {
       alert("잠시후 다시 시도해주세요.");
-      // setCompleteModal(false);
     }
   };
 
@@ -120,6 +118,6 @@ const Buttons = styled.div`
   height: 45px;
 
   & button {
-    width: 40%;
+    width: 45%;
   }
 `;
