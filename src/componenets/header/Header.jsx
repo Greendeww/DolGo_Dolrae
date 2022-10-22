@@ -11,20 +11,28 @@ import ToTheTop from "../scroll/ToTheTop";
 import Search from "./Search";
 import burger from "../../assert/header/burger.png";
 import event from "../../assert/header/event.png";
-
+import SSE from "../sse/SSE";
+import { useEffect } from "react";
 
 const Header = ({ title }) => {
   const navigate = useNavigate();
 
+  // 햄버거 메뉴 modal
   const [modal, setModal] = useState(false);
 
+  // sse modal
+  const [notice, setNotice] = useState(false);
+
+  // 로그인 여부와 관리자 여부를 확인하기 위해 storage에서 가져온 데이터
   const role = sessionStorage.getItem("role");
   const token = sessionStorage.getItem("ACCESS_TOKEN");
 
+  // 클릭 시 모달 열고 닫기
   const onModalHandler = (e) => {
     setModal(!modal);
   };
 
+  // 로그아웃 클릭 시, 데이터 전송 & storage 초기화
   const logout = async () => {
     const response = await instance.post("/api/auth/member/logout");
     alert(response.data);
@@ -43,11 +51,34 @@ const Header = ({ title }) => {
     navigate("/");
   };
 
+  // sse
+  const [count, setCount] = useState();
+
+  const getNotice = async () => {
+    const res = await instance.get("/api/auth/notice/notifications");
+    setCount(res.data.unreadCount);
+  };
+
+  useEffect(() => {
+    if (token) {
+      getNotice();
+    }
+  }, []);
+
   return (
     <StHeader>
       <Top>
-        {/* <Bell alt="" src={bell} style={{ paddingLeft: "8px" }} /> */}
         <Bell
+          alt=""
+          src={bell}
+          style={{ paddingLeft: "8px" }}
+          onClick={() => setNotice(!notice)}
+        />
+        {/* 알림 수가 1 이상이면 표시해주기 */}
+        {count === 0 || count === undefined ? null : <Count />}
+        {/* 알림 아이콘 클릭하면 sse 모달 open */}
+        {notice === true ? <SSE modal={notice} setModal={setNotice} /> : null}
+        {/* <Bell
           alt=""
           src={event}
           onClick={() =>
@@ -55,7 +86,7 @@ const Header = ({ title }) => {
               "https://blog.naver.com/PostView.naver?blogId=wmr06102&Redirect=View&logNo=222905608839&categoryNo=13&isAfterWrite=true&isMrblogPost=false&isHappyBeanLeverage=true&contentLength=6267&isWeeklyDiaryPopupEnabled=false"
             )
           }
-        />
+        /> */}
         <img alt="" src={dolphin} onClick={() => navigate("/")} />
         <img
           alt=""
@@ -70,12 +101,14 @@ const Header = ({ title }) => {
             <h2 onClick={() => navigate("/")}>홈</h2>
             <h2 onClick={() => navigate("/select")}>지역별 조회</h2>
             <h2 onClick={() => navigate("/random")}>랜덤 추천</h2>
+            <h2 onClick={() => navigate("/ideal")}>이상형 월드컵</h2>
+            <br />
             {token !== null ? (
               <>
-                <h2 onClick={() => navigate("/mypage")}>마이페이지</h2>
                 <h2 onClick={() => navigate("/request/post")}>
                   장소 등록 요청
                 </h2>
+                <h2 onClick={() => navigate("/mypage")}>마이페이지</h2>
               </>
             ) : null}
             <br />
@@ -103,10 +136,9 @@ const Header = ({ title }) => {
         </MenuContainer>
       ) : null}
 
-      <ToTheTop/>
+      <ToTheTop />
 
       <Search title={title} />
-
     </StHeader>
   );
 };
@@ -136,18 +168,12 @@ const Top = styled.div`
   display: flex;
   justify-content: space-between;
   vertical-align: middle;
+  position: relative;
   /* & h2 {
     color: white;
     background-image: url(${dolphin});
     background-repeat: no-repeat;
   } */
-
-  & div {
-    top: 10px;
-    &:hover {
-      cursor: pointer;
-    }
-  }
 
   & img {
     margin-top: 5px;
@@ -163,13 +189,23 @@ const Top = styled.div`
   }
 `;
 
+const Count = styled.div`
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 10px;
+  left: 43px;
+  background-color: red;
+  border-radius: 50px;
+`;
+
 const Bell = styled.img`
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   margin: auto 0;
-  margin-left: 20px;
+  margin-left: 10px;
   position: relative;
-  top: 7px;
+  top: 8px;
 
   &:hover {
     cursor: pointer;
@@ -218,8 +254,4 @@ const Menu = styled.div`
   }
 `;
 
-
-const Log = styled.div`
-
-`;
-
+const Log = styled.div``;

@@ -18,17 +18,11 @@ import RandomSelect from "../componenets/random/RandomSelect";
 import RandomList from "../componenets/random/RandomList";
 import SearchPage from "../pages/tourist/SearchPage";
 import SearchSelList from "../componenets/searchList/SearchSelList";
+import WorldCup from "../componenets/worldCup/WorldCup";
 
 // mypage
 import MyPage from "../pages/mypage/MyPage";
 import MyPageChange from "../pages/mypage/MyPageChange";
-
-import AmendmentRequest from "../pages/request/AmendmentRequest";
-import RegistrationRequest from "../pages/request/RegistrationRequest";
-import Administrator from "../pages/manager/Administrator";
-import RequestEdit from "../pages/manager/RequestEdit";
-import RequestDetail from "../pages/manager/RequestDetail";
-import RequestPost from "../pages/manager/RequestPost";
 
 import MyRequestDetail from "../componenets/mypage/mypage/request/MyRequestDetail";
 import MapLike from "../componenets/mypage/mypage/likeList/MapLike";
@@ -46,9 +40,11 @@ import Edit from "../pages/manager/Edit";
 
 import { useEffect } from "react";
 import axios from "axios";
-
+import { EventSourcePolyfill } from "event-source-polyfill";
+import { instance } from "./Api";
 
 function Router() {
+
   // 토큰 재발급
   const getToken = async () => {
     try {
@@ -74,20 +70,82 @@ function Router() {
   };
 
   useEffect(() => {
+
+    // refreshToken이 존재하면 구독하기
+    if (sessionStorage.getItem("REFRESH_TOKEN")) {
+      isSSE();
+    }
+
+    // refreshToken이 존재하면 토큰 재발급
     setInterval(() => {
-      console.log("실행")
       if (sessionStorage.getItem("REFRESH_TOKEN") !== null) {
-        alert("토큰 재발급");
+        // alert("토큰 재발급");
         getToken();
       } else {
         return;
       }
-    }, 1200000);
+    }, 600000);
   }, []);
 
+  // 스크롤 맨 위 고정
   useEffect(() => {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   }, []);
+
+
+  // SSE
+  let eventSource = undefined;
+
+  const isSSE = () => {
+    eventSource = new EventSourcePolyfill(
+      process.env.REACT_APP_BASE_URL + `/api/auth/notice/subscribe`,
+      {
+        headers: {
+          Authorization: sessionStorage.getItem("ACCESS_TOKEN"),
+          RefreshToken: sessionStorage.getItem("REFRESH_TOKEN"),
+        },
+        heartbeatTimeout: 1000 * 60 * 20,
+      }
+    );
+    // console.log("구독성공");
+    eventSource.addEventListener("sse", function (event) {
+      const data = JSON.parse(event.data);
+      (async () => {
+        // 브라우저 알림
+        const showNotification = () => {
+          const notification = new Notification(
+            "돌고돌래에서 알림이 도착했습니다.",
+            {
+              body: data.content,
+            }
+          );
+          // console.log("알림성공");
+          setTimeout(() => {
+            notification.close();
+          }, 10 * 1000);
+
+          notification.addEventListener("click", () => {
+            window.open(data.url, "_blank");
+          });
+        };
+
+        // 브라우저 알림 허용 권한
+        let granted = false;
+
+        if (Notification.permission === "granted") {
+          granted = true;
+        } else if (Notification.permission !== "denied") {
+          let permission = await Notification.requestPermission();
+          granted = permission === "granted";
+        }
+
+        // 알림 보여주기
+        if (granted === true) {
+          showNotification();
+        }
+      })();
+    });
+  };
 
   return (
     <BrowserRouter>
@@ -129,6 +187,7 @@ function Router() {
         <Route path="/rnd" element={<RandomList />} />
         <Route path="/search/:title" element={<SearchPage />} />
         <Route path="/search/:title/:si/:area" element={<SearchSelList />} />
+        <Route path="/ideal" element={<WorldCup />} />
       </Routes>
     </BrowserRouter>
   );
