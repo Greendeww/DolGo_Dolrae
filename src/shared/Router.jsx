@@ -65,9 +65,9 @@ function Router() {
       sessionStorage.setItem("ACCESS_TOKEN", res.headers.authorization);
       sessionStorage.setItem("REFRESH_TOKEN", res.headers.refreshtoken);
 
-      console.log("토큰이 갱신되었습니다.");
+      // console.log("토큰이 갱신되었습니다.");
     } catch {
-      console.log("토큰 갱신에 실패하였습니다.");
+      // console.log("토큰 갱신에 실패하였습니다.");
     }
   };
 
