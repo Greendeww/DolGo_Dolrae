@@ -16,7 +16,7 @@ const CommentModal = ({ comment }) => {
   const [modalOn, setModalOn] = useState(false);
   const [imageModal, setImageModal] = useState(false);
   const nickname = sessionStorage.getItem("nickname");
-  const getToken = getCookie("ACCESS_TOKEN");
+  const getToken = sessionStorage.getItem("ACCESS_TOKEN");
   const navigate = useNavigate();
 
   const handleModal = () => {
@@ -82,7 +82,7 @@ const CommentModal = ({ comment }) => {
               }
           </div>
             <ModalPortal>
-            {imageModal && <ModalImage onClose={onClose} comment={comment}/>}
+              {imageModal && <ModalImage onClose={onClose} comment={comment}/>}
             </ModalPortal> 
         </BoxDiv>
       </ComDiv>

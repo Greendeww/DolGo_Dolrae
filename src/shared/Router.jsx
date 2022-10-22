@@ -23,7 +23,6 @@ import WorldCup from "../componenets/worldCup/WorldCup";
 // mypage
 import MyPage from "../pages/mypage/MyPage";
 import MyPageChange from "../pages/mypage/MyPageChange";
-
 import MyRequestDetail from "../componenets/mypage/mypage/request/MyRequestDetail";
 import MapLike from "../componenets/mypage/mypage/likeList/MapLike";
 import SelectLike from "../componenets/mypage/mypage/likeList/SelectLike";
@@ -37,6 +36,9 @@ import RequestList from "../pages/manager/RequestList";
 import RequestDetail from "../pages/manager/RequestDetail";
 import Post from "../pages/manager/Post";
 import Edit from "../pages/manager/Edit";
+
+// import MapLine from "../componenets/maps/MapLine";
+
 
 import { useEffect } from "react";
 import axios from "axios";
@@ -187,7 +189,8 @@ function Router() {
         <Route path="/rnd" element={<RandomList />} />
         <Route path="/search/:title" element={<SearchPage />} />
         <Route path="/search/:title/:si/:area" element={<SearchSelList />} />
-        <Route path="/ideal" element={<WorldCup />} />
+        {/* <Route path="/ideal" element={<WorldCup />} /> */}
+        {/* <Route path="/maps" element={<MapLine />} /> */}
       </Routes>
     </BrowserRouter>
   );

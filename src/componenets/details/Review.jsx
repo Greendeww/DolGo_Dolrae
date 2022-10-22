@@ -6,7 +6,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Comments from "./Comments";
 import { _getComments } from "../../redux/modules/comment";
-import { getCookie } from "../../shared/Cookie";
 
 const Review = ({ comment }) => {
   const navigate = useNavigate();

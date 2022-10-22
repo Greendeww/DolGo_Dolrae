@@ -17,3 +17,6 @@ span,p{
 li{
   list-style:none;
 }
+hr{
+  margin:0;
+}
