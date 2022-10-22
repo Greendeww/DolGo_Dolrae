@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const ThemeList = ({ post }) => {
-  console.log(post.theme);
+  // console.log(post.theme);
   return (
     <>
       <Wrap>

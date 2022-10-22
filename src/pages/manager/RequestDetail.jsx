@@ -21,7 +21,7 @@ const RequestDetail = () => {
 
   const getData = async () => {
     const res = await instance.get(`/api/auth/order/${param.id}`);
-    console.log(res);
+    // console.log(res);
     setData(res.data);
   };
 
