@@ -59,6 +59,12 @@ const Header = ({ title }) => {
     setCount(res.data.unreadCount);
   };
 
+  const noticeModalHandler = () => {
+    if (token) {
+      setNotice(!notice);
+    }
+  };
+
   useEffect(() => {
     if (token) {
       getNotice();
@@ -72,7 +78,7 @@ const Header = ({ title }) => {
           alt=""
           src={bell}
           style={{ paddingLeft: "8px" }}
-          onClick={() => setNotice(!notice)}
+          onClick={noticeModalHandler}
         />
         {/* 알림 수가 1 이상이면 표시해주기 */}
         {count === 0 || count === undefined ? null : <Count />}

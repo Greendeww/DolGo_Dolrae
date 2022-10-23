@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../../componenets/header/Header";
 import { instance } from "../../shared/Api";
-import { getCookie, setCookie } from "../../shared/Cookie";
-import axios from "axios";
 
 const PostRequest = () => {
   const navigate = useNavigate();
@@ -60,7 +58,6 @@ const PostRequest = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log(req)
     if (req.title === "" || req.content === "" || req.address === "") {
       alert("필수 항목을 모두 작성해주세요.");
       return;
@@ -74,7 +71,7 @@ const PostRequest = () => {
       }
       formData.append("data", blob);
 
-      const res = await instance.post(`/api/auth/order`, formData, {
+      await instance.post(`/api/auth/order`, formData, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -84,61 +81,9 @@ const PostRequest = () => {
     }
   };
 
-  const refresh_token = getCookie("REFRESH_TOKEN");
-
-  // const getToken = sessionStorage.getItem("ACCESS_TOKEN");
-  // const getToken = getCookie("ACCESS_TOKEN")
-  // console.log(getToken)
-  // const navigate =useNavigate()
-
-  // useEffect(() => {
-  //   if(getToken === undefined){
-  //     alert("로그인이 필요한 서비스입니다.")
-  //     navigate('/login')
-  //   }
-  // },[getToken])
-
-  // const getToken = sessionStorage.getItem("ACCESS_TOKEN");
-  // const getToken = getCookie("ACCESS_TOKEN")
-  // console.log(getToken)
-  // const navigate =useNavigate()
-
-  // useEffect(() => {
-  //   if(getToken === undefined){
-  //     alert("로그인이 필요한 서비스입니다.")
-  //     navigate('/login')
-  //   }
-  // },[getToken])
-
-  // 토큰 재발급
-  const getToken = async () => {
-    try {
-      console.log("토큰 만료");
-      alert("토큰 만료");
-      const res = await axios.post(
-        process.env.REACT_APP_BASE_URL + "/api/member/retoken",
-        {},
-        {
-          headers: {
-            RefreshToken: refresh_token,
-          },
-        }
-      );
-      setCookie("ACCESS_TOKEN", res.headers.authorization);
-      setCookie("REFRESH_TOKEN", res.headers.refreshtoken);
-      console.log("토큰이 갱신되었습니다.");
-    } catch {
-      alert("토큰 갱신에 실패하였습니다.");
-    }
-  };
-
+  // 화면 렌더링시 스크롤 맨 위로 이동
   useEffect(() => {
-    if (
-      getCookie("ACCESS_TOKEN") === undefined &&
-      getCookie("REFRESH_TOKEN") !== undefined
-    ) {
-      getToken();
-    }
+    window.scrollTo(0, 0);
   }, []);
 
   return (

@@ -31,7 +31,7 @@ const Banner = () => {
                     setClick(!click);
                   }}
                 />
-                <p>다시 보지 않기</p>
+                <p>다음 로그인까지 보지 않기</p>
               </label>
             </div>
             <div>

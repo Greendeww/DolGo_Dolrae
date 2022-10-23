@@ -36,7 +36,7 @@ const List = () => {
       console.error(err);
     }
   }, []);
-  console.log(posts);
+
   useEffect(() => {
     if (!observerTargetEl.current || !hasNextPage) return;
 

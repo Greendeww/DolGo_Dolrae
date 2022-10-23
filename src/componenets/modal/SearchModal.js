@@ -1,24 +1,15 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../header/Header"
 
-const SearchModal = ({ close, title}) => {
-  const dispatch = useDispatch();
+const SearchModal = ({ close, title }) => {
   const navigate = useNavigate();
-  document.body.style.overflow = "hidden"
-
-  const AREA_CODE = "AREA_CODE";
-  const AREA_NAME = "AREA_NAME";
-  const SIGUNGU_CODE = "SIGUNGU_CODE";
-  const SIGUNGU_NAME = "SIGUNGU_NAME";
+  document.body.style.overflow = "hidden";
 
   const [selectedDo, setSelectedDo] = useState("");
   const [selectedSi, setSelectedSi] = useState("");
-
 
   // 필터 초기화
   const initialization = (e) => {
@@ -29,19 +20,6 @@ const SearchModal = ({ close, title}) => {
 
     setSelectedDo("");
     setSelectedSi("");
-  };
-
-  // 서버로 보내줄 값 ( 선택한 테마, 지역 )
-  const GET_AREA_CODE = window.sessionStorage.getItem("AREA_CODE");
-  const GET_AREA_NAME = window.sessionStorage.getItem("AREA_NAME");
-  const GET_SIGUNGU_CODE = window.sessionStorage.getItem("SIGUNGU_CODE");
-  const GET_SIGUNGU_NAME = window.sessionStorage.getItem("SIGUNGU_NAME");
-
-  const search = {
-    areaCode: GET_AREA_CODE,
-    areaName: GET_AREA_NAME,
-    sigunguCode: GET_SIGUNGU_CODE,
-    sigunguName: GET_SIGUNGU_NAME,
   };
 
   // 지역별 name, value
@@ -257,10 +235,10 @@ const SearchModal = ({ close, title}) => {
         onClick={() => {
           setSelectedDo(item.value);
           setSelectedSi("");
-          sessionStorage.setItem(AREA_CODE, item.value);
-          sessionStorage.setItem(AREA_NAME, item.name);
-          sessionStorage.removeItem(SIGUNGU_CODE);
-          sessionStorage.removeItem(SIGUNGU_NAME);
+          sessionStorage.setItem("AREA_CODE", item.value);
+          sessionStorage.setItem("AREA_NAME", item.name);
+          sessionStorage.removeItem("SIGUNGU_CODE");
+          sessionStorage.removeItem("SIGUNGU_NAME");
         }}
       >
         {item.name}
@@ -270,6 +248,7 @@ const SearchModal = ({ close, title}) => {
 
   // 세부 지역 생성
   const DetailLocation = () => {
+    const GET_AREA_NAME = window.sessionStorage.getItem("AREA_NAME");
     return siList.map((item, idx) =>
       item.do === GET_AREA_NAME ? (
         <div
@@ -281,8 +260,8 @@ const SearchModal = ({ close, title}) => {
           }
           onClick={() => {
             setSelectedSi(item.value);
-            sessionStorage.setItem(SIGUNGU_CODE, item.value);
-            sessionStorage.setItem(SIGUNGU_NAME, item.name);
+            sessionStorage.setItem("SIGUNGU_CODE", item.value);
+            sessionStorage.setItem("SIGUNGU_NAME", item.name);
           }}
         >
           {item.name}
@@ -302,32 +281,47 @@ const SearchModal = ({ close, title}) => {
         <St>
           <Title>
             <button onClick={initialization}>초기화↺</button>
-            <p onClick={()=> 
-                {close(false); 
-                 document.body.style.overflow = "unset";}}>X</p>
+            <p
+              onClick={() => {
+                close(false);
+                document.body.style.overflow = "unset";
+              }}
+            >
+              X
+            </p>
           </Title>
           <StLocation>
             <StList>
-              <p>지역</p>
+              <p style={{ marginTop: "-20px" }}>지역</p>
               <Locations className="location-set">{Location()}</Locations>
             </StList>
-            <StList>
-              <p>세부지역</p>
-              <Locations className="location-set">
-                {DetailLocation()}
-              </Locations>
-            </StList>
+            {selectedDo !== "" ? (
+              <StList>
+                <p>세부지역</p>
+                <Locations className="location-set">
+                  {DetailLocation()}
+                </Locations>
+              </StList>
+            ) : null}
             <CompleteButton>
               <button
                 onClick={() => {
-                  if (
-                    GET_AREA_NAME === null ||
-                    GET_SIGUNGU_NAME === null
-                  ) {
-                    alert("모든 항목을 선택해주세요.");
+                  if (selectedDo === "") {
+                    alert("지역을 선택해주세요.");
                     return;
                   } else {
-                    navigate("/search/"+title+"/"+GET_SIGUNGU_CODE+"/"+GET_AREA_CODE);
+                    if (selectedSi === "") {
+                      sessionStorage.setItem("SIGUNGU_CODE", 0);
+                      sessionStorage.setItem("SIGUNGU_NAME", "전체");
+                    }
+                    navigate(
+                      "/search/" +
+                        title +
+                        "/" +
+                        window.sessionStorage.getItem("SIGUNGU_CODE") +
+                        "/" +
+                        window.sessionStorage.getItem("AREA_CODE")
+                    );
                     document.body.style.overflow = "unset";
                   }
                 }}
@@ -389,14 +383,15 @@ const St = styled.div`
 `;
 
 const Title = styled.div`
-  margin-top:30px;
   display: flex;
-  width: 95%;
+  width: 85%;
   justify-content: space-between;
   align-items: center;
+  margin: 0 auto;
+  margin-top: 50px;
 
-  button { 
-    margin-left:0px;
+  button {
+    margin-left: 0px;
     background: #ffc0c0;
     border: none;
     border-radius: 12px;
@@ -405,21 +400,23 @@ const Title = styled.div`
     text-align: center;
     color: #ffffff;
     cursor: pointer;
+    width: 120px;
   }
-  p{
-    margin-top:35px;
+
+  p {
+    margin-top: 35px;
     font-size: 35px;
     font-weight: bold;
     text-align: center;
     cursor: pointer;
-    &:hover{
-      color:#abd4e2;
+    &:hover {
+      color: #abd4e2;
     }
   }
 `;
 
 const StLocation = styled.div`
-    margin: 50px auto;
+  margin: 50px auto;
   & button {
     background-color: #ffc0c0;
     color: white;
@@ -432,7 +429,6 @@ const StLocation = styled.div`
     font-weight: bold;
     line-height: 24px;
     display: block;
-
   }
 `;
 
@@ -446,7 +442,6 @@ const StList = styled.div`
     line-height: 40px;
     color: #bfb8b8;
     margin: 20px;
-    margin-top: 30px;
     /* margin-left: 30px; */
   }
 `;
@@ -454,7 +449,7 @@ const StList = styled.div`
 const CompleteButton = styled.div`
   display: flex;
   padding-bottom: 20px;
-  margin: 0 auto;
+  margin: 40px auto;
 `;
 
 const Locations = styled.div`

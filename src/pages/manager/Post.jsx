@@ -15,9 +15,6 @@ const Post = () => {
   // image 미리보기를 위한 state
   const [fileImage, setFileImage] = useState([]);
 
-  // id를 storage에서 가져옴
-  const id = sessionStorage.getItem("ID");
-
   // 선택한 Do, Si, Theme를 저장할 state
   const [selectedDo, setSelectedDo] = useState();
   const [selectedSi, setSelectedSi] = useState();
@@ -115,7 +112,7 @@ const Post = () => {
 
       try {
         alert("게시글이 추가되었습니다.");
-        navigate(`/request/detail/${id}`);
+        navigate(`/`);
         sessionStorage.removeItem("sameDo");
         sessionStorage.removeItem("ID");
       } catch (error) {

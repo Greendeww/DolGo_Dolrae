@@ -4,23 +4,24 @@ import styled from "styled-components";
 import { instance } from "../../shared/Api";
 
 const CompleteModal = ({ completeModal, setCompleteModal, data }) => {
+  const navigate = useNavigate();
 
   // input에 입력하는 값을 onChange를 통해 state에 저장
-  const [content, setContent] = useState();
+  const [answer, setAnswer] = useState("");
 
   // 작성 버튼을 눌렀을 때 서버로 전송
   const completeHandler = async () => {
     const req = {
-      answer: content,
+      answer: answer,
       id: data.id,
       username: data.username
     };
 
     try {
-      const res = await instance.post(`/api/auth/order/state`, req);
-      console.log(res);
+      await instance.post(`/api/auth/order/state`, req);
       alert("답변이 등록되었습니다.");
       setCompleteModal(false);
+      navigate('/request/list')
     } catch {
       alert("잠시후 다시 시도해주세요.");
     }
@@ -32,7 +33,7 @@ const CompleteModal = ({ completeModal, setCompleteModal, data }) => {
         <PageDel>
           <textarea
             onChange={(e) => {
-              setContent(e.target.value);
+              setAnswer(e.target.value);
             }}
           />
           <Buttons>
