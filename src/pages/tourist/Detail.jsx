@@ -17,6 +17,7 @@ import Like from "../../componenets/like/Like";
 import Header from "../../componenets/header/Header";
 import { FaStar } from "react-icons/fa";
 import ThemeList from "../../componenets/theme/ThemeList";
+import DeletePostModal from "../../componenets/modal/DeletePostModal";
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -25,6 +26,9 @@ const Detail = () => {
   const [posts, setPosts] = useState("");
   const [number, setNumber] = useState(1);
   const login = sessionStorage.getItem("username");
+
+  // 게시글 삭제버튼 클릭시 modal open
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const { isLoading, error, comment } = useSelector((state) => state.comment);
 
@@ -61,6 +65,7 @@ const Detail = () => {
       navigate(`/request/edit/${posts.id}`);
     }
   };
+
   return (
     <>
       <BoxDiv>
@@ -99,6 +104,22 @@ const Detail = () => {
                   </Request>
                 </div>
               </StarThemeDiv>
+              {sessionStorage.getItem("role") === "ADMIN" ? (
+                <Manager>
+                  <button onClick={() => navigate(`/edit/${id}`)}>
+                    수정
+                  </button>
+                  <button onClick={() => setDeleteModal(!deleteModal)}>
+                    삭제
+                  </button>
+                </Manager>
+              ) : null}
+              {deleteModal === true ? (
+                <DeletePostModal
+                  deleteModal={deleteModal}
+                  setDeleteModal={setDeleteModal}
+                />
+              ) : null}
             </ImgCover>
           </Cover>
           <Title></Title>
@@ -317,4 +338,18 @@ const ReviewDiv = styled.div`
 `;
 const Request = styled.span`
   cursor: pointer;
+`;
+const Manager = styled.div`
+  float: right;
+  margin-top: 25px;
+
+  & button {
+    margin-left: 10px;
+    background-color: white;
+    border: none;
+    font-weight: bold;
+    width: 65px;
+    height: 25px;
+    cursor: pointer;
+  }
 `;
