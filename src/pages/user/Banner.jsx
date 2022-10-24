@@ -7,12 +7,12 @@ const Banner = () => {
 
   const [modal, setModal] = useState(true);
 
-  const banner = localStorage.getItem("never");
+  const banner = sessionStorage.getItem("never");
 
   const closeHandler = () => {
     setModal(!modal);
     if (click === true) {
-      localStorage.setItem("never", click);
+      sessionStorage.setItem("never", click);
     } else {
       return;
     }
@@ -31,7 +31,7 @@ const Banner = () => {
                     setClick(!click);
                   }}
                 />
-                <p>다시 보지 않기</p>
+                <p>다음 로그인까지 보지 않기</p>
               </label>
             </div>
             <div>

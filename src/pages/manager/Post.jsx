@@ -15,9 +15,6 @@ const Post = () => {
   // image 미리보기를 위한 state
   const [fileImage, setFileImage] = useState([]);
 
-  // id를 storage에서 가져옴
-  const id = localStorage.getItem("ID");
-
   // 선택한 Do, Si, Theme를 저장할 state
   const [selectedDo, setSelectedDo] = useState();
   const [selectedSi, setSelectedSi] = useState();
@@ -115,9 +112,9 @@ const Post = () => {
 
       try {
         alert("게시글이 추가되었습니다.");
-        navigate(`/request/detail/${id}`);
-        localStorage.removeItem("sameDo");
-        localStorage.removeItem("ID");
+        navigate(`/`);
+        sessionStorage.removeItem("sameDo");
+        sessionStorage.removeItem("ID");
       } catch (error) {
         alert("내용을 다시 확인해주세요.");
       }
@@ -150,10 +147,10 @@ const Post = () => {
   const doSelectHandler = (e) => {
     setSelectedDo(e.target.value);
     const sameDo = doList.find((list) => list.value == e.target.value);
-    localStorage.setItem("sameDo", sameDo.name);
+    sessionStorage.setItem("sameDo", sameDo.name);
   };
 
-  const sameDo = localStorage.getItem("sameDo");
+  const sameDo = sessionStorage.getItem("sameDo");
 
   // 세부 지역별 해당 do, name, value
   const siList = [
@@ -534,7 +531,7 @@ const Post = () => {
           <CancelBtn
             onClick={() => {
               navigate(-1);
-              localStorage.removeItem("sameDo");
+              sessionStorage.removeItem("sameDo");
             }}
           >
             취소

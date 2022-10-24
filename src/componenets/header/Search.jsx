@@ -11,7 +11,7 @@ const Search = ({ title }) => {
     // [localStorage.getItem('keywords' || [])])
    JSON.parse(localStorage.getItem('keywords')) || []
   );
-  console.log(keywords)
+  // console.log(keywords)
 
   useEffect(() => {
     localStorage.setItem('keywords', JSON.stringify(keywords))

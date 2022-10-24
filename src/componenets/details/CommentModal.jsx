@@ -14,10 +14,9 @@ import ModalImage from "../modal/ModalImage";
 const CommentModal = ({ comment }) => {
   const [modalOn, setModalOn] = useState(false);
   const [imageModal, setImageModal] = useState(false);
-  const nickname = localStorage.getItem("nickname");
-  const role = localStorage.getItem("role");
-  console.log(role)
-  // const getToken = localStorage.getItem("ACCESS_TOKEN");
+  const nickname = sessionStorage.getItem("nickname");
+  const getToken = sessionStorage.getItem("ACCESS_TOKEN");
+
   const navigate = useNavigate();
 
   const handleModal = () => {

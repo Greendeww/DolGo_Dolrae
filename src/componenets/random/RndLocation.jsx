@@ -1,43 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { __getTheme } from "../../redux/modules/theme";
 import css from "../../css/select.css";
 import Header from "../header/Header";
 import Swal from "sweetalert2";
 
 const RndLocation = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const AREA_CODE = "AREA_CODE";
-  const AREA_NAME = "AREA_NAME";
-  const SIGUNGU_CODE = "SIGUNGU_CODE";
-  const SIGUNGU_NAME = "SIGUNGU_NAME";
-
-  const GET_THEME_CODE = window.localStorage.getItem("THEME_CODE");
-  const GET_THEME_NAME = window.localStorage.getItem("THEME_NAME");
-  const GET_AREA_CODE = window.localStorage.getItem("AREA_CODE");
-  const GET_AREA_NAME = window.localStorage.getItem("AREA_NAME");
-  const GET_SIGUNGU_CODE = window.localStorage.getItem("SIGUNGU_CODE");
-  const GET_SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
-
-  const search = {
-    themeCode: GET_THEME_CODE,
-    themeName: GET_THEME_NAME,
-    areaCode: GET_AREA_CODE,
-    areaName: GET_AREA_NAME,
-    sigunguCode: GET_SIGUNGU_CODE,
-    sigunguName: GET_SIGUNGU_NAME,
-  };
 
   const initialization = (e) => {
     // e.preventDefault();
-    localStorage.removeItem("AREA_CODE");
-    localStorage.removeItem("AREA_NAME");
-    localStorage.removeItem("SIGUNGU_CODE");
-    localStorage.removeItem("SIGUNGU_NAME");
+    sessionStorage.removeItem("AREA_CODE");
+    sessionStorage.removeItem("AREA_NAME");
+    sessionStorage.removeItem("SIGUNGU_CODE");
+    sessionStorage.removeItem("SIGUNGU_NAME");
 
     setSelectedDo("");
     setSelectedSi("");
@@ -323,8 +299,8 @@ const RndLocation = () => {
         }
         onClick={() => {
           setSelectedDo(item.value);
-          localStorage.setItem(AREA_CODE, item.value);
-          localStorage.setItem(AREA_NAME, item.name);
+          sessionStorage.setItem("AREA_CODE", item.value);
+          sessionStorage.setItem("AREA_NAME", item.name);
         }}
       >
         {item.name}
@@ -333,6 +309,7 @@ const RndLocation = () => {
   };
 
   const DetailLocation = () => {
+    const GET_AREA_NAME = window.sessionStorage.getItem("AREA_NAME");
     return siList.map((item, idx) =>
       item.do === GET_AREA_NAME ? (
         <div
@@ -344,8 +321,8 @@ const RndLocation = () => {
           }
           onClick={() => {
             setSelectedSi(item.value);
-            localStorage.setItem(SIGUNGU_CODE, item.value);
-            localStorage.setItem(SIGUNGU_NAME, item.name);
+            sessionStorage.setItem("SIGUNGU_CODE", item.value);
+            sessionStorage.setItem("SIGUNGU_NAME", item.name);
           }}
         >
           {item.name}
@@ -370,12 +347,11 @@ const RndLocation = () => {
       },
       willClose: () => {
         clearInterval(timerInterval);
-        dispatch(__getTheme(search));
         navigate(
           "/rndselect/" +
-            localStorage.getItem(SIGUNGU_CODE) +
+            sessionStorage.getItem("SIGUNGU_CODE") +
             "/" +
-            localStorage.getItem(AREA_CODE)
+            sessionStorage.getItem("AREA_CODE")
         );
       },
     }).then((result) => {
@@ -406,16 +382,22 @@ const RndLocation = () => {
             <Locations className="location-set">{Location()}</Locations>
           </div>
         </StList>
-        <StList>
-          <p style={{ marginTop: "50px" }}>세부지역</p>
-          <Locations className="location-set">{DetailLocation()}</Locations>
-        </StList>
+        {selectedDo !== "" ? (
+          <StList>
+            <p style={{ marginTop: "50px" }}>세부지역</p>
+            <Locations className="location-set">{DetailLocation()}</Locations>
+          </StList>
+        ) : null}
         <BtnDiv>
           <CompleteBtn
             onClick={() => {
-              if (GET_AREA_NAME === null || GET_SIGUNGU_NAME === null) {
+              if (selectedDo === null) {
                 alert("모든 항목을 선택해주세요.");
               } else {
+                if (selectedSi === "") {
+                  sessionStorage.setItem("SIGUNGU_CODE", 0);
+                  sessionStorage.setItem("SIGUNGU_NAME", "전체");
+                }
                 onRandom();
               }
             }}
