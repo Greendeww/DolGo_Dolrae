@@ -9,14 +9,15 @@ import "swiper/css";
 import styled from "styled-components";
 import ModalPortal from "../modal/ModalPortal";
 import Modal from "../modal/Modal";
-import { getCookie } from "../../shared/Cookie";
 import ModalImage from "../modal/ModalImage";
 
 const CommentModal = ({ comment }) => {
   const [modalOn, setModalOn] = useState(false);
   const [imageModal, setImageModal] = useState(false);
   const nickname = localStorage.getItem("nickname");
-  const getToken = localStorage.getItem("ACCESS_TOKEN");
+  const role = localStorage.getItem("role");
+  console.log(role)
+  // const getToken = localStorage.getItem("ACCESS_TOKEN");
   const navigate = useNavigate();
 
   const handleModal = () => {
@@ -46,20 +47,17 @@ const CommentModal = ({ comment }) => {
             <div style={{ display: "flex", alignItems: "center" }}></div>
             <div style={{ textAlign: "left" }} >
               {comment.imageList.map((image, index) => {
-                return <DetailImg onClick={onOpen} key={index} alt="" src={image} />;
+                return <DetailImg onClick={onOpen} key={index} alt="image" src={image} />;
               })}
             </div>
             <Star key={comment.comment_id} comment={comment} />
             <p style={{ marginTop: "20px", lineHeight: "28px" }}>
               {comment.content}
             </p>
-            {getToken === undefined
-              ? <ModalPortal>
-              {modalOn && <Modal onClose={handleModal} comment={comment} />}
-              </ModalPortal>
-              :<div>
-              {nickname === comment.nickname ? (
+              <div>
+              {(nickname === comment.nickname) || (role === "ADMIN")? (
               <ButtonDiv>
+                 {(nickname === comment.nickname)? (
                 <DelBut
                   onClick={() =>
                     navigate(
@@ -71,7 +69,8 @@ const CommentModal = ({ comment }) => {
                   }
                 >
                     수정하기
-                  </DelBut>
+                  </DelBut>)
+                  :null}
                   <ReviseBut onClick={deleteModal}>삭제하기</ReviseBut>
                 </ButtonDiv>
               ) : null}
@@ -79,7 +78,6 @@ const CommentModal = ({ comment }) => {
                 {modalOn && <Modal onClose={handleModal} comment={comment} />}
               </ModalPortal>
               </div>
-              }
           </div>
             <ModalPortal>
               {imageModal && <ModalImage onClose={onClose} comment={comment}/>}
@@ -131,6 +129,7 @@ const DetailImg = styled.img`
   border-radius: 20px;
   margin-top: 1rem;
   margin-right:0.5rem;
+  height:84px;
   cursor: pointer;
   @media screen and (max-width: 398px){
     width:82px;
