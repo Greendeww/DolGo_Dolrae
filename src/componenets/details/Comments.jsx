@@ -107,13 +107,7 @@ const PCom = styled.p`
   white-space: nowrap;
 `;
 const CommentDiv = styled.div`
-  /* display:flex; */
-  /* cursor:pointer;
-  margin-top:10px;
-  text-align:center; */
   background-color: #eef6fa;
-
-  /* border:5px solid #EBF8FF; */
   border-radius: 20px;
   margin-top: 0.8rem;
 `;
