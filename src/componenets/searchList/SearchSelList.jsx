@@ -252,7 +252,7 @@ const ImgBox = styled.div`
 const Img = styled.img`
   position: relative;
   max-width: 428px;
-  width: 50%;
+  width: 100%;
   height: 234px;
   z-index: -2;
   border-radius: 20px;

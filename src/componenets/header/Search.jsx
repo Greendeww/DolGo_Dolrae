@@ -63,7 +63,9 @@ const Search = ({ title }) => {
     if (e.key === "Enter") {
       if (searchWord === undefined) {
         alert("검색어를 입력해주세요.");
-      } else {
+      }else if (searchWord.trim() === ""){
+        alert("검색어를 입력해주세요.");
+      }else {
         handleAddKeyword(searchWord);
         window.location.replace("/search/" + searchWord);
       }
