@@ -17,8 +17,8 @@ export const instance = axios.create({
 // });
 
 // instance.interceptors.request.use((config) => {
-//     const token = localStorage.getItem("ACCESS_TOKEN");
-//     const refreshToken = localStorage.getItem("REFRESH_TOKEN");
+//     const token = sessionStorage.getItem("ACCESS_TOKEN");
+//     const refreshToken = sessionStorage.getItem("REFRESH_TOKEN");
 //     const cookieToken = getCookie("ACCESS_TOKEN");
 //     const cookieRefreshToken = getCookie("REFRESH_TOKEN");
 
@@ -31,8 +31,8 @@ export const instance = axios.create({
 // });
 
 instance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("ACCESS_TOKEN");
-  const refreshToken = localStorage.getItem("REFRESH_TOKEN");
+  const token = sessionStorage.getItem("ACCESS_TOKEN");
+  const refreshToken = sessionStorage.getItem("REFRESH_TOKEN");
 
   config.headers.Authorization = token;
   config.headers.RefreshToken = refreshToken;

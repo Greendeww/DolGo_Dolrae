@@ -15,12 +15,12 @@ const List = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const THEME_CODE = window.localStorage.getItem("THEME_CODE");
-  const AREA_CODE = window.localStorage.getItem("AREA_CODE");
-  const SIGUNGU_CODE = window.localStorage.getItem("SIGUNGU_CODE");
-  const THEME_NAME = window.localStorage.getItem("THEME_NAME");
-  const AREA_NAME = window.localStorage.getItem("AREA_NAME");
-  const SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
+  const THEME_CODE = window.sessionStorage.getItem("THEME_CODE");
+  const AREA_CODE = window.sessionStorage.getItem("AREA_CODE");
+  const SIGUNGU_CODE = window.sessionStorage.getItem("SIGUNGU_CODE");
+  const THEME_NAME = window.sessionStorage.getItem("THEME_NAME");
+  const AREA_NAME = window.sessionStorage.getItem("AREA_NAME");
+  const SIGUNGU_NAME = window.sessionStorage.getItem("SIGUNGU_NAME");
 
   const fetch = useCallback(async () => {
     try {
@@ -36,7 +36,7 @@ const List = () => {
       console.error(err);
     }
   }, []);
-  console.log(posts);
+
   useEffect(() => {
     if (!observerTargetEl.current || !hasNextPage) return;
 

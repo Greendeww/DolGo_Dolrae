@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import css from "../../css/select.css";
-import { __getTheme } from "../../redux/modules/theme";
 
 const List = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   // 선택한 theme, do, si를 저장할 state
   const [selectedTheme, setSelectedTheme] = useState("");
@@ -47,8 +44,8 @@ const List = () => {
         }
         onClick={() => {
           setSelectedTheme(item.value);
-          localStorage.setItem(THEME_CODE, item.value);
-          localStorage.setItem(THEME_NAME, item.name);
+          sessionStorage.setItem("THEME_CODE", item.value);
+          sessionStorage.setItem("THEME_NAME", item.name);
         }}
       >
         {item.name}
@@ -56,22 +53,15 @@ const List = () => {
     ));
   };
 
-  // const init = () => {
-  //   let data = localStorage.getItem(THEME_CODE);
-  //   if (data !== null) setSelectedTheme(data);
-  // };
-
-  // useEffect(init, []);
-
   // select 페이지로 돌아올 시 자동으로 필터 초기화
   const initialization = (e) => {
     // e.preventDefault();
-    localStorage.removeItem("THEME_CODE");
-    localStorage.removeItem("THEME_NAME");
-    localStorage.removeItem("AREA_CODE");
-    localStorage.removeItem("AREA_NAME");
-    localStorage.removeItem("SIGUNGU_CODE");
-    localStorage.removeItem("SIGUNGU_NAME");
+    sessionStorage.removeItem("THEME_CODE");
+    sessionStorage.removeItem("THEME_NAME");
+    sessionStorage.removeItem("AREA_CODE");
+    sessionStorage.removeItem("AREA_NAME");
+    sessionStorage.removeItem("SIGUNGU_CODE");
+    sessionStorage.removeItem("SIGUNGU_NAME");
 
     setSelectedTheme("");
     setSelectedDo("");
@@ -81,30 +71,6 @@ const List = () => {
   useEffect(() => {
     initialization();
   }, []);
-
-  // 서버로 보내줄 값 ( 선택한 테마, 지역 )
-  const THEME_CODE = "THEME_CODE";
-  const THEME_NAME = "THEME_NAME";
-  const AREA_CODE = "AREA_CODE";
-  const AREA_NAME = "AREA_NAME";
-  const SIGUNGU_CODE = "SIGUNGU_CODE";
-  const SIGUNGU_NAME = "SIGUNGU_NAME";
-
-  const GET_THEME_CODE = window.localStorage.getItem("THEME_CODE");
-  const GET_THEME_NAME = window.localStorage.getItem("THEME_NAME");
-  const GET_AREA_CODE = window.localStorage.getItem("AREA_CODE");
-  const GET_AREA_NAME = window.localStorage.getItem("AREA_NAME");
-  const GET_SIGUNGU_CODE = window.localStorage.getItem("SIGUNGU_CODE");
-  const GET_SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
-
-  const search = {
-    themeCode: GET_THEME_CODE,
-    themeName: GET_THEME_NAME,
-    areaCode: GET_AREA_CODE,
-    areaName: GET_AREA_NAME,
-    sigunguCode: GET_SIGUNGU_CODE,
-    sigunguName: GET_SIGUNGU_NAME,
-  };
 
   // 지역별 name, value
   const doList = [
@@ -395,10 +361,10 @@ const List = () => {
         onClick={() => {
           setSelectedDo(item.value);
           setSelectedSi("");
-          localStorage.setItem(AREA_CODE, item.value);
-          localStorage.setItem(AREA_NAME, item.name);
-          localStorage.removeItem(SIGUNGU_CODE);
-          localStorage.removeItem(SIGUNGU_NAME);
+          sessionStorage.setItem("AREA_CODE", item.value);
+          sessionStorage.setItem("AREA_NAME", item.name);
+          sessionStorage.removeItem("SIGUNGU_CODE");
+          sessionStorage.removeItem("SIGUNGU_NAME");
         }}
       >
         {item.name}
@@ -408,6 +374,7 @@ const List = () => {
 
   // 세부 지역 생성
   const DetailLocation = () => {
+    const GET_AREA_NAME = window.sessionStorage.getItem("AREA_NAME");
     return siList.map((item, idx) =>
       // "siList.do"와 "선택한 doList"가 같은 것만 나열
       item.do === GET_AREA_NAME ? (
@@ -421,8 +388,8 @@ const List = () => {
           }
           onClick={() => {
             setSelectedSi(item.value);
-            localStorage.setItem(SIGUNGU_CODE, item.value);
-            localStorage.setItem(SIGUNGU_NAME, item.name);
+            sessionStorage.setItem("SIGUNGU_CODE", item.value);
+            sessionStorage.setItem("SIGUNGU_NAME", item.name);
           }}
         >
           {item.name}
@@ -449,24 +416,26 @@ const List = () => {
           <p>지역</p>
           <Locations className="location-set">{Location()}</Locations>
         </StList>
-        {/* 시/군 선택 */}
-        <StList>
-          <p>세부지역</p>
-          <Locations className="location-set">{DetailLocation()}</Locations>
-        </StList>
-        {/* 테마/도/시 중 하나라도 선택 안 했을 시 alert, getTheme 함수 실행, list 페이지로 이동 */}
+        {/* 시/군 선택, 도를 선택했을 때만 "세부지역" 나타나게 */}
+        {selectedDo !== "" ? (
+          <StList>
+            <p>세부지역</p>
+            <Locations className="location-set">{DetailLocation()}</Locations>
+          </StList>
+        ) : null}
+        {/* 테마/도/시 중 하나라도 선택 안 했을 시 
+        alert, getTheme 함수 실행, list 페이지로 이동 */}
         <CompleteButton>
           <button
             onClick={() => {
-              if (
-                GET_THEME_NAME === null ||
-                GET_AREA_NAME === null ||
-                GET_SIGUNGU_NAME === null
-              ) {
+              if (selectedTheme === "" || selectedDo === "") {
                 alert("모든 항목을 선택해주세요.");
                 return;
               } else {
-                dispatch(__getTheme(search));
+                if (selectedSi === "") {
+                  sessionStorage.setItem("SIGUNGU_CODE", 0);
+                  sessionStorage.setItem("SIGUNGU_NAME", "전체");
+                }
                 navigate("/list");
               }
             }}
@@ -499,7 +468,6 @@ const StCategory = styled.div`
 
 const Category = styled.div`
   margin-top: 25px;
-  cursor: pointer;
   & div {
     gap: 30px;
   }

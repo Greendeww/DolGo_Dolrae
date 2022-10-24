@@ -12,7 +12,7 @@ const MyPage = () => {
   const navigate = useNavigate();
 
   // ACCESS_TOKEN이 없으면 마이페이지 접근 불가
-  const getToken = localStorage.getItem("ACCESS_TOKEN");
+  const getToken = sessionStorage.getItem("ACCESS_TOKEN");
 
   useEffect(() => {
     if(getToken === null){
