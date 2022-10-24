@@ -9,6 +9,7 @@ import { _updateComment, _getComments } from "../../redux/modules/comment";
 import { instance } from "../../shared/Api";
 import Header from "../header/Header";
 import img from "../../assert/image/image.svg";
+import Swal from "sweetalert2";
 
 const DetailRevise = () => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const DetailRevise = () => {
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
 
+  //후기작성 기존 데이터 불러오기
   const fetch = async () => {
     const response = await instance.get(`/api/comment/${placeId}`);
 
@@ -51,6 +53,7 @@ const DetailRevise = () => {
     sendReview();
   }, [clicked]);
 
+  //별점 입력하기
   const handleStarClick = (index) => {
     let clickStates = [...clicked];
     for (let i = 0; i < 5; i++) {
@@ -64,6 +67,7 @@ const DetailRevise = () => {
     setStar(score);
   };
 
+  //이미지 미리보기 및 파일 추가
   const onChangeImg = (e) => {
     const imageList = e.target.files;
     let imageLists = [...image];
@@ -88,16 +92,18 @@ const DetailRevise = () => {
     setImage(imageLists);
   };
 
+  //추가이미지 삭제
   const handleDeleteImage = (id) => {
     setFileImage(fileImage.filter((_, index) => index !== id));
     setImage(image.filter((_, index) => index !== id));
   };
 
+  //기존이미지 삭제
   const handleDeleteImage1 = (id) => {
     setFileImage1(fileImage1.filter((_, index) => index !== id));
-    // setImage(image.filter((_, index) => index !== id));
   };
 
+  //내용 유효성 검사
   const onChangeContent = (e) => {
     const contentRegex =
       /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{10,300}$/;
@@ -113,6 +119,7 @@ const DetailRevise = () => {
     }
   };
 
+  //제목 유효성 검사
   const onChangeTitle = (e) => {
     const TitleRegex = /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{1,20}$/;
     const TitleCurrnet = e.target.value;
@@ -132,11 +139,11 @@ const DetailRevise = () => {
     content: content,
     star: Number(star),
     existUrlList: fileImage1,
-    // nickname:nickname
   };
 
   const onChangeHandler = (event, setState) => setState(event.target.value);
 
+  //후기 수정하기 완료 버튼
   const onUpdatePost = async (e) => {
     e.preventDefault();
     if (title === "" || content === "" || star === 0) {
@@ -150,7 +157,6 @@ const DetailRevise = () => {
       formData.append("image", image[i]);
     }
     formData.append("data", blob);
-
     const payload = {
       placeId: placeId,
       id: id,
@@ -159,6 +165,13 @@ const DetailRevise = () => {
     for (let value of payload.formData.values()) {
       console.log(value);
     }
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: '수정 완료',
+      showConfirmButton: false,
+      timer: 1000
+    })
     dispatch(_updateComment(payload));
   };
 

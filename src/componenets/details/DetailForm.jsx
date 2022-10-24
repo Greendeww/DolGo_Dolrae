@@ -2,16 +2,18 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
-import { instance } from "../../shared/Api";
 import Header from "../header/Header";
 import { useRef } from "react";
 import img from "../../assert/image/image.svg";
+import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { _postComment } from "../../redux/modules/comment";
 
 const DetailForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const inputFocus = useRef(null);
-
+  const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const [contentMessage, setContentMessage] = useState("");
   const [isContent, setIsContent] = useState(false);
@@ -78,7 +80,7 @@ const DetailForm = () => {
   //후기 내용 10글자 이상 작성
   const onChangeContent = (e) => {
     const contentRegex =
-      /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{10,300}$/;
+      /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{10,3000}$/;
     const contentCurrnet = e.target.value;
     setContent(contentCurrnet);
 
@@ -131,24 +133,19 @@ const DetailForm = () => {
       id: id,
       formData: formData,
     };
-    try {
-      const res = await instance.post(
-        `/api/auth/comment/${payload.id}`,
-        payload.formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      for (let value of payload.formData.values()) {
-        console.log(value);
-      }
-      window.location.replace(`/detail/${id}`);
-      return res.data;
-    } catch (error) {
+    for (let value of payload.formData.values()) {
+      console.log(value);
     }
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: '작성 완료',
+      showConfirmButton: false,
+      timer: 1000
+    })
+    dispatch(_postComment(payload));
   };
+  
   return (
     <StDetailForm>
       <Header />

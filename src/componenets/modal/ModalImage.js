@@ -44,7 +44,6 @@ const ModalImage = ({onClose, comment}) => {
 
 export default ModalImage;
 
-//아래는 styled-components를 통한 스타일링
 const Background = styled.div`
   height: 100%;
   width: 100%;
