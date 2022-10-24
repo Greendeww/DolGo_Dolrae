@@ -19,6 +19,7 @@ import RandomList from "../componenets/random/RandomList";
 import SearchPage from "../pages/tourist/SearchPage";
 import SearchSelList from "../componenets/searchList/SearchSelList";
 import WorldCup from "../componenets/worldCup/WorldCup";
+import Match from "../componenets/worldCup/Match";
 
 // mypage
 import MyPage from "../pages/mypage/MyPage";
@@ -39,14 +40,12 @@ import Edit from "../pages/manager/Edit";
 
 // import MapLine from "../componenets/maps/MapLine";
 
-
 import { useEffect } from "react";
 import axios from "axios";
 import { EventSourcePolyfill } from "event-source-polyfill";
 import { instance } from "./Api";
 
 function Router() {
-
   // 토큰 재발급
   const getToken = async () => {
     try {
@@ -72,7 +71,6 @@ function Router() {
   };
 
   useEffect(() => {
-
     // refreshToken이 존재하면 구독하기
     if (sessionStorage.getItem("REFRESH_TOKEN")) {
       isSSE();
@@ -94,7 +92,6 @@ function Router() {
     window.scrollTo(0, 0);
   }, []);
 
-
   // SSE
   let eventSource = undefined;
 
@@ -111,6 +108,7 @@ function Router() {
     );
     // console.log("구독성공");
     eventSource.addEventListener("sse", function (event) {
+      console.log(event)
       const data = JSON.parse(event.data);
       (async () => {
         // 브라우저 알림
@@ -125,22 +123,18 @@ function Router() {
           setTimeout(() => {
             notification.close();
           }, 10 * 1000);
-
           notification.addEventListener("click", () => {
             window.open(data.url, "_blank");
           });
         };
-
         // 브라우저 알림 허용 권한
         let granted = false;
-
         if (Notification.permission === "granted") {
           granted = true;
         } else if (Notification.permission !== "denied") {
           let permission = await Notification.requestPermission();
           granted = permission === "granted";
         }
-
         // 알림 보여주기
         if (granted === true) {
           showNotification();
@@ -189,7 +183,8 @@ function Router() {
         <Route path="/rnd" element={<RandomList />} />
         <Route path="/search/:title" element={<SearchPage />} />
         <Route path="/search/:title/:si/:area" element={<SearchSelList />} />
-        {/* <Route path="/ideal" element={<WorldCup />} /> */}
+        <Route path="/ideal" element={<WorldCup />} />
+        <Route path="/ideal/match" element={<Match />} />
         {/* <Route path="/maps" element={<MapLine />} /> */}
       </Routes>
     </BrowserRouter>
