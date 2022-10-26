@@ -16,7 +16,7 @@ const CommentModal = ({ comment }) => {
   const [imageModal, setImageModal] = useState(false);
   const nickname = sessionStorage.getItem("nickname");
   const getToken = sessionStorage.getItem("ACCESS_TOKEN");
-
+  const role = sessionStorage.getItem("role")
   const navigate = useNavigate();
 
   const handleModal = () => {
