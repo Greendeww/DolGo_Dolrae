@@ -452,6 +452,10 @@ const Post = () => {
     setSelectedTheme(e.target.value);
   };
 
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
+
   return (
     <StPost>
       <Header />

@@ -69,12 +69,11 @@ const EditRequest = () => {
       }
       formData.append("data", blob);
 
-      const res = await instance.post(`/api/auth/order/${id}`, formData, {
+      await instance.post(`/api/auth/order/${id}`, formData, {
         headers: {
           "content-type": "multipart/form-data",
         },
       });
-      console.log(res);
       alert("게시글 수정 또는 삭제 요청이 완료되었습니다.");
       navigate(-1);
     }

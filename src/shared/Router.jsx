@@ -19,6 +19,7 @@ import RandomList from "../componenets/random/RandomList";
 import SearchPage from "../pages/tourist/SearchPage";
 import SearchSelList from "../componenets/searchList/SearchSelList";
 import WorldCup from "../componenets/worldCup/WorldCup";
+import Match from "../componenets/worldCup/Match";
 
 // mypage
 import MyPage from "../pages/mypage/MyPage";
@@ -57,7 +58,6 @@ import { instance } from "./Api";
 
 
 function Router() {
-
   // 토큰 재발급
   const getToken = async () => {
     try {
@@ -83,7 +83,6 @@ function Router() {
   };
 
   useEffect(() => {
-
     // refreshToken이 존재하면 구독하기
     if (sessionStorage.getItem("REFRESH_TOKEN")) {
       isSSE();
@@ -105,7 +104,6 @@ function Router() {
     window.scrollTo(0, 0);
   }, []);
 
-
   // SSE
   let eventSource = undefined;
 
@@ -122,6 +120,7 @@ function Router() {
     );
     // console.log("구독성공");
     eventSource.addEventListener("sse", function (event) {
+      console.log(event)
       const data = JSON.parse(event.data);
       (async () => {
         // 브라우저 알림
@@ -136,22 +135,18 @@ function Router() {
           setTimeout(() => {
             notification.close();
           }, 10 * 1000);
-
           notification.addEventListener("click", () => {
             window.open(data.url, "_blank");
           });
         };
-
         // 브라우저 알림 허용 권한
         let granted = false;
-
         if (Notification.permission === "granted") {
           granted = true;
         } else if (Notification.permission !== "denied") {
           let permission = await Notification.requestPermission();
           granted = permission === "granted";
         }
-
         // 알림 보여주기
         if (granted === true) {
           showNotification();
@@ -208,6 +203,9 @@ function Router() {
         <Route path="/cose/add/:searchWord/:si/:area" element={<MapSearchSel />} />
         <Route path="/cose/revises/:searchWord" element={<ReviseSearch />} />
         <Route path="/cose/revises/:searchWord/:si/:area" element={<ReviseSearchSel />} />
+        <Route path="/ideal" element={<WorldCup />} />
+        <Route path="/ideal/match" element={<Match />} />
+
       </Routes>
     </BrowserRouter>
   );
