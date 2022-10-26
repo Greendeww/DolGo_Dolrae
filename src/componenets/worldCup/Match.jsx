@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "../header/Header";
 import basicImg from "../../assert/image/basic.png";
-import detailImg from "../../assert/worldcup/detail.png";
+import detailImg from "../../assert/worldcup//detail.png";
 import WorldCupDetail from "../modal/WorldCupDetail";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
