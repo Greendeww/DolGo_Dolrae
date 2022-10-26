@@ -26,14 +26,13 @@ export const _getComments = createAsyncThunk(
 export const _deleteComment = createAsyncThunk(
   "comment/delete",
   async (payload, thunkAPI) => {
-    console.log(payload)
     try {
       const data = await instance.delete(
         `api/auth/comment/${payload}`,
         // {
         //   headers: {
-        //     Authorization: localStorage.getItem("Authorization"),
-        //     RefreshToken: localStorage.getItem("RefreshToken"),
+        //     Authorization: sessionStorage.getItem("Authorization"),
+        //     RefreshToken: sessionStorage.getItem("RefreshToken"),
         //   },
         // }
       );
@@ -54,8 +53,29 @@ export const _updateComment = createAsyncThunk(
         {
           headers: {
             "Content-Type": "multipart/form",
-            // Authorization: localStorage.getItem("Authorization"),
-            // RefreshToken: localStorage.getItem("RefreshToken"),
+
+          },
+        }
+      );
+      window.history.go(-1);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const _postComment = createAsyncThunk(
+  "comment/post",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await instance.post(
+        `/api/auth/comment/${payload.id}`,
+        payload.formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form",
+
           },
         }
       );
@@ -99,6 +119,18 @@ extraReducers:(builder) => {
                 state.error = action.payload;
             })
         builder
+            .addCase(_postComment.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(_postComment.fulfilled, (state,action) => {
+                state.isLoading = true;
+                state.comment = action.payload;
+            })
+            .addCase(_postComment.rejected, (state,action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+        builder
             .addCase(_updateComment.pending, (state) => {
                 state.isLoading = true;
             })
@@ -107,7 +139,7 @@ extraReducers:(builder) => {
                 state.comment = action.payload;
             })
             .addCase(_updateComment.rejected, (state,action) => {
-                state.isLoading = true;
+                state.isLoading = false;
                 state.error = action.payload;
             })
     }

@@ -14,16 +14,16 @@ const SearchSelList = () => {
   const page = useRef(0);
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const {title} = useParams();
+  const { title } = useParams();
   const { si } = useParams();
   const { area } = useParams();
 
-  const AREA_NAME = window.localStorage.getItem("AREA_NAME");
-  const SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
+  const AREA_NAME = window.sessionStorage.getItem("AREA_NAME");
+  const SIGUNGU_NAME = window.sessionStorage.getItem("SIGUNGU_NAME");
 
   const fetch = useCallback(async () => {
     try {
-      const {data} = await instance.get(
+      const { data } = await instance.get(
         `/api/place/search?keyword=${title}&pageNum=${page.current}&areaCode=${area}&sigunguCode=${si}`
       );
       setPosts((prevPosts) => [...prevPosts, ...data.content]);
@@ -56,67 +56,80 @@ const SearchSelList = () => {
   }, [pathname]);
 
   return (
-    <>
     <StList>
-    <Header title={title}/>
-    <HeadTitle>
-      <div>
-        <p>{AREA_NAME}</p>
-      </div>
-      <p>‣</p>
-      <div>
-        <p>{SIGUNGU_NAME}</p>
-      </div>
-        <p 
-          style={{cursor:"pointer",paddingLeft:"2rem"}}
-          onClick={() => navigate(-1)}>↺
+      <Header title={title} />
+      <HeadTitle>
+        <div>
+          <p>{AREA_NAME}</p>
+        </div>
+        <p>‣</p>
+        <div>
+          <p>{SIGUNGU_NAME}</p>
+        </div>
+        <p
+          style={{ cursor: "pointer", paddingLeft: "2rem" }}
+          onClick={() => navigate(-1)}
+        >
+          ↺
         </p>
-    </HeadTitle>
-    {posts.length !== 0
-    ?<Content>
-      {posts &&
-        posts.map((list) => (
-          <Card key={list.placeId} onClick={() => navigate(`/detail/${list.placeId}`)}>
-            {list.image == null ? (
-              <>
-                <BasicImg src={basicImg} />
-                <Name>
-                  <ListTitle style={{ color: "#414141" }}>
-                    {list.title}
-                  </ListTitle>
-                  <div style={{ display: "flex" }}>
-                    <FaStar
-                      style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
-                    />
-                    {list.star}
-                  </div>
-                </Name>
-              </>
-            ) : (
-              <>
-                <ImgShadow>
-                  <ImgBox>
-                    <Img src={list.image} />
-                  </ImgBox>
-                </ImgShadow>
-                <Name>
-                  <ListTitle>{list.title}</ListTitle>
-                  <div style={{ display: "flex" }}>
-                  <FaStar
-                      style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
-                    /> {list.star}
-                  </div>
-                </Name>
-              </>
-            )}
-          </Card>
-        ))}
-    </Content>
-    :<NoP>정보가 없습니다</NoP>
-    }
-    <div ref={observerTargetEl} />
+      </HeadTitle>
+      {posts.length !== 0 ? (
+        <Content>
+          {posts &&
+            posts.map((list) => (
+              <Card
+                key={list.placeId}
+                onClick={() => navigate(`/detail/${list.placeId}`)}
+              >
+                {list.image == null ? (
+                  <>
+                    <BasicImg src={basicImg} />
+                    <Name>
+                      <ListTitle style={{ color: "#414141" }}>
+                        {list.title}
+                      </ListTitle>
+                      <div style={{ display: "flex" }}>
+                        <FaStar
+                          style={{
+                            color: "#fcc419",
+                            marginRight: "0.3rem",
+                            marginTop: "0.2rem",
+                          }}
+                        />
+                        {list.star}
+                      </div>
+                    </Name>
+                  </>
+                ) : (
+                  <>
+                    <ImgShadow>
+                      <ImgBox>
+                        <Img src={list.image} />
+                      </ImgBox>
+                    </ImgShadow>
+                    <Name>
+                      <ListTitle>{list.title}</ListTitle>
+                      <div style={{ display: "flex" }}>
+                        <FaStar
+                          style={{
+                            color: "#fcc419",
+                            marginRight: "0.3rem",
+                            marginTop: "0.2rem",
+                          }}
+                        />{" "}
+                        {list.star}
+                      </div>
+                    </Name>
+                  </>
+                )}
+              </Card>
+            ))}
+        </Content>
+      ) : (
+        <NoP>정보가 없습니다.</NoP>
+      )}
+      <div ref={observerTargetEl} />
     </StList>
-    </>
   );
 };
 
@@ -186,59 +199,22 @@ const HeadTitle = styled.div`
   }
 `;
 
-const Title = styled.div`
-  display: flex;
-  position: fixed;
-  justify-content: center;
-  align-items: center;
-  margin: 40px 0;
-  top: 30px;
-  height: 150px;
+const Card = styled.div`
   max-width: 428px;
   width: 100%;
-  z-index: 1;
-  background-color: #ffffff;
-
-  & div {
-    width: 90px;
-    height: 50px;
-    background-color: #c4e0ec;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-    border-radius: 15px;
-    margin: auto 15px;
-  }
-
-  & p {
-    color: #ffc0c0;
-    font-size: 45px;
-    font-weight: 700;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  }
-
-  & div > p {
-    display: flex;
-    justify-content: center;
-    margin-block-start: 8px;
-    margin-block-end: 0;
-    color: #ffffff;
-    font-size: 24px;
-    font-weight: normal;
-    text-shadow: none;
-    margin-top: 13px;
-  }
-`;
-
-const Card = styled.div`
   text-align: center;
 `;
 
 const Content = styled.div`
   position: relative;
   top: 280px;
+  max-width: 428px;
+  width: 100%;
 `;
 
 const BasicImg = styled.img`
   position: relative;
+  max-width: 428px;
   width: 100%;
   height: 234px;
   border-radius: 20px;
@@ -250,7 +226,8 @@ const BasicImg = styled.img`
 
 const ImgShadow = styled.div`
   margin: 0 auto;
-  width: 420px;
+  max-width: 428px;
+  width: 100%;
   height: 235px;
   border-radius: 20px;
   /* z-index: 3; */
@@ -262,6 +239,7 @@ const ImgShadow = styled.div`
 
 const ImgBox = styled.div`
   margin: 0 auto;
+  max-width: 428px;
   width: 100%;
   height: 235px;
   border-radius: 20px;
@@ -273,6 +251,7 @@ const ImgBox = styled.div`
 
 const Img = styled.img`
   position: relative;
+  max-width: 428px;
   width: 100%;
   height: 234px;
   z-index: -2;
@@ -302,8 +281,8 @@ const ListTitle = styled.div`
 `;
 
 const NoP = styled.p`
-  margin-top:270px;
-  text-align:center;
-  font-size:30px;
-  font-weight:500;
-`
+  margin-top: 270px;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 500;
+`;

@@ -2,15 +2,19 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
-import { instance } from "../../shared/Api";
 import Header from "../header/Header";
 import { useRef } from "react";
+import img from "../../assert/image/image.svg";
+import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { _postComment } from "../../redux/modules/comment";
+import imageCompression from "browser-image-compression";
 
 const DetailForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const inputFocus = useRef(null);
-
+  const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const [contentMessage, setContentMessage] = useState("");
   const [isContent, setIsContent] = useState(false);
@@ -43,8 +47,22 @@ const DetailForm = () => {
     let score = clicked.filter(Boolean).length;
     setStar(score);
   };
+  //이미지 리사이징
+  const compressImage = async (image) => {
+    try{
+      const options = {
+        maxSizeMb: 1,
+        maxWidthOrHeight: 600,
+        alwaysKeepResolution : true, //품질만 낮추고 항상 너비와 높이 유지
+      }
+      return await imageCompression(image, options);
+    } catch(e){
+      console.log(e);
+    };
+  };
 
-  const onChangeImg = (e) => {
+  //이미지 미리보기 및 리사이징
+  const onChangeImg = async(e) => {
     const imageList = e.target.files;
     let imageLists = [...image];
     let imgFiles = [...fileImage];
@@ -54,9 +72,11 @@ const DetailForm = () => {
     }
     for (let i = 0; i < imageList.length; i++) {
       const nowImageUrl1 = e.target.files[i];
-      imageLists.push(nowImageUrl1);
+      const compressedImage = await compressImage(nowImageUrl1);
+      imageLists.push(compressedImage);
     }
-       //이미지 개수 최대 3개까지 등록가능
+    
+    //이미지 개수 최대 3개까지 등록가능
     if (imageLists.length > 3) {
       window.alert("이미지는 최대 3개까지 등록 가능합니다")
       imageLists = imageLists.slice(0, 3);
@@ -77,7 +97,7 @@ const DetailForm = () => {
   //후기 내용 10글자 이상 작성
   const onChangeContent = (e) => {
     const contentRegex =
-      /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{10,300}$/;
+      /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{10,3000}$/;
     const contentCurrnet = e.target.value;
     setContent(contentCurrnet);
 
@@ -109,6 +129,7 @@ const DetailForm = () => {
     // nickname:nickname
   };
 
+
   const onAddComment = async (e) => {
     e.preventDefault();
     if (title === "" || content === "" || star === 0) {
@@ -118,7 +139,6 @@ const DetailForm = () => {
       return alert("형식을 확인해주세요");
     }
     let json = JSON.stringify(data);
-    console.log(json);
     const blob = new Blob([json], { type: "application/json" });
     const formData = new FormData();
     for (let i = 0; i < image.length; i++) {
@@ -130,24 +150,19 @@ const DetailForm = () => {
       id: id,
       formData: formData,
     };
-    try {
-      const res = await instance.post(
-        `/api/auth/comment/${payload.id}`,
-        payload.formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      for (let value of payload.formData.values()) {
-        console.log(value);
-      }
-      window.location.replace(`/detail/${id}`);
-      return res.data;
-    } catch (error) {
+    for (let value of payload.formData.values()) {
+      console.log(value);
     }
+    dispatch(_postComment(payload))
+    .then(( dispatch ) => Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: '작성 완료',
+      showConfirmButton: false,
+      timer: 1000
+    }))
   };
+  
   return (
     <StDetailForm>
       <Header />
@@ -186,7 +201,7 @@ const DetailForm = () => {
                 <img
                   alt=""
                   style={{ height: "1.5rem" }}
-                  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj4KICAgIDxwYXRoIGZpbGw9IiNEQ0RCRTQiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTI4LjQ3MSAzMkgzLjUzYy0uOTcxIDAtMS44OTQtLjQyMi0yLjUyOS0xLjE1N2wtLjAyNi0uMDNBNCA0IDAgMCAxIDAgMjguMTk4VjguNjA3QTQgNCAwIDAgMSAuOTc0IDUuOTlMMSA1Ljk2YTMuMzQzIDMuMzQzIDAgMCAxIDIuNTI5LTEuMTU2aDIuNTM0YTIgMiAwIDAgMCAxLjUzNy0uNzJMMTAuNC43MkEyIDIgMCAwIDEgMTEuOTM3IDBoOC4xMjZBMiAyIDAgMCAxIDIxLjYuNzJsMi44IDMuMzYzYTIgMiAwIDAgMCAxLjUzNy43MmgyLjUzNGMuOTcxIDAgMS44OTQuNDIzIDIuNTI5IDEuMTU3bC4wMjYuMDNBNCA0IDAgMCAxIDMyIDguNjA2djE5LjU5MWE0IDQgMCAwIDEtLjk3NCAyLjYxN2wtLjAyNi4wM0EzLjM0MyAzLjM0MyAwIDAgMSAyOC40NzEgMzJ6TTE2IDkuNmE4IDggMCAxIDEgMCAxNiA4IDggMCAwIDEgMC0xNnptMCAxMi44YzIuNjQ3IDAgNC44LTIuMTUzIDQuOC00LjhzLTIuMTUzLTQuOC00LjgtNC44YTQuODA1IDQuODA1IDAgMCAwLTQuOCA0LjhjMCAyLjY0NyAyLjE1MyA0LjggNC44IDQuOHoiLz4KPC9zdmc+Cg=="
+                  src={img}
                 />
                 <p style={{ marginTop: "15px", fontSize: "0.9rem" }}>
                   이미지 등록
@@ -372,6 +387,7 @@ const InputTit = styled.input`
   border-radius: 15px;
   border: none;
   padding-left: 10px;
+  font-family: tway;
 `;
 const Message = styled.div`
   margin-bottom: 25px;
@@ -382,6 +398,7 @@ const Message = styled.div`
 `;
 const InputCom = styled.textarea`
   width: 95%;
+  font-family: tway;
   min-height: 163px;
   padding: 0px 1rem;
   font-size: 14px;

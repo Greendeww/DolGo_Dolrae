@@ -19,9 +19,10 @@ const LikeList = () => {
   const [postPerPage] = useState(2);
   const indexOfLastPost = page * postPerPage;
   const indexOfFirstPage = indexOfLastPost - postPerPage;
-
+  
   const getList = async () => {
-    const res = await instance.get("/api/auth/place/mypage");
+    const res = await instance.get("/api/auth/place/mypage?areaCode=0&sigunguCode=0");
+
     setList(res?.data);
     setLikeList([...res?.data].reverse());
   };

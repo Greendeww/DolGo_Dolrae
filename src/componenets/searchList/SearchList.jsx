@@ -18,13 +18,13 @@ const SearchList = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const {title} = useParams();
+
+
   const fetch = useCallback(async () => {
     try {
-      const {data} = await instance.get(
+      const { data } = await instance.get(
         `/api/place/search?keyword=${title}&pageNum=${page.current}&areaCode=0&sigunguCode=0`
       );
-
-      console.log(data.content)
       setPosts((prevPosts) => [...prevPosts, ...data.content]);
       setHasNextPage(data.content.length === 10);
       if (data.content.length) {
@@ -34,6 +34,7 @@ const SearchList = () => {
       console.error(err);
     }
   }, []);
+
   useEffect(() => {
     if (!observerTargetEl.current || !hasNextPage) return;
 
@@ -55,24 +56,27 @@ const SearchList = () => {
 
   const close = () => {
     setModalOn(false);
-  }
+  };
   return (
     <StList>
-      <Header title={title}/>
+      <Header title={title} />
       <HeadTitle>
-        {modalOn
-        ?<img alt='filter' src={filter} style={{display:"none"}}></img>
-        :<img alt='filter' src={filter} onClick={() => setModalOn(true)}></img>
-        }
+        {modalOn ? (
+          <img alt="filter" src={filter} style={{ display: "none" }}></img>
+        ) : (
+          <img alt="filter" src={filter} onClick={() => setModalOn(true)}></img>
+        )}
       </HeadTitle>
-      {modalOn === true
-      ?<SearchModal close={close} title={title}/>
-      :null
-      }
-      <Content>
+      {posts.length !== 0 ? (
+      <>
+      {modalOn === true ? <SearchModal close={close} title={title} /> : null}
+        <Content>
         {posts &&
           posts.map((list) => (
-            <Card key={list.placeId} onClick={() => navigate(`/detail/${list.placeId}`)}>
+            <Card
+              key={list.placeId}
+              onClick={() => navigate(`/detail/${list.placeId}`)}
+            >
               {list.image == null ? (
                 <>
                   <BasicImg src={basicImg} />
@@ -82,7 +86,11 @@ const SearchList = () => {
                     </ListTitle>
                     <div style={{ display: "flex" }}>
                       <FaStar
-                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
+                        style={{
+                          color: "#fcc419",
+                          marginRight: "0.3rem",
+                          marginTop: "0.2rem",
+                        }}
                       />
                       {list.star}
                     </div>
@@ -98,16 +106,25 @@ const SearchList = () => {
                   <Name>
                     <ListTitle>{list.title}</ListTitle>
                     <div style={{ display: "flex" }}>
-                    <FaStar
-                        style={{ color: "#fcc419", marginRight: "0.3rem", marginTop: "0.2rem" }}
-                      /> {list.star}
+                      <FaStar
+                        style={{
+                          color: "#fcc419",
+                          marginRight: "0.3rem",
+                          marginTop: "0.2rem",
+                        }}
+                      />{" "}
+                      {list.star}
                     </div>
                   </Name>
                 </>
               )}
             </Card>
           ))}
-      </Content>
+       </Content>
+      </>
+      ) : (
+        <NoP>정보가 없습니다.</NoP>
+      )}
       <div ref={observerTargetEl} />
     </StList>
   );
@@ -119,7 +136,6 @@ const StList = styled.div`
   max-width: 428px;
   width: 100%;
   margin: 0 auto;
-
   & button {
     margin-left: 15px;
     margin-top: 30px;
@@ -131,7 +147,6 @@ const StList = styled.div`
     font-size: 17px;
     text-align: center;
     color: #ffffff;
-
     &:hover {
       cursor: pointer;
     }
@@ -150,17 +165,17 @@ const HeadTitle = styled.div`
   width: 100%;
   z-index: 1;
   background-color: #ffffff;
-
   & img {
     color: #ffc0c0;
-    height:60px;
-    cursor:pointer;
+    height: 60px;
+    cursor: pointer;
   }
-
 `;
 
 const Card = styled.div`
   text-align: center;
+  max-width: 428px;
+  width: 100%;
 `;
 
 const Content = styled.div`
@@ -181,7 +196,8 @@ const BasicImg = styled.img`
 
 const ImgShadow = styled.div`
   margin: 0 auto;
-  width: 420px;
+  width: 100%;
+  max-width: 420px;
   height: 235px;
   border-radius: 20px;
   /* z-index: 3; */
@@ -193,6 +209,7 @@ const ImgShadow = styled.div`
 
 const ImgBox = styled.div`
   margin: 0 auto;
+  max-width: 428px;
   width: 100%;
   height: 235px;
   border-radius: 20px;
@@ -204,6 +221,7 @@ const ImgBox = styled.div`
 
 const Img = styled.img`
   position: relative;
+  max-width: 428px;
   width: 100%;
   height: 234px;
   z-index: -2;
@@ -230,4 +248,11 @@ const ListTitle = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+const NoP = styled.p`
+  margin-top: 270px;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 500;
 `;

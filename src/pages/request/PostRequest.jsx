@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -12,6 +12,7 @@ const PostRequest = () => {
     title: "",
     content: "",
     address: "",
+    type: "추가"
   };
 
   const [req, setReq] = useState(initialState);
@@ -70,7 +71,7 @@ const PostRequest = () => {
       }
       formData.append("data", blob);
 
-      const res = await instance.post(`/api/auth/order`, formData, {
+      await instance.post(`/api/auth/order`, formData, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -79,6 +80,11 @@ const PostRequest = () => {
       navigate("/");
     }
   };
+
+  // 화면 렌더링시 스크롤 맨 위로 이동
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <StRegistration>
@@ -161,8 +167,8 @@ const PostRequest = () => {
           </div>
         </div>
         <Buttons>
-          <CancelBtn onClick={() => navigate(-1)}>취소</CancelBtn>
           <PostBtn onClick={onSubmitHandler}>작성하기</PostBtn>
+          <CancelBtn onClick={() => navigate(-1)}>취소</CancelBtn>
         </Buttons>
       </Container>
     </StRegistration>
@@ -179,17 +185,18 @@ const StRegistration = styled.div`
 `;
 
 const Container = styled.div`
-  padding-top: 70px;
+  padding-top: 120px;
 `;
 
 const Buttons = styled.div`
   display: flex;
   padding-top: 40px;
   padding-bottom: 50px;
+  width: 90%;
 `;
 
 const Title = styled.p`
-  width: 200px;
+  width: 100px;
   height: 40px;
   padding: 40px 0px 0px 35px;
   font-weight: 700;
@@ -200,7 +207,7 @@ const Title = styled.p`
 const Text = styled.input`
   display: flex;
   margin: 10px auto;
-  width: 373px;
+  width: 90%;
   height: 52px;
   background-color: white;
   border-radius: 15px;
@@ -217,7 +224,7 @@ const CheckBox = styled.input`
 `;
 
 const Context = styled.textarea`
-  width: 350px;
+  width: 85%;
   height: 200px;
   display: flex;
   margin: 0 auto;

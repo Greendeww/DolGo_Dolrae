@@ -2,10 +2,12 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Star from "../../star/Star";
-import ModalPortal from "../../modal/ModalPortal";
-import Modal from "../../modal/Modal";
-import ModalImage from "../../modal/ModalImage";
+import Star from  "../../../../componenets/star/Star";
+import ModalPortal from "../../../../componenets/modal/ModalPortal";
+import Modal from "../../../../componenets/modal/Modal";
+import ModalImage from "../../../../componenets/modal/ModalImage";
+
+
 
 const ReviewModal = ({ item }) => {
   const [modalOn, setModalOn] = useState(false);
@@ -38,7 +40,7 @@ const ReviewModal = ({ item }) => {
               상세페이지로
             </Button>
           </StarDiv>
-          <p style={{ paddingLeft: "10px", width: "360px", wordWrap: "break-word", lineHeight: "28px"}}>{item.content}</p>
+          <p style={{ paddingLeft: "10px", width: "90%", wordWrap: "break-word", lineHeight: "28px"}}>{item.content}</p>
           <ButtonDiv>
             <ReviseBut
               onClick={() =>

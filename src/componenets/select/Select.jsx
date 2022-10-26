@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import css from "../../css/select.css";
-import { __getTheme } from "../../redux/modules/theme";
 
 const List = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const THEME_CODE = "THEME_CODE";
-  const THEME_NAME = "THEME_NAME";
-  const AREA_CODE = "AREA_CODE";
-  const AREA_NAME = "AREA_NAME";
-  const SIGUNGU_CODE = "SIGUNGU_CODE";
-  const SIGUNGU_NAME = "SIGUNGU_NAME";
-
+  // 선택한 theme, do, si를 저장할 state
   const [selectedTheme, setSelectedTheme] = useState("");
   const [selectedDo, setSelectedDo] = useState("");
   const [selectedSi, setSelectedSi] = useState("");
@@ -43,6 +34,7 @@ const List = () => {
   // 테마 생성
   const makeCategories = () => {
     return categories.map((item, idx) => (
+      // 선택시 storage와 state에 저장
       <div
         key={idx}
         className={
@@ -52,8 +44,8 @@ const List = () => {
         }
         onClick={() => {
           setSelectedTheme(item.value);
-          localStorage.setItem(THEME_CODE, item.value);
-          localStorage.setItem(THEME_NAME, item.name);
+          sessionStorage.setItem("THEME_CODE", item.value);
+          sessionStorage.setItem("THEME_NAME", item.name);
         }}
       >
         {item.name}
@@ -61,44 +53,24 @@ const List = () => {
     ));
   };
 
-  // const init = () => {
-  //   let data = localStorage.getItem(THEME_CODE);
-  //   if (data !== null) setSelectedTheme(data);
-  // };
-
-  // useEffect(init, []);
-
-  // 필터 초기화
+  // select 페이지로 돌아올 시 자동으로 필터 초기화
   const initialization = (e) => {
     // e.preventDefault();
-    localStorage.removeItem("THEME_CODE");
-    localStorage.removeItem("THEME_NAME");
-    localStorage.removeItem("AREA_CODE");
-    localStorage.removeItem("AREA_NAME");
-    localStorage.removeItem("SIGUNGU_CODE");
-    localStorage.removeItem("SIGUNGU_NAME");
+    sessionStorage.removeItem("THEME_CODE");
+    sessionStorage.removeItem("THEME_NAME");
+    sessionStorage.removeItem("AREA_CODE");
+    sessionStorage.removeItem("AREA_NAME");
+    sessionStorage.removeItem("SIGUNGU_CODE");
+    sessionStorage.removeItem("SIGUNGU_NAME");
 
     setSelectedTheme("");
     setSelectedDo("");
     setSelectedSi("");
   };
 
-  // 서버로 보내줄 값 ( 선택한 테마, 지역 )
-  const GET_THEME_CODE = window.localStorage.getItem("THEME_CODE");
-  const GET_THEME_NAME = window.localStorage.getItem("THEME_NAME");
-  const GET_AREA_CODE = window.localStorage.getItem("AREA_CODE");
-  const GET_AREA_NAME = window.localStorage.getItem("AREA_NAME");
-  const GET_SIGUNGU_CODE = window.localStorage.getItem("SIGUNGU_CODE");
-  const GET_SIGUNGU_NAME = window.localStorage.getItem("SIGUNGU_NAME");
-
-  const search = {
-    themeCode: GET_THEME_CODE,
-    themeName: GET_THEME_NAME,
-    areaCode: GET_AREA_CODE,
-    areaName: GET_AREA_NAME,
-    sigunguCode: GET_SIGUNGU_CODE,
-    sigunguName: GET_SIGUNGU_NAME,
-  };
+  useEffect(() => {
+    initialization();
+  }, []);
 
   // 지역별 name, value
   const doList = [
@@ -126,12 +98,86 @@ const List = () => {
   const siList = [
     { do: "전체", name: "전체", value: 0 },
     { do: "서울", name: "전체", value: 0 },
+    { do: "서울", name: "강남", value: 1 },
+    { do: "서울", name: "강동", value: 2 },
+    { do: "서울", name: "강북", value: 3 },
+    { do: "서울", name: "강서", value: 4 },
+    { do: "서울", name: "관악", value: 5 },
+    { do: "서울", name: "광진", value: 6 },
+    { do: "서울", name: "구로", value: 7 },
+    { do: "서울", name: "금천", value: 8 },
+    { do: "서울", name: "노원", value: 9 },
+    { do: "서울", name: "도봉", value: 10 },
+    { do: "서울", name: "동대문", value: 11 },
+    { do: "서울", name: "동작", value: 12 },
+    { do: "서울", name: "마포", value: 13 },
+    { do: "서울", name: "서대문", value: 14 },
+    { do: "서울", name: "서초", value: 15 },
+    { do: "서울", name: "성동", value: 16 },
+    { do: "서울", name: "성북", value: 17 },
+    { do: "서울", name: "송파", value: 18 },
+    { do: "서울", name: "양천", value: 19 },
+    { do: "서울", name: "영등포", value: 20 },
+    { do: "서울", name: "용산", value: 21 },
+    { do: "서울", name: "은평", value: 22 },
+    { do: "서울", name: "종로", value: 23 },
+    { do: "서울", name: "중구", value: 24 },
+    { do: "서울", name: "중랑", value: 25 },
     { do: "인천", name: "전체", value: 0 },
+    { do: "인천", name: "강화", value: 1 },
+    { do: "인천", name: "계양", value: 2 },
+    { do: "인천", name: "남동", value: 3 },
+    { do: "인천", name: "동구", value: 4 },
+    { do: "인천", name: "미추홀", value: 5 },
+    { do: "인천", name: "부평", value: 6 },
+    { do: "인천", name: "서구", value: 7 },
+    { do: "인천", name: "연수", value: 8 },
+    { do: "인천", name: "옹진", value: 9 },
+    { do: "인천", name: "중구", value: 10 },
     { do: "대전", name: "전체", value: 0 },
+    { do: "대전", name: "대덕", value: 1 },
+    { do: "대전", name: "동구", value: 2 },
+    { do: "대전", name: "서구", value: 3 },
+    { do: "대전", name: "유성", value: 4 },
+    { do: "대전", name: "중구", value: 5 },
     { do: "대구", name: "전체", value: 0 },
+    { do: "대구", name: "남구", value: 1 },
+    { do: "대구", name: "달서", value: 2 },
+    { do: "대구", name: "달성", value: 3 },
+    { do: "대구", name: "동구", value: 4 },
+    { do: "대구", name: "북구", value: 5 },
+    { do: "대구", name: "서구", value: 6 },
+    { do: "대구", name: "수성", value: 7 },
+    { do: "대구", name: "중구", value: 8 },
     { do: "광주", name: "전체", value: 0 },
+    { do: "광주", name: "광산", value: 0 },
+    { do: "광주", name: "남구", value: 0 },
+    { do: "광주", name: "동구", value: 0 },
+    { do: "광주", name: "북구", value: 0 },
+    { do: "광주", name: "서구", value: 0 },
     { do: "부산", name: "전체", value: 0 },
+    { do: "부산", name: "강서", value: 1 },
+    { do: "부산", name: "금정", value: 2 },
+    { do: "부산", name: "기장", value: 3 },
+    { do: "부산", name: "남구", value: 4 },
+    { do: "부산", name: "동구", value: 5 },
+    { do: "부산", name: "동래", value: 6 },
+    { do: "부산", name: "부산진", value: 7 },
+    { do: "부산", name: "북구", value: 8 },
+    { do: "부산", name: "사상", value: 9 },
+    { do: "부산", name: "사하", value: 10 },
+    { do: "부산", name: "서구", value: 11 },
+    { do: "부산", name: "수영", value: 12 },
+    { do: "부산", name: "연제", value: 13 },
+    { do: "부산", name: "영도", value: 14 },
+    { do: "부산", name: "중구", value: 15 },
+    { do: "부산", name: "해운대", value: 16 },
     { do: "울산", name: "전체", value: 0 },
+    { do: "울산", name: "남구", value: 2 },
+    { do: "울산", name: "동구", value: 3 },
+    { do: "울산", name: "북구", value: 4 },
+    { do: "울산", name: "울주", value: 5 },
+    { do: "울산", name: "중구", value: 1 },
     { do: "세종", name: "전체", value: 0 },
     { do: "경기", name: "전체", value: 0 },
     { do: "경기", name: "가평", value: 1 },
@@ -192,11 +238,11 @@ const List = () => {
     { do: "충북", name: "옥천", value: 5 },
     { do: "충북", name: "음성", value: 6 },
     { do: "충북", name: "제천", value: 7 },
-    { do: "충북", name: "증평", value: 8 },
-    { do: "충북", name: "진천", value: 9 },
-    { do: "충북", name: "청원", value: 10 },
-    { do: "충북", name: "청주", value: 11 },
-    { do: "충북", name: "충주", value: 12 },
+    { do: "충북", name: "증평", value: 12 },
+    { do: "충북", name: "진천", value: 8 },
+    { do: "충북", name: "청원", value: 9 },
+    { do: "충북", name: "청주", value: 10 },
+    { do: "충북", name: "충주", value: 11 },
     { do: "충남", name: "전체", value: 0 },
     { do: "충남", name: "계룡", value: 16 },
     { do: "충남", name: "공주", value: 1 },
@@ -248,16 +294,16 @@ const List = () => {
     { do: "경남", name: "사천", value: 8 },
     { do: "경남", name: "산청", value: 9 },
     { do: "경남", name: "양산", value: 10 },
-    { do: "경남", name: "의령", value: 11 },
-    { do: "경남", name: "진주", value: 12 },
-    { do: "경남", name: "진해", value: 13 },
-    { do: "경남", name: "창녕", value: 14 },
-    { do: "경남", name: "창원", value: 15 },
-    { do: "경남", name: "통영", value: 16 },
-    { do: "경남", name: "하동", value: 17 },
-    { do: "경남", name: "함안", value: 18 },
-    { do: "경남", name: "함양", value: 19 },
-    { do: "경남", name: "합천", value: 20 },
+    { do: "경남", name: "의령", value: 12 },
+    { do: "경남", name: "진주", value: 13 },
+    { do: "경남", name: "진해", value: 14 },
+    { do: "경남", name: "창녕", value: 15 },
+    { do: "경남", name: "창원", value: 16 },
+    { do: "경남", name: "통영", value: 17 },
+    { do: "경남", name: "하동", value: 18 },
+    { do: "경남", name: "함안", value: 19 },
+    { do: "경남", name: "함양", value: 20 },
+    { do: "경남", name: "합천", value: 21 },
     { do: "전북", name: "전체", value: 0 },
     { do: "전북", name: "고창", value: 1 },
     { do: "전북", name: "군산", value: 2 },
@@ -287,15 +333,15 @@ const List = () => {
     { do: "전남", name: "순천", value: 11 },
     { do: "전남", name: "신안", value: 12 },
     { do: "전남", name: "여수", value: 13 },
-    { do: "전남", name: "영광", value: 14 },
-    { do: "전남", name: "영암", value: 15 },
-    { do: "전남", name: "완도", value: 16 },
-    { do: "전남", name: "장성", value: 17 },
-    { do: "전남", name: "장흥", value: 18 },
-    { do: "전남", name: "진도", value: 19 },
-    { do: "전남", name: "함평", value: 20 },
-    { do: "전남", name: "해남", value: 21 },
-    { do: "전남", name: "화순", value: 22 },
+    { do: "전남", name: "영광", value: 16 },
+    { do: "전남", name: "영암", value: 17 },
+    { do: "전남", name: "완도", value: 18 },
+    { do: "전남", name: "장성", value: 19 },
+    { do: "전남", name: "장흥", value: 20 },
+    { do: "전남", name: "진도", value: 21 },
+    { do: "전남", name: "함평", value: 22 },
+    { do: "전남", name: "해남", value: 23 },
+    { do: "전남", name: "화순", value: 24 },
     { do: "제주", name: "전체", value: 0 },
     { do: "제주", name: "서귀포", value: 3 },
     { do: "제주", name: "제주", value: 4 },
@@ -304,6 +350,7 @@ const List = () => {
   // 지역 생성
   const Location = () => {
     return doList.map((item, idx) => (
+      // 선택한 값 storage와 state에 저장
       <div
         key={idx}
         className={
@@ -314,10 +361,10 @@ const List = () => {
         onClick={() => {
           setSelectedDo(item.value);
           setSelectedSi("");
-          localStorage.setItem(AREA_CODE, item.value);
-          localStorage.setItem(AREA_NAME, item.name);
-          localStorage.removeItem(SIGUNGU_CODE);
-          localStorage.removeItem(SIGUNGU_NAME);
+          sessionStorage.setItem("AREA_CODE", item.value);
+          sessionStorage.setItem("AREA_NAME", item.name);
+          sessionStorage.removeItem("SIGUNGU_CODE");
+          sessionStorage.removeItem("SIGUNGU_NAME");
         }}
       >
         {item.name}
@@ -327,8 +374,11 @@ const List = () => {
 
   // 세부 지역 생성
   const DetailLocation = () => {
+    const GET_AREA_NAME = window.sessionStorage.getItem("AREA_NAME");
     return siList.map((item, idx) =>
+      // "siList.do"와 "선택한 doList"가 같은 것만 나열
       item.do === GET_AREA_NAME ? (
+        // 선택한 값 storage와 state에 저장
         <div
           key={idx}
           className={
@@ -338,8 +388,8 @@ const List = () => {
           }
           onClick={() => {
             setSelectedSi(item.value);
-            localStorage.setItem(SIGUNGU_CODE, item.value);
-            localStorage.setItem(SIGUNGU_NAME, item.name);
+            sessionStorage.setItem("SIGUNGU_CODE", item.value);
+            sessionStorage.setItem("SIGUNGU_NAME", item.name);
           }}
         >
           {item.name}
@@ -348,13 +398,9 @@ const List = () => {
     );
   };
 
-  // select 페이지로 돌아올 시 자동으로 필터 초기화
-  useEffect(() => {
-    initialization();
-  }, []);
-
   return (
     <St>
+      {/* 테마 선택 */}
       <StCategory>
         <Title>
           <p>테마</p>
@@ -365,28 +411,31 @@ const List = () => {
         </Category>
       </StCategory>
       <StLocation>
+        {/* 도 선택 */}
         <StList>
           <p>지역</p>
           <Locations className="location-set">{Location()}</Locations>
         </StList>
-        <StList>
-          <p>세부지역</p>
-          <Locations className="location-set">
-            {DetailLocation()}
-          </Locations>
-        </StList>
+        {/* 시/군 선택, 도를 선택했을 때만 "세부지역" 나타나게 */}
+        {selectedDo !== "" ? (
+          <StList>
+            <p>세부지역</p>
+            <Locations className="location-set">{DetailLocation()}</Locations>
+          </StList>
+        ) : null}
+        {/* 테마/도/시 중 하나라도 선택 안 했을 시 
+        alert, getTheme 함수 실행, list 페이지로 이동 */}
         <CompleteButton>
           <button
             onClick={() => {
-              if (
-                GET_THEME_NAME === null ||
-                GET_AREA_NAME === null ||
-                GET_SIGUNGU_NAME === null
-              ) {
+              if (selectedTheme === "" || selectedDo === "") {
                 alert("모든 항목을 선택해주세요.");
                 return;
               } else {
-                dispatch(__getTheme(search));
+                if (selectedSi === "") {
+                  sessionStorage.setItem("SIGUNGU_CODE", 0);
+                  sessionStorage.setItem("SIGUNGU_NAME", "전체");
+                }
                 navigate("/list");
               }
             }}
@@ -419,7 +468,6 @@ const StCategory = styled.div`
 
 const Category = styled.div`
   margin-top: 25px;
-  cursor: pointer;
   & div {
     gap: 30px;
   }

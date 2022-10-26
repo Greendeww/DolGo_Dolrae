@@ -54,12 +54,11 @@ const Randoms = () => {
       willClose: () => {
         clearInterval(timerInterval);
         navigate("/rnd");
-        localStorage.removeItem("place0");
+        sessionStorage.removeItem("place0");
       },
     }).then((result) => {
       /* Read more about handling dismissals below */
       if (result.dismiss === Swal.DismissReason.timer) {
-        console.log("I was closed by the timer");
       }
     });
   };

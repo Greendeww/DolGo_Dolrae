@@ -5,23 +5,41 @@ import { instance } from "../../../shared/Api";
 
 const Nickname = () => {
   const navigate = useNavigate();
-  const nickname = localStorage.getItem("nickname");
 
+  // sessionStorage로부터 가져온 "nickname"
+  const nickname = sessionStorage.getItem("nickname");
+
+  // input에 입력한 값을 onChange를 통해 state에 저장
   const [changeNickname, setChangeNickname] = useState({ nickname: "" });
 
+  // 변경하기 버튼을 클릭했을 때 서버로 변경값 전송
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+
+    // input이 비어있으면 alert
     if (changeNickname.nickname === "") {
       alert("변경할 닉네임을 입력해주세요.");
       e.preventDefault();
     } else {
-      const res = await instance.put(
-        "/api/auth/member/updatenickname",
-        changeNickname
-      );
-      // console.log(res)
-      localStorage.setItem("nickname", changeNickname.nickname);
-      navigate("/mypage");
+      // 변경여부 재확인
+      if (
+        window.confirm(
+          `정말 「${changeNickname.nickname}」로 변경하시겠습니까?`
+        )
+      ) {
+        // 동의하면 서버로 값 전송, storage에 저장, mypage로 이동, 변경값 alert
+        const res = await instance.put(
+          "/api/auth/member/updatenickname",
+          changeNickname
+        );
+        sessionStorage.setItem("nickname", changeNickname.nickname);
+        navigate("/mypage");
+        alert(`닉네임이 「${changeNickname.nickname}」(으)로 변경되었습니다.`);
+      }
+      // 동의하지 않을 시, alert
+      else {
+        alert("닉네임 변경이 취소되었습니다.");
+      }
     }
   };
 
@@ -45,19 +63,24 @@ const Nickname = () => {
 export default Nickname;
 
 const StNickname = styled.div`
-  padding-top: 100px;
+  padding-top: 150px;
   margin: 0 auto;
   max-width: 428px;
   width: 100%;
 
+  & h2 {
+    margin-left: 20px;
+  }
+
   & div {
     display: flex;
+    width: 95%;
   }
 
   & input {
     display: flex;
     margin: 0 auto;
-    width: 320px;
+    width: 80%;
     height: 52px;
     border: none;
     border-radius: 15px;
@@ -65,11 +88,9 @@ const StNickname = styled.div`
   }
 
   & p {
-    font-weight: 900;
+    font-weight: bold;
     font-size: 23px;
-    /* margin-left: 15px; */
-    margin-top: 10px;
-    padding-right: 5px;
+    margin-top: 15px;
   }
 
   & button {
@@ -86,9 +107,6 @@ const StNickname = styled.div`
     margin: 30px auto;
     justify-content: center;
     align-items: center;
-
-    &:hover {
-      cursor: pointer;
-    }
+    cursor: pointer;
   }
 `;

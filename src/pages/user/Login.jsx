@@ -7,37 +7,43 @@ import kakao from "../../assert/login/kakao_login_medium_wide.png";
 import Swal from "sweetalert2";
 import { instance } from "../../shared/Api";
 import { useRef } from "react";
-import { setCookie } from "../../shared/Cookie";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  // input에 입력한 값을 저장
   const usernameRef = useRef();
   const passwordRef = useRef();
 
+  // 로그인 버튼 click시 서버로 데이터 전송
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    // console.log(usernameRef.current.value)
+
+    // 서버로 보낼 데이터
     const user = {
       username: usernameRef.current.value,
       password: passwordRef.current.value,
     };
-    // console.log(user);
+
+    // input이 비었을 때 alert
     if (usernameRef.current.value === "" || passwordRef.current.value === "") {
       alert("모든 항목을 입력해주세요.");
       return;
-    } else {
+    }
+
+    // 서버로 전송 후, 받아온 토큰을 로컬에 저장
+    else {
       try {
         const response = await instance.post("/api/member/login", user);
-        setCookie("ACCESS_TOKEN", response.headers.authorization, 0.5);
-        setCookie("REFRESH_TOKEN", response.headers.refreshtoken, 0.5);
 
-        localStorage.setItem("ACCESS_TOKEN", response.headers.authorization);
-        localStorage.setItem("REFRESH_TOKEN", response.headers.refreshtoken);
-        localStorage.setItem("username", response.data.username);
-        localStorage.setItem("nickname", response.data.nickname);
+        sessionStorage.setItem("ACCESS_TOKEN", response.headers.authorization);
+        sessionStorage.setItem("REFRESH_TOKEN", response.headers.refreshtoken);
+        sessionStorage.setItem("username", response.data.username);
+        sessionStorage.setItem("nickname", response.data.nickname);
+        sessionStorage.setItem("role", response.data.role);
 
         alert(`${response.data.nickname}님 환영합니다.`);
-        navigate(-1);
+        navigate("/");
       } catch (error) {
         alert("이메일 또는 비밀번호를 확인해주세요.");
       }
@@ -112,29 +118,22 @@ const St = styled.div`
 const StLogin = styled.div`
   vertical-align: middle;
   padding-top: 120px;
+  width: 100%;
 
   & p {
     margin-bottom: 10px;
-  }
-  & input {
-    width: 98%;
-    height: 52px;
-    background-color: rgba(172, 212, 228, 0.35);
-    border-radius: 15px;
-    border: none;
-    padding-left: 10px;
   }
 
   & button {
     background-color: rgba(121, 185, 211, 0.62);
     color: white;
     border: none;
-    border-radius: 12px;
-    width: 95%;
-    height: 50px;
+    border-radius: 5px;
+    width: 335px;
+    height: 48px;
     cursor: pointer;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 24px;
     display: block;
     margin: 0 auto;
@@ -143,18 +142,30 @@ const StLogin = styled.div`
 
 const Input = styled.div`
   display: block;
-  margin: 40px 20px;
+  margin: 40px auto;
+  width: 100%;
+
+  & input {
+    width: 95%;
+    height: 52px;
+    background-color: rgba(172, 212, 228, 0.35);
+    border-radius: 15px;
+    border: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0 auto;
+  }
 `;
 
 const Inputs = styled.div`
-  margin: 100px 0;
+  margin: 100px auto;
+  width: 85%;
 `;
 
 const Social = styled.div`
   & img {
     display: block;
     margin: 20px auto;
-    width: 95%;
     height: 50px;
 
     &:hover {

@@ -7,16 +7,18 @@ import { instance } from "../../../shared/Api";
 const Password = () => {
   const navigate = useNavigate();
 
+  // input에 입력한 값을 저장할 state
   const [password, setPassword] = useState({
     password: "",
     newPassword: "",
     newPasswordConfirm: "",
   });
 
-  console.log(password);
-
+  // 변경하기 버튼을 클릭했을 때 서버로 전송
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+
+    // input이 비어있을 때, alert
     if (
       password.password === "" ||
       password.newPassword === "" ||
@@ -24,13 +26,22 @@ const Password = () => {
     ) {
       alert("모든 항목을 입력해주세요.");
       e.preventDefault();
-    } else {
-      const res = await instance.put(
-        "/api/auth/member/updatepassword",
-        password
-      );
-      console.log(res);
-      navigate("/mypage");
+    }
+    // 변경여부 확인
+    else {
+      if (window.confirm("정말 비밀번호를 변경하시겠습니까?")) {
+        // 동의시 서버로 값 전송, mypage로 이동, alert
+        const res = await instance.put(
+          "/api/auth/member/updatepassword",
+          password
+        );
+        navigate("/mypage");
+        alert("비밀번호가 변경되었습니다.");
+      }
+      // 동의하지 않을 시 alert
+      else {
+        alert("비밀번호 변경이 취소되었습니다.");
+      }
     }
   };
 
@@ -81,11 +92,16 @@ export default Password;
 
 const StPassword = styled.div`
   margin: 0 auto;
-  width: 380px;
   padding-top: 30px;
 
+  & h2 {
+    margin-left: 20px;
+  }
+
   & input {
-    width: 350px;
+    display: flex;
+    margin: 0 auto;
+    width: 85%;
     height: 52px;
     border: none;
     border-radius: 15px;

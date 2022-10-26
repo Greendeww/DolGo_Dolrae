@@ -6,30 +6,26 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import PostModal from "../../componenets/modal/PostModal";
+import CompleteModal from "../../componenets/modal/CompleteModal";
 
 const RequestDetail = () => {
   const navigate = useNavigate();
   const param = useParams();
-  const [data, setData] = useState();
+
+  // modal on/off를 설정할 state
   const [modal, setModal] = useState(false);
+  const [completeModal, setCompleteModal] = useState(false);
+
+  // 서버로부터 받아온 데이터를 state에 저장
+  const [data, setData] = useState();
 
   const getData = async () => {
     const res = await instance.get(`/api/auth/order/${param.id}`);
+    // console.log(res);
     setData(res.data);
   };
 
-  const deleteBtn = async () => {
-    setModal(true);
-    // const res = await instance.delete(`/api/auth/place/${param.id}`);
-    // console.log(res)
-  };
-
-  const completeBtn = async () => {
-    const res = await instance.post(`/api/auth/order/state/${param.id}`);
-    console.log(res);
-    alert("상태가 변경되었습니다.");
-  };
-
+  // 렌더링될 때마다 getData 함수 실행
   useEffect(() => {
     getData();
   }, []);
@@ -42,6 +38,12 @@ const RequestDetail = () => {
           <Title>제목</Title>
           <Content defaultValue={data?.title} readOnly />
         </div>
+        {data?.type !== "추가" ? (
+          <div>
+            <Title>여행지 id</Title>
+            <Content defaultValue={data?.place_id} readOnly />
+          </div>
+        ) : null}
         <div>
           <Title>유형</Title>
           <div
@@ -60,7 +62,11 @@ const RequestDetail = () => {
         </div>
         <div style={{ marginTop: "10px" }}>
           <Title>내용</Title>
-          <Context defaultValue={data?.content} readOnly></Context>
+          <Context
+            defaultValue={data?.content}
+            style={{ lineHeight: "20px" }}
+            readOnly
+          ></Context>
         </div>
         {/* <div>
           <Title>주소</Title>
@@ -68,14 +74,22 @@ const RequestDetail = () => {
         </div> */}
         <div>
           <Title>이미지</Title>
-          <div style={{ width: "100%" }}>
-            <ImgBox>
-              {data?.imageList.map((img, idx) => {
-                return <Img key={idx} alt="" src={img} />;
-              })}
-            </ImgBox>
-          </div>
+          <ImgBox>
+            {data?.imageList.map((img, idx) => {
+              return <Img key={idx} alt="" src={img} />;
+            })}
+          </ImgBox>
         </div>
+        {data?.state === true ? (
+          <div style={{ marginTop: "10px" }}>
+            <Title>답변</Title>
+            <Context
+              defaultValue={data?.answer}
+              style={{ lineHeight: "20px" }}
+              readOnly
+            />
+          </div>
+        ) : null}
         <Buttons>
           <button
             onClick={() => {
@@ -85,7 +99,7 @@ const RequestDetail = () => {
               background: "white",
               border: "3px solid #abd4e2",
               color: "#abd4e2",
-              letterSpacing: "-3px"
+              letterSpacing: "-3px",
             }}
           >
             뒤로가기
@@ -94,25 +108,44 @@ const RequestDetail = () => {
             <button
               onClick={() => {
                 navigate("/post");
+                sessionStorage.setItem("ID", param.id);
               }}
             >
               추가
             </button>
+          ) : data?.type === "수정" ? (
+            <button
+              onClick={() => {
+                navigate(`/edit/${data?.place_id}`);
+              }}
+            >
+              수정
+            </button>
           ) : (
-            <>
-              <button
-                onClick={() => {
-                  navigate(`/edit/${data?.place_id}`);
-                }}
-              >
-                수정
-              </button>
-              <button onClick={deleteBtn}>삭제</button>
-            </>
+            <button onClick={() => setModal(true)}>삭제</button>
           )}
-          <button onClick={completeBtn}>완료</button>
+          {data?.state === false ? (
+            <button onClick={() => setCompleteModal(!completeModal)}>
+              완료
+            </button>
+          ) : (
+            <button style={{ background: "gray" }} disabled>
+              완료
+            </button>
+          )}
+
+          {/* 삭제버튼 클릭시 modal */}
           {modal === true ? (
             <PostModal modal={modal} setModal={setModal} data={data} />
+          ) : null}
+
+          {/* 완료버튼 클릭시 modal */}
+          {completeModal === true ? (
+            <CompleteModal
+              completeModal={completeModal}
+              setCompleteModal={setCompleteModal}
+              data={data}
+            />
           ) : null}
         </Buttons>
       </Container>
@@ -134,7 +167,7 @@ const Container = styled.div`
 const Title = styled.p`
   width: 200px;
   height: 40px;
-  padding: 40px 0px 0px 35px;
+  padding: 40px 0px 0px 30px;
   font-weight: 700;
   font-size: 1.2rem;
   line-height: 40px;
@@ -191,12 +224,11 @@ const Context = styled.textarea`
   padding: 10px;
 `;
 
-const ImgBox = styled.div`
-  display: flex;
-`;
+const ImgBox = styled.div``;
 
 const Img = styled.img`
   width: 90%;
+  display: flex;
   margin: 0 auto;
   padding-top: 20px;
 `;

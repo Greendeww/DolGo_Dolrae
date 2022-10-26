@@ -7,13 +7,11 @@ import MapInfo from './MapInfo';
 import styled, { keyframes } from "styled-components";
 
 
-const Maps = ({aniState, modal}) => {
-console.log(aniState)
+const Maps = ({aniState}) => {
 const [positions, setPositions] = useState([]);
 
-
 const fetch = async () => {
-  const response = await instance.get(`/api/auth/place/mypage`); 
+  const response = await instance.get(`/api/auth/place/mypage?areaCode=0&sigunguCode=0`); 
   setPositions(response.data)
 }
 useEffect(() => {
