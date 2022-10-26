@@ -20,7 +20,7 @@ const RandomSelect = () => {
     const response = await instance.get(
       `/api/place/random?sigunguCode=${si}&areaCode=${area}`
     );
-    console.log(response.data);
+    // console.log(response.data);
     setRandom(response.data);
   };
   useEffect(() => {
@@ -91,7 +91,7 @@ const RandomSelect = () => {
                 {/* <TemaImg alt='' src={random?.placeList[0]?.image}/> */}
                 <TemaDesc>
                   <div style={{ display: "flex" }}>
-                    <TemaTilte >{random?.placeList[0]?.title}</TemaTilte>
+                    <TemaTilte>{random?.placeList[0]?.title}</TemaTilte>
                     <TemaStar>
                       <FaStar
                         style={{
@@ -265,12 +265,12 @@ const RandomSelect = () => {
                     onRandom();
                   }}
                 >
-                  랜덤 다시 돌리기
+                  다시 돌리기
                 </ButText>
               </ResetBtn>
               <BackBtn style={{ marginTop: "20px" }}>
                 <ButText onClick={() => navigate("/rndLocation")}>
-                  ＜ 지역 다시 선택하기
+                  ＜ 다른 지역 선택하기
                 </ButText>
               </BackBtn>
             </ButDiv>
@@ -349,8 +349,8 @@ const TemaName = styled.span`
 `;
 const TemaHeart = styled.span`
   font-size: 2rem;
-  line-height: 0.5rem;
   cursor: pointer;
+  margin-top: -7px;
   color: #ff8585;
 `;
 const TemaImgBox = styled.div`
@@ -379,7 +379,7 @@ const TemaDesc = styled.div`
 `;
 const TemaTilte = styled.span`
   font-size: 20px;
-  line-height: 1.2rem;
+  line-height: 1.3rem;
   width: 180px;
   display: block;
   white-space: nowrap;

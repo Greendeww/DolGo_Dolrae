@@ -3,7 +3,7 @@ import Paginations from "../pagination/Paginations";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import Comments from "./Comments";
-
+import Swal from "sweetalert2";
 
 const Review = ({ comment }) => {
   const navigate = useNavigate();
@@ -43,7 +43,10 @@ const Review = ({ comment }) => {
   
   const noLogin = (e) => {
     e.preventDefault();
-    alert("로그인이 필요한 서비스 입니다");
+    Swal.fire({
+      text: "로그인이 필요한 서비스 입니다",
+      icon: "warning",
+    });
     navigate("/login");
   };
 

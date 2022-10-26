@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../shared/Api";
+import Swal from "sweetalert2";
 
 const PostModal = ({ modal, setModal, data }) => {
   const navigate = useNavigate();
@@ -18,10 +19,16 @@ const PostModal = ({ modal, setModal, data }) => {
                   const res = await instance.delete(
                     `/api/auth/place/${data.place_id}`
                   );
-                  alert("삭제되었습니다.");
+                  Swal.fire({
+                    text: "삭제되었습니다.",
+                    icon: "success",
+                  });
                   setModal(false);
                 } catch {
-                  alert("존재하는 여행지가 아닙니다.");
+                  Swal.fire({
+                    text: "존재하는 여행지가 아닙니다.",
+                    icon: "error",
+                  });
                   setModal(false);
                 }
               }}

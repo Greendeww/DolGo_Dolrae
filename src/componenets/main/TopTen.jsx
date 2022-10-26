@@ -51,7 +51,7 @@ const TopTen = () => {
   return (
     <StTopTen>
       <Title>TOP 10</Title>
-      <Theme>
+      <Theme style={{ marginTop: "-30px" }}>
         <h4>관광</h4>
         <Slider {...settings}>
           {foodList.map((item) => (
@@ -214,8 +214,8 @@ const StTopTen = styled.div`
   width: 100%;
   text-align: center;
   color: #79b9d3;
-  padding-top: 30px;
   margin: 0 auto;
+  margin-top: 120px;
 
   & h4 {
     font-size: 35px;
@@ -230,9 +230,10 @@ const Title = styled.div`
   border-radius: 30px;
   width: 236px;
   height: 50px;
-  font-size: 35px;
-  line-height: 46px;
-  margin: 30px auto;
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 45px;
+  margin: 35px auto;
   padding-top: 5px;
 `;
 
@@ -240,6 +241,7 @@ const Theme = styled.div`
   text-align: center;
   line-height: 100px;
   font-size: 15px;
+  margin-top: 20px;
 `;
 
 const Name = styled.div`

@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../shared/Api";
+import Swal from "sweetalert2";
 
 const DeletePostModal = ({ deleteModal, setDeleteModal }) => {
   const place_id = useParams();
@@ -11,10 +12,16 @@ const DeletePostModal = ({ deleteModal, setDeleteModal }) => {
     try {
       await instance.delete(`/api/auth/place/${place_id.id}`);
       navigate(-1);
-      alert("정상적으로 삭제되었습니다.");
+      Swal.fire({
+        text: "정상적으로 삭제되었습니다.",
+        icon: "success",
+      });
       setDeleteModal(false);
     } catch {
-      alert("잠시 후 다시 시도해주세요.");
+      Swal.fire({
+        text: "잠시 후 다시 시도해주세요.",
+        icon: "error",
+      });
       setDeleteModal(false);
     }
   };

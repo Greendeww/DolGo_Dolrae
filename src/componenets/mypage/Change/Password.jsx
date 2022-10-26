@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../../shared/Api";
+import Swal from "sweetalert2";
 
 const Password = () => {
   const navigate = useNavigate();
@@ -24,7 +25,10 @@ const Password = () => {
       password.newPassword === "" ||
       password.newPasswordConfirm === ""
     ) {
-      alert("모든 항목을 입력해주세요.");
+      Swal.fire({
+        text: "모든 항목을 입력해주세요.",
+        icon: "warning",
+      });
       e.preventDefault();
     }
     // 변경여부 확인
@@ -36,11 +40,17 @@ const Password = () => {
           password
         );
         navigate("/mypage");
-        alert("비밀번호가 변경되었습니다.");
+        Swal.fire({
+          text: "비밀번호가 변경되었습니다.",
+          icon: "success",
+        });
       }
       // 동의하지 않을 시 alert
       else {
-        alert("비밀번호 변경이 취소되었습니다.");
+        Swal.fire({
+          text: "비밀번호 변경이 취소되었습니다.",
+          icon: "success",
+        });
       }
     }
   };
