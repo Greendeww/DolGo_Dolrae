@@ -88,8 +88,7 @@ const PageDel = styled.div`
 
 const DetailImg = styled.img`
   width: 100%;
-  max-height:350px;
-  height:100%;
+  height:300px;
   border-radius: 20px;
   margin-top: 1rem;
   margin-bottom:1rem;
