@@ -19,6 +19,7 @@ import RandomList from "../componenets/random/RandomList";
 import SearchPage from "../pages/tourist/SearchPage";
 import SearchSelList from "../componenets/searchList/SearchSelList";
 import WorldCup from "../componenets/worldCup/WorldCup";
+import Match from "../componenets/worldCup/Match";
 
 // mypage
 import MyPage from "../pages/mypage/MyPage";
@@ -26,6 +27,16 @@ import MyPageChange from "../pages/mypage/MyPageChange";
 import MyRequestDetail from "../componenets/mypage/mypage/request/MyRequestDetail";
 import MapLike from "../componenets/mypage/mypage/likeList/MapLike";
 import SelectLike from "../componenets/mypage/mypage/likeList/SelectLike";
+
+//cose
+import MapSearch from "../componenets/cose/MapSearch";
+import Cose from "../pages/cose/Cose";
+import CoseMap from "../componenets/cose/CoseMap";
+import MapLine from "../componenets/cose/MapLine";
+import MapSearchSel from "../componenets/cose/MapSearchSel";
+import CoseRevise from "../componenets/cose/coseReviser/CoseRevise";
+import ReviseSearch from "../componenets/cose/coseReviser/ReviseSearch";
+import ReviseSearchSel from "../componenets/cose/coseReviser/ReviseSearchSel";
 
 // request
 import EditRequest from "../pages/request/EditRequest";
@@ -37,20 +48,19 @@ import RequestDetail from "../pages/manager/RequestDetail";
 import Post from "../pages/manager/Post";
 import Edit from "../pages/manager/Edit";
 
-// import MapLine from "../componenets/maps/MapLine";
-
-
 import { useEffect } from "react";
 import axios from "axios";
 import { EventSourcePolyfill } from "event-source-polyfill";
 import { instance } from "./Api";
 
-function Router() {
 
+
+
+
+function Router() {
   // 토큰 재발급
   const getToken = async () => {
     try {
-      // alert("토큰 만료");
       const res = await axios.post(
         process.env.REACT_APP_BASE_URL + "/api/member/retoken",
         {},
@@ -72,7 +82,6 @@ function Router() {
   };
 
   useEffect(() => {
-
     // refreshToken이 존재하면 구독하기
     if (sessionStorage.getItem("REFRESH_TOKEN")) {
       isSSE();
@@ -81,7 +90,6 @@ function Router() {
     // refreshToken이 존재하면 토큰 재발급
     setInterval(() => {
       if (sessionStorage.getItem("REFRESH_TOKEN") !== null) {
-        // alert("토큰 재발급");
         getToken();
       } else {
         return;
@@ -93,7 +101,6 @@ function Router() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
 
   // SSE
   let eventSource = undefined;
@@ -111,6 +118,7 @@ function Router() {
     );
     // console.log("구독성공");
     eventSource.addEventListener("sse", function (event) {
+      console.log(event)
       const data = JSON.parse(event.data);
       (async () => {
         // 브라우저 알림
@@ -125,22 +133,18 @@ function Router() {
           setTimeout(() => {
             notification.close();
           }, 10 * 1000);
-
           notification.addEventListener("click", () => {
             window.open(data.url, "_blank");
           });
         };
-
         // 브라우저 알림 허용 권한
         let granted = false;
-
         if (Notification.permission === "granted") {
           granted = true;
         } else if (Notification.permission !== "denied") {
           let permission = await Notification.requestPermission();
           granted = permission === "granted";
         }
-
         // 알림 보여주기
         if (granted === true) {
           showNotification();
@@ -189,8 +193,17 @@ function Router() {
         <Route path="/rnd" element={<RandomList />} />
         <Route path="/search/:title" element={<SearchPage />} />
         <Route path="/search/:title/:si/:area" element={<SearchSelList />} />
-        {/* <Route path="/ideal" element={<WorldCup />} /> */}
-        {/* <Route path="/maps" element={<MapLine />} /> */}
+        <Route path="/cose" element={<Cose />} />
+        <Route path="/cose/detail/:id" element={<CoseMap />} />
+        <Route path="/cose/revise/:id" element={<CoseRevise />} />
+        <Route path="/cose/add" element={<MapLine />} />
+        <Route path="/cose/add/:searchWord" element={<MapSearch />} />
+        <Route path="/cose/add/:searchWord/:si/:area" element={<MapSearchSel />} />
+        <Route path="/cose/revises/:searchWord" element={<ReviseSearch />} />
+        <Route path="/cose/revises/:searchWord/:si/:area" element={<ReviseSearchSel />} />
+        <Route path="/ideal" element={<WorldCup />} />
+        <Route path="/ideal/match" element={<Match />} />
+
       </Routes>
     </BrowserRouter>
   );

@@ -2,27 +2,35 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../shared/Api";
+import Swal from "sweetalert2";
 
 const CompleteModal = ({ completeModal, setCompleteModal, data }) => {
+  const navigate = useNavigate();
 
   // input에 입력하는 값을 onChange를 통해 state에 저장
-  const [content, setContent] = useState();
+  const [answer, setAnswer] = useState("");
 
   // 작성 버튼을 눌렀을 때 서버로 전송
   const completeHandler = async () => {
     const req = {
-      answer: content,
+      answer: answer,
       id: data.id,
-      username: data.username
+      username: data.username,
     };
 
     try {
-      const res = await instance.post(`/api/auth/order/state`, req);
-      console.log(res);
-      alert("답변이 등록되었습니다.");
+      await instance.post(`/api/auth/order/state`, req);
+      Swal.fire({
+        text: "답변이 등록되었습니다.",
+        icon: "success",
+      });
       setCompleteModal(false);
+      navigate("/request/list");
     } catch {
-      alert("잠시후 다시 시도해주세요.");
+      Swal.fire({
+        text: "잠시후 다시 시도해주세요.",
+        icon: "error",
+      });
     }
   };
 
@@ -32,7 +40,7 @@ const CompleteModal = ({ completeModal, setCompleteModal, data }) => {
         <PageDel>
           <textarea
             onChange={(e) => {
-              setContent(e.target.value);
+              setAnswer(e.target.value);
             }}
           />
           <Buttons>

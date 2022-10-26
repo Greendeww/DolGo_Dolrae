@@ -5,7 +5,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { instance } from "../../shared/Api";
 import img from "../../assert/image/image.svg";
+
 import DragNDrop from "../../componenets/drag&drop/DragNDrop";
+
+import Swal from "sweetalert2";
+
 
 const Post = () => {
   const navigate = useNavigate();
@@ -15,9 +19,6 @@ const Post = () => {
 
   // image 미리보기를 위한 state
   const [fileImage, setFileImage] = useState([]);
-
-  // id를 storage에서 가져옴
-  const id = sessionStorage.getItem("ID");
 
   // 선택한 Do, Si, Theme를 저장할 state
   const [selectedDo, setSelectedDo] = useState();
@@ -89,7 +90,10 @@ const Post = () => {
       request.areaCode === undefined ||
       request.sigunguCode === undefined
     ) {
-      alert("필수 항목을 모두 작성해주세요.");
+      Swal.fire({
+        text: "필수 항목을 모두 작성해주세요.",
+        icon: "warning",
+      });
       return;
     }
 
@@ -115,12 +119,18 @@ const Post = () => {
       });
 
       try {
-        alert("게시글이 추가되었습니다.");
-        navigate(`/request/detail/${id}`);
+        Swal.fire({
+          text: "게시글이 추가되었습니다.",
+          icon: "success",
+        });
+        navigate(`/`);
         sessionStorage.removeItem("sameDo");
         sessionStorage.removeItem("ID");
       } catch (error) {
-        alert("내용을 다시 확인해주세요.");
+        Swal.fire({
+          text: "내용을 다시 확인해주세요.",
+          icon: "warning",
+        });
       }
     }
   };

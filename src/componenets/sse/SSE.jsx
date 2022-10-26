@@ -3,23 +3,38 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import { instance } from "../../shared/Api";
 import arrow from "../../assert/header/arrow.png";
+import Swal from "sweetalert2";
 
 const SSE = ({ modal, setModal }) => {
   const token = sessionStorage.getItem("ACCESS_TOKEN");
+
+  // ACCESS_TOKEN이 없으면 마이페이지 접근 불가
+  useEffect(() => {
+    if (token === null) {
+      Swal.fire({
+        text: "로그인이 필요한 서비스입니다.",
+        icon: "warning",
+      });
+    } 
+  }, []);
+
+  // 서버로부터 받아온 데이터를 저장할 state
   const [data, setData] = useState();
-  const [count, setCount] = useState();
+  
+  // 읽은 알림과 안 읽은 알림을 구분 ( 안 읽은 알림 먼저 보여주기 )
+  const notReadData =
+    data && data.filter((data) => data.read === false).reverse();
+  const readData = data && data.filter((data) => data.read === true).reverse();
 
-  const filteredData = data && data.filter((data) => data.read === false);
-
+  // 서버로부터 받아온 데이터를 저장
   const getNotice = async () => {
     const res = await instance.get("/api/auth/notice/notifications");
     setData(res.data.notificationResponses);
-    setCount(res.data.unreadCount);
   };
 
+  // 읽음 버튼을 클릭했을 때 서버로 보냄
   const readHandler = async (id) => {
-    const res = await instance.patch(`/api/auth/notice/read/${id}`);
-    console.log(res);
+    await instance.patch(`/api/auth/notice/read/${id}`);
   };
 
   useEffect(() => {
@@ -30,17 +45,35 @@ const SSE = ({ modal, setModal }) => {
 
   return (
     <Background onClick={() => setModal(!modal)}>
-      <Content onClick={() => null}>
+      <Content>
         <img alt="" src={arrow} />
         <StSse>
-          {filteredData?.map((list) => (
-            <Container key={list.id}>
-              <List>
-                <p style={{ fontSize: "15px" }}>{list.content}</p>
-              </List>
-              <button onClick={() => readHandler(list.id)}>읽음</button>
-            </Container>
-          ))}
+          {data?.length === 0 ? (
+            <Zero>
+              <p style={{ fontSize: "15px" }}>조회할 알림이 없습니다.</p>
+            </Zero>
+          ) : (
+            <>
+              {notReadData?.map((list) => (
+                <Container key={list.id}>
+                  <List>
+                    <p style={{ fontSize: "15px" }}>{list.content}</p>
+                  </List>
+                  <button onClick={() => readHandler(list.id)}>읽음</button>
+                </Container>
+              ))}
+              {readData?.map((list) => (
+                <Container key={list.id}>
+                  <List>
+                    <p style={{ fontSize: "15px" }}>{list.content}</p>
+                  </List>
+                  <button style={{ background: "gray", cursor: "default" }}>
+                    읽음
+                  </button>
+                </Container>
+              ))}
+            </>
+          )}
         </StSse>
       </Content>
     </Background>
@@ -106,6 +139,17 @@ const StSse = styled.div`
     color: white;
     margin: auto;
     cursor: pointer;
+  }
+`;
+
+const Zero = styled.div`
+  & p {
+    background-color: white;
+    vertical-align: middle;
+    border-radius: 10px;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 15px;
   }
 `;
 

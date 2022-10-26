@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Header from "../../componenets/header/Header";
 import { instance } from "../../shared/Api";
 import Terms from "./Terms";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -33,7 +34,10 @@ const SignUp = () => {
 
     // input이 비었거나, 이메일 유효성검사에 안 맞다면 alert
     if (user.username === "" || emailRegex.test(user.username) === false) {
-      alert("올바른 이메일을 입력해주세요.");
+      Swal.fire({
+        text: "올바른 이메일을 입력해주세요.",
+        icon: "warning",
+      });
     }
 
     // 조건을 충족했다면, 사용 가능한 이메일인지 체크하기 위해 서버로 이메일 전송
@@ -48,10 +52,17 @@ const SignUp = () => {
       // 중복된 이메일이라면 availableEmail === false
       if (response.data !== "중복 이메일입니다.") {
         setAvailableEmail(true);
-        alert(response.data);
+        Swal.fire({
+          title: "사용 가능합니다.",
+          text: "인증코드는 5분 후 만료됩니다.",
+          icon: "success",
+        });
       } else {
         setAvailableEmail(false);
-        alert("중복된 이메일입니다.");
+        Swal.fire({
+          text: "중복된 이메일입니다.",
+          icon: "error",
+        });
       }
     }
   };
@@ -82,14 +93,20 @@ const SignUp = () => {
     // 응답이 true이면 인증 완료 alert, sameCode === true
     if (response.data === true) {
       setSameCode(true);
-      // alert("인증이 완료되었습니다.");
+      Swal.fire({
+        text: "인증되었습니다",
+        icon: "success",
+      });
       return false;
     }
 
     // 응답이 false라면 코드 확인 alert, sameCode === false
     else {
       setSameCode(false);
-      alert("인증 코드를 다시 확인해주세요.");
+      Swal.fire({
+        text: "인증 코드를 다시 확인해주세요.",
+        icon: "error",
+      });
       return false;
     }
   };
@@ -113,13 +130,19 @@ const SignUp = () => {
 
     // 이메일 중복확인을 안 했을 경우
     if (availableEmail === false) {
-      alert("이메일 인증을 해주세요.");
+      Swal.fire({
+        text: "이메일 인증을 해주세요.",
+        icon: "warning",
+      });
       return false;
     }
 
     // 이메일 인증코드가 정확하지 않을 경우
     else if (sameCode === false) {
-      alert("인증코드를 확인해주세요.");
+      Swal.fire({
+        text: "인증코드를 확인해주세요.",
+        icon: "warning",
+      });
       return false;
     }
 
@@ -129,29 +152,45 @@ const SignUp = () => {
       user.password === "" ||
       user.passwordConfirm === ""
     ) {
-      alert("모든 항목을 입력해주세요.");
+      Swal.fire({
+        text: "모든 항목을 입력해주세요.",
+        icon: "warning",
+      });
       return false;
     }
 
     // 비밀번호와 비밀번호 확인이 일치하지 않을 경우
     else if (user.password !== user.passwordConfirm) {
-      alert("비밀번호가 일치하지 않습니다.");
+      Swal.fire({
+        text: "비밀번호가 일치하지 않습니다.",
+        icon: "warning",
+      });
       return false;
     }
 
     // 개인정보 수집에 동의하지 않았을 경우
     else if (consent === false) {
-      alert("개인정보 수집에 동의해주세요.");
+      Swal.fire({
+        text: "개인정보 수집에 동의해주세요.",
+        icon: "warning",
+      });
     } else {
       // 모든 조건을 충족했을 시, 서버로 데이터 전송
       try {
         const response = await instance.post("/api/member/signup", user);
-        alert(`${response.data.nickname}님 회원가입을 축하드립니다.`);
+        Swal.fire({
+          title: `${response.data.nickname}님`,
+          text: "회원가입을 축하드립니다.",
+          icon: "success",
+        });
         setUser(initialState);
         navigate("/login");
       } catch {
         // 회원탈퇴 후 일정 기간이 지나지 않아 회원가입이 불가능한 경우 alert
-        alert("회원탈퇴 후 7일간 재가입이 불가합니다.");
+        Swal.fire({
+          text: "탈퇴 후 7일간 재가입이 불가합니다.",
+          icon: "error",
+        });
       }
     }
   };
@@ -159,6 +198,11 @@ const SignUp = () => {
   // 이메일, 비밀번호 정규표현식
   const emailRegex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/;
+
+  // 렌더링될 때마다 스크롤 맨 위로
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
 
   return (
     <St>
@@ -190,7 +234,13 @@ const SignUp = () => {
                 {user.username === "" ? null : emailRegex.test(
                     user.username
                   ) ? (
-                  <p style={{ color: "green", textAlign: "left", lineHeight: "20px" }}>
+                  <p
+                    style={{
+                      color: "green",
+                      textAlign: "left",
+                      lineHeight: "20px",
+                    }}
+                  >
                     올바른 이메일 형식입니다.
                     <br /> 「인증하기」를 누른 후 잠시 기다려주세요.
                   </p>
