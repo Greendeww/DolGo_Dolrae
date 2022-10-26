@@ -34,7 +34,7 @@ const MapModal = ({ pos, close, setIsOpen }) => {
           <Img alt="mapsImage" src={pos.image} />
         )}
         <TotalDiv>
-          <div style={{ padding: "5px", color: "#000" }}>
+          <div style={{ padding: "5px", color: "#000",width:"85%" }}>
             <TitleDIv>
               <TitleB>{pos.title}</TitleB>
             </TitleDIv>

@@ -69,7 +69,7 @@ const DivBack = styled.div`
 `;
 const PageDel = styled.div`
   font-size: 17px;
-  font-family:tway;
+  font-family: bold;
   width: 296px;
   height: 141px;
   border: 3px solid #ABD4E2;

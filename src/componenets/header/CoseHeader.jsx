@@ -101,7 +101,7 @@ const StHeader = styled.div`
   z-index: 3;
   position: fixed;
   top: 0;
-
+  font-family: bold;
   & a {
     &:hover {
       cursor: pointer;

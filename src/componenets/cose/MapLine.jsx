@@ -85,7 +85,7 @@ const CoseBox = styled.div`
   width: 100%;
   max-width: 428px;
   margin: 0 auto;
-  font-family: tway;
+  font-family: bold;
 `
 const HelpP = styled.p`
   padding-top:8.8rem;
@@ -156,7 +156,7 @@ const InputTit = styled.input`
   border-radius: 15px;
   border: none;
   padding-left:0.5rem;
-  font-family: tway;
+  font-family: bold;
   font-size: 18px;
 `
 const Message = styled.div`
