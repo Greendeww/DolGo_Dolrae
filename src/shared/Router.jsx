@@ -61,7 +61,6 @@ function Router() {
   // 토큰 재발급
   const getToken = async () => {
     try {
-      // alert("토큰 만료");
       const res = await axios.post(
         process.env.REACT_APP_BASE_URL + "/api/member/retoken",
         {},
@@ -91,7 +90,6 @@ function Router() {
     // refreshToken이 존재하면 토큰 재발급
     setInterval(() => {
       if (sessionStorage.getItem("REFRESH_TOKEN") !== null) {
-        // alert("토큰 재발급");
         getToken();
       } else {
         return;

@@ -97,7 +97,10 @@ const DetailRevise = () => {
     }
     //이미지 개수 최대 3개까지 등록가능
     if (imageLists.length + fileImage1.length> 3) {
-      window.alert("이미지는 최대 3개까지 등록 가능합니다")
+      Swal.fire({
+        text: "이미지는 최대 3개까지 등록 가능합니다",
+        icon: "warning",
+      });
       imageLists = imageLists.slice(0, 3-fileImage1.length);
     }
     if(imgFiles.length + fileImage1.length> 3){
@@ -161,7 +164,10 @@ const DetailRevise = () => {
   const onUpdatePost = async (e) => {
     e.preventDefault();
     if (title === "" || content === "" || star === 0) {
-      alert("필수항목을 입력해주세요.");
+      Swal.fire({
+        text: "필수항목을 입력해주세요.",
+        icon: "warning",
+      });
       return;
     }
     let json = JSON.stringify(data);

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { instance } from "../../shared/Api";
 import img from "../../assert/image/image.svg";
+import Swal from "sweetalert2";
 
 const Post = () => {
   const navigate = useNavigate();
@@ -85,7 +86,10 @@ const Post = () => {
       request.areaCode === undefined ||
       request.sigunguCode === undefined
     ) {
-      alert("필수 항목을 모두 작성해주세요.");
+      Swal.fire({
+        text: "필수 항목을 모두 작성해주세요.",
+        icon: "warning",
+      });
       return;
     }
 
@@ -111,12 +115,18 @@ const Post = () => {
       });
 
       try {
-        alert("게시글이 추가되었습니다.");
+        Swal.fire({
+          text: "게시글이 추가되었습니다.",
+          icon: "success",
+        });
         navigate(`/`);
         sessionStorage.removeItem("sameDo");
         sessionStorage.removeItem("ID");
       } catch (error) {
-        alert("내용을 다시 확인해주세요.");
+        Swal.fire({
+          text: "내용을 다시 확인해주세요.",
+          icon: "warning",
+        });
       }
     }
   };

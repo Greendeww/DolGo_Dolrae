@@ -68,12 +68,23 @@ const Randoms = () => {
       <BoxDiv>
         <Header />
         <Box>
+          <Explanation>
+            * <b style={{ textDecoration: "underline" }}>완전 랜덤</b>은{" "}
+            <b style={{ color: "red" }}>전국</b>의 여행지를 기준으로,
+            <br /> *{" "}
+            <b style={{ textDecoration: "underline" }}>
+              지역 선택 후 랜덤
+            </b>은 <b style={{ color: "red" }}>선택한 지역</b>의 여행지를 <br />
+            &nbsp;&nbsp;기준으로 추천합니다.
+          </Explanation>
           <ImgBox>
             <Img alt="logo" src={backgroundImg} />
           </ImgBox>
           <ButDiv>
-            <button onClick={() => random()}>랜덤</button>
-            <button onClick={() => navigate("/rndlocation")}>지역 선택</button>
+            <button onClick={() => random()}>완전 랜덤</button>
+            <button onClick={() => navigate("/rndlocation")}>
+              지역 선택 후 랜덤
+            </button>
           </ButDiv>
         </Box>
       </BoxDiv>
@@ -89,7 +100,16 @@ const BoxDiv = styled.div`
 `;
 
 const Box = styled.div`
-  padding-top: 10rem;
+  padding-top: 8rem;
+`;
+
+const Explanation = styled.div`
+  background-color: #eef6fa;
+  font-size: 16px;
+  line-height: 28px;
+  width: 320px;
+  margin: 30px auto;
+  padding: 15px;
 `;
 
 const ImgBox = styled.div`
@@ -102,32 +122,30 @@ const Img = styled.img`
   min-height: 317px;
   max-height: 317px;
   display: flex;
-  width: 100%;
-  max-width: 370px;
-  margin: 20px auto;
-  border-radius: 15px;
+  width: 90%;
+  margin: 30px auto;
 `;
 
 const ButDiv = styled.div`
   width: 90%;
-  margin: 60px auto;
+  margin: 50px auto;
 
   & button {
-  background-color: #abd4e2;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  width: 100%;
-  height: 50px;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  display: block;
-  margin: 20px auto;
+    background-color: #abd4e2;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    display: block;
+    margin: 20px auto;
 
-  &:hover {
-    background-color: #ffaeae;
-  }
+    &:hover {
+      background-color: #ffaeae;
+    }
   }
 `;

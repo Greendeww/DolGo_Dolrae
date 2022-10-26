@@ -18,6 +18,7 @@ import Header from "../../componenets/header/Header";
 import { FaStar } from "react-icons/fa";
 import ThemeList from "../../componenets/theme/ThemeList";
 import DeletePostModal from "../../componenets/modal/DeletePostModal";
+import Swal from "sweetalert2";
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -57,7 +58,10 @@ const Detail = () => {
 
   const requestBtn = () => {
     if (login === null) {
-      alert("로그인이 필요한 서비스입니다.");
+      Swal.fire({
+        text: "로그인이 필요한 서비스입니다.",
+        icon: "warning",
+      });
       navigate("/login");
     } else {
       sessionStorage.setItem("place_id", posts.id);

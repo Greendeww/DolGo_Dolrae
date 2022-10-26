@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "../../componenets/header/Header";
-import Nickname from "../../componenets/mypage/Change/Nickname";
-import Password from "../../componenets/mypage/Change/Password";
-import Withdrawal from "../../componenets/mypage/Change/Withdrawal";
+import Nickname from "../../componenets/mypage/change/Nickname";
+import Password from "../../componenets/mypage/change/Password";
+import Withdrawal from "../../componenets/mypage/change/Withdrawal";
 
 function MyPageChange() {
   return (

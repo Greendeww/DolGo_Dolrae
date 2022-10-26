@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { instance } from "../../shared/Api";
 import { setCookie } from "../../shared/Cookie";
+import Swal from "sweetalert2";
 
 const KaKaoLogin = () => {
   const navigate = useNavigate();
@@ -24,7 +25,11 @@ const KaKaoLogin = () => {
       sessionStorage.setItem("nickname", res.data.nickname);
       sessionStorage.setItem("role", res.data.role);
 
-      alert(`${res.data.nickname}님 환영합니다.`);
+      Swal.fire({
+        title: `${res.data.nickname}님`,
+        text: "환영합니다.",
+        icon: "success",
+      });
       navigate("/");
 
     } catch (error) {

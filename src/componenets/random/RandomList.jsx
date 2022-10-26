@@ -16,7 +16,7 @@ const RandomList = () => {
   const navigate = useNavigate();
   const scrollRef = useRef();
   const [random, setRandom] = useState();
-  
+
   const fetch = async () => {
     const response = await instance.get(
       `/api/place/random?sigunguCode=0&areaCode=0`
@@ -52,7 +52,7 @@ const RandomList = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-      fetch();
+    fetch();
   },[]);
 
   // useEffect(() =>{
@@ -335,8 +335,8 @@ const TemaName = styled.span`
 `;
 const TemaHeart = styled.span`
   font-size: 2rem;
-  line-height: 0.5rem;
   cursor: pointer;
+  margin-top: -7px;
   color: #ff8585;
 `;
 const TemaImgBox = styled.div`
@@ -365,7 +365,7 @@ const TemaDesc = styled.div`
 `;
 const TemaTilte = styled.span`
   font-size: 20px;
-  line-height: 1.2rem;
+  line-height: 1.3rem;
   width: 180px;
   display: block;
   white-space: nowrap;
@@ -377,7 +377,7 @@ const TemaStar = styled.span`
   font-size: 1rem;
   display: flex;
   justify-content: flex-start;
-  line-height: 1rem;
+  line-height: 1.1rem;
 `;
 const ButDiv = styled.div`
   text-align: center;
@@ -388,7 +388,7 @@ const RandomBut = styled.button`
   cursor: pointer;
   color: white;
   background-color: #abd4e2;
-  height: 2.5rem;
+  height: 3rem;
   width: 100%;
   border: none;
   border-radius: 15px;
@@ -397,14 +397,15 @@ const RandomBut = styled.button`
 const BackBut = styled.button`
   cursor: pointer;
   color: white;
-  background-color: #ffc0c0;
-  height: 2.5rem;
+  background-color: white;
+  color: #abd4e2;
+  height: 3rem;
   width: 100%;
-  border: none;
+  border: 3px solid #abd4e2;
   border-radius: 15px;
 `;
 const ButText = styled.p`
-  font-weight: 700;
+  font-weight: bold;
   line-height: 0.6rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
 `;

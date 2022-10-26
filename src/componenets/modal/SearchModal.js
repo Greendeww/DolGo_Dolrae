@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const SearchModal = ({ close, title }) => {
   const navigate = useNavigate();
@@ -355,7 +356,6 @@ const SearchModal = ({ close, title }) => {
       <Content>
         <St>
           <Title>
-            <button onClick={initialization}>초기화↺</button>
             <p
               onClick={() => {
                 close(false);
@@ -367,7 +367,7 @@ const SearchModal = ({ close, title }) => {
           </Title>
           <StLocation>
             <StList>
-              <p style={{ marginTop: "-20px" }}>지역</p>
+              <p style={{ marginTop: "-60px" }}>지역</p>
               <Locations className="location-set">{Location()}</Locations>
             </StList>
             {selectedDo !== "" ? (
@@ -378,11 +378,15 @@ const SearchModal = ({ close, title }) => {
                 </Locations>
               </StList>
             ) : null}
-            <CompleteButton>
-              <button
+            <Buttons>
+              <ResetBtn onClick={initialization}>초기화↺</ResetBtn>
+              <CompleteBtn
                 onClick={() => {
                   if (selectedDo === "") {
-                    alert("지역을 선택해주세요.");
+                    Swal.fire({
+                      text: "지역을 선택해주세요.",
+                      icon: "warning",
+                    });
                     return;
                   } else {
                     if (selectedSi === "") {
@@ -402,8 +406,8 @@ const SearchModal = ({ close, title }) => {
                 }}
               >
                 선택완료
-              </button>
-            </CompleteButton>
+              </CompleteBtn>
+            </Buttons>
           </StLocation>
         </St>
       </Content>
@@ -454,35 +458,20 @@ const Content = styled.div`
 const St = styled.div`
   max-width: 428px;
   width: 100%;
-  padding-top: 80px;
+  padding-top: 60px;
 `;
 
 const Title = styled.div`
   display: flex;
   width: 85%;
-  justify-content: space-between;
-  align-items: center;
   margin: 0 auto;
   margin-top: 50px;
-
-  button {
-    margin-left: 0px;
-    background: #ffc0c0;
-    border: none;
-    border-radius: 12px;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    color: #ffffff;
-    cursor: pointer;
-    width: 120px;
-  }
+  justify-content: right;
 
   p {
     margin-top: 35px;
     font-size: 35px;
     font-weight: bold;
-    text-align: center;
     cursor: pointer;
     &:hover {
       color: #abd4e2;
@@ -491,40 +480,57 @@ const Title = styled.div`
 `;
 
 const StLocation = styled.div`
-  margin: 50px auto;
-  & button {
-    background-color: #ffc0c0;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    width: 92%;
-    height: 50px;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 24px;
-    display: block;
-  }
+  margin: 0 auto;
 `;
 
 const StList = styled.div`
   width: 100%;
-  margin-top: 50px;
-  /* margin: 0 auto; */
+  margin-top: 40px;
+
   & p {
     font-style: normal;
     font-size: 25px;
     line-height: 40px;
     color: #bfb8b8;
     margin: 20px;
-    /* margin-left: 30px; */
   }
 `;
 
-const CompleteButton = styled.div`
-  display: flex;
-  padding-bottom: 20px;
+const Buttons = styled.div`
   margin: 40px auto;
+`;
+
+const ResetBtn = styled.button`
+  background-color: white;
+  border: 3px solid #ffc0c0;
+  color: #ffc0c0;
+  border-radius: 10px;
+  width: 90%;
+  height: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 24px;
+  display: block;
+  margin: 0 auto;
+  margin-top: -20px;
+`;
+
+const CompleteBtn = styled.button`
+  background-color: #ffc0c0;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  width: 90%;
+  height: 50px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  display: block;
+  margin: 0 auto;
+  margin-top: -20px;
 `;
 
 const Locations = styled.div`

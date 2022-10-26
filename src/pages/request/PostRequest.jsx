@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../../componenets/header/Header";
 import { instance } from "../../shared/Api";
+import Swal from "sweetalert2";
 
 const PostRequest = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const PostRequest = () => {
     title: "",
     content: "",
     address: "",
-    type: "추가"
+    type: "추가",
   };
 
   const [req, setReq] = useState(initialState);
@@ -26,11 +27,7 @@ const PostRequest = () => {
 
   const onChangeImg = (e) => {
     const imageList = e.target.files;
-    // const maxImageCnt = 3;
     const imageLists = [...image];
-    // if(image.length > maxImageCnt){
-    //   alert("첨부파일은 최대 3개까지 가능합니다")
-    // }
 
     console.log(imageList);
     const imgFiles = [...fileImage];
@@ -43,9 +40,7 @@ const PostRequest = () => {
       imageLists.push(nowImageUrl1);
       continue;
     }
-    // if (imageLists.length > 3) {
-    //   imageLists = imageLists.slice(0, 3);
-    // }
+
     setFileImage(imgFiles);
     setImage(imageLists);
   };
@@ -59,7 +54,10 @@ const PostRequest = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     if (req.title === "" || req.content === "" || req.address === "") {
-      alert("필수 항목을 모두 작성해주세요.");
+      Swal.fire({
+        text: "필수 항목을 모두 작성해주세요.",
+        icon: "warning",
+      });
       return;
     } else {
       const json = JSON.stringify(req);
@@ -76,7 +74,10 @@ const PostRequest = () => {
           "content-type": "multipart/form-data",
         },
       });
-      alert("게시글 등록 요청 완료되었습니다.");
+      Swal.fire({
+        text: "게시글 등록 요청 완료되었습니다.",
+        icon: "success",
+      });
       navigate("/");
     }
   };
