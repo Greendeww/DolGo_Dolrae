@@ -56,6 +56,7 @@ const Content = styled.div`
   position: relative;
   overflow: scroll;
   background: rgba(0, 0, 0, 0.6);
+  font-family: bold;
 `;
 
 const DivBack = styled.div`
@@ -85,6 +86,7 @@ const PageDel = styled.div`
   left: 0;
   z-index: 99;
   border-radius:20px;
+  font-family: bold;
 `;
 const Button = styled.div`
   width: 160px;

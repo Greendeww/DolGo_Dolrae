@@ -63,6 +63,7 @@ const ReviseMap = ({searchWords}) => {
     position: relative;
     background-color: #abd4e2;
     top: -1px;
+    font-family: bold;
   `;
   const SearchContainer = styled.div`
   

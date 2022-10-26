@@ -222,6 +222,7 @@ const Cose1Box = styled.div`
   /* display:flex; */
   margin: auto;
   flex-wrap:wrap;
+  font-family: bold;
 `;
 const Cose1Div = styled.div`
   margin: auto;
