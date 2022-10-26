@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
-import Star from "../star/Star";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { _updateComment, _getComments } from "../../redux/modules/comment";
 import { instance } from "../../shared/Api";
 import Header from "../header/Header";
 import img from "../../assert/image/image.svg";
 import Swal from "sweetalert2";
+import imageCompression from "browser-image-compression";
 
 const DetailRevise = () => {
   const navigate = useNavigate();
@@ -67,8 +67,22 @@ const DetailRevise = () => {
     setStar(score);
   };
 
+  //이미지 리사이징
+  const compressImage = async (image) => {
+    try{
+      const options = {
+        maxSizeMb: 1,
+        maxWidthOrHeight: 600,
+        alwaysKeepResolution : true, 
+      }
+      return await imageCompression(image, options);
+    } catch(e){
+      console.log(e);
+    };
+  };
+
   //이미지 미리보기 및 파일 추가
-  const onChangeImg = (e) => {
+  const onChangeImg = async(e) => {
     const imageList = e.target.files;
     let imageLists = [...image];
     let imgFiles = [...fileImage];
@@ -78,7 +92,8 @@ const DetailRevise = () => {
     }
     for (let i = 0; i < imageList.length; i++) {
       const nowImageUrl1 = e.target.files[i];
-      imageLists.push(nowImageUrl1);
+      const compressedImage = await compressImage(nowImageUrl1);
+      imageLists.push(compressedImage);
     }
     //이미지 개수 최대 3개까지 등록가능
     if (imageLists.length + fileImage1.length> 3) {
@@ -143,7 +158,6 @@ const DetailRevise = () => {
     star: Number(star),
     existUrlList: fileImage1,
   };
-
   const onChangeHandler = (event, setState) => setState(event.target.value);
 
   //후기 수정하기 완료 버튼
@@ -171,14 +185,15 @@ const DetailRevise = () => {
     for (let value of payload.formData.values()) {
       console.log(value);
     }
-    Swal.fire({
+    dispatch(_updateComment(payload))
+    .then((dispatch) => 
+      Swal.fire({
       position: 'center',
       icon: 'success',
       title: '수정 완료',
       showConfirmButton: false,
       timer: 1000
-    })
-    dispatch(_updateComment(payload));
+    }));
   };
 
   useEffect(() => {

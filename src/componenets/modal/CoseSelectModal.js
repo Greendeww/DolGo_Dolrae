@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import styled, { keyframes } from "styled-components";
+import { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import css from "../../css/select.css";
-import Header from "../header/Header";
-import Swal from "sweetalert2";
 
-const RndLocation = () => {
+const CoseSelectModal = ({ close, searchWord}) => {
   const navigate = useNavigate();
+  document.body.style.overflow = "hidden";
 
+  const [selectedDo, setSelectedDo] = useState("");
+  const [selectedSi, setSelectedSi] = useState("");
+
+  // 필터 초기화
   const initialization = (e) => {
-    // e.preventDefault();
     sessionStorage.removeItem("AREA_CODE");
     sessionStorage.removeItem("AREA_NAME");
     sessionStorage.removeItem("SIGUNGU_CODE");
@@ -19,10 +22,9 @@ const RndLocation = () => {
     setSelectedSi("");
   };
 
-  const [selectedDo, setSelectedDo] = useState("");
-  const [selectedSi, setSelectedSi] = useState("");
-
+  // 지역별 name, value
   const doList = [
+    { name: "전체", value: 0 },
     { name: "서울", value: 1 },
     { name: "인천", value: 2 },
     { name: "대전", value: 3 },
@@ -42,7 +44,9 @@ const RndLocation = () => {
     { name: "제주", value: 39 },
   ];
 
+  // 세부 지역별 해당 do, name, value
   const siList = [
+    { do: "전체", name: "전체", value: 0 },
     { do: "서울", name: "전체", value: 0 },
     { do: "서울", name: "강남", value: 1 },
     { do: "서울", name: "강동", value: 2 },
@@ -78,6 +82,7 @@ const RndLocation = () => {
     { do: "인천", name: "부평", value: 6 },
     { do: "인천", name: "서구", value: 7 },
     { do: "인천", name: "연수", value: 8 },
+    { do: "인천", name: "옹진", value: 9 },
     { do: "인천", name: "중구", value: 10 },
     { do: "대전", name: "전체", value: 0 },
     { do: "대전", name: "대덕", value: 1 },
@@ -91,19 +96,22 @@ const RndLocation = () => {
     { do: "대구", name: "달성", value: 3 },
     { do: "대구", name: "동구", value: 4 },
     { do: "대구", name: "북구", value: 5 },
+    { do: "대구", name: "서구", value: 6 },
     { do: "대구", name: "수성", value: 7 },
+    { do: "대구", name: "중구", value: 8 },
     { do: "광주", name: "전체", value: 0 },
-    { do: "광주", name: "광산", value: 1 },
-    { do: "광주", name: "남구", value: 2 },
-    { do: "광주", name: "동구", value: 3 },
-    { do: "광주", name: "북구", value: 4 },
-    { do: "광주", name: "서구", value: 5 },
+    { do: "광주", name: "광산", value: 0 },
+    { do: "광주", name: "남구", value: 0 },
+    { do: "광주", name: "동구", value: 0 },
+    { do: "광주", name: "북구", value: 0 },
+    { do: "광주", name: "서구", value: 0 },
     { do: "부산", name: "전체", value: 0 },
     { do: "부산", name: "강서", value: 1 },
     { do: "부산", name: "금정", value: 2 },
     { do: "부산", name: "기장", value: 3 },
     { do: "부산", name: "남구", value: 4 },
     { do: "부산", name: "동구", value: 5 },
+    { do: "부산", name: "동래", value: 6 },
     { do: "부산", name: "부산진", value: 7 },
     { do: "부산", name: "북구", value: 8 },
     { do: "부산", name: "사상", value: 9 },
@@ -112,6 +120,7 @@ const RndLocation = () => {
     { do: "부산", name: "수영", value: 12 },
     { do: "부산", name: "연제", value: 13 },
     { do: "부산", name: "영도", value: 14 },
+    { do: "부산", name: "중구", value: 15 },
     { do: "부산", name: "해운대", value: 16 },
     { do: "울산", name: "전체", value: 0 },
     { do: "울산", name: "남구", value: 2 },
@@ -235,16 +244,16 @@ const RndLocation = () => {
     { do: "경남", name: "사천", value: 8 },
     { do: "경남", name: "산청", value: 9 },
     { do: "경남", name: "양산", value: 10 },
-    { do: "경남", name: "의령", value: 11 },
-    { do: "경남", name: "진주", value: 12 },
-    { do: "경남", name: "진해", value: 13 },
-    { do: "경남", name: "창녕", value: 14 },
-    { do: "경남", name: "창원", value: 15 },
-    { do: "경남", name: "통영", value: 16 },
-    { do: "경남", name: "하동", value: 17 },
-    { do: "경남", name: "함안", value: 18 },
-    { do: "경남", name: "함양", value: 19 },
-    { do: "경남", name: "합천", value: 20 },
+    { do: "경남", name: "의령", value: 12 },
+    { do: "경남", name: "진주", value: 13 },
+    { do: "경남", name: "진해", value: 14 },
+    { do: "경남", name: "창녕", value: 15 },
+    { do: "경남", name: "창원", value: 16 },
+    { do: "경남", name: "통영", value: 17 },
+    { do: "경남", name: "하동", value: 18 },
+    { do: "경남", name: "함안", value: 19 },
+    { do: "경남", name: "함양", value: 20 },
+    { do: "경남", name: "합천", value: 21 },
     { do: "전북", name: "전체", value: 0 },
     { do: "전북", name: "고창", value: 1 },
     { do: "전북", name: "군산", value: 2 },
@@ -274,20 +283,21 @@ const RndLocation = () => {
     { do: "전남", name: "순천", value: 11 },
     { do: "전남", name: "신안", value: 12 },
     { do: "전남", name: "여수", value: 13 },
-    { do: "전남", name: "영광", value: 14 },
-    { do: "전남", name: "영암", value: 15 },
-    { do: "전남", name: "완도", value: 16 },
-    { do: "전남", name: "장성", value: 17 },
-    { do: "전남", name: "장흥", value: 18 },
-    { do: "전남", name: "진도", value: 19 },
-    { do: "전남", name: "함평", value: 20 },
-    { do: "전남", name: "해남", value: 21 },
-    { do: "전남", name: "화순", value: 22 },
+    { do: "전남", name: "영광", value: 16 },
+    { do: "전남", name: "영암", value: 17 },
+    { do: "전남", name: "완도", value: 18 },
+    { do: "전남", name: "장성", value: 19 },
+    { do: "전남", name: "장흥", value: 20 },
+    { do: "전남", name: "진도", value: 21 },
+    { do: "전남", name: "함평", value: 22 },
+    { do: "전남", name: "해남", value: 23 },
+    { do: "전남", name: "화순", value: 24 },
     { do: "제주", name: "전체", value: 0 },
     { do: "제주", name: "서귀포", value: 3 },
     { do: "제주", name: "제주", value: 4 },
   ];
 
+  // 지역 생성
   const Location = () => {
     return doList.map((item, idx) => (
       <div
@@ -299,8 +309,11 @@ const RndLocation = () => {
         }
         onClick={() => {
           setSelectedDo(item.value);
+          setSelectedSi("");
           sessionStorage.setItem("AREA_CODE", item.value);
           sessionStorage.setItem("AREA_NAME", item.name);
+          sessionStorage.removeItem("SIGUNGU_CODE");
+          sessionStorage.removeItem("SIGUNGU_NAME");
         }}
       >
         {item.name}
@@ -308,6 +321,7 @@ const RndLocation = () => {
     ));
   };
 
+  // 세부 지역 생성
   const DetailLocation = () => {
     const GET_AREA_NAME = window.sessionStorage.getItem("AREA_NAME");
     return siList.map((item, idx) =>
@@ -331,170 +345,190 @@ const RndLocation = () => {
     );
   };
 
-  const onRandom = (e) => {
-    let timerInterval;
-    Swal.fire({
-      title: "지역을 선정중입니다",
-      html: "잠시만 기다려주세요",
-      timer: 1500,
-      timerProgressBar: true,
-      didOpen: () => {
-        Swal.showLoading();
-        const b = Swal.getHtmlContainer().querySelector("b");
-        timerInterval = setInterval(() => {
-          b.textContent = Swal.getTimerLeft();
-        }, 100);
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-        navigate(
-          "/rndselect/" +
-            sessionStorage.getItem("SIGUNGU_CODE") +
-            "/" +
-            sessionStorage.getItem("AREA_CODE")
-        );
-      },
-    }).then((result) => {
-      /* Read more about handling dismissals below */
-      if (result.dismiss === Swal.DismissReason.timer) {
-      }
-    });
-  };
-
+  // select 페이지로 돌아올 시 자동으로 필터 초기화
   useEffect(() => {
     initialization();
   }, []);
 
   return (
-    <StRnd>
-      <Header />
-      <RndDiv>
-        <StList>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <p>지역</p>
-            <ResetBtn style={{ marginRight: "20px" }} onClick={initialization}>
-              필터 초기화 ↺
-            </ResetBtn>
-          </div>
-          <div>
-            <Locations className="location-set">{Location()}</Locations>
-          </div>
-        </StList>
-        {selectedDo !== "" ? (
-          <StList>
-            <p style={{ marginTop: "50px" }}>세부지역</p>
-            <Locations className="location-set">{DetailLocation()}</Locations>
-          </StList>
-        ) : null}
-        <BtnDiv>
-          <CompleteBtn
-            onClick={() => {
-              if (selectedDo === "") {
-                Swal.fire({
-                  title: "지역을 선택해주세요.",
-                  icon: "warning",
-                });
-              } else {
-                if (selectedSi === "") {
-                  sessionStorage.setItem("SIGUNGU_CODE", 0);
-                  sessionStorage.setItem("SIGUNGU_NAME", "전체");
-                }
-                onRandom();
-              }
-            }}
-          >
-            선택완료
-          </CompleteBtn>
-          <BackBtn onClick={() => navigate("/random")}>뒤로가기</BackBtn>
-        </BtnDiv>
-      </RndDiv>
-    </StRnd>
+    <Background>
+      <Content>
+        <St>
+          <Title>
+            <button onClick={initialization}>초기화↺</button>
+            <p
+              onClick={() => {
+                close(false);
+                document.body.style.overflow = "unset";
+              }}
+            >
+              X
+            </p>
+          </Title>
+          <StLocation>
+            <StList>
+              <p style={{ marginTop: "-20px" }}>지역</p>
+              <Locations className="location-set">{Location()}</Locations>
+            </StList>
+            {selectedDo !== "" ? (
+              <StList>
+                <p>세부지역</p>
+                <Locations className="location-set">
+                  {DetailLocation()}
+                </Locations>
+              </StList>
+            ) : null}
+            <CompleteButton>
+              <button
+                onClick={() => {
+                  if (selectedDo === "") {
+                    alert("지역을 선택해주세요.");
+                    return;
+                  } else {
+                    if (selectedSi === "") {
+                      sessionStorage.setItem("SIGUNGU_CODE", 0);
+                      sessionStorage.setItem("SIGUNGU_NAME", "전체");
+                    }
+                    navigate(
+                      "/cose/add/" +
+                      searchWord+
+                        "/" +
+                        window.sessionStorage.getItem("SIGUNGU_CODE") +
+                        "/" +
+                        window.sessionStorage.getItem("AREA_CODE")
+                    );
+                    document.body.style.overflow = "unset";
+                  }
+                }}
+              >
+                선택완료
+              </button>
+            </CompleteButton>
+          </StLocation>
+        </St>
+      </Content>
+    </Background>
   );
 };
 
-export default RndLocation;
+export default CoseSelectModal;
 
-const StRnd = styled.div`
+const slideIn = keyframes`
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+`;
+
+const slideOut = keyframes`
+  from {
+      transform: translate(0%);
+  }
+  to {
+      transform: translateX(-100%);
+  }
+`;
+
+const Background = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  text-align: center;
+  z-index: 2;
+`;
+
+const Content = styled.div`
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: scroll;
+  background: #fff;
+  animation: ${(props) => (props.aniState ? slideOut : slideIn)} 0.4s;
+`;
+
+const St = styled.div`
   max-width: 428px;
   width: 100%;
+  padding-top: 80px;
+`;
+
+const Title = styled.div`
+  display: flex;
+  width: 85%;
+  justify-content: space-between;
+  align-items: center;
   margin: 0 auto;
+  margin-top: 50px;
+
+  button {
+    margin-left: 0px;
+    background: #ffc0c0;
+    border: none;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+    cursor: pointer;
+    width: 120px;
+  }
+
+  p {
+    margin-top: 35px;
+    font-size: 35px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    &:hover {
+      color: #abd4e2;
+    }
+  }
 `;
 
-const RndDiv = styled.div`
-  padding-top: 9rem;
-`;
-
-const ResetBtn = styled.button`
-  width: 150px;
-  height: 40px;
-  background: #ffc0c0;
-  border: none;
-  border-radius: 12px;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-  color: #ffffff;
-  cursor: pointer;
-  margin-top: 21px;
-`;
-
-const BackBtn = styled.button`
-  background-color: white;
-  border: 3px solid #abd4e2;
-  color: #abd4e2;
-  border-radius: 12px;
-  width: 90%;
-  height: 50px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 24px;
-  display: block;
-  margin: 0 auto;
-  margin-top: -20px;
-`;
-
-const CompleteBtn = styled.button`
-  background-color: #abd4e2;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 12px;
-  width: 90%;
-  height: 50px;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  display: block;
-  margin: 0 auto;
-  margin-top: -20px;
+const StLocation = styled.div`
+  margin: 50px auto;
+  & button {
+    background-color: #ffc0c0;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    width: 92%;
+    height: 50px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 24px;
+    display: block;
+  }
 `;
 
 const StList = styled.div`
   width: 100%;
-  margin: 0 auto;
+  margin-top: 50px;
+  /* margin: 0 auto; */
   & p {
     font-style: normal;
     font-size: 25px;
     line-height: 40px;
     color: #bfb8b8;
     margin: 20px;
-    margin-left: 30px;
+    /* margin-left: 30px; */
   }
 `;
 
-const BtnDiv = styled.div`
-  margin: 50px auto;
-  gap: 15px;
-
-  & button {
-    margin-top: 20px;
-  }
+const CompleteButton = styled.div`
+  display: flex;
+  padding-bottom: 20px;
+  margin: 40px auto;
 `;
 
 const Locations = styled.div`
   display: flex;
-  margin: 20px auto;
+  margin: 0 auto;
   width: 323px;
 `;

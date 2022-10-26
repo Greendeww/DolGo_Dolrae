@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Paginations from "../pagination/Paginations";
-import axios from "axios";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import Comments from "./Comments";
-import { _getComments } from "../../redux/modules/comment";
 import Swal from "sweetalert2";
 
 const Review = ({ comment }) => {

@@ -8,6 +8,7 @@ import img from "../../assert/image/image.svg";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { _postComment } from "../../redux/modules/comment";
+import imageCompression from "browser-image-compression";
 
 const DetailForm = () => {
   const navigate = useNavigate();
@@ -46,8 +47,22 @@ const DetailForm = () => {
     let score = clicked.filter(Boolean).length;
     setStar(score);
   };
+  //이미지 리사이징
+  const compressImage = async (image) => {
+    try{
+      const options = {
+        maxSizeMb: 1,
+        maxWidthOrHeight: 600,
+        alwaysKeepResolution : true, //품질만 낮추고 항상 너비와 높이 유지
+      }
+      return await imageCompression(image, options);
+    } catch(e){
+      console.log(e);
+    };
+  };
 
-  const onChangeImg = (e) => {
+  //이미지 미리보기 및 리사이징
+  const onChangeImg = async(e) => {
     const imageList = e.target.files;
     let imageLists = [...image];
     let imgFiles = [...fileImage];
@@ -57,8 +72,10 @@ const DetailForm = () => {
     }
     for (let i = 0; i < imageList.length; i++) {
       const nowImageUrl1 = e.target.files[i];
-      imageLists.push(nowImageUrl1);
+      const compressedImage = await compressImage(nowImageUrl1);
+      imageLists.push(compressedImage);
     }
+
     //이미지 개수 최대 3개까지 등록가능
     if (imageLists.length > 3) {
       Swal.fire({
@@ -115,6 +132,7 @@ const DetailForm = () => {
     // nickname:nickname
   };
 
+
   const onAddComment = async (e) => {
     e.preventDefault();
     if (title === "" || content === "" || star === 0) {
@@ -132,7 +150,6 @@ const DetailForm = () => {
       return;
     }
     let json = JSON.stringify(data);
-    console.log(json);
     const blob = new Blob([json], { type: "application/json" });
     const formData = new FormData();
     for (let i = 0; i < image.length; i++) {
@@ -147,14 +164,14 @@ const DetailForm = () => {
     for (let value of payload.formData.values()) {
       console.log(value);
     }
-    Swal.fire({
-      position: "center",
-      icon: "success",
-      title: "작성 완료",
+    dispatch(_postComment(payload))
+    .then(( dispatch ) => Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: '작성 완료',
       showConfirmButton: false,
-      timer: 1000,
-    });
-    dispatch(_postComment(payload));
+      timer: 1000
+    }))
   };
 
   return (
