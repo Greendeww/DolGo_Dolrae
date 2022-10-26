@@ -5,8 +5,21 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const ModalImage = ({onClose, comment}) => {
+import img1 from "../../assert/cose/course1.png"
+import img2 from "../../assert/cose/course2.png"
+import img3 from "../../assert/cose/course3.png"
+import img4 from "../../assert/cose/course5.png"
+
+const CoseImage = ({onClose, comment}) => {
   document.body.style.overflow = "hidden"
+
+  const backgroundArr = [
+    img1,
+    img2,
+    img3,
+    img4,
+  ];
+
 
   const settings = {
     dots: true,
@@ -14,8 +27,9 @@ const ModalImage = ({onClose, comment}) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    draggable:true,
-    arrow:false
+    autoplay: true,
+    pauseOnHover: true,
+    arrows: false
   };
 
   return (
@@ -23,7 +37,7 @@ const ModalImage = ({onClose, comment}) => {
         <Content>
           <PageDel>
             <HeadDiv>
-              <HeadP>이미지 상세보기</HeadP>
+              <HeadP>코스 작성 예시</HeadP>
               <CancelP 
                 onClick={() => {
                   onClose(false);
@@ -32,7 +46,7 @@ const ModalImage = ({onClose, comment}) => {
                 >X</CancelP>
             </HeadDiv>
             <Slider {...settings}> 
-                  {comment.imageList.map((image, index) => {
+                  {backgroundArr.map((image, index) => {
                     return <DetailImg key={index} alt="" src={image} />;
                   })}
             </Slider>
@@ -42,7 +56,7 @@ const ModalImage = ({onClose, comment}) => {
   );
 };
 
-export default ModalImage;
+export default CoseImage;
 
 const Background = styled.div`
   height: 100%;
@@ -68,7 +82,7 @@ const PageDel = styled.div`
   max-width:400px;
   width: 100%;
   height: 100%;
-  max-height:428px;
+  max-height:800px;
   border: 3px solid #ABD4E2;
   background-color: rgb(255, 255, 255);
   margin: auto;
@@ -88,7 +102,9 @@ const PageDel = styled.div`
 
 const DetailImg = styled.img`
   width: 100%;
-  height:300px;
+  min-height:650px;
+  max-height:650px;
+  height:100%;
   border-radius: 20px;
   margin-top: 1rem;
   margin-bottom:1rem;

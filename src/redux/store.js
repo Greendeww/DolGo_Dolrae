@@ -6,6 +6,8 @@ const store = configureStore({
   reducer: {
     post: postSlice.reducer,
     comment: commentSlice.reducer,
+    theme: themeSlice.reducer,
+    cose: coseSlice.reducer
   },
 });
 

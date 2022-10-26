@@ -28,6 +28,16 @@ import MyRequestDetail from "../componenets/mypage/mypage/request/MyRequestDetai
 import MapLike from "../componenets/mypage/mypage/likeList/MapLike";
 import SelectLike from "../componenets/mypage/mypage/likeList/SelectLike";
 
+//cose
+import MapSearch from "../componenets/cose/MapSearch";
+import Cose from "../pages/cose/Cose";
+import CoseMap from "../componenets/cose/CoseMap";
+import MapLine from "../componenets/cose/MapLine";
+import MapSearchSel from "../componenets/cose/MapSearchSel";
+import CoseRevise from "../componenets/cose/coseReviser/CoseRevise";
+import ReviseSearch from "../componenets/cose/coseReviser/ReviseSearch";
+import ReviseSearchSel from "../componenets/cose/coseReviser/ReviseSearchSel";
+
 // request
 import EditRequest from "../pages/request/EditRequest";
 import PostRequest from "../pages/request/PostRequest";
@@ -38,12 +48,14 @@ import RequestDetail from "../pages/manager/RequestDetail";
 import Post from "../pages/manager/Post";
 import Edit from "../pages/manager/Edit";
 
-// import MapLine from "../componenets/maps/MapLine";
-
 import { useEffect } from "react";
 import axios from "axios";
 import { EventSourcePolyfill } from "event-source-polyfill";
 import { instance } from "./Api";
+
+
+
+
 
 function Router() {
   // 토큰 재발급
@@ -183,9 +195,17 @@ function Router() {
         <Route path="/rnd" element={<RandomList />} />
         <Route path="/search/:title" element={<SearchPage />} />
         <Route path="/search/:title/:si/:area" element={<SearchSelList />} />
+        <Route path="/cose" element={<Cose />} />
+        <Route path="/cose/detail/:id" element={<CoseMap />} />
+        <Route path="/cose/revise/:id" element={<CoseRevise />} />
+        <Route path="/cose/add" element={<MapLine />} />
+        <Route path="/cose/add/:searchWord" element={<MapSearch />} />
+        <Route path="/cose/add/:searchWord/:si/:area" element={<MapSearchSel />} />
+        <Route path="/cose/revises/:searchWord" element={<ReviseSearch />} />
+        <Route path="/cose/revises/:searchWord/:si/:area" element={<ReviseSearchSel />} />
         <Route path="/ideal" element={<WorldCup />} />
         <Route path="/ideal/match" element={<Match />} />
-        {/* <Route path="/maps" element={<MapLine />} /> */}
+
       </Routes>
     </BrowserRouter>
   );

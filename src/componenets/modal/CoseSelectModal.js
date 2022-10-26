@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const SearchModal = ({ close, title }) => {
+const CoseSelectModal = ({ close, searchWord}) => {
   const navigate = useNavigate();
   document.body.style.overflow = "hidden";
 
@@ -390,8 +390,8 @@ const SearchModal = ({ close, title }) => {
                       sessionStorage.setItem("SIGUNGU_NAME", "전체");
                     }
                     navigate(
-                      "/search/" +
-                        title +
+                      "/cose/add/" +
+                      searchWord+
                         "/" +
                         window.sessionStorage.getItem("SIGUNGU_CODE") +
                         "/" +
@@ -411,7 +411,7 @@ const SearchModal = ({ close, title }) => {
   );
 };
 
-export default SearchModal;
+export default CoseSelectModal;
 
 const slideIn = keyframes`
   from {
