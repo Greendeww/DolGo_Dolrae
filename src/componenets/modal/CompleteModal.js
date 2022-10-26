@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../shared/Api";
+import Swal from "sweetalert2";
 
 const CompleteModal = ({ completeModal, setCompleteModal, data }) => {
   const navigate = useNavigate();
@@ -14,16 +15,22 @@ const CompleteModal = ({ completeModal, setCompleteModal, data }) => {
     const req = {
       answer: answer,
       id: data.id,
-      username: data.username
+      username: data.username,
     };
 
     try {
       await instance.post(`/api/auth/order/state`, req);
-      alert("답변이 등록되었습니다.");
+      Swal.fire({
+        text: "답변이 등록되었습니다.",
+        icon: "success",
+      });
       setCompleteModal(false);
-      navigate('/request/list')
+      navigate("/request/list");
     } catch {
-      alert("잠시후 다시 시도해주세요.");
+      Swal.fire({
+        text: "잠시후 다시 시도해주세요.",
+        icon: "error",
+      });
     }
   };
 

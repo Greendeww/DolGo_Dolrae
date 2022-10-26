@@ -391,8 +391,11 @@ const RndLocation = () => {
         <BtnDiv>
           <CompleteBtn
             onClick={() => {
-              if (selectedDo === null) {
-                alert("모든 항목을 선택해주세요.");
+              if (selectedDo === "") {
+                Swal.fire({
+                  title: "지역을 선택해주세요.",
+                  icon: "warning",
+                });
               } else {
                 if (selectedSi === "") {
                   sessionStorage.setItem("SIGUNGU_CODE", 0);
@@ -484,7 +487,7 @@ const StList = styled.div`
 `;
 
 const BtnDiv = styled.div`
-  margin: 40px auto;
+  margin: 50px auto;
   gap: 15px;
 
   & button {

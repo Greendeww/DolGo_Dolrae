@@ -24,7 +24,7 @@ const DetailForm = () => {
   const [image, setImage] = useState([]);
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
- 
+
   const handleStarClick = (index) => {
     let clickStates = [...clicked];
     for (let i = 0; i < 5; i++) {
@@ -36,7 +36,7 @@ const DetailForm = () => {
   useEffect(() => {
     sendReview();
   }, [clicked]);
-  
+
   //제목부분에 커서
   useEffect(() => {
     inputFocus.current.focus();
@@ -59,12 +59,15 @@ const DetailForm = () => {
       const nowImageUrl1 = e.target.files[i];
       imageLists.push(nowImageUrl1);
     }
-       //이미지 개수 최대 3개까지 등록가능
+    //이미지 개수 최대 3개까지 등록가능
     if (imageLists.length > 3) {
-      window.alert("이미지는 최대 3개까지 등록 가능합니다")
+      Swal.fire({
+        text: "이미지는 최대 3개까지 등록 가능합니다",
+        icon: "warning",
+      });
       imageLists = imageLists.slice(0, 3);
     }
-    if(imgFiles.length > 3){
+    if (imgFiles.length > 3) {
       imgFiles = imgFiles.slice(0, 3);
     }
     setFileImage(imgFiles);
@@ -115,10 +118,18 @@ const DetailForm = () => {
   const onAddComment = async (e) => {
     e.preventDefault();
     if (title === "" || content === "" || star === 0) {
-      return alert("필수항목을 입력해주세요.");
+      Swal.fire({
+        text: "필수항목을 입력해주세요.",
+        icon: "warning",
+      });
+      return;
     }
     if (isContent !== true || isTitle !== true) {
-      return alert("형식을 확인해주세요");
+      Swal.fire({
+        text: "형식을 확인해주세요",
+        icon: "warning",
+      });
+      return;
     }
     let json = JSON.stringify(data);
     console.log(json);
@@ -137,15 +148,15 @@ const DetailForm = () => {
       console.log(value);
     }
     Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: '작성 완료',
+      position: "center",
+      icon: "success",
+      title: "작성 완료",
       showConfirmButton: false,
-      timer: 1000
-    })
+      timer: 1000,
+    });
     dispatch(_postComment(payload));
   };
-  
+
   return (
     <StDetailForm>
       <Header />
@@ -181,11 +192,7 @@ const DetailForm = () => {
           <div style={{ width: "100%" }}>
             <ImgBox>
               <ImgLabel>
-                <img
-                  alt=""
-                  style={{ height: "1.5rem" }}
-                  src={img}
-                />
+                <img alt="" style={{ height: "1.5rem" }} src={img} />
                 <p style={{ marginTop: "15px", fontSize: "0.9rem" }}>
                   이미지 등록
                 </p>

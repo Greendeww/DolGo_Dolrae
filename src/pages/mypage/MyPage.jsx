@@ -7,6 +7,7 @@ import Info from "../../componenets/mypage/mypage/Info";
 import LikeList from "../../componenets/mypage/mypage/likeList/LikeList";
 import MyRequestList from "../../componenets/mypage/mypage/request/MyRequestList";
 import ReviewList from "../../componenets/mypage/mypage/review/ReviewList";
+import Swal from "sweetalert2";
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -16,7 +17,10 @@ const MyPage = () => {
 
   useEffect(() => {
     if(getToken === null){
-      alert("로그인이 필요한 서비스입니다.")
+      Swal.fire({
+        text: "로그인이 필요한 서비스입니다.",
+        icon: "warning",
+      });
       navigate('/login')
     }
   },[getToken])

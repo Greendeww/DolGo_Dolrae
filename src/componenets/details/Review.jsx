@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Comments from "./Comments";
 import { _getComments } from "../../redux/modules/comment";
+import Swal from "sweetalert2";
 
 const Review = ({ comment }) => {
   const navigate = useNavigate();
@@ -45,7 +46,10 @@ const Review = ({ comment }) => {
   
   const noLogin = (e) => {
     e.preventDefault();
-    alert("로그인이 필요한 서비스 입니다");
+    Swal.fire({
+      text: "로그인이 필요한 서비스 입니다",
+      icon: "warning",
+    });
     navigate("/login");
   };
 

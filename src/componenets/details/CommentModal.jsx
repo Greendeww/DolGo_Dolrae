@@ -10,6 +10,7 @@ import styled from "styled-components";
 import ModalPortal from "../modal/ModalPortal";
 import Modal from "../modal/Modal";
 import ModalImage from "../modal/ModalImage";
+import Swal from "sweetalert2";
 
 const CommentModal = ({ comment }) => {
   const [modalOn, setModalOn] = useState(false);
@@ -35,7 +36,10 @@ const CommentModal = ({ comment }) => {
   }
   const noLogin = (e) => {
     e.preventDefault();
-    alert("로그인이 필요한 서비스 입니다");
+    Swal.fire({
+      text: "로그인이 필요한 서비스 입니다",
+      icon: "warning",
+    });
     navigate("/login");
   };
 

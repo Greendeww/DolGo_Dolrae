@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import css from "../../css/select.css";
+import Swal from "sweetalert2";
 
 const List = () => {
   const navigate = useNavigate();
@@ -428,15 +429,40 @@ const List = () => {
         <CompleteButton>
           <button
             onClick={() => {
-              if (selectedTheme === "" || selectedDo === "") {
-                alert("모든 항목을 선택해주세요.");
+              if (selectedTheme === "") {
+                Swal.fire({
+                  title: "테마를 선택해주세요.",
+                  icon: "warning",
+                });
+                return;
+              } else if (selectedDo === "") {
+                Swal.fire({
+                  title: "지역을 선택해주세요.",
+                  icon: "warning",
+                });
                 return;
               } else {
                 if (selectedSi === "") {
                   sessionStorage.setItem("SIGUNGU_CODE", 0);
                   sessionStorage.setItem("SIGUNGU_NAME", "전체");
                 }
-                navigate("/list");
+                let timerInterval;
+                Swal.fire({
+                  title: "여행지를 불러옵니다.",
+                  timer: 500,
+                  timerProgressBar: true,
+                  didOpen: () => {
+                    Swal.showLoading();
+                    const b = Swal.getHtmlContainer().querySelector("b");
+                    timerInterval = setInterval(() => {
+                      b.textContent = Swal.getTimerLeft();
+                    }, 100);
+                  },
+                  willClose: () => {
+                    clearInterval(timerInterval);
+                    navigate("/list");
+                  },
+                });
               }
             }}
           >

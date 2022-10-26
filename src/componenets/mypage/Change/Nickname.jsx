@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { instance } from "../../../shared/Api";
+import Swal from "sweetalert2";
 
 const Nickname = () => {
   const navigate = useNavigate();
@@ -18,28 +19,42 @@ const Nickname = () => {
 
     // input이 비어있으면 alert
     if (changeNickname.nickname === "") {
-      alert("변경할 닉네임을 입력해주세요.");
+      Swal.fire({
+        text: "변경할 닉네임을 입력해주세요.",
+        icon: "warning",
+      });
       e.preventDefault();
     } else {
       // 변경여부 재확인
-      if (
-        window.confirm(
-          `정말 「${changeNickname.nickname}」로 변경하시겠습니까?`
-        )
-      ) {
-        // 동의하면 서버로 값 전송, storage에 저장, mypage로 이동, 변경값 alert
-        const res = await instance.put(
-          "/api/auth/member/updatenickname",
-          changeNickname
-        );
-        sessionStorage.setItem("nickname", changeNickname.nickname);
-        navigate("/mypage");
-        alert(`닉네임이 「${changeNickname.nickname}」(으)로 변경되었습니다.`);
-      }
-      // 동의하지 않을 시, alert
-      else {
-        alert("닉네임 변경이 취소되었습니다.");
-      }
+      Swal.fire({
+        title: `「${changeNickname.nickname}」`,
+        text: "(으)로 변경하시겠습니까?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "예",
+        cancelButtonText: "아니오",
+        // closeOnConfirm: false,
+        // closeOnCancel: true,
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          console.log("예");
+          // 동의하면 서버로 값 전송, storage에 저장, mypage로 이동, 변경값 alert
+          await instance.put("/api/auth/member/updatenickname", changeNickname);
+          sessionStorage.setItem("nickname", changeNickname.nickname);
+          navigate("/mypage");
+          Swal.fire({
+            title: `「${changeNickname.nickname}」`,
+            text: "(으)로 변경되었습니다.",
+            icon: "success",
+          });
+        } else {
+          // 동의하지 않을 시, alert
+          Swal.fire({
+            text: "닉네임 변경이 취소되었습니다.",
+            icon: "success",
+          });
+        }
+      });
     }
   };
 
