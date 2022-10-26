@@ -18,7 +18,6 @@ const PostModal = ({ modal, setModal, data }) => {
                   const res = await instance.delete(
                     `/api/auth/place/${data.place_id}`
                   );
-                  console.log(res);
                   alert("삭제되었습니다.");
                   setModal(false);
                 } catch {
