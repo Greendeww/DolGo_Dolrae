@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "../header/Header";
 import { useNavigate } from "react-router-dom";
+import { instance } from "../../shared/Api";
+import Swal from "sweetalert2";
 
 const WorldCup = () => {
   const navigate = useNavigate();
@@ -422,10 +424,7 @@ const WorldCup = () => {
           <br />
         </Explanation>
         <Title>
-          <p onClick={() => setThemeModal(!themeModal)}>테마 ▼</p>
-          {selectedDo !== "" || selectedSi !== "" || selectedTheme !== "" ? (
-            <button onClick={initialization}>필터 초기화 ↺</button>
-          ) : null}
+          <p style={{ marginTop: "15px" }} onClick={() => setThemeModal(!themeModal)}>테마 ▼</p>
         </Title>
         {themeModal === true ? (
           <Category>
@@ -452,9 +451,12 @@ const WorldCup = () => {
         ) : null}
         {/* 테마/도/시 중 하나라도 선택 안 했을 시 
         alert, getTheme 함수 실행, list 페이지로 이동 */}
-        <CompleteButton>
-          <button
-            onClick={() => {
+        <Buttons>
+          {selectedDo !== "" || selectedSi !== "" || selectedTheme !== "" ? (
+            <ResetBtn onClick={initialization}>필터 초기화 ↺</ResetBtn>
+          ) : null}
+          <CompleteBtn
+            onClick={async () => {
               if (selectedSi === "") {
                 sessionStorage.setItem("IDEAL_SIGUNGU_CODE", 0);
                 sessionStorage.setItem("IDEAL_SIGUNGU_NAME", "전체");
@@ -467,12 +469,41 @@ const WorldCup = () => {
                 sessionStorage.setItem("IDEAL_THEME_CODE", 0);
                 sessionStorage.setItem("IDEAL_THEME_NAME", "전체");
               }
+              const res = await instance.get(
+                `/api/place/worldcup?areaCode=${sessionStorage.getItem(
+                  "IDEAL_AREA_CODE"
+                )}&sigunguCode=${sessionStorage.getItem(
+                  "IDEAL_SIGUNGU_CODE"
+                )}&themes=${sessionStorage.getItem("IDEAL_THEME_CODE")}`
+              );
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              let timerInterval;
+              Swal.fire({
+                html: "여행지 월드컵이<br/>곧 시작됩니다.",
+                text: "안내사항을 꼭! 읽어주세요 😊",
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: () => {
+                  Swal.showLoading();
+                  const b = Swal.getHtmlContainer().querySelector("b");
+                  timerInterval = setInterval(() => {
+                    // b.textContent = Swal.getTimerLeft();
+                  }, 100);
+                },
+                willClose: () => {
+                  clearInterval(timerInterval);
+                },
+              }).then((result) => {
+                /* Read more about handling dismissals below */
+              });
               navigate("/ideal/match");
+              // JSON을 String 형식으로 만들어 sessionStorage에 저장
+              sessionStorage.setItem("Data", JSON.stringify(res.data));
             }}
           >
             선택완료
-          </button>
-        </CompleteButton>
+          </CompleteBtn>
+        </Buttons>
       </StLocation>
     </St>
   );
@@ -522,38 +553,9 @@ const Title = styled.div`
   width: 100%;
   justify-content: space-between;
   position: relative;
-
-  & button {
-    background: #ffc0c0;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    color: #ffffff;
-    cursor: pointer;
-    position: absolute;
-    right: 0;
-    height: 38px;
-  }
 `;
 
-const StLocation = styled.div`
-  & button {
-    background-color: #ffc0c0;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    width: 95%;
-    height: 50px;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 24px;
-    display: block;
-    margin: 50px auto;
-  }
-`;
+const StLocation = styled.div``;
 
 const StList = styled.div`
   width: 100%;
@@ -572,10 +574,41 @@ const StList = styled.div`
   }
 `;
 
-const CompleteButton = styled.div`
-  display: flex;
+const Buttons = styled.div`
   padding-bottom: 20px;
+  padding-top: 10px;
   margin: 0 auto;
+`;
+
+const ResetBtn = styled.button`
+  background-color: white;
+  color: #ffc0c0;
+  border: 3px solid #ffc0c0;
+  border-radius: 12px;
+  width: 90%;
+  height: 50px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 24px;
+  display: block;
+  margin: 50px auto;
+  margin-bottom: -30px;
+`;
+
+const CompleteBtn = styled.button`
+  background-color: #ffc0c0;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  width: 90%;
+  height: 50px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 24px;
+  display: block;
+  margin: 50px auto;
 `;
 
 const Locations = styled.div`
