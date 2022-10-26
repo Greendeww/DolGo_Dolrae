@@ -4,7 +4,13 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../../componenets/header/Header";
 import { instance } from "../../shared/Api";
+
+import { getCookie, setCookie } from "../../shared/Cookie";
+import axios from "axios";
+import DragNDrop from "../../componenets/drag&drop/DragNDrop";
+
 import Swal from "sweetalert2";
+
 
 const PostRequest = () => {
   const navigate = useNavigate();
@@ -141,14 +147,24 @@ const PostRequest = () => {
           <div style={{ width: "100%" }}>
             <ImgBox>
               <ImgLabel>
-                <img
+
+                <DIV01>
+                  <img
                   alt=""
                   style={{ height: "1.5rem" }}
                   src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj4KICAgIDxwYXRoIGZpbGw9IiNEQ0RCRTQiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTI4LjQ3MSAzMkgzLjUzYy0uOTcxIDAtMS44OTQtLjQyMi0yLjUyOS0xLjE1N2wtLjAyNi0uMDNBNCA0IDAgMCAxIDAgMjguMTk4VjguNjA3QTQgNCAwIDAgMSAuOTc0IDUuOTlMMSA1Ljk2YTMuMzQzIDMuMzQzIDAgMCAxIDIuNTI5LTEuMTU2aDIuNTM0YTIgMiAwIDAgMCAxLjUzNy0uNzJMMTAuNC43MkEyIDIgMCAwIDEgMTEuOTM3IDBoOC4xMjZBMiAyIDAgMCAxIDIxLjYuNzJsMi44IDMuMzYzYTIgMiAwIDAgMCAxLjUzNy43MmgyLjUzNGMuOTcxIDAgMS44OTQuNDIzIDIuNTI5IDEuMTU3bC4wMjYuMDNBNCA0IDAgMCAxIDMyIDguNjA2djE5LjU5MWE0IDQgMCAwIDEtLjk3NCAyLjYxN2wtLjAyNi4wM0EzLjM0MyAzLjM0MyAwIDAgMSAyOC40NzEgMzJ6TTE2IDkuNmE4IDggMCAxIDEgMCAxNiA4IDggMCAwIDEgMC0xNnptMCAxMi44YzIuNjQ3IDAgNC44LTIuMTUzIDQuOC00LjhzLTIuMTUzLTQuOC00LjgtNC44YTQuODA1IDQuODA1IDAgMCAwLTQuOCA0LjhjMCAyLjY0NyAyLjE1MyA0LjggNC44IDQuOHoiLz4KPC9zdmc+Cg=="
-                />
-                <p style={{ marginTop: "15px", fontSize: "0.9rem" }}>
-                  이미지 등록
-                </p>
+                  />
+                  <p style={{ marginTop: "15px", fontSize: "0.9rem" }}>
+                    이미지 등록
+                  </p>
+                </DIV01>
+
+                
+                <DIV02>
+                  <DragNDrop/>
+                </DIV02>
+              
+              
                 <ImgInput
                   type="file"
                   name="imgUrl"
@@ -178,6 +194,16 @@ const PostRequest = () => {
 
 export default PostRequest;
 
+
+const DIV01 = styled.div`
+  text-align: center;
+  position: absolute;
+  z-index: 3;
+`
+const DIV02 = styled.div`
+  position: absolute;
+  z-index: 2;
+`
 const StRegistration = styled.div`
   max-width: 428px;
   width: 100%;
@@ -193,6 +219,8 @@ const Buttons = styled.div`
   display: flex;
   padding-top: 40px;
   padding-bottom: 50px;
+  gap: 20px;
+  margin: 150px auto;
   width: 90%;
 `;
 
@@ -287,10 +315,11 @@ const ImgInput = styled.input`
 `;
 
 const ImgLabel = styled.label`
-  width: 100px;
-  height: 100px;
+  width: 300px;
+  height: 200px;
+  margin: 10px auto 30px auto;
   position: relative;
-  background: white;
+  background: #eef6fa;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
@@ -300,10 +329,7 @@ const ImgLabel = styled.label`
   color: rgb(155, 153, 169);
   font-size: 1rem;
   border-radius: 15px;
-
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;
 
 const Img = styled.img`

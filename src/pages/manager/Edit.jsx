@@ -6,7 +6,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { instance } from "../../shared/Api";
 import { useEffect } from "react";
 import img from "../../assert/image/image.svg";
+
+import DragNDrop from "../../componenets/drag&drop/DragNDrop";
+
 import Swal from "sweetalert2";
+
 
 const Post = () => {
   const navigate = useNavigate();
@@ -542,10 +546,28 @@ const Post = () => {
           <div style={{ width: "100%" }}>
             <ImgBox>
               <ImgLabel>
+
+
+              <DIV01>
+                <img
+                  alt=""
+                  style={{ height: "1.5rem" }}
+                  src={img}
+                />
+
                 <img alt="" style={{ height: "1.5rem" }} src={img} />
+
                 <p style={{ marginTop: "15px", fontSize: "0.9rem" }}>
                   이미지 등록
                 </p>
+              </DIV01>
+
+                  <DIV02>
+                    <DragNDrop/>
+                  </DIV02>
+              
+              
+              
                 <ImgInput
                   type="file"
                   name="imgUrl"
@@ -598,6 +620,15 @@ const Post = () => {
 
 export default Post;
 
+const DIV01 = styled.div`
+  text-align: center;
+  position: absolute;
+  z-index: 3;
+`
+const DIV02 = styled.div`
+  position: absolute;
+  z-index: 2;
+`
 const StPost = styled.div`
   max-width: 428px;
   width: 100%;
@@ -619,7 +650,7 @@ const Buttons = styled.div`
   display: flex;
   padding-top: 40px;
   padding-bottom: 50px;
-  margin: 0 auto;
+  margin: 150px auto;
   width: 80%;
 `;
 const Context = styled.textarea`
@@ -674,10 +705,11 @@ const ImgInput = styled.input`
   display: none;
 `;
 const ImgLabel = styled.label`
-  width: 100px;
-  height: 100px;
+  width: 300px;
+  height: 200px;
+  margin: 10px auto 30px auto;
   position: relative;
-  background: white;
+  background: #eef6fa;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
