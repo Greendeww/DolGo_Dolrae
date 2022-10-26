@@ -136,7 +136,7 @@ const Header = ({ title }) => {
         </MenuContainer>
       ) : null}
 
-      <ToTheTop />
+      <ToTheTop/>
 
       <Search title={title} />
     </StHeader>
