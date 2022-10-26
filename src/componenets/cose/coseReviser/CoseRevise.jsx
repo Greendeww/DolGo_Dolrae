@@ -96,7 +96,7 @@ const CoseBox = styled.div`
   width: 100%;
   max-width: 428px;
   margin: 0 auto;
-  font-family: tway;
+  font-family: bold;
 `
 const HelpP = styled.p`
   padding-top:8.8rem;

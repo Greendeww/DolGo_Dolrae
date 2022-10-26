@@ -55,7 +55,7 @@ const Background = styled.div`
   top: 0;
   text-align: center;
   z-index: 10;
-  font-family: tway;
+  font-family: bold;
 `;
 
 const Content = styled.div`

@@ -61,7 +61,7 @@ export default CoseDetail
 const CoseBox = styled.div`
   width: 100%;
   max-width: 428px;
-  font-family: tway;
+  font-family: bold;
 `;
 
 const TitleDiv = styled.div`

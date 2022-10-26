@@ -131,7 +131,7 @@ const Header = ({ title }) => {
                   장소 등록 요청
                 </h2>
                 <h2 onClick={() => navigate("/mypage")}>마이페이지</h2>
-                {/* <h2 onClick={() => navigate("/cose")}>나만의 코스</h2> */}
+                <h2 onClick={() => navigate("/cose")}>나만의 코스</h2>
               </>
             ) : null}
             <br />

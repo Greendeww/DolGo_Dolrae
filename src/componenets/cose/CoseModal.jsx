@@ -66,7 +66,7 @@ const DescDiv = styled.div`
   margin: auto;
   margin-top: 20px;
   gap: 10px;
-  font-family: tway;
+  font-family: bold;
 `;
 const Img = styled.img`
   width: 100%;
