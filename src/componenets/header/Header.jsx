@@ -5,14 +5,11 @@ import css from "../../css/header.css";
 import dolphin from "../../assert/header/logo_.png";
 import bell from "../../assert/header/bell.png";
 import { instance } from "../../shared/Api";
-
-import ToTheTop from "../scroll/ToTheTop";
-
 import Search from "./Search";
 import burger from "../../assert/header/burger.png";
-import event from "../../assert/header/event.png";
 import SSE from "../sse/SSE";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 const Header = ({ title }) => {
   const navigate = useNavigate();
@@ -34,21 +31,44 @@ const Header = ({ title }) => {
 
   // 로그아웃 클릭 시, 데이터 전송 & storage 초기화
   const logout = async () => {
-    const response = await instance.post("/api/auth/member/logout");
-    alert(response.data);
-    sessionStorage.removeItem("username");
-    sessionStorage.removeItem("nickname");
-    sessionStorage.removeItem("role");
-    sessionStorage.removeItem("ACCESS_TOKEN");
-    sessionStorage.removeItem("REFRESH_TOKEN");
-    sessionStorage.removeItem("THEME_CODE");
-    sessionStorage.removeItem("THEME_NAME");
-    sessionStorage.removeItem("AREA_CODE");
-    sessionStorage.removeItem("AREA_NAME");
-    sessionStorage.removeItem("SIGUNGU_CODE");
-    sessionStorage.removeItem("SIGUNGU_NAME");
-    sessionStorage.removeItem("never");
-    navigate("/");
+    try {
+      await instance.post("/api/auth/member/logout");
+      Swal.fire({
+        text: "로그아웃 되었습니다.",
+        icon: "success",
+      });
+      sessionStorage.removeItem("username");
+      sessionStorage.removeItem("nickname");
+      sessionStorage.removeItem("role");
+      sessionStorage.removeItem("ACCESS_TOKEN");
+      sessionStorage.removeItem("REFRESH_TOKEN");
+      sessionStorage.removeItem("THEME_CODE");
+      sessionStorage.removeItem("THEME_NAME");
+      sessionStorage.removeItem("AREA_CODE");
+      sessionStorage.removeItem("AREA_NAME");
+      sessionStorage.removeItem("SIGUNGU_CODE");
+      sessionStorage.removeItem("SIGUNGU_NAME");
+      sessionStorage.removeItem("never");
+      navigate("/");
+    } catch {
+      Swal.fire({
+        text: "로그아웃 되었습니다.",
+        icon: "success",
+      });
+      sessionStorage.removeItem("username");
+      sessionStorage.removeItem("nickname");
+      sessionStorage.removeItem("role");
+      sessionStorage.removeItem("ACCESS_TOKEN");
+      sessionStorage.removeItem("REFRESH_TOKEN");
+      sessionStorage.removeItem("THEME_CODE");
+      sessionStorage.removeItem("THEME_NAME");
+      sessionStorage.removeItem("AREA_CODE");
+      sessionStorage.removeItem("AREA_NAME");
+      sessionStorage.removeItem("SIGUNGU_CODE");
+      sessionStorage.removeItem("SIGUNGU_NAME");
+      sessionStorage.removeItem("never");
+      navigate("/");
+    }
   };
 
   // sse
@@ -62,6 +82,11 @@ const Header = ({ title }) => {
   const noticeModalHandler = () => {
     if (token) {
       setNotice(!notice);
+    } else {
+      Swal.fire({
+        text: "로그인이 필요한 서비스입니다.",
+        icon: "warning",
+      });
     }
   };
 
@@ -84,15 +109,6 @@ const Header = ({ title }) => {
         {count === 0 || count === undefined ? null : <Count />}
         {/* 알림 아이콘 클릭하면 sse 모달 open */}
         {notice === true ? <SSE modal={notice} setModal={setNotice} /> : null}
-        {/* <Bell
-          alt=""
-          src={event}
-          onClick={() =>
-            window.open(
-              "https://blog.naver.com/PostView.naver?blogId=wmr06102&Redirect=View&logNo=222905608839&categoryNo=13&isAfterWrite=true&isMrblogPost=false&isHappyBeanLeverage=true&contentLength=6267&isWeeklyDiaryPopupEnabled=false"
-            )
-          }
-        /> */}
         <img alt="" src={dolphin} onClick={() => navigate("/")} />
         <img
           alt=""
@@ -105,9 +121,9 @@ const Header = ({ title }) => {
         <MenuContainer onClick={onModalHandler}>
           <Menu>
             <h2 onClick={() => navigate("/")}>홈</h2>
-            <h2 onClick={() => navigate("/select")}>지역별 조회</h2>
-            <h2 onClick={() => navigate("/random")}>랜덤 추천</h2>
-            {/* <h2 onClick={() => navigate("/ideal")}>이상형 월드컵</h2> */}
+            <h2 onClick={() => navigate("/select")}>지역별 여행지</h2>
+            <h2 onClick={() => navigate("/random")}>랜덤 여행지</h2>
+            <h2 onClick={() => navigate("/ideal")}>여행지 월드컵</h2>
             <br />
             {token !== null ? (
               <>
@@ -141,9 +157,6 @@ const Header = ({ title }) => {
           </Menu>
         </MenuContainer>
       ) : null}
-
-      <ToTheTop />
-
       <Search title={title} />
     </StHeader>
   );
@@ -241,23 +254,19 @@ const Menu = styled.div`
   color: #535353;
   transition: all 0.3s;
   z-index: 30;
+  margin-top: -1px;
 
   & h2 {
-    /* text-decoration: underline; */
     margin: 30px auto;
 
     &:hover {
       cursor: pointer;
+      font-weight: bold;
     }
   }
 
   & div {
     margin-top: 60px;
     color: white;
-    & h2 {
-      text-decoration: none;
-    }
   }
 `;
-
-const Log = styled.div``;
