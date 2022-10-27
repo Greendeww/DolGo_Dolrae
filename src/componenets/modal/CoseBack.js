@@ -71,7 +71,7 @@ const PageDel = styled.div`
   font-size: 17px;
   font-family: bold;
   width: 296px;
-  height: 141px;
+  height: 170px;
   border: 3px solid #ABD4E2;
   background-color: rgb(255, 255, 255);
   margin: auto;
