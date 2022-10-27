@@ -18,7 +18,7 @@ const MapSearchSel = () => {
   const page = useRef(0);
   const navigate = useNavigate();
   let [cose, setCose] = useState(
-   JSON.parse(localStorage.getItem('TITLE_NAME')) || []
+   JSON.parse(sessionStorage.getItem('TITLE_NAME')) || []
   );
   const { pathname } = useLocation();
   const {searchWord} = useParams();
@@ -42,7 +42,7 @@ const MapSearchSel = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('TITLE_NAME', JSON.stringify(cose))
+    sessionStorage.setItem('TITLE_NAME', JSON.stringify(cose))
   },[cose]);
 
 
@@ -58,7 +58,7 @@ const MapSearchSel = () => {
   } 
 
   const initialization = (e) => {
-    localStorage.removeItem("Title");
+    sessionStorage.removeItem("Title");
   };
 
 

@@ -9,13 +9,13 @@ const Search = ({ title }) => {
   const [searchWord, setSearchWord] = useState(title);
   const [modal, setModal] = useState(false);
   let [keywords, setKeywords] = useState(
-    // [localStorage.getItem('keywords' || [])])
-    JSON.parse(localStorage.getItem("keywords")) || []
+    // [sessionStorage.getItem('keywords' || [])])
+    JSON.parse(sessionStorage.getItem("keywords")) || []
   );
   // console.log(keywords)
 
   useEffect(() => {
-    localStorage.setItem("keywords", JSON.stringify(keywords));
+    sessionStorage.setItem("keywords", JSON.stringify(keywords));
   }, [keywords]);
 
   const onClose = () => {
