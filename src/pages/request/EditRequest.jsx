@@ -4,11 +4,7 @@ import Header from "../../componenets/header/Header";
 import { useState } from "react";
 import { instance } from "../../shared/Api";
 import { useNavigate } from "react-router-dom";
-
-import DragNDrop from "../../componenets/drag&drop/DragNDrop";
-
 import Swal from "sweetalert2";
-
 
 const EditRequest = () => {
   const navigate = useNavigate();
@@ -146,25 +142,14 @@ const EditRequest = () => {
           <div style={{ width: "100%" }}>
             <ImgBox>
               <ImgLabel>
-
-
-                <DIV01>
-                  <img
+                <img
                   alt=""
                   style={{ height: "1.5rem" }}
                   src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj4KICAgIDxwYXRoIGZpbGw9IiNEQ0RCRTQiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTI4LjQ3MSAzMkgzLjUzYy0uOTcxIDAtMS44OTQtLjQyMi0yLjUyOS0xLjE1N2wtLjAyNi0uMDNBNCA0IDAgMCAxIDAgMjguMTk4VjguNjA3QTQgNCAwIDAgMSAuOTc0IDUuOTlMMSA1Ljk2YTMuMzQzIDMuMzQzIDAgMCAxIDIuNTI5LTEuMTU2aDIuNTM0YTIgMiAwIDAgMCAxLjUzNy0uNzJMMTAuNC43MkEyIDIgMCAwIDEgMTEuOTM3IDBoOC4xMjZBMiAyIDAgMCAxIDIxLjYuNzJsMi44IDMuMzYzYTIgMiAwIDAgMCAxLjUzNy43MmgyLjUzNGMuOTcxIDAgMS44OTQuNDIzIDIuNTI5IDEuMTU3bC4wMjYuMDNBNCA0IDAgMCAxIDMyIDguNjA2djE5LjU5MWE0IDQgMCAwIDEtLjk3NCAyLjYxN2wtLjAyNi4wM0EzLjM0MyAzLjM0MyAwIDAgMSAyOC40NzEgMzJ6TTE2IDkuNmE4IDggMCAxIDEgMCAxNiA4IDggMCAwIDEgMC0xNnptMCAxMi44YzIuNjQ3IDAgNC44LTIuMTUzIDQuOC00LjhzLTIuMTUzLTQuOC00LjgtNC44YTQuODA1IDQuODA1IDAgMCAwLTQuOCA0LjhjMCAyLjY0NyAyLjE1MyA0LjggNC44IDQuOHoiLz4KPC9zdmc+Cg=="
-                  />
-                  <p style={{ marginTop: "15px", fontSize: "0.9rem" }}>
-                    이미지 등록
-                  </p>
-                </DIV01>
-
-                <DIV02>
-                  <DragNDrop />
-                </DIV02>
-              
-              
-              
+                />
+                <p style={{ marginTop: "15px", fontSize: "0.9rem" }}>
+                  이미지 등록
+                </p>
                 <ImgInput
                   type="file"
                   name="imgUrl"
@@ -208,16 +193,6 @@ const EditRequest = () => {
 
 export default EditRequest;
 
-
-const DIV01 = styled.div`
-  text-align: center;
-  position: absolute;
-  z-index: 3;
-`
-const DIV02 = styled.div`
-  position: absolute;
-  z-index: 2;
-`
 const StEditRequest = styled.div`
   max-width: 428px;
   width: 100%;
@@ -246,7 +221,7 @@ const Buttons = styled.div`
   padding-top: 40px;
   padding-bottom: 50px;
   gap: 20px;
-  margin: 150px auto;
+  margin: 0 auto;
   width: 90%;
 `;
 const Context = styled.textarea`
@@ -300,11 +275,10 @@ const ImgInput = styled.input`
   display: none;
 `;
 const ImgLabel = styled.label`
-  width: 300px;
-  height: 200px;
-  margin: 10px auto 30px auto;
+  width: 100px;
+  height: 100px;
   position: relative;
-  background: #eef6fa;
+  background: white;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
