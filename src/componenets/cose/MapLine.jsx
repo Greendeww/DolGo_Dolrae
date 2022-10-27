@@ -6,14 +6,12 @@ import { useEffect } from 'react';
 import ModalPortal from '../modal/ModalPortal';
 import CoseImage from '../modal/CoseImage';
 
-
-
 const MapLine = () => {
     const [modal, setModal] = useState(false);
     const [titleMessage, setTitleMessage] = useState("");
     const [isTitle, setIsTitle] = useState(false);
     const [title, setTitle] = useState(
-      JSON.parse(localStorage.getItem('NAME')) || ""
+      JSON.parse(sessionStorage.getItem('NAME')) || ""
      );
 
     const onChangeTitle = (e) => {
@@ -38,14 +36,14 @@ const MapLine = () => {
     };
 
     useEffect(() => {
-      localStorage.setItem('NAME', JSON.stringify(title))
+      sessionStorage.setItem('NAME', JSON.stringify(title))
     },[title]);
     
     return (
       <>
         <CoseBox>
           <CoseHeader/>
-          <HelpP>추가하고 싶은 장소를 상단 검색창에 입력해주세요</HelpP>
+          <HelpP>▲ 추가하고 싶은 장소를 상단에 입력해주세요</HelpP>
           <CoseDiv>
            <NameDiv>
               <p>Course</p>
@@ -55,7 +53,6 @@ const MapLine = () => {
             </HelpDiv>
           </CoseDiv>
             <TitleDiv>
-              <PTitle>제목</PTitle>
               <InputTit
                 type="text"
                 name="title"
@@ -67,9 +64,6 @@ const MapLine = () => {
               <Message>
                 {title.length > 0 && <p style={{ color: "red" }}>{titleMessage}</p>}
               </Message>
-              <DescDiv>
-                <p>코스를 마우스로 드래그해서 조정할 수 있습니다</p>
-              </DescDiv>
             <MapCose title={title} isTitle={isTitle}/>
             <ModalPortal>
                 {modal && <CoseImage onClose={onClose}/>}
@@ -88,10 +82,10 @@ const CoseBox = styled.div`
   font-family: bold;
 `
 const HelpP = styled.p`
-  padding-top:8.8rem;
-  text-align:left;
-  margin-left:3.2rem;
-  color:rgb(255, 133, 133);
+  padding-top: 8.8rem;
+  font-size: 15px;
+  color: #bfb8b8;
+  text-align: center;
 `
 const CoseDiv =styled.div`
   text-align:center;
@@ -122,7 +116,7 @@ const HelpDiv = styled.div`
       &:hover{
         border:3px solid #abd4e2;
         background-color:#fff;
-        color:black;
+        color:#abd4e2;
       }
     }
 `
@@ -150,14 +144,16 @@ const PTitle = styled.p`
   margin-right:0.5rem;
 `;
 const InputTit = styled.input`
-  width: 80%;
-  height: 52px;
-  background-color: rgba(172, 212, 228, 0.35);
+  width: 100%;
+  height: 50px;
+  background-color: #eef6fa;
   border-radius: 15px;
   border: none;
-  padding-left:0.5rem;
   font-family: bold;
   font-size: 18px;
+  margin: 0 auto;
+  margin-top: 10px;
+  padding-left: 10px;
 `
 const Message = styled.div`
   margin-bottom: 25px;
@@ -167,9 +163,3 @@ const Message = styled.div`
   text-align: end;
   margin-top:0.5rem;
 `;
-const DescDiv = styled.div`
-  width:80%;
-  margin: auto;
-  text-align:right;
-  color: rgb(255, 133, 133);
-`

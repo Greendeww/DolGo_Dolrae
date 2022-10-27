@@ -9,6 +9,7 @@ import { FaStar } from "react-icons/fa";
 import filter from "../../assert/header/filter.png";
 import CoseHeader from "../header/CoseHeader";
 import CoseSelectModal from "../modal/CoseSelectModal";
+import Swal from "sweetalert2";
 
 const MapSearch = () => {
   const [posts, setPosts] = useState([]);
@@ -18,7 +19,7 @@ const MapSearch = () => {
   const page = useRef(0);
   const navigate = useNavigate();
   let [cose, setCose] = useState(
-   JSON.parse(localStorage.getItem('TITLE_NAME')) || []
+   JSON.parse(sessionStorage.getItem('TITLE_NAME')) || []
   );
   const { pathname } = useLocation();
   const {searchWord} = useParams();
@@ -28,7 +29,10 @@ const MapSearch = () => {
 
   useEffect(() => {
     if(getToken === null){
-      alert("로그인이 필요한 서비스입니다.")
+      Swal.fire({
+        text: "로그인이 필요한 서비스입니다.",
+        icon: "warning",
+      });
       navigate('/login')
     }
   },[getToken]);
@@ -49,7 +53,7 @@ const MapSearch = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('TITLE_NAME', JSON.stringify(cose))
+    sessionStorage.setItem('TITLE_NAME', JSON.stringify(cose))
   },[cose]);
 
 
@@ -65,7 +69,7 @@ const MapSearch = () => {
   } 
 
   const initialization = (e) => {
-    localStorage.removeItem("Title");
+    sessionStorage.removeItem("Title");
   };
 
 
@@ -98,13 +102,14 @@ const MapSearch = () => {
   return (
     <StList>
       <CoseHeader searchWords={searchWord}/>
+      <Container>
       <HeadTitle>
         {modalOn
         ?<img alt='filter' src={filter} style={{display:"none"}}></img>
-        :<img style={{zIndex:"5"}} alt='filter' src={filter} onClick={() => setModalOn(true)}></img>
+        :<img  alt='filter' src={filter} onClick={() => setModalOn(true)}></img>
         }
       </HeadTitle>
-      <HelpP>추가하고 싶은 장소를 상단 검색창에 입력해주세요</HelpP>
+      <HelpP></HelpP>
       <CancelBut onClick={() => navigate('/cose/add')}>뒤로가기</CancelBut>
       {modalOn === true
       ?<CoseSelectModal close={close} searchWord={searchWord}/>
@@ -153,6 +158,7 @@ const MapSearch = () => {
           ))}
       </Content>
       <div ref={observerTargetEl} />
+      </Container>
     </StList>
   );
 };
@@ -163,7 +169,10 @@ const StList = styled.div`
   max-width: 428px;
   width: 100%;
   margin: 0 auto;
+  z-index: 999;
+`;
 
+const Container = styled.div`
   & button {
     margin-left: 15px;
     margin-top: 30px;
@@ -235,7 +244,7 @@ const BasicImg = styled.img`
 
 const ImgShadow = styled.div`
   margin: 0 auto;
-  width: 420px;
+  width: 100%;
   height: 235px;
   border-radius: 20px;
   &:hover {

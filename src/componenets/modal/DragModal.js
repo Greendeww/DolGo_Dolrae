@@ -24,13 +24,13 @@ const DragModal = ({onClose, cose}) => {
     };
 
     const reviseList = () => {
-      localStorage.setItem('TITLE_NAME', JSON.stringify(list));
+      sessionStorage.setItem('TITLE_NAME', JSON.stringify(list));
       window.location.reload();
     } 
     
     //드래그 했을 시 로컬스토리지에 반영되는 것(수정필요)
     useEffect(() => {
-        localStorage.setItem('TITLE_NAME', JSON.stringify(dragAndDrop.updatedOrder))
+        sessionStorage.setItem('TITLE_NAME', JSON.stringify(dragAndDrop.updatedOrder))
     },[]);
 
     const onDragOver = (event) => {

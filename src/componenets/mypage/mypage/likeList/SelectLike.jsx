@@ -456,7 +456,7 @@ const Address = styled.select`
   border: none;
   border-radius: 15px;
   text-align: center;
-  font-family: tway;
+  font-family: bold;
   font-size: 16px;
   cursor: pointer;
 `;

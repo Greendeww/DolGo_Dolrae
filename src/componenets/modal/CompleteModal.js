@@ -113,7 +113,7 @@ const PageDel = styled.div`
     background-color: #eef6fa;
     border: none;
     border-radius: 15px;
-    font-family: tway;
+    font-family: bold;
     padding: 15px;
   }
 `;

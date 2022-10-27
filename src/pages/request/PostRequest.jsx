@@ -243,7 +243,7 @@ const Text = styled.input`
   border: none;
   padding-left: 10px;
   font-size: 14px;
-  font-family: tway;
+  font-family: bold;
   font-weight: lighter;
 `;
 
@@ -262,7 +262,7 @@ const Context = styled.textarea`
   border-radius: 15px;
   resize: none;
   font-size: 14px;
-  font-family: tway;
+  font-family: bold;
   font-weight: lighter;
 `;
 

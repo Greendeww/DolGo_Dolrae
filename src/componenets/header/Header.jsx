@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import css from "../../css/header.css";
@@ -10,6 +10,8 @@ import burger from "../../assert/header/burger.png";
 import SSE from "../sse/SSE";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import ModalPortal from "../modal/ModalPortal";
+import HeaderMenu from "./HeaderMenu";
 
 const Header = ({ title }) => {
   const navigate = useNavigate();
@@ -20,55 +22,12 @@ const Header = ({ title }) => {
   // sse modal
   const [notice, setNotice] = useState(false);
 
-  // 로그인 여부와 관리자 여부를 확인하기 위해 storage에서 가져온 데이터
-  const role = sessionStorage.getItem("role");
+  // 로그인 여부를 확인하기 위해 storage에서 가져온 데이터
   const token = sessionStorage.getItem("ACCESS_TOKEN");
 
   // 클릭 시 모달 열고 닫기
   const onModalHandler = (e) => {
     setModal(!modal);
-  };
-
-  // 로그아웃 클릭 시, 데이터 전송 & storage 초기화
-  const logout = async () => {
-    try {
-      await instance.post("/api/auth/member/logout");
-      Swal.fire({
-        text: "로그아웃 되었습니다.",
-        icon: "success",
-      });
-      sessionStorage.removeItem("username");
-      sessionStorage.removeItem("nickname");
-      sessionStorage.removeItem("role");
-      sessionStorage.removeItem("ACCESS_TOKEN");
-      sessionStorage.removeItem("REFRESH_TOKEN");
-      sessionStorage.removeItem("THEME_CODE");
-      sessionStorage.removeItem("THEME_NAME");
-      sessionStorage.removeItem("AREA_CODE");
-      sessionStorage.removeItem("AREA_NAME");
-      sessionStorage.removeItem("SIGUNGU_CODE");
-      sessionStorage.removeItem("SIGUNGU_NAME");
-      sessionStorage.removeItem("never");
-      navigate("/");
-    } catch {
-      Swal.fire({
-        text: "로그아웃 되었습니다.",
-        icon: "success",
-      });
-      sessionStorage.removeItem("username");
-      sessionStorage.removeItem("nickname");
-      sessionStorage.removeItem("role");
-      sessionStorage.removeItem("ACCESS_TOKEN");
-      sessionStorage.removeItem("REFRESH_TOKEN");
-      sessionStorage.removeItem("THEME_CODE");
-      sessionStorage.removeItem("THEME_NAME");
-      sessionStorage.removeItem("AREA_CODE");
-      sessionStorage.removeItem("AREA_NAME");
-      sessionStorage.removeItem("SIGUNGU_CODE");
-      sessionStorage.removeItem("SIGUNGU_NAME");
-      sessionStorage.removeItem("never");
-      navigate("/");
-    }
   };
 
   // sse
@@ -96,6 +55,10 @@ const Header = ({ title }) => {
     }
   }, []);
 
+  const modalHandler = () => {
+    setNotice(false);
+  };
+
   return (
     <StHeader>
       <Top>
@@ -108,7 +71,11 @@ const Header = ({ title }) => {
         {/* 알림 수가 1 이상이면 표시해주기 */}
         {count === 0 || count === undefined ? null : <Count />}
         {/* 알림 아이콘 클릭하면 sse 모달 open */}
-        {notice === true ? <SSE modal={notice} setModal={setNotice} /> : null}
+        {notice && (
+          <ModalPortal>
+            <SSE modalHandler={modalHandler} />
+          </ModalPortal>
+        )}
         <img alt="" src={dolphin} onClick={() => navigate("/")} />
         <img
           alt=""
@@ -117,51 +84,11 @@ const Header = ({ title }) => {
           style={{ paddingBottom: "7px", paddingRight: "12px" }}
         />
       </Top>
-      {modal === true ? (
-        <MenuContainer onClick={onModalHandler}>
-          <Menu>
-            <h2 onClick={() => navigate("/")}>홈</h2>
-            <h2 onClick={() => navigate("/select")}>지역별 여행지</h2>
-            <h2 onClick={() => navigate("/random")}>랜덤 여행지</h2>
-            <h2 onClick={() => navigate("/ideal")}>여행지 월드컵</h2>
-            <br />
-            {token !== null ? (
-              <>
-                <h2 onClick={() => navigate("/request/post")}>
-                  장소 등록 요청
-                </h2>
-                <h2 onClick={() => navigate("/mypage")}>마이페이지</h2>
-                <h2 onClick={() => navigate("/cose")}>나만의 코스</h2>
-              </>
-            ) : null}
-            <br />
-            {role === "ADMIN" ? (
-              <>
-                <h2 onClick={() => navigate("/request/list")}>* 요청 목록 *</h2>
-                <h2 onClick={() => navigate("/post")}>* 게시글 추가 *</h2>
-              </>
-            ) : null}
-            <div>
-              {token === null ? (
-                <h2 onClick={() => navigate("/login")}>로그인 ＞</h2>
-              ) : (
-                <h2
-                  onClick={() => {
-                    logout();
-                    setModal(!modal);
-                  }}
-                >
-                  로그아웃 ＞
-                </h2>
-              )}
-            </div>
-          </Menu>
-        </MenuContainer>
-      ) : null}
-
-
-      <ToTheTop/>
-
+      {modal && (
+        <ModalPortal>
+          <HeaderMenu modalHandler={onModalHandler}/>
+        </ModalPortal>
+      )}
       <Search title={title} />
     </StHeader>
   );
@@ -193,11 +120,6 @@ const Top = styled.div`
   justify-content: space-between;
   vertical-align: middle;
   position: relative;
-  /* & h2 {
-    color: white;
-    background-image: url(${dolphin});
-    background-repeat: no-repeat;
-  } */
 
   & img {
     margin-top: 5px;
@@ -233,45 +155,5 @@ const Bell = styled.img`
 
   &:hover {
     cursor: pointer;
-  }
-`;
-
-const MenuContainer = styled.div`
-  margin: 0 auto;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  /* background: rgba(0, 0, 0, 0.3); */
-`;
-
-const Menu = styled.div`
-  position: absolute;
-  left: 50%;
-  max-width: 214px;
-  width: 50%;
-  float: right;
-  height: 100vh;
-  top: calc(0vh + 70px);
-  background-color: #abd4e2;
-  text-align: center;
-  color: #535353;
-  transition: all 0.3s;
-  z-index: 30;
-  margin-top: -1px;
-
-  & h2 {
-    margin: 30px auto;
-
-    &:hover {
-      cursor: pointer;
-      font-weight: bold;
-    }
-  }
-
-  & div {
-    margin-top: 60px;
-    color: white;
   }
 `;

@@ -408,6 +408,46 @@ const WorldCup = () => {
   const [doModal, setDoModal] = useState(false);
   const [siModal, setSiModal] = useState(false);
 
+  const completeHandler = async () => {
+    if (selectedSi === "") {
+      sessionStorage.setItem("IDEAL_SIGUNGU_CODE", 0);
+      sessionStorage.setItem("IDEAL_SIGUNGU_NAME", "전체");
+    }
+    if (selectedDo === "") {
+      sessionStorage.setItem("IDEAL_AREA_CODE", 0);
+      sessionStorage.setItem("IDEAL_AREA_NAME", "전체");
+    }
+    if (selectedTheme === "") {
+      sessionStorage.setItem("IDEAL_THEME_CODE", 0);
+      sessionStorage.setItem("IDEAL_THEME_NAME", "전체");
+    }
+    const res = await instance
+      .get(
+        `/api/place/worldcup?areaCode=${sessionStorage.getItem(
+          "IDEAL_AREA_CODE"
+        )}&sigunguCode=${sessionStorage.getItem(
+          "IDEAL_SIGUNGU_CODE"
+        )}&themes=${sessionStorage.getItem("IDEAL_THEME_CODE")}`
+      )
+      .then((res) => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        let timerInterval;
+        Swal.fire({
+          html: "여행지 월드컵이<br/>곧 시작됩니다.",
+          text: "안내사항을 꼭! 읽어주세요 😊",
+          timer: 2000,
+          timerProgressBar: true,
+          willClose: () => {
+            clearInterval(timerInterval);
+          },
+        }).then((result) => {
+          navigate("/ideal/match");
+          // JSON을 String 형식으로 만들어 sessionStorage에 저장
+          sessionStorage.setItem("Data", JSON.stringify(res.data));
+        });
+      });
+  };
+
   return (
     <St>
       <Header />
@@ -424,7 +464,12 @@ const WorldCup = () => {
           <br />
         </Explanation>
         <Title>
-          <p style={{ marginTop: "15px" }} onClick={() => setThemeModal(!themeModal)}>테마 ▼</p>
+          <p
+            style={{ marginTop: "15px" }}
+            onClick={() => setThemeModal(!themeModal)}
+          >
+            테마 ▼
+          </p>
         </Title>
         {themeModal === true ? (
           <Category>
@@ -455,54 +500,7 @@ const WorldCup = () => {
           {selectedDo !== "" || selectedSi !== "" || selectedTheme !== "" ? (
             <ResetBtn onClick={initialization}>필터 초기화 ↺</ResetBtn>
           ) : null}
-          <CompleteBtn
-            onClick={async () => {
-              if (selectedSi === "") {
-                sessionStorage.setItem("IDEAL_SIGUNGU_CODE", 0);
-                sessionStorage.setItem("IDEAL_SIGUNGU_NAME", "전체");
-              }
-              if (selectedDo === "") {
-                sessionStorage.setItem("IDEAL_AREA_CODE", 0);
-                sessionStorage.setItem("IDEAL_AREA_NAME", "전체");
-              }
-              if (selectedTheme === "") {
-                sessionStorage.setItem("IDEAL_THEME_CODE", 0);
-                sessionStorage.setItem("IDEAL_THEME_NAME", "전체");
-              }
-              const res = await instance.get(
-                `/api/place/worldcup?areaCode=${sessionStorage.getItem(
-                  "IDEAL_AREA_CODE"
-                )}&sigunguCode=${sessionStorage.getItem(
-                  "IDEAL_SIGUNGU_CODE"
-                )}&themes=${sessionStorage.getItem("IDEAL_THEME_CODE")}`
-              );
-              window.scrollTo({ top: 0, behavior: "smooth" });
-              let timerInterval;
-              Swal.fire({
-                html: "여행지 월드컵이<br/>곧 시작됩니다.",
-                text: "안내사항을 꼭! 읽어주세요 😊",
-                timer: 2000,
-                timerProgressBar: true,
-                didOpen: () => {
-                  Swal.showLoading();
-                  const b = Swal.getHtmlContainer().querySelector("b");
-                  timerInterval = setInterval(() => {
-                    // b.textContent = Swal.getTimerLeft();
-                  }, 100);
-                },
-                willClose: () => {
-                  clearInterval(timerInterval);
-                },
-              }).then((result) => {
-                /* Read more about handling dismissals below */
-              });
-              navigate("/ideal/match");
-              // JSON을 String 형식으로 만들어 sessionStorage에 저장
-              sessionStorage.setItem("Data", JSON.stringify(res.data));
-            }}
-          >
-            선택완료
-          </CompleteBtn>
+          <CompleteBtn onClick={completeHandler}>선택완료</CompleteBtn>
         </Buttons>
       </StLocation>
     </St>

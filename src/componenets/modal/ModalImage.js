@@ -23,7 +23,6 @@ const ModalImage = ({onClose, comment}) => {
         <Content>
           <PageDel>
             <HeadDiv>
-              <HeadP>이미지 상세보기</HeadP>
               <CancelP 
                 onClick={() => {
                   onClose(false);
@@ -69,7 +68,6 @@ const PageDel = styled.div`
   width: 100%;
   height: 100%;
   max-height:428px;
-  border: 3px solid #ABD4E2;
   background-color: rgb(255, 255, 255);
   margin: auto;
   align-items: center;

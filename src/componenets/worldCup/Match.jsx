@@ -3,9 +3,10 @@ import styled from "styled-components";
 import Header from "../header/Header";
 import basicImg from "../../assert/image/basic.png";
 import detailImg from "../../assert/worldcup//detail.png";
-import WorldCupDetail from "../modal/WorldCupDetail";
+import WorldCupDetail from "./WorldCupDetail";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import ModalPortal from "../modal/ModalPortal";
 
 const Match = () => {
   const navigate = useNavigate();
@@ -15,11 +16,16 @@ const Match = () => {
   const [displays, setDisplays] = useState([]);
   const [winners, setWinners] = useState([]);
   const [detail, setDetail] = useState("");
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setList(items);
     setDisplays([items[0], items[1]]);
   }, []);
+
+  const modalHandler = () => {
+    setOpen(false);
+  };
 
   const clickHandler = (data) => () => {
     if (list.length <= 2) {
@@ -95,7 +101,10 @@ const Match = () => {
                 <img
                   alt=""
                   src={detailImg}
-                  onClick={() => setDetail(data.id)}
+                  onClick={() => {
+                    setDetail(data.id);
+                    setOpen(true);
+                  }}
                 />
               </div>
             </Title>
@@ -106,8 +115,14 @@ const Match = () => {
             />
           </Content>
         ))}
-        {detail === "" ? null : (
-          <WorldCupDetail detail={detail} setDetail={setDetail} />
+        {open && (
+          <ModalPortal>
+            <WorldCupDetail
+              detail={detail}
+              setDetail={setDetail}
+              modalHandler={modalHandler}
+            />
+          </ModalPortal>
         )}
       </Container>
     </StMatch>
@@ -160,7 +175,7 @@ const Title = styled.div`
   background-color: white;
   border-top: 2.5px solid #535353;
   border-bottom: 2.5px solid #535353;
-  opacity:0.8;
+  opacity: 0.8;
   max-width: 80%;
   width: auto;
   display: inline-block;

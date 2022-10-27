@@ -21,9 +21,9 @@ const CoseMark = ({path, index, length}) => {
   const [isOpen, setIsOpen] = useState(false)
 
   //모달창 열렸을 때 스크롤 맨 아래로
-  useEffect(() => {
-    window.scrollTo({ top: 3000, behavior: "smooth" });
-  }, [isOpen])
+  // useEffect(() => {
+  //   window.scrollTo({ top: 3000, behavior: "smooth" });
+  // }, [isOpen])
 
   const close = () => {
     setIsOpen(false)
