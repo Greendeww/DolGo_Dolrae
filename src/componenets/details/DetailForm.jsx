@@ -47,6 +47,7 @@ const DetailForm = () => {
     let score = clicked.filter(Boolean).length;
     setStar(score);
   };
+  
   //이미지 리사이징
   const compressImage = async (image) => {
     try{

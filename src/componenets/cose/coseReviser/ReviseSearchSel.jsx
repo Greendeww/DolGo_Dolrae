@@ -31,7 +31,7 @@ const ReviseSearchSel = () => {
   const AREA_NAME = window.sessionStorage.getItem("AREA_NAME");
   const SIGUNGU_NAME = window.sessionStorage.getItem("SIGUNGU_NAME");
   const ids = localStorage.getItem("IDs");
-  console.log(cose)
+
   const fetch = useCallback(async () => {
     try {
       const {data} = await instance.get(

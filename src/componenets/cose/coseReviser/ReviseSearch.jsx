@@ -32,6 +32,7 @@ const ReviseSearch = () => {
   // ACCESS_TOKEN이 없으면 마이페이지 접근 불가
   const getToken = sessionStorage.getItem("ACCESS_TOKEN");
 
+  //로그인이 안됐을 때 로그인페이지로 이동
   useEffect(() => {
     if(getToken === null){
       alert("로그인이 필요한 서비스입니다.")
@@ -39,6 +40,7 @@ const ReviseSearch = () => {
     }
   },[getToken]);
 
+  //검색 데이터 불러오기
   const fetch = useCallback(async () => {
     try {
       const {data} = await instance.get(
@@ -54,11 +56,12 @@ const ReviseSearch = () => {
     }
   }, []);
 
+  //코스가 추가 됐을 때 로컬스토리지에 저장
   useEffect(() => {
     localStorage.setItem('TITLE_NAME', JSON.stringify(cose))
   },[cose]);
 
-
+  //코스 추가 이벤트
   const handleAddKeyword = (text,index) => {
     const newKeyword = {
       id: text[1],
@@ -92,13 +95,16 @@ const ReviseSearch = () => {
     };
   }, [fetch, hasNextPage]);
 
+  //무한스크롤시 스크롤이 유지된 상태로 데이터를 불러옴
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
+  //지역 선택 모달창
   const close = () => {
     setModalOn(false);
-  }
+  };
+
   return (
     <StList>
       <ReviseHeader searchWords={searchWord}/>

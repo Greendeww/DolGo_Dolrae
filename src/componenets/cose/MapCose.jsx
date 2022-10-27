@@ -33,7 +33,8 @@ const MapCose = ({title, isTitle}) => {
 
   useEffect(() => {
       JSON.parse(localStorage.getItem('TITLE_NAME'))
-  },[])
+  },[]);
+
   const onDragStart = (event) => {
       event.currentTarget.style.opacity = "0.4";
       const initialPosition = parseInt(event.currentTarget.dataset.position);
@@ -46,7 +47,7 @@ const MapCose = ({title, isTitle}) => {
         
   //드래그 했을 시 로컬스토리지에 반영되는 것(수정필요)
   useEffect(() => {
-      localStorage.setItem('TITLE_NAME', JSON.stringify(dragAndDrop.updatedOrder))
+      localStorage.setItem('TITLE_NAME', JSON.stringify(cose))
   },[cose]);
 
   //취소 버튼 모달

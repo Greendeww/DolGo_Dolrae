@@ -22,10 +22,13 @@ const CoseDetail = ({cose,index,length}) => {
     }
   },[getToken]);
   
+
     //모달창 열렸을 때 스크롤 맨 아래로
-    useEffect(() => {
-      window.scrollTo({ top: 3000, behavior: "smooth" });
-    }, [isOpen])
+  useEffect(() => {
+    window.scrollTo({ top: 3000, behavior: "smooth" });
+  }, [isOpen]);
+
+
     return (
     <>
         <CoseBox>

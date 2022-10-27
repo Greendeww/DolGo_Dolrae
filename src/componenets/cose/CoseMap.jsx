@@ -24,9 +24,11 @@ const CoseMap = () => {
     useEffect(() => {
       fetch()
     }, []);
+
     const initialization = (e) => {
         localStorage.removeItem("TITLE_NAME");
       };
+
     // select 페이지로 돌아올 시 자동으로 필터 초기화
     useEffect(() => {
         initialization();
