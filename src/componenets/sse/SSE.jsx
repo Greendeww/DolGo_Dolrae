@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { useEffect } from "react";
 import { instance } from "../../shared/Api";
 import arrow from "../../assert/header/arrow.png";
 import Swal from "sweetalert2";
 
-const SSE = ({ modal, setModal }) => {
+const SSE = ({ modal, setModal, modalHandler }) => {
   const token = sessionStorage.getItem("ACCESS_TOKEN");
 
   // ACCESS_TOKEN이 없으면 마이페이지 접근 불가
@@ -15,12 +15,12 @@ const SSE = ({ modal, setModal }) => {
         text: "로그인이 필요한 서비스입니다.",
         icon: "warning",
       });
-    } 
+    }
   }, []);
 
   // 서버로부터 받아온 데이터를 저장할 state
   const [data, setData] = useState();
-  
+
   // 읽은 알림과 안 읽은 알림을 구분 ( 안 읽은 알림 먼저 보여주기 )
   const notReadData =
     data && data.filter((data) => data.read === false).reverse();
@@ -43,44 +43,69 @@ const SSE = ({ modal, setModal }) => {
     }
   }, []);
 
+  const modalRef = useRef();
+
+  useEffect(() => {
+    document.addEventListener("mousedown", clickModalOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", clickModalOutside);
+    };
+  });
+
+  const clickModalOutside = (event) => {
+    if (!modalRef.current.contains(event.target)) {
+      modalHandler();
+    }
+  };
+
   return (
-    <Background onClick={() => setModal(!modal)}>
-      <Content>
-        <img alt="" src={arrow} />
-        <StSse>
-          {data?.length === 0 ? (
-            <Zero>
-              <p style={{ fontSize: "15px" }}>조회할 알림이 없습니다.</p>
-            </Zero>
-          ) : (
-            <>
-              {notReadData?.map((list) => (
-                <Container key={list.id}>
-                  <List>
-                    <p style={{ fontSize: "15px" }}>{list.content}</p>
-                  </List>
-                  <button onClick={() => readHandler(list.id)}>읽음</button>
-                </Container>
-              ))}
-              {readData?.map((list) => (
-                <Container key={list.id}>
-                  <List>
-                    <p style={{ fontSize: "15px" }}>{list.content}</p>
-                  </List>
-                  <button style={{ background: "gray", cursor: "default" }}>
-                    읽음
-                  </button>
-                </Container>
-              ))}
-            </>
-          )}
-        </StSse>
-      </Content>
-    </Background>
+    <St>
+      <Background>
+        <Content ref={modalRef}>
+          <img alt="" src={arrow} />
+          <StSse>
+            {data?.length === 0 ? (
+              <Zero>
+                <p style={{ fontSize: "15px" }}>조회할 알림이 없습니다.</p>
+              </Zero>
+            ) : (
+              <>
+                {notReadData?.map((list) => (
+                  <Container key={list.id}>
+                    <List>
+                      <p style={{ fontSize: "15px" }}>{list.content}</p>
+                    </List>
+                    <button onClick={() => readHandler(list.id)}>읽음</button>
+                  </Container>
+                ))}
+                {readData?.map((list) => (
+                  <Container key={list.id}>
+                    <List>
+                      <p style={{ fontSize: "15px" }}>{list.content}</p>
+                    </List>
+                    <button style={{ background: "gray", cursor: "default" }}>
+                      읽음
+                    </button>
+                  </Container>
+                ))}
+              </>
+            )}
+          </StSse>
+        </Content>
+      </Background>
+    </St>
   );
 };
 
 export default SSE;
+
+const St = styled.div`
+  max-width: 428px;
+  width: 100%;
+  margin: 0 auto;
+  font-family: bold;
+`;
 
 const Background = styled.div`
   height: 100%;
@@ -107,7 +132,7 @@ const Content = styled.div`
   width: 98%;
   background-color: #eef6fa;
   margin-top: 80px;
-  z-index: 11;
+  z-index: 999;
   border-radius: 15px;
 `;
 
@@ -160,7 +185,7 @@ const List = styled.div`
   border-radius: 10px;
   margin: 0 auto;
   padding: 5px;
-  padding-top: 0;
+  padding-top: 5px;
   padding-left: 0;
 
   & p {
