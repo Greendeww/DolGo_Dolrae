@@ -146,5 +146,5 @@ const MapBut = styled.button`
   /* margin-right:1rem; */
   width: 70%;
   margin-top:0.7rem;
-  font-family: tway;
+  font-family: bold;
 `;

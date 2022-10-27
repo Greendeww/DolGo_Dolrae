@@ -588,7 +588,7 @@ const Context = styled.textarea`
   border-radius: 15px;
   resize: none;
   font-size: 16px;
-  font-family: tway;
+  font-family: bold;
   font-weight: lighter;
   line-height: 18px;
 `;
@@ -678,7 +678,7 @@ const Text = styled.input`
   border: none;
   padding-left: 10px;
   font-size: 14px;
-  font-family: tway;
+  font-family: bold;
   font-weight: lighter;
 `;
 const Theme = styled.select`
@@ -690,7 +690,7 @@ const Theme = styled.select`
   border: none;
   border-radius: 15px;
   text-align: center;
-  font-family: tway;
+  font-family: bold;
   font-size: 16px;
   cursor: pointer;
 `;
@@ -703,7 +703,7 @@ const Address = styled.select`
   border: none;
   border-radius: 15px;
   text-align: center;
-  font-family: tway;
+  font-family: bold;
   font-size: 16px;
   cursor: pointer;
 `;

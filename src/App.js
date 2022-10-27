@@ -60,4 +60,5 @@ const Feedback = styled.button`
   z-index: 999;
   font-size: 16px;
   color: black;
+  opacity: 0.9;
 `;

@@ -121,6 +121,7 @@ function Router() {
       console.log(event)
       const data = JSON.parse(event.data);
       (async () => {
+        // console.log(data)
         // 브라우저 알림
         const showNotification = () => {
           const notification = new Notification(
@@ -133,9 +134,9 @@ function Router() {
           setTimeout(() => {
             notification.close();
           }, 10 * 1000);
-          notification.addEventListener("click", () => {
-            window.open(data.url, "_blank");
-          });
+          // notification.addEventListener("click", () => {
+          //   window.open(data.url, "_blank");
+          // });
         };
         // 브라우저 알림 허용 권한
         let granted = false;

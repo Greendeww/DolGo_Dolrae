@@ -10,6 +10,7 @@ import CoseSelectModal from "../../modal/CoseSelectModal";
 import ReviseHeader from "./ReviseHeader";
 import { useDispatch } from "react-redux";
 import { _ReviseCose } from "../../../redux/modules/coses";
+import Swal from "sweetalert2";
 
 const ReviseSearch = () => {
   const dispatch = useDispatch();
@@ -20,14 +21,14 @@ const ReviseSearch = () => {
   const page = useRef(0);
   const navigate = useNavigate();
   let [cose, setCose] = useState(
-   JSON.parse(localStorage.getItem('TITLE_NAME')) || []
+   JSON.parse(sessionStorage.getItem('TITLE_NAME')) || []
   );
   const [name, setName] = useState(
-    JSON.parse(localStorage.getItem('NAME')) || []
+    JSON.parse(sessionStorage.getItem('NAME')) || []
   );
   const { pathname } = useLocation();
   const {searchWord} = useParams();
-  const ids = localStorage.getItem("IDs");
+  const ids = sessionStorage.getItem("IDs");
 
   // ACCESS_TOKEN이 없으면 마이페이지 접근 불가
   const getToken = sessionStorage.getItem("ACCESS_TOKEN");
@@ -35,7 +36,10 @@ const ReviseSearch = () => {
   //로그인이 안됐을 때 로그인페이지로 이동
   useEffect(() => {
     if(getToken === null){
-      alert("로그인이 필요한 서비스입니다.")
+      Swal.fire({
+        text: "로그인이 필요한 서비스입니다.",
+        icon: "warning",
+      });
       navigate('/login')
     }
   },[getToken]);
@@ -58,7 +62,7 @@ const ReviseSearch = () => {
 
   //코스가 추가 됐을 때 로컬스토리지에 저장
   useEffect(() => {
-    localStorage.setItem('TITLE_NAME', JSON.stringify(cose))
+    sessionStorage.setItem('TITLE_NAME', JSON.stringify(cose))
   },[cose]);
 
   //코스 추가 이벤트
@@ -111,10 +115,12 @@ const ReviseSearch = () => {
       <HeadTitle>
         {modalOn
         ?<img alt='filter' src={filter} style={{display:"none"}}></img>
-        :<img style={{zIndex:"5"}} alt='filter' src={filter} onClick={() => setModalOn(true)}></img>
+        :<img alt='filter' src={filter} onClick={() => setModalOn(true)}></img>
         }
       </HeadTitle>
-      <HelpP>추가하고 싶은 장소를 상단 검색창에 입력해주세요</HelpP>
+      <HelpP>
+        {/* 추가하고 싶은 장소를 상단 검색창에 입력해주세요 */}
+        </HelpP>
       <CancelBut onClick={() => navigate('/cose/reivse/'+ids)}>뒤로가기</CancelBut>
       {modalOn === true
       ?<CoseSelectModal close={close} searchWord={searchWord}/>
@@ -173,6 +179,7 @@ const StList = styled.div`
   max-width: 428px;
   width: 100%;
   margin: 0 auto;
+  z-index: 999;
 
   & button {
     margin-left: 15px;
@@ -245,7 +252,7 @@ const BasicImg = styled.img`
 
 const ImgShadow = styled.div`
   margin: 0 auto;
-  width: 420px;
+  width: 100%;
   height: 235px;
   border-radius: 20px;
   &:hover {

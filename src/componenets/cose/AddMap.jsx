@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import RecentSearch from "../modal/RecentSearch";
 import Header from "../header/Header";
+import Swal from "sweetalert2";
 
 const AddMap = ({searchWords}) => {
     const [searchWord, setSearchWord] = useState(searchWords);
@@ -15,7 +16,10 @@ const AddMap = ({searchWords}) => {
     const onSubmitSearch = (e) => {
       if (e.key === "Enter") {
         if (searchWord === undefined) {
-          alert("검색어를 입력해주세요.");
+          Swal.fire({
+            text: "검색어를 입력해주세요.",
+            icon: "warning",
+          });
         } else {
           window.location.replace("/cose/add/" + searchWord);
         }
@@ -30,7 +34,7 @@ const AddMap = ({searchWords}) => {
               <InputDiv >
                 <input
                   type="text"
-                  placeholder="코스에 추가하고 싶은 장소를 입력해주세요"
+                  placeholder="추가하고 싶은 장소를 입력해주세요."
                   value={searchWord}
                   onChange={(e) => setSearchWord(e.target.value)}
                   onKeyPress={onSubmitSearch}
@@ -41,7 +45,10 @@ const AddMap = ({searchWords}) => {
                 <img
                   onClick={() => {
                     if (searchWord === undefined) {
-                      alert("검색어를 입력해주세요.");
+                      Swal.fire({
+                        text: "검색어를 입력해주세요.",
+                        icon: "warning",
+                      });
                     } else {
                       window.location.replace("/cose/add/" + searchWord);
                     }}}
@@ -90,6 +97,7 @@ const AddMap = ({searchWords}) => {
       font-weight: 700;
       padding-left: 1rem;
       font-size: 1rem;
+      font-family: bold;
       ::placeholder {
         color: rgb(179, 179, 179);
         font-weight: 500;

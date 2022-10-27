@@ -19,10 +19,10 @@ const ReviseSearchSel = () => {
   const page = useRef(0);
   const navigate = useNavigate();
   let [cose, setCose] = useState(
-   JSON.parse(localStorage.getItem('TITLE_NAME')) || []
+   JSON.parse(sessionStorage.getItem('TITLE_NAME')) || []
   );
   const [name, setName] = useState(
-    JSON.parse(localStorage.getItem('NAME')) || []
+    JSON.parse(sessionStorage.getItem('NAME')) || []
   );
   const { pathname } = useLocation();
   const {searchWord} = useParams();
@@ -30,8 +30,13 @@ const ReviseSearchSel = () => {
   const { area } = useParams();
   const AREA_NAME = window.sessionStorage.getItem("AREA_NAME");
   const SIGUNGU_NAME = window.sessionStorage.getItem("SIGUNGU_NAME");
+<<<<<<< HEAD
   const ids = localStorage.getItem("IDs");
 
+=======
+  const ids = sessionStorage.getItem("IDs");
+  console.log(cose)
+>>>>>>> 1c14c58bb18ad21a0a635314c824d052fd674de4
   const fetch = useCallback(async () => {
     try {
       const {data} = await instance.get(
@@ -48,7 +53,7 @@ const ReviseSearchSel = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('TITLE_NAME', JSON.stringify(cose))
+    sessionStorage.setItem('TITLE_NAME', JSON.stringify(cose))
   },[cose]);
 
   //이미지 클릭시 수정하기

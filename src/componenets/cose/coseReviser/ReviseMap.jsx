@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import search from "../../../assert/header/search.png";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 
 const ReviseMap = ({searchWords}) => {
     const [searchWord, setSearchWord] = useState(searchWords);
@@ -12,7 +13,10 @@ const ReviseMap = ({searchWords}) => {
     const onSubmitSearch = (e) => {
       if (e.key === "Enter") {
         if (searchWord === undefined) {
-          alert("검색어를 입력해주세요.");
+          Swal.fire({
+            text: "검색어를 입력해주세요.",
+            icon: "warning",
+          });
         } else {
           window.location.replace("/cose/revises/" + searchWord);
         }
@@ -27,7 +31,7 @@ const ReviseMap = ({searchWords}) => {
               <InputDiv >
                 <input
                   type="text"
-                  placeholder="코스에 추가하고 싶은 장소를 입력해주세요"
+                  placeholder="추가하고 싶은 장소를 입력해주세요."
                   value={searchWord}
                   onChange={(e) => setSearchWord(e.target.value)}
                   onKeyPress={onSubmitSearch}
@@ -38,7 +42,10 @@ const ReviseMap = ({searchWords}) => {
                 <img
                   onClick={() => {
                     if (searchWord === undefined) {
-                      alert("검색어를 입력해주세요.");
+                      Swal.fire({
+                        text: "검색어를 입력해주세요.",
+                        icon: "warning",
+                      });
                     } else {
                       window.location.replace("/cose/revises/" + searchWord);
                     }}}
@@ -89,6 +96,7 @@ const ReviseMap = ({searchWords}) => {
       padding-left: 1rem;
       font-size: 1rem;
       ::placeholder {
+        font-family: bold;
         color: rgb(179, 179, 179);
         font-weight: 500;
       }
