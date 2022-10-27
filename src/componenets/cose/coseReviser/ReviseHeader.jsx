@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import dolphin from "../../../assert/header/logo_.png";
@@ -6,40 +6,115 @@ import bell from "../../../assert/header/bell.png";
 import { instance } from "../../../shared/Api";
 import burger from "../../../assert/header/burger.png";
 import ReviseMap from "./ReviseMap";
+import Swal from "sweetalert2";
+import ModalPortal from "../../modal/ModalPortal";
+import SSE from "../../sse/SSE";
 
 const ReviseHeader = ({ searchWords }) => {
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
-  const role = localStorage.getItem("role");
+  const role = sessionStorage.getItem("role");
   // const getToken = getCookie("ACCESS_TOKEN");
-  const getToken = localStorage.getItem("ACCESS_TOKEN");
+  const getToken = sessionStorage.getItem("ACCESS_TOKEN");
 
   const onModalHandler = (e) => {
     setModal(!modal);
   };
 
+    // sse modal
+    const [notice, setNotice] = useState(false);
+
+    // 로그인 여부를 확인하기 위해 storage에서 가져온 데이터
+    const token = sessionStorage.getItem("ACCESS_TOKEN");
+
 
   const logout = async () => {
-    const response = await instance.post("/api/auth/member/logout");
-    alert(response.data);
-    localStorage.removeItem("username");
-    localStorage.removeItem("nickname");
-    localStorage.removeItem("role");
-    localStorage.removeItem("ACCESS_TOKEN");
-    localStorage.removeItem("REFRESH_TOKEN");
-    localStorage.removeItem("THEME_CODE");
-    localStorage.removeItem("THEME_NAME");
-    localStorage.removeItem("AREA_CODE");
-    localStorage.removeItem("AREA_NAME");
-    localStorage.removeItem("SIGUNGU_CODE");
-    localStorage.removeItem("SIGUNGU_NAME");
-    navigate('/')
+    try {
+      await instance.post("/api/auth/member/logout");
+      Swal.fire({
+        text: "로그아웃 되었습니다.",
+        icon: "success",
+      });
+      sessionStorage.removeItem("username");
+      sessionStorage.removeItem("nickname");
+      sessionStorage.removeItem("role");
+      sessionStorage.removeItem("ACCESS_TOKEN");
+      sessionStorage.removeItem("REFRESH_TOKEN");
+      sessionStorage.removeItem("THEME_CODE");
+      sessionStorage.removeItem("THEME_NAME");
+      sessionStorage.removeItem("AREA_CODE");
+      sessionStorage.removeItem("AREA_NAME");
+      sessionStorage.removeItem("SIGUNGU_CODE");
+      sessionStorage.removeItem("SIGUNGU_NAME");
+      sessionStorage.removeItem("never");
+      navigate("/");
+    } catch(error) {
+      Swal.fire({
+        text: "로그아웃 되었습니다.",
+        icon: "success",
+      });
+      sessionStorage.removeItem("username");
+      sessionStorage.removeItem("nickname");
+      sessionStorage.removeItem("role");
+      sessionStorage.removeItem("ACCESS_TOKEN");
+      sessionStorage.removeItem("REFRESH_TOKEN");
+      sessionStorage.removeItem("THEME_CODE");
+      sessionStorage.removeItem("THEME_NAME");
+      sessionStorage.removeItem("AREA_CODE");
+      sessionStorage.removeItem("AREA_NAME");
+      sessionStorage.removeItem("SIGUNGU_CODE");
+      sessionStorage.removeItem("SIGUNGU_NAME");
+      sessionStorage.removeItem("never");
+      navigate("/");
+    }
+  };
+
+  // sse
+  const [count, setCount] = useState();
+
+  const getNotice = async () => {
+    const res = await instance.get("/api/auth/notice/notifications");
+    setCount(res.data.unreadCount);
+  };
+
+  const noticeModalHandler = () => {
+    if (token) {
+      setNotice(!notice);
+    } else {
+      Swal.fire({
+        text: "로그인이 필요한 서비스입니다.",
+        icon: "warning",
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      getNotice();
+    }
+  }, []);
+
+  const modalHandler = () => {
+    setNotice(false);
   };
 
   return (
     <StHeader>
       <Top>
-        <Bell alt="" src={bell} style={{ paddingLeft: "8px" }} />
+      <Bell
+          alt=""
+          src={bell}
+          style={{ paddingLeft: "8px" }}
+          onClick={noticeModalHandler}
+        />
+        {/* 알림 수가 1 이상이면 표시해주기 */}
+        {count === 0 || count === undefined ? null : <Count />}
+        {/* 알림 아이콘 클릭하면 sse 모달 open */}
+        {notice && (
+          <ModalPortal>
+            <SSE modalHandler={modalHandler} />
+          </ModalPortal>
+        )}
         <img alt="" src={dolphin} onClick={() => navigate("/")} />
         <img
           alt=""
@@ -51,36 +126,36 @@ const ReviseHeader = ({ searchWords }) => {
       {modal === true ? (
         <MenuContainer>
           <Menu>
-            <h2 onClick={() => navigate("/")}>홈</h2>
-            <h2 onClick={() => navigate("/select")}>지역별 조회</h2>
-            <h2 onClick={() => navigate("/random")}>랜덤 추천</h2>
+            <h3 onClick={() => navigate("/")}>홈</h3>
+            <h3 onClick={() => navigate("/select")}>지역별 조회</h3>
+            <h3 onClick={() => navigate("/random")}>랜덤 추천</h3>
             {getToken !== null ? (
               <>
-                <h2 onClick={() => navigate("/mypage")}>마이페이지</h2>
-                <h2 onClick={() => navigate("/request/post")}>
+                <h3 onClick={() => navigate("/mypage")}>마이페이지</h3>
+                <h3 onClick={() => navigate("/request/post")}>
                   장소 등록 요청
-                </h2>
+                </h3>
               </>
             ) : null}
             <br />
             { role === "ADMIN" ? (
               <>
-                <h2 onClick={() => navigate("/request/list")}>* 요청 목록 *</h2>
-                <h2 onClick={() => navigate("/post")}>* 게시글 추가 *</h2>
+                <h3 onClick={() => navigate("/request/list")}>* 요청 목록 *</h3>
+                <h3 onClick={() => navigate("/post")}>* 게시글 추가 *</h3>
               </>
             ) : null}
             <div>
               {getToken === null ? (
-                <h2 onClick={() => navigate("/login")}>로그인 ＞</h2>
+                <h3 onClick={() => navigate("/login")}>로그인 ＞</h3>
               ) : (
-                <h2
+                <h3
                   onClick={() => {
                     logout();
                     setModal(!modal);
                   }}
                 >
                   로그아웃 ＞
-                </h2>
+                </h3>
               )}
             </div>
           </Menu>
@@ -97,7 +172,7 @@ const StHeader = styled.div`
   max-width: 428px;
   width: 100%;
   margin: 0 auto;
-  z-index: 3;
+  z-index: 999;
   position: fixed;
   top: 0;
   font-family: bold;
@@ -171,9 +246,10 @@ const Menu = styled.div`
   text-align: center;
   color: #535353;
   transition: all 0.3s;
-  z-index: 10;
+  z-index: 999;
+  margin-top: -1px;
 
-  & h2 {
+  & h3 {
     /* text-decoration: underline; */
     margin: 30px auto;
 
@@ -189,4 +265,14 @@ const Menu = styled.div`
       text-decoration: none;
     }
   }
+`;
+
+const Count = styled.div`
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 10px;
+  left: 43px;
+  background-color: red;
+  border-radius: 50px;
 `;

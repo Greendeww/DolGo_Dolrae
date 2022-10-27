@@ -3,8 +3,9 @@ import styled, { keyframes } from "styled-components";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
-const CoseSelectModal = ({ close, searchWord}) => {
+const CoseSelectModal = ({ close, searchWord }) => {
   const navigate = useNavigate();
   document.body.style.overflow = "hidden";
 
@@ -382,7 +383,10 @@ const CoseSelectModal = ({ close, searchWord}) => {
               <button
                 onClick={() => {
                   if (selectedDo === "") {
-                    alert("지역을 선택해주세요.");
+                    Swal.fire({
+                      text: "지역을 선택해주세요.",
+                      icon: "warning",
+                    });
                     return;
                   } else {
                     if (selectedSi === "") {
@@ -391,7 +395,7 @@ const CoseSelectModal = ({ close, searchWord}) => {
                     }
                     navigate(
                       "/cose/add/" +
-                      searchWord+
+                        searchWord +
                         "/" +
                         window.sessionStorage.getItem("SIGUNGU_CODE") +
                         "/" +
