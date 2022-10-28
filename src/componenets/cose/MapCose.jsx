@@ -35,14 +35,8 @@ const MapCose = ({ title, isTitle }) => {
   }, [getToken]);
 
   useEffect(() => {
-<<<<<<< HEAD
-      JSON.parse(localStorage.getItem('TITLE_NAME'))
-  },[]);
-
-=======
     JSON.parse(sessionStorage.getItem("TITLE_NAME"));
   }, []);
->>>>>>> 1c14c58bb18ad21a0a635314c824d052fd674de4
   const onDragStart = (event) => {
     event.currentTarget.style.opacity = "0.4";
     const initialPosition = parseInt(event.currentTarget.dataset.position);
@@ -55,16 +49,11 @@ const MapCose = ({ title, isTitle }) => {
 
   //드래그 했을 시 로컬스토리지에 반영되는 것(수정필요)
   useEffect(() => {
-<<<<<<< HEAD
-      localStorage.setItem('TITLE_NAME', JSON.stringify(cose))
-  },[cose]);
-=======
     sessionStorage.setItem(
       "TITLE_NAME",
       JSON.stringify(cose)
     );
   }, [cose]);
->>>>>>> 1c14c58bb18ad21a0a635314c824d052fd674de4
 
   //취소 버튼 모달
   const onClose = () => {

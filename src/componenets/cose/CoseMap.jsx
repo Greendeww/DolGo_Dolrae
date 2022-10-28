@@ -16,30 +16,7 @@ import Header from "../header/Header";
 const { kakao } = window;
 
 const CoseMap = () => {
-<<<<<<< HEAD
-    const mapRef = useRef()
-    const navigate = useNavigate();
-    const {id} = useParams();
-    const [cose, setCose] = useState([])
-    const [name, setName] = useState([])
-    const fetch = async () => {
-      const response = await instance.get(`/api/auth/course/${id}`); 
-      setCose(response?.data.data)
-      setName(response?.data.name)
-    }
-    useEffect(() => {
-      fetch()
-    }, []);
 
-    const initialization = (e) => {
-        localStorage.removeItem("TITLE_NAME");
-      };
-
-    // select 페이지로 돌아올 시 자동으로 필터 초기화
-    useEffect(() => {
-        initialization();
-    }, []);
-=======
   const mapRef = useRef();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -60,7 +37,6 @@ const CoseMap = () => {
   useEffect(() => {
     initialization();
   }, []);
->>>>>>> 1c14c58bb18ad21a0a635314c824d052fd674de4
 
   const addCose = () => {
     navigate("/cose/add");

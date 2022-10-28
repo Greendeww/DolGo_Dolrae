@@ -25,48 +25,8 @@ const CoseDetail = ({ cose, index, length }) => {
       });
       navigate("/login");
     }
-<<<<<<< HEAD
-  },[getToken]);
-  
-
-    //모달창 열렸을 때 스크롤 맨 아래로
-  useEffect(() => {
-    window.scrollTo({ top: 3000, behavior: "smooth" });
-  }, [isOpen]);
-
-
-    return (
-    <>
-        <CoseBox>
-            <TitleDiv key={index}>
-                {index+1 === length
-                ?
-                <CoseBox>
-                <LastCoseDiv>
-                    <p onClick={() => setIsOpen(true)}>{cose.title}</p>
-                </LastCoseDiv>
-                </CoseBox>
-                :<CoseBox>
-                <CoseDiv>
-                    <p onClick={() => setIsOpen(true)}>{cose.title}</p>
-                </CoseDiv>
-                <p style={{paddingTop:"0.1rem",textAlign:"center"}}>▼</p>
-                </CoseBox>
-                }
-            </TitleDiv>
-        </CoseBox>
-        <div ref={scrollRef}/>
-        <ModalPortal>
-        {isOpen && (
-          <CoseModal pos={cose} close={close} /> 
-        )}
-        </ModalPortal>
-    </>
-    )
-}
-=======
   }, [getToken]);
->>>>>>> 1c14c58bb18ad21a0a635314c824d052fd674de4
+
 
   //모달창 열렸을 때 스크롤 맨 아래로
   useEffect(() => {
