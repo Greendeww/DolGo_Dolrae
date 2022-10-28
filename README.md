@@ -35,7 +35,7 @@ notion : https://www.notion.so/1-695787ebec1e4ecd91a12ff8ae70f7b7 <br/>
 ![아키텍쳐](https://user-images.githubusercontent.com/97495661/198329375-c93bca10-7fb1-4d49-88b9-aab30fcef434.png)
 
 ## 📘 ERD
-![image](https://user-images.githubusercontent.com/110370672/194831500-fac710cc-8da5-4d68-b0a3-c827b7ecc098.png)
+<img width="928" alt="erd" src="https://user-images.githubusercontent.com/110075438/198322563-120ff608-7df9-4e78-8ee2-158c5bcb288f.png">
 
 ## 📙 API
 ![API](https://user-images.githubusercontent.com/110370672/194831335-f11ce610-7e4c-40a7-b004-b3562a319d35.png)
