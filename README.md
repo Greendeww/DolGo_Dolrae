@@ -1,3 +1,7 @@
+<p align="center">
+ <img src="https://user-images.githubusercontent.com/97495661/198329036-9b258aa5-cb1b-4d27-b8c6-7609e052f861.png">
+</p>
+
 # 🐋돌고돌래🐋
 
 실전프로젝트 _ 1조
@@ -26,6 +30,9 @@ notion : https://www.notion.so/1-695787ebec1e4ecd91a12ff8ae70f7b7 <br/>
 
 
 ## 📗 와이어프레임
+
+## 📒 아키텍쳐
+![아키텍쳐](https://user-images.githubusercontent.com/97495661/198329375-c93bca10-7fb1-4d49-88b9-aab30fcef434.png)
 
 ## 📘 ERD
 ![image](https://user-images.githubusercontent.com/110370672/194831500-fac710cc-8da5-4d68-b0a3-c827b7ecc098.png)
