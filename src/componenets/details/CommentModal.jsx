@@ -18,7 +18,7 @@ const CommentModal = ({ comment }) => {
   const nickname = sessionStorage.getItem("nickname");
   const getToken = sessionStorage.getItem("ACCESS_TOKEN");
   const role = sessionStorage.getItem("role");
-
+  console.log(comment)
   const navigate = useNavigate();
 
   const handleModal = () => {
@@ -98,6 +98,7 @@ const ComDiv = styled.div`
   width: 95%;
   padding-bottom: 2rem;
   margin: 0 auto;
+  white-space: pre-wrap;
 `;
 const BoxDiv = styled.div`
   margin: 0rem 1rem 0rem 1rem;

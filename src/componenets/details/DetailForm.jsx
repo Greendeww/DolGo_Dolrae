@@ -47,6 +47,7 @@ const DetailForm = () => {
     let score = clicked.filter(Boolean).length;
     setStar(score);
   };
+  
   //이미지 리사이징
   const compressImage = async (image) => {
     try {
@@ -100,7 +101,7 @@ const DetailForm = () => {
   //후기 내용 10글자 이상 작성
   const onChangeContent = (e) => {
     const contentRegex =
-      /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{10,3000}$/;
+      /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=]).{10,3000}$/gs;
     const contentCurrnet = e.target.value;
     setContent(contentCurrnet);
 
