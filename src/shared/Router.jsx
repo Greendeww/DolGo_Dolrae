@@ -20,6 +20,7 @@ import SearchPage from "../pages/tourist/SearchPage";
 import SearchSelList from "../componenets/searchList/SearchSelList";
 import WorldCup from "../componenets/worldCup/WorldCup";
 import Match from "../componenets/worldCup/Match";
+import RecentReview from "../pages/tourist/RecentReview";
 
 // mypage
 import MyPage from "../pages/mypage/MyPage";
@@ -118,10 +119,8 @@ function Router() {
     );
     // console.log("구독성공");
     eventSource.addEventListener("sse", function (event) {
-      console.log(event)
-      const data = JSON.parse(event.data);
       (async () => {
-        // console.log(data)
+        const data = JSON.parse(event.data);
         // 브라우저 알림
         const showNotification = () => {
           const notification = new Notification(
@@ -204,6 +203,7 @@ function Router() {
         <Route path="/cose/revises/:searchWord/:si/:area" element={<ReviseSearchSel />} />
         <Route path="/ideal" element={<WorldCup />} />
         <Route path="/ideal/match" element={<Match />} />
+        <Route path="/review/recent" element={<RecentReview />} />
 
       </Routes>
     </BrowserRouter>

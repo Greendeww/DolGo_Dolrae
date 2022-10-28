@@ -48,7 +48,7 @@ const CommentModal = ({ comment }) => {
       <ComDiv key={comment.comment_id}>
         <BoxDiv>
           <div>
-            <div style={{ display: "flex", alignItems: "center" }}></div>
+            <div style={{ display: "flex", alignItems: "center" }}>{comment.title}</div>
             <div style={{ textAlign: "left" }} >
               {comment.imageList.map((image, index) => {
                 return <DetailImg onClick={onOpen} key={index} alt="image" src={image} />;
