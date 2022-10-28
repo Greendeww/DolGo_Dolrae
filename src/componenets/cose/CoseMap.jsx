@@ -16,6 +16,7 @@ import Header from "../header/Header";
 const { kakao } = window;
 
 const CoseMap = () => {
+
   const mapRef = useRef();
   const navigate = useNavigate();
   const { id } = useParams();
