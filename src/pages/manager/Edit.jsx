@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { instance } from "../../shared/Api";
 import { useEffect } from "react";
 import img from "../../assert/image/image.svg";
+import Swal from "sweetalert2";
 
 const Post = () => {
   const navigate = useNavigate();
@@ -113,7 +114,10 @@ const Post = () => {
       request.areaCode === undefined ||
       request.sigunguCode === undefined
     ) {
-      alert("필수 항목을 모두 작성해주세요.");
+      Swal.fire({
+        text: "필수 항목을 모두 작성해주세요.",
+        icon: "warning",
+      });
       return;
     }
     // formData 형식으로 변환
@@ -140,11 +144,17 @@ const Post = () => {
             },
           }
         );
-        alert("게시글이 수정되었습니다.");
+        Swal.fire({
+          text: "게시글이 수정되었습니다.",
+          icon: "success",
+        });
         navigate(`/request/detail/${req.id}`);
         sessionStorage.removeItem("sameDo");
       } catch {
-        alert("내용을 다시 확인해주세요.");
+        Swal.fire({
+          text: "내용을 다시 확인해주세요.",
+          icon: "warning",
+        });
       }
     }
   };
@@ -452,6 +462,10 @@ const Post = () => {
     setSelectedTheme(e.target.value);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <StPost>
       <Header />
@@ -528,11 +542,7 @@ const Post = () => {
           <div style={{ width: "100%" }}>
             <ImgBox>
               <ImgLabel>
-                <img
-                  alt=""
-                  style={{ height: "1.5rem" }}
-                  src={img}
-                />
+                <img alt="" style={{ height: "1.5rem" }} src={img} />
                 <p style={{ marginTop: "15px", fontSize: "0.9rem" }}>
                   이미지 등록
                 </p>
@@ -622,7 +632,7 @@ const Context = styled.textarea`
   border-radius: 15px;
   resize: none;
   font-size: 14px;
-  font-family: tway;
+  font-family: bold;
   font-weight: lighter;
   line-height: 25px;
 `;
@@ -708,7 +718,7 @@ const Text = styled.input`
   border: none;
   padding-left: 10px;
   font-size: 14px;
-  font-family: tway;
+  font-family: bold;
   font-weight: lighter;
 `;
 const Theme = styled.select`
@@ -720,7 +730,7 @@ const Theme = styled.select`
   border: none;
   border-radius: 15px;
   text-align: center;
-  font-family: tway;
+  font-family: bold;
   font-size: 16px;
   cursor: pointer;
 `;
@@ -733,7 +743,7 @@ const Address = styled.select`
   border: none;
   border-radius: 15px;
   text-align: center;
-  font-family: tway;
+  font-family: bold;
   font-size: 16px;
   cursor: pointer;
 `;

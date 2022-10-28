@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../../componenets/header/Header";
 import { instance } from "../../shared/Api";
-import { getCookie, setCookie } from "../../shared/Cookie";
-import axios from "axios";
+import Swal from "sweetalert2";
 
 const PostRequest = () => {
   const navigate = useNavigate();
@@ -14,7 +13,7 @@ const PostRequest = () => {
     title: "",
     content: "",
     address: "",
-    type: "추가"
+    type: "추가",
   };
 
   const [req, setReq] = useState(initialState);
@@ -28,11 +27,7 @@ const PostRequest = () => {
 
   const onChangeImg = (e) => {
     const imageList = e.target.files;
-    // const maxImageCnt = 3;
     const imageLists = [...image];
-    // if(image.length > maxImageCnt){
-    //   alert("첨부파일은 최대 3개까지 가능합니다")
-    // }
 
     console.log(imageList);
     const imgFiles = [...fileImage];
@@ -45,9 +40,7 @@ const PostRequest = () => {
       imageLists.push(nowImageUrl1);
       continue;
     }
-    // if (imageLists.length > 3) {
-    //   imageLists = imageLists.slice(0, 3);
-    // }
+
     setFileImage(imgFiles);
     setImage(imageLists);
   };
@@ -60,9 +53,11 @@ const PostRequest = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log(req)
     if (req.title === "" || req.content === "" || req.address === "") {
-      alert("필수 항목을 모두 작성해주세요.");
+      Swal.fire({
+        text: "필수 항목을 모두 작성해주세요.",
+        icon: "warning",
+      });
       return;
     } else {
       const json = JSON.stringify(req);
@@ -74,71 +69,22 @@ const PostRequest = () => {
       }
       formData.append("data", blob);
 
-      const res = await instance.post(`/api/auth/order`, formData, {
+      await instance.post(`/api/auth/order`, formData, {
         headers: {
           "content-type": "multipart/form-data",
         },
       });
-      alert("게시글 등록 요청 완료되었습니다.");
+      Swal.fire({
+        text: "게시글 등록 요청 완료되었습니다.",
+        icon: "success",
+      });
       navigate("/");
     }
   };
 
-  const refresh_token = getCookie("REFRESH_TOKEN");
-
-  // const getToken = sessionStorage.getItem("ACCESS_TOKEN");
-  // const getToken = getCookie("ACCESS_TOKEN")
-  // console.log(getToken)
-  // const navigate =useNavigate()
-
-  // useEffect(() => {
-  //   if(getToken === undefined){
-  //     alert("로그인이 필요한 서비스입니다.")
-  //     navigate('/login')
-  //   }
-  // },[getToken])
-
-  // const getToken = sessionStorage.getItem("ACCESS_TOKEN");
-  // const getToken = getCookie("ACCESS_TOKEN")
-  // console.log(getToken)
-  // const navigate =useNavigate()
-
-  // useEffect(() => {
-  //   if(getToken === undefined){
-  //     alert("로그인이 필요한 서비스입니다.")
-  //     navigate('/login')
-  //   }
-  // },[getToken])
-
-  // 토큰 재발급
-  const getToken = async () => {
-    try {
-      console.log("토큰 만료");
-      alert("토큰 만료");
-      const res = await axios.post(
-        process.env.REACT_APP_BASE_URL + "/api/member/retoken",
-        {},
-        {
-          headers: {
-            RefreshToken: refresh_token,
-          },
-        }
-      );
-      setCookie("ACCESS_TOKEN", res.headers.authorization);
-      setCookie("REFRESH_TOKEN", res.headers.refreshtoken);
-      console.log("토큰이 갱신되었습니다.");
-    } catch {
-      alert("토큰 갱신에 실패하였습니다.");
-    }
-  };
-
+  // 화면 렌더링시 스크롤 맨 위로 이동
   useEffect(() => {
-    if (
-      getCookie("ACCESS_TOKEN") === undefined &&
-      getCookie("REFRESH_TOKEN") !== undefined
-    ) {
-      getToken();
-    }
+    window.scrollTo(0, 0);
   }, []);
 
   return (
@@ -269,7 +215,7 @@ const Text = styled.input`
   border: none;
   padding-left: 10px;
   font-size: 14px;
-  font-family: tway;
+  font-family: bold;
   font-weight: lighter;
 `;
 
@@ -288,7 +234,7 @@ const Context = styled.textarea`
   border-radius: 15px;
   resize: none;
   font-size: 14px;
-  font-family: tway;
+  font-family: bold;
   font-weight: lighter;
 `;
 

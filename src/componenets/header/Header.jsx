@@ -1,18 +1,19 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import css from "../../css/header.css";
-import dolphin from "../../assert/header/logo_.png";
-import bell from "../../assert/header/bell.png";
+import styled from "styled-components";
+import Swal from "sweetalert2";
 import { instance } from "../../shared/Api";
 
-import ToTheTop from "../scroll/ToTheTop";
-
-import Search from "./Search";
+// 이미지
+import dolphin from "../../assert/header/logo_.png";
+import bell from "../../assert/header/bell.png";
 import burger from "../../assert/header/burger.png";
-import event from "../../assert/header/event.png";
+
+// component
+import Search from "./Search";
 import SSE from "../sse/SSE";
-import { useEffect } from "react";
+import HeaderMenu from "./HeaderMenu";
+import ModalPortal from "../modal/ModalPortal";
 
 const Header = ({ title }) => {
   const navigate = useNavigate();
@@ -20,45 +21,48 @@ const Header = ({ title }) => {
   // 햄버거 메뉴 modal
   const [modal, setModal] = useState(false);
 
-  // sse modal
-  const [notice, setNotice] = useState(false);
-
-  // 로그인 여부와 관리자 여부를 확인하기 위해 storage에서 가져온 데이터
-  const role = sessionStorage.getItem("role");
-  const token = sessionStorage.getItem("ACCESS_TOKEN");
-
   // 클릭 시 모달 열고 닫기
   const onModalHandler = (e) => {
     setModal(!modal);
   };
 
-  // 로그아웃 클릭 시, 데이터 전송 & storage 초기화
-  const logout = async () => {
-    const response = await instance.post("/api/auth/member/logout");
-    alert(response.data);
-    sessionStorage.removeItem("username");
-    sessionStorage.removeItem("nickname");
-    sessionStorage.removeItem("role");
-    sessionStorage.removeItem("ACCESS_TOKEN");
-    sessionStorage.removeItem("REFRESH_TOKEN");
-    sessionStorage.removeItem("THEME_CODE");
-    sessionStorage.removeItem("THEME_NAME");
-    sessionStorage.removeItem("AREA_CODE");
-    sessionStorage.removeItem("AREA_NAME");
-    sessionStorage.removeItem("SIGUNGU_CODE");
-    sessionStorage.removeItem("SIGUNGU_NAME");
-    sessionStorage.removeItem("never");
-    navigate("/");
-  };
+  // 로그인 여부를 확인하기 위해 storage에서 가져온 데이터
+  const token = sessionStorage.getItem("ACCESS_TOKEN");
 
   // sse
+  // sse modal
+  const [notice, setNotice] = useState(false);
+
+  // 알림 modal on/off
+  const modalHandler = () => {
+    setNotice(false);
+  };
+
+  // 알림 갯수
   const [count, setCount] = useState();
 
+  // 서버로부터 받아온 알림 갯수를 state에 저장
   const getNotice = async () => {
     const res = await instance.get("/api/auth/notice/notifications");
     setCount(res.data.unreadCount);
   };
 
+  // 알림 아이콘 Click했을 경우,
+  const noticeModalHandler = () => {
+    // token이 있으면 알림 모달 open
+    if (token) {
+      setNotice(!notice);
+    }
+    // token이 없으면 안내 alert
+    else {
+      Swal.fire({
+        text: "로그인이 필요한 서비스입니다.",
+        icon: "warning",
+      });
+    }
+  };
+
+  // token이 있으면 렌더링될 때마다 알림 조회
   useEffect(() => {
     if (token) {
       getNotice();
@@ -68,26 +72,24 @@ const Header = ({ title }) => {
   return (
     <StHeader>
       <Top>
+        {/* SSE */}
         <Bell
           alt=""
           src={bell}
           style={{ paddingLeft: "8px" }}
-          onClick={() => setNotice(!notice)}
+          onClick={noticeModalHandler}
         />
         {/* 알림 수가 1 이상이면 표시해주기 */}
         {count === 0 || count === undefined ? null : <Count />}
         {/* 알림 아이콘 클릭하면 sse 모달 open */}
-        {notice === true ? <SSE modal={notice} setModal={setNotice} /> : null}
-        {/* <Bell
-          alt=""
-          src={event}
-          onClick={() =>
-            window.open(
-              "https://blog.naver.com/PostView.naver?blogId=wmr06102&Redirect=View&logNo=222905608839&categoryNo=13&isAfterWrite=true&isMrblogPost=false&isHappyBeanLeverage=true&contentLength=6267&isWeeklyDiaryPopupEnabled=false"
-            )
-          }
-        /> */}
+        {notice && (
+          <ModalPortal>
+            <SSE modalHandler={modalHandler} />
+          </ModalPortal>
+        )}
+        {/* LOGO */}
         <img alt="" src={dolphin} onClick={() => navigate("/")} />
+        {/* 햄버거 메뉴 */}
         <img
           alt=""
           src={burger}
@@ -95,49 +97,12 @@ const Header = ({ title }) => {
           style={{ paddingBottom: "7px", paddingRight: "12px" }}
         />
       </Top>
-      {modal === true ? (
-        <MenuContainer onClick={onModalHandler}>
-          <Menu>
-            <h2 onClick={() => navigate("/")}>홈</h2>
-            <h2 onClick={() => navigate("/select")}>지역별 조회</h2>
-            <h2 onClick={() => navigate("/random")}>랜덤 추천</h2>
-            {/* <h2 onClick={() => navigate("/ideal")}>이상형 월드컵</h2> */}
-            <br />
-            {token !== null ? (
-              <>
-                <h2 onClick={() => navigate("/request/post")}>
-                  장소 등록 요청
-                </h2>
-                <h2 onClick={() => navigate("/mypage")}>마이페이지</h2>
-              </>
-            ) : null}
-            <br />
-            {role === "ADMIN" ? (
-              <>
-                <h2 onClick={() => navigate("/request/list")}>* 요청 목록 *</h2>
-                <h2 onClick={() => navigate("/post")}>* 게시글 추가 *</h2>
-              </>
-            ) : null}
-            <div>
-              {token === null ? (
-                <h2 onClick={() => navigate("/login")}>로그인 ＞</h2>
-              ) : (
-                <h2
-                  onClick={() => {
-                    logout();
-                    setModal(!modal);
-                  }}
-                >
-                  로그아웃 ＞
-                </h2>
-              )}
-            </div>
-          </Menu>
-        </MenuContainer>
-      ) : null}
-
-      <ToTheTop />
-
+      {/* MENU BAR */}
+      {modal && (
+        <ModalPortal>
+          <HeaderMenu modalHandler={onModalHandler} />
+        </ModalPortal>
+      )}
       <Search title={title} />
     </StHeader>
   );
@@ -152,12 +117,6 @@ const StHeader = styled.div`
   z-index: 3;
   position: fixed;
   top: 0;
-
-  & a {
-    &:hover {
-      cursor: pointer;
-    }
-  }
 `;
 
 const Top = styled.div`
@@ -169,11 +128,6 @@ const Top = styled.div`
   justify-content: space-between;
   vertical-align: middle;
   position: relative;
-  /* & h2 {
-    color: white;
-    background-image: url(${dolphin});
-    background-repeat: no-repeat;
-  } */
 
   & img {
     margin-top: 5px;
@@ -182,11 +136,6 @@ const Top = styled.div`
     }
   }
 
-  & p {
-    font-size: 35px;
-    margin-top: 8px;
-    margin-left: 10px;
-  }
 `;
 
 const Count = styled.div`
@@ -206,52 +155,5 @@ const Bell = styled.img`
   margin-left: 10px;
   position: relative;
   top: 8px;
-
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;
-
-const MenuContainer = styled.div`
-  margin: 0 auto;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  /* background: rgba(0, 0, 0, 0.3); */
-`;
-
-const Menu = styled.div`
-  position: absolute;
-  left: 50%;
-  max-width: 214px;
-  width: 50%;
-  float: right;
-  height: 100vh;
-  top: calc(0vh + 70px);
-  background-color: #abd4e2;
-  text-align: center;
-  color: #535353;
-  transition: all 0.3s;
-  z-index: 30;
-
-  & h2 {
-    /* text-decoration: underline; */
-    margin: 30px auto;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  & div {
-    margin-top: 60px;
-    color: white;
-    & h2 {
-      text-decoration: none;
-    }
-  }
-`;
-
-const Log = styled.div``;

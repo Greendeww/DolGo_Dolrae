@@ -3,12 +3,13 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
-import Star from "../star/Star";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { _updateComment, _getComments } from "../../redux/modules/comment";
 import { instance } from "../../shared/Api";
 import Header from "../header/Header";
 import img from "../../assert/image/image.svg";
+import Swal from "sweetalert2";
+import imageCompression from "browser-image-compression";
 
 const DetailRevise = () => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const DetailRevise = () => {
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
 
+  //후기작성 기존 데이터 불러오기
   const fetch = async () => {
     const response = await instance.get(`/api/comment/${placeId}`);
 
@@ -51,6 +53,7 @@ const DetailRevise = () => {
     sendReview();
   }, [clicked]);
 
+  //별점 입력하기
   const handleStarClick = (index) => {
     let clickStates = [...clicked];
     for (let i = 0; i < 5; i++) {
@@ -64,7 +67,22 @@ const DetailRevise = () => {
     setStar(score);
   };
 
-  const onChangeImg = (e) => {
+  //이미지 리사이징
+  const compressImage = async (image) => {
+    try{
+      const options = {
+        maxSizeMb: 1,
+        maxWidthOrHeight: 600,
+        alwaysKeepResolution : true, 
+      }
+      return await imageCompression(image, options);
+    } catch(e){
+      console.log(e);
+    };
+  };
+
+  //이미지 미리보기 및 파일 추가
+  const onChangeImg = async(e) => {
     const imageList = e.target.files;
     let imageLists = [...image];
     let imgFiles = [...fileImage];
@@ -74,11 +92,15 @@ const DetailRevise = () => {
     }
     for (let i = 0; i < imageList.length; i++) {
       const nowImageUrl1 = e.target.files[i];
-      imageLists.push(nowImageUrl1);
+      const compressedImage = await compressImage(nowImageUrl1);
+      imageLists.push(compressedImage);
     }
     //이미지 개수 최대 3개까지 등록가능
     if (imageLists.length + fileImage1.length> 3) {
-      window.alert("이미지는 최대 3개까지 등록 가능합니다")
+      Swal.fire({
+        text: "이미지는 최대 3개까지 등록 가능합니다",
+        icon: "warning",
+      });
       imageLists = imageLists.slice(0, 3-fileImage1.length);
     }
     if(imgFiles.length + fileImage1.length> 3){
@@ -88,16 +110,18 @@ const DetailRevise = () => {
     setImage(imageLists);
   };
 
+  //추가이미지 삭제
   const handleDeleteImage = (id) => {
     setFileImage(fileImage.filter((_, index) => index !== id));
     setImage(image.filter((_, index) => index !== id));
   };
 
+  //기존이미지 삭제
   const handleDeleteImage1 = (id) => {
     setFileImage1(fileImage1.filter((_, index) => index !== id));
-    // setImage(image.filter((_, index) => index !== id));
   };
 
+  //내용 유효성 검사
   const onChangeContent = (e) => {
     const contentRegex =
       /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{10,300}$/;
@@ -113,6 +137,7 @@ const DetailRevise = () => {
     }
   };
 
+  //제목 유효성 검사
   const onChangeTitle = (e) => {
     const TitleRegex = /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{1,20}$/;
     const TitleCurrnet = e.target.value;
@@ -132,15 +157,17 @@ const DetailRevise = () => {
     content: content,
     star: Number(star),
     existUrlList: fileImage1,
-    // nickname:nickname
   };
-
   const onChangeHandler = (event, setState) => setState(event.target.value);
 
+  //후기 수정하기 완료 버튼
   const onUpdatePost = async (e) => {
     e.preventDefault();
     if (title === "" || content === "" || star === 0) {
-      alert("필수항목을 입력해주세요.");
+      Swal.fire({
+        text: "필수항목을 입력해주세요.",
+        icon: "warning",
+      });
       return;
     }
     let json = JSON.stringify(data);
@@ -150,7 +177,6 @@ const DetailRevise = () => {
       formData.append("image", image[i]);
     }
     formData.append("data", blob);
-
     const payload = {
       placeId: placeId,
       id: id,
@@ -159,7 +185,15 @@ const DetailRevise = () => {
     for (let value of payload.formData.values()) {
       console.log(value);
     }
-    dispatch(_updateComment(payload));
+    dispatch(_updateComment(payload))
+    .then((dispatch) => 
+      Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: '수정 완료',
+      showConfirmButton: false,
+      timer: 1000
+    }));
   };
 
   useEffect(() => {

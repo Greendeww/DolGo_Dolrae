@@ -2,16 +2,19 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
-import { instance } from "../../shared/Api";
 import Header from "../header/Header";
 import { useRef } from "react";
 import img from "../../assert/image/image.svg";
+import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { _postComment } from "../../redux/modules/comment";
+import imageCompression from "browser-image-compression";
 
 const DetailForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const inputFocus = useRef(null);
-
+  const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const [contentMessage, setContentMessage] = useState("");
   const [isContent, setIsContent] = useState(false);
@@ -22,7 +25,7 @@ const DetailForm = () => {
   const [image, setImage] = useState([]);
   const [fileImage, setFileImage] = useState([]);
   const [clicked, setClicked] = useState([false, false, false, false, false]);
- 
+
   const handleStarClick = (index) => {
     let clickStates = [...clicked];
     for (let i = 0; i < 5; i++) {
@@ -34,7 +37,7 @@ const DetailForm = () => {
   useEffect(() => {
     sendReview();
   }, [clicked]);
-  
+
   //제목부분에 커서
   useEffect(() => {
     inputFocus.current.focus();
@@ -44,8 +47,22 @@ const DetailForm = () => {
     let score = clicked.filter(Boolean).length;
     setStar(score);
   };
+  //이미지 리사이징
+  const compressImage = async (image) => {
+    try {
+      const options = {
+        maxSizeMb: 1,
+        maxWidthOrHeight: 600,
+        alwaysKeepResolution: true, //품질만 낮추고 항상 너비와 높이 유지
+      };
+      return await imageCompression(image, options);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-  const onChangeImg = (e) => {
+  //이미지 미리보기 및 리사이징
+  const onChangeImg = async (e) => {
     const imageList = e.target.files;
     let imageLists = [...image];
     let imgFiles = [...fileImage];
@@ -55,14 +72,19 @@ const DetailForm = () => {
     }
     for (let i = 0; i < imageList.length; i++) {
       const nowImageUrl1 = e.target.files[i];
-      imageLists.push(nowImageUrl1);
+      const compressedImage = await compressImage(nowImageUrl1);
+      imageLists.push(compressedImage);
     }
-       //이미지 개수 최대 3개까지 등록가능
+
+    //이미지 개수 최대 3개까지 등록가능
     if (imageLists.length > 3) {
-      window.alert("이미지는 최대 3개까지 등록 가능합니다")
+      Swal.fire({
+        text: "이미지는 최대 3개까지 등록 가능합니다",
+        icon: "warning",
+      });
       imageLists = imageLists.slice(0, 3);
     }
-    if(imgFiles.length > 3){
+    if (imgFiles.length > 3) {
       imgFiles = imgFiles.slice(0, 3);
     }
     setFileImage(imgFiles);
@@ -78,18 +100,19 @@ const DetailForm = () => {
   //후기 내용 10글자 이상 작성
   const onChangeContent = (e) => {
     const contentRegex =
-      /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{10,300}$/;
+      /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{10,3000}$/;
     const contentCurrnet = e.target.value;
     setContent(contentCurrnet);
 
-    if (!contentRegex.test(contentCurrnet)) {
-      setContentMessage("10글자 이상 작성해주세요");
-      setIsContent(false);
-    } else {
-      setContentMessage(null);
-      setIsContent(true);
-    }
+    // if (!contentRegex.test(contentCurrnet)) {
+    //   setContentMessage("10글자 이상 작성해주세요");
+    //   setIsContent(false);
+    // } else {
+    //   setContentMessage(null);
+    //   setIsContent(true);
+    // }
   };
+  console.log(content)
   const onChangeTitle = (e) => {
     const TitleRegex = /^(?=.*[a-zA-z0-9가-힣ㄱ-ㅎㅏ-ㅣ!@#$%^*+=-]).{1,20}$/;
     const TitleCurrnet = e.target.value;
@@ -113,13 +136,22 @@ const DetailForm = () => {
   const onAddComment = async (e) => {
     e.preventDefault();
     if (title === "" || content === "" || star === 0) {
-      return alert("필수항목을 입력해주세요.");
+      Swal.fire({
+        text: "필수항목을 입력해주세요.",
+        icon: "warning",
+      });
+      return;
     }
-    if (isContent !== true || isTitle !== true) {
-      return alert("형식을 확인해주세요");
+    if (
+      // isContent !== true || 
+      isTitle !== true) {
+      Swal.fire({
+        text: "형식을 확인해주세요",
+        icon: "warning",
+      });
+      return;
     }
     let json = JSON.stringify(data);
-    console.log(json);
     const blob = new Blob([json], { type: "application/json" });
     const formData = new FormData();
     for (let i = 0; i < image.length; i++) {
@@ -131,24 +163,25 @@ const DetailForm = () => {
       id: id,
       formData: formData,
     };
-    try {
-      const res = await instance.post(
-        `/api/auth/comment/${payload.id}`,
-        payload.formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      for (let value of payload.formData.values()) {
-        console.log(value);
-      }
-      window.location.replace(`/detail/${id}`);
-      return res.data;
-    } catch (error) {
+    for (let value of payload.formData.values()) {
+      console.log(value);
     }
+    dispatch(_postComment(payload)).then((dispatch) =>
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "작성 완료",
+        showConfirmButton: false,
+        timer: 1000,
+      })
+    );
   };
+
+  // 화면 렌더링시 스크롤 맨 위로 이동
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <StDetailForm>
       <Header />
@@ -184,11 +217,7 @@ const DetailForm = () => {
           <div style={{ width: "100%" }}>
             <ImgBox>
               <ImgLabel>
-                <img
-                  alt=""
-                  style={{ height: "1.5rem" }}
-                  src={img}
-                />
+                <img alt="" style={{ height: "1.5rem" }} src={img} />
                 <p style={{ marginTop: "15px", fontSize: "0.9rem" }}>
                   이미지 등록
                 </p>
@@ -247,11 +276,11 @@ const DetailForm = () => {
             placeholder="후기를 남겨주세요"
           />
         </LiTilte>
-        <Message>
+        {/* <Message>
           {content.length > 0 && (
             <p style={{ color: "red" }}>{contentMessage}</p>
           )}
-        </Message>
+        </Message> */}
         <ButDiv>
           <AddBut onClick={onAddComment}>작성하기</AddBut>
           <CancelBut onClick={() => navigate("/detail/" + id)}>
@@ -287,7 +316,7 @@ const BoxTitle = styled.div`
 const BoxSpan = styled.p`
   color: rgb(255, 80, 88);
   text-align: right;
-  line-height: 2rem;
+  line-height: 1rem;
   padding-right: 10px;
 `;
 const LiImg = styled.li`
@@ -355,7 +384,7 @@ const DeleteImg = styled.button`
   cursor: pointer;
 `;
 const LiTilte = styled.li`
-  padding: 10px 0px;
+  /* padding: 10px 0px; */
   /* display: flex; */
   width: 100%;
 `;
@@ -373,7 +402,7 @@ const InputTit = styled.input`
   border-radius: 15px;
   border: none;
   padding-left: 10px;
-  font-family: tway;
+  font-family: bold;
 `;
 const Message = styled.div`
   margin-bottom: 25px;
@@ -384,7 +413,7 @@ const Message = styled.div`
 `;
 const InputCom = styled.textarea`
   width: 95%;
-  font-family: tway;
+  font-family: bold;
   min-height: 163px;
   padding: 0px 1rem;
   font-size: 14px;

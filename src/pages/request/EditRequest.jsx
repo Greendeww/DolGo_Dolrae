@@ -4,6 +4,7 @@ import Header from "../../componenets/header/Header";
 import { useState } from "react";
 import { instance } from "../../shared/Api";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const EditRequest = () => {
   const navigate = useNavigate();
@@ -57,7 +58,10 @@ const EditRequest = () => {
 
   const onSubmitHandler = async (e) => {
     if (req.content === "" || req.type === "") {
-      alert("필수 항목을 모두 작성해주세요.");
+      Swal.fire({
+        text: "필수 항목을 모두 작성해주세요.",
+        icon: "warning",
+      });
       return;
     } else {
       const json = JSON.stringify(req);
@@ -69,13 +73,15 @@ const EditRequest = () => {
       }
       formData.append("data", blob);
 
-      const res = await instance.post(`/api/auth/order/${id}`, formData, {
+      await instance.post(`/api/auth/order/${id}`, formData, {
         headers: {
           "content-type": "multipart/form-data",
         },
       });
-      console.log(res);
-      alert("게시글 수정 또는 삭제 요청이 완료되었습니다.");
+      Swal.fire({
+        text: "게시글 수정 또는 삭제 요청이 완료되었습니다.",
+        icon: "success",
+      });
       navigate(-1);
     }
   };
@@ -227,7 +233,7 @@ const Context = styled.textarea`
   border-radius: 15px;
   resize: none;
   font-size: 14px;
-  font-family: tway;
+  font-family: bold;
   font-weight: lighter;
   padding: 15px;
   line-height: 30px;

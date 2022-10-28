@@ -9,12 +9,12 @@ const MyRequestList = () => {
 
   // 서버로부터 받아온 값을 state에 저장
   const [list, setList] = useState([]);
-  const [request, setRequet] = useState([...list].reverse());
+  const [request, setRequet] = useState([...list]);
 
   const getList = async () => {
     const res = await instance.get("/api/auth/order/mypage");
     setList(res.data);
-    setRequet([...res?.data].reverse());
+    setRequet([...res?.data]);
   };
 
   // 렌더링될 때마다 getList 함수 실행

@@ -67,8 +67,10 @@ const SearchList = () => {
           <img alt="filter" src={filter} onClick={() => setModalOn(true)}></img>
         )}
       </HeadTitle>
+      {posts.length !== 0 ? (
+      <>
       {modalOn === true ? <SearchModal close={close} title={title} /> : null}
-      <Content>
+        <Content>
         {posts &&
           posts.map((list) => (
             <Card
@@ -118,7 +120,11 @@ const SearchList = () => {
               )}
             </Card>
           ))}
-      </Content>
+       </Content>
+      </>
+      ) : (
+        <NoP>정보가 없습니다.</NoP>
+      )}
       <div ref={observerTargetEl} />
     </StList>
   );
@@ -130,7 +136,6 @@ const StList = styled.div`
   max-width: 428px;
   width: 100%;
   margin: 0 auto;
-
   & button {
     margin-left: 15px;
     margin-top: 30px;
@@ -142,7 +147,6 @@ const StList = styled.div`
     font-size: 17px;
     text-align: center;
     color: #ffffff;
-
     &:hover {
       cursor: pointer;
     }
@@ -161,7 +165,6 @@ const HeadTitle = styled.div`
   width: 100%;
   z-index: 1;
   background-color: #ffffff;
-
   & img {
     color: #ffc0c0;
     height: 60px;
@@ -245,4 +248,11 @@ const ListTitle = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+const NoP = styled.p`
+  margin-top: 270px;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 500;
 `;

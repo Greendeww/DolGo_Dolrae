@@ -77,14 +77,16 @@ const RequestDetail = () => {
             </ImgBox>
           </div>
         </div>
-        <div style={{ marginTop: "10px" }}>
-          <Title>답변</Title>
-          <Context
-            defaultValue={data?.answer}
-            style={{ lineHeight: "20px" }}
-            readOnly
-          />
-        </div>
+        {data?.state === true ? (
+          <div style={{ marginTop: "10px" }}>
+            <Title>답변</Title>
+            <Context
+              defaultValue={data?.answer}
+              style={{ lineHeight: "20px" }}
+              readOnly
+            />
+          </div>
+        ) : null}
         <Buttons>
           <button
             onClick={() => {
@@ -128,7 +130,7 @@ const Content = styled.input`
   border: none;
   padding-left: 10px;
   font-size: 14px;
-  font-family: tway;
+  font-family: bold;
   font-weight: lighter;
 `;
 const Buttons = styled.div`
@@ -170,7 +172,7 @@ const Context = styled.textarea`
   border-radius: 15px;
   resize: none;
   font-size: 14px;
-  font-family: tway;
+  font-family: bold;
   font-weight: lighter;
   padding: 10px;
 `;

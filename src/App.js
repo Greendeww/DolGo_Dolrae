@@ -29,7 +29,7 @@ function App() {
 export default App;
 
 const StApp = styled.div`
-  font-family: tway;
+  font-family: bold;
 `;
 
 const Feedback = styled.button`
@@ -48,7 +48,7 @@ const Feedback = styled.button`
   right: 0;
   bottom: 0;
   margin-right: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 70px;
   border: none;
   border-radius: 10px;
   width: 130px;
@@ -60,4 +60,5 @@ const Feedback = styled.button`
   z-index: 999;
   font-size: 16px;
   color: black;
+  opacity: 0.9;
 `;

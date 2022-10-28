@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { KAKAO_AUTH_URL } from "../../shared/OAuth";
@@ -27,10 +27,13 @@ const Login = () => {
 
     // input이 비었을 때 alert
     if (usernameRef.current.value === "" || passwordRef.current.value === "") {
-      alert("모든 항목을 입력해주세요.");
+      Swal.fire({
+        text: "모든 항목을 입력해주세요.",
+        icon: "warning",
+      });
       return;
     }
-    
+
     // 서버로 전송 후, 받아온 토큰을 로컬에 저장
     else {
       try {
@@ -42,13 +45,25 @@ const Login = () => {
         sessionStorage.setItem("nickname", response.data.nickname);
         sessionStorage.setItem("role", response.data.role);
 
-        alert(`${response.data.nickname}님 환영합니다.`);
-        navigate('/');
+        Swal.fire({
+          title: `${response.data.nickname}님`,
+          text: "환영합니다.",
+          icon: "success",
+        });
+        navigate("/");
       } catch (error) {
-        alert("이메일 또는 비밀번호를 확인해주세요.");
+        Swal.fire({
+          text: "이메일 또는 비밀번호를 확인해주세요.",
+          icon: "error",
+        });
       }
     }
   };
+
+  // 렌더링될 때마다 스크롤 맨 위로
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <St>
@@ -118,29 +133,22 @@ const St = styled.div`
 const StLogin = styled.div`
   vertical-align: middle;
   padding-top: 120px;
+  width: 100%;
 
   & p {
     margin-bottom: 10px;
-  }
-  & input {
-    width: 98%;
-    height: 52px;
-    background-color: rgba(172, 212, 228, 0.35);
-    border-radius: 15px;
-    border: none;
-    padding-left: 10px;
   }
 
   & button {
     background-color: rgba(121, 185, 211, 0.62);
     color: white;
     border: none;
-    border-radius: 12px;
-    width: 95%;
-    height: 50px;
+    border-radius: 5px;
+    width: 335px;
+    height: 48px;
     cursor: pointer;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 24px;
     display: block;
     margin: 0 auto;
@@ -149,18 +157,30 @@ const StLogin = styled.div`
 
 const Input = styled.div`
   display: block;
-  margin: 40px 20px;
+  margin: 40px auto;
+  width: 100%;
+
+  & input {
+    width: 95%;
+    height: 52px;
+    background-color: rgba(172, 212, 228, 0.35);
+    border-radius: 15px;
+    border: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0 auto;
+  }
 `;
 
 const Inputs = styled.div`
-  margin: 100px 0;
+  margin: 100px auto;
+  width: 85%;
 `;
 
 const Social = styled.div`
   & img {
     display: block;
     margin: 20px auto;
-    width: 95%;
     height: 50px;
 
     &:hover {
