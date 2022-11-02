@@ -43,8 +43,6 @@ https://www.youtube.com/watch?v=m15IKMwa7U0&feature=youtu.be
 ## 📙 API
 ![API](https://user-images.githubusercontent.com/110370672/198503301-f184cc33-03ed-492d-b9ca-6a920f44cefc.png)
 
-## 🖼 구현 이미지
-
 ## 👷 사용한 기술
 `Back-end`
 - Spring boot 2.7.3 JDK11
@@ -74,7 +72,6 @@ https://www.youtube.com/watch?v=m15IKMwa7U0&feature=youtu.be
 - React
 - HTML5
 - CSS
-- react-redux
 - react-router-dom
 - react-kakao-maps-sdk
 - react-icons
@@ -85,6 +82,5 @@ https://www.youtube.com/watch?v=m15IKMwa7U0&feature=youtu.be
 - react-redux @reduxjs/toolkit
 - axios
 - Visual Studio Code
-- Git
 - GitHub
 - kakao
